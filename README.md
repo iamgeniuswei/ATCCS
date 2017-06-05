@@ -1,2 +1,3 @@
 # ATCCS
-ATCCS is the abbreviation of Astronomical Telescope Central Control System
+ATCCS is the abbreviation of Astronomical Telescope Central Control System.
+

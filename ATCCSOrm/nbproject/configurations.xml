@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>src/ORMHelper.h</itemPath>
+      <itemPath>src/at60ccdstatus-odb.hxx</itemPath>
+      <itemPath>src/at60ccdstatus.h</itemPath>
+      <itemPath>src/at60filterstatus-odb.hxx</itemPath>
+      <itemPath>src/at60filterstatus.h</itemPath>
+      <itemPath>src/at60focusstatus-odb.hxx</itemPath>
+      <itemPath>src/at60focusstatus.h</itemPath>
+      <itemPath>src/at60gimbalstatus-odb.hxx</itemPath>
+      <itemPath>src/at60gimbalstatus.h</itemPath>
+      <itemPath>src/at60instruction-odb.hxx</itemPath>
+      <itemPath>src/at60instruction.h</itemPath>
+      <itemPath>src/at60plan-odb.hxx</itemPath>
+      <itemPath>src/at60plan.h</itemPath>
+      <itemPath>src/at60slavedomestatus-odb.hxx</itemPath>
+      <itemPath>src/at60slavedomestatus.h</itemPath>
+      <itemPath>src/atccsat.h</itemPath>
+      <itemPath>src/atccsccdstatus-odb.hxx</itemPath>
+      <itemPath>src/atccsccdstatus.h</itemPath>
+      <itemPath>src/atccsdevice.h</itemPath>
+      <itemPath>src/atccsfilterstatus-odb.hxx</itemPath>
+      <itemPath>src/atccsfilterstatus.h</itemPath>
+      <itemPath>src/atccsfocusstatus-odb.hxx</itemPath>
+      <itemPath>src/atccsfocusstatus.h</itemPath>
+      <itemPath>src/atccsfullopeneddomestatus.h</itemPath>
+      <itemPath>src/atccsgimbalstatus-odb.hxx</itemPath>
+      <itemPath>src/atccsgimbalstatus.h</itemPath>
+      <itemPath>src/atccsinstruction.h</itemPath>
+      <itemPath>src/atccsoccupation-odb.hxx</itemPath>
+      <itemPath>src/atccsoccupation.h</itemPath>
+      <itemPath>src/atccsplan.h</itemPath>
+      <itemPath>src/atccspublicstatus-odb.hxx</itemPath>
+      <itemPath>src/atccspublicstatus.h</itemPath>
+      <itemPath>src/atccsslavedomestatus-odb.hxx</itemPath>
+      <itemPath>src/atccsslavedomestatus.h</itemPath>
+      <itemPath>src/atccsuser-odb.hxx</itemPath>
+      <itemPath>src/atccsuser.h</itemPath>
+      <itemPath>src/atccsutilization-odb.hxx</itemPath>
+      <itemPath>src/atccsutilization.h</itemPath>
+      <itemPath>src/atccsutilizationlog.h</itemPath>
+      <itemPath>src/dpmstatus.h</itemPath>
+      <itemPath>src/guidescopestatus.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/ORMHelper.cpp</itemPath>
+      <itemPath>src/at60ccdstatus-odb.cxx</itemPath>
+      <itemPath>src/at60ccdstatus-odb.ixx</itemPath>
+      <itemPath>src/at60ccdstatus.cpp</itemPath>
+      <itemPath>src/at60filterstatus-odb.cxx</itemPath>
+      <itemPath>src/at60filterstatus-odb.ixx</itemPath>
+      <itemPath>src/at60filterstatus.cpp</itemPath>
+      <itemPath>src/at60focusstatus-odb.cxx</itemPath>
+      <itemPath>src/at60focusstatus-odb.ixx</itemPath>
+      <itemPath>src/at60focusstatus.cpp</itemPath>
+      <itemPath>src/at60gimbalstatus-odb.cxx</itemPath>
+      <itemPath>src/at60gimbalstatus-odb.ixx</itemPath>
+      <itemPath>src/at60gimbalstatus.cpp</itemPath>
+      <itemPath>src/at60instruction-odb.cxx</itemPath>
+      <itemPath>src/at60instruction-odb.ixx</itemPath>
+      <itemPath>src/at60instruction.cpp</itemPath>
+      <itemPath>src/at60plan-odb.cxx</itemPath>
+      <itemPath>src/at60plan-odb.ixx</itemPath>
+      <itemPath>src/at60plan.cpp</itemPath>
+      <itemPath>src/at60slavedomestatus-odb.cxx</itemPath>
+      <itemPath>src/at60slavedomestatus-odb.ixx</itemPath>
+      <itemPath>src/at60slavedomestatus.cpp</itemPath>
+      <itemPath>src/atccsat.cpp</itemPath>
+      <itemPath>src/atccsccdstatus-odb.cxx</itemPath>
+      <itemPath>src/atccsccdstatus-odb.ixx</itemPath>
+      <itemPath>src/atccsccdstatus.cpp</itemPath>
+      <itemPath>src/atccsdevice.cpp</itemPath>
+      <itemPath>src/atccsfilterstatus-odb.cxx</itemPath>
+      <itemPath>src/atccsfilterstatus-odb.ixx</itemPath>
+      <itemPath>src/atccsfilterstatus.cpp</itemPath>
+      <itemPath>src/atccsfocusstatus-odb.cxx</itemPath>
+      <itemPath>src/atccsfocusstatus-odb.ixx</itemPath>
+      <itemPath>src/atccsfocusstatus.cpp</itemPath>
+      <itemPath>src/atccsfullopeneddomestatus.cpp</itemPath>
+      <itemPath>src/atccsgimbalstatus-odb.cxx</itemPath>
+      <itemPath>src/atccsgimbalstatus-odb.ixx</itemPath>
+      <itemPath>src/atccsgimbalstatus.cpp</itemPath>
+      <itemPath>src/atccsinstruction-odb.cxx</itemPath>
+      <itemPath>src/atccsinstruction-odb.ixx</itemPath>
+      <itemPath>src/atccsinstruction.cpp</itemPath>
+      <itemPath>src/atccsoccupation-odb.cxx</itemPath>
+      <itemPath>src/atccsoccupation-odb.ixx</itemPath>
+      <itemPath>src/atccsoccupation.cpp</itemPath>
+      <itemPath>src/atccsplan.cpp</itemPath>
+      <itemPath>src/atccspublicstatus-odb.cxx</itemPath>
+      <itemPath>src/atccspublicstatus-odb.ixx</itemPath>
+      <itemPath>src/atccspublicstatus.cpp</itemPath>
+      <itemPath>src/atccsslavedomestatus-odb.cxx</itemPath>
+      <itemPath>src/atccsslavedomestatus-odb.ixx</itemPath>
+      <itemPath>src/atccsslavedomestatus.cpp</itemPath>
+      <itemPath>src/atccsuser-odb.cxx</itemPath>
+      <itemPath>src/atccsuser-odb.ixx</itemPath>
+      <itemPath>src/atccsuser.cpp</itemPath>
+      <itemPath>src/atccsutilization-odb.cxx</itemPath>
+      <itemPath>src/atccsutilization-odb.ixx</itemPath>
+      <itemPath>src/atccsutilization.cpp</itemPath>
+      <itemPath>src/atccsutilizationlog.cpp</itemPath>
+      <itemPath>src/dpmstatus.cpp</itemPath>
+      <itemPath>src/guidescopestatus.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1"
+                     displayName="New C++ Simple Test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/newsimpletest.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../ATCCSProtocol/src</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lodb-pgsql -lodb</commandLine>
+        </linkerTool>
+      </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <item path="src/ORMHelper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ORMHelper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60instruction-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60instruction-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60instruction-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60instruction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60instruction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plan-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60plan-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plan-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plan.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60plan.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsdevice.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdevice.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfullopeneddomestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfullopeneddomestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplan.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsplan.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsuser-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsuser-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsuser-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsuser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsuser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilization-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilization-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilization-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilization.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilization.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilizationlog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dpmstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dpmstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/guidescopestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/guidescopestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/newsimpletest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <item path="src/ORMHelper.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ORMHelper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60ccdstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60filterstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60focusstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60gimbalstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60instruction-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60instruction-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60instruction-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60instruction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60instruction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plan-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60plan-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plan-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plan.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60plan.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60slavedomestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsat.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsccdstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsdevice.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdevice.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfilterstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfocusstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsfullopeneddomestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsfullopeneddomestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsgimbalstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsoccupation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplan.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsplan.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccspublicstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsslavedomestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsuser-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsuser-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsuser-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsuser.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsuser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilization-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilization-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilization-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilization.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilization.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsutilizationlog.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dpmstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dpmstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/guidescopestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/guidescopestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/newsimpletest.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
