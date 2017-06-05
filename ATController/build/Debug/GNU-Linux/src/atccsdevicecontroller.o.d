@@ -6,6 +6,7 @@ build/Debug/GNU-Linux/src/atccsdevicecontroller.o: \
  ../ATCCSOrm/src/atccspublicstatus.h ../ATCCSOrm/src/atccsinstruction.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccsonline.h ../ATCCSProtocol/src/atccsdata.h \
+ ../ATCCSProtocol/src/atccsaddress.h \
  ../ATCCSProtocol/src/atccsexception.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
  ../ATCCSProtocol/src/atccsexception.h
@@ -31,6 +32,8 @@ src/atccsdevicecontroller.h:
 ../ATCCSProtocol/src/atccsonline.h:
 
 ../ATCCSProtocol/src/atccsdata.h:
+
+../ATCCSProtocol/src/atccsaddress.h:
 
 ../ATCCSProtocol/src/atccsexception.h:
 

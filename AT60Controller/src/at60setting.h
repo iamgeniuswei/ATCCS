@@ -48,6 +48,7 @@ private:
     std::shared_ptr<ATCCSAddress> _hostAddress = nullptr;
     std::shared_ptr<ATCCSDBAddress> _dbAddress = nullptr;
     std::shared_ptr<ATCCSMapManager<ATCCSAddress>> _deviceAddresses = nullptr;
+    
     std::shared_ptr<ATCCSMapManager<ATCCSAddress>> deviceAddressesInstance();
     std::shared_ptr<ATCCSAddress> hostAddressInstance();
     std::shared_ptr<ATCCSDBAddress> dbAddressInstance();
@@ -57,10 +58,11 @@ private:
     bool initDeviceAddresses(XMLElement *element = nullptr);
     
 public:
-    static AT60Setting *instance();
-    bool initSystemSetting(const std::string &xmlpath);
     virtual ~AT60Setting();
+    static AT60Setting *instance();
+    bool initSystemSetting(const std::string &xmlpath);    
     void setHostAddress(std::shared_ptr<ATCCSAddress> _hostAddress);
+    
     std::shared_ptr<ATCCSAddress> hostAddress() const;
     std::shared_ptr<ATCCSDBAddress> dbAddress() const;
     std::shared_ptr<ATCCSAddress> deviceAddress(unsigned int device) const;

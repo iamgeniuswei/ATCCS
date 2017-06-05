@@ -9,7 +9,7 @@ class atccsinstruction;
 class ATCCSDataSender;
 class atccspublicstatus;
 class ATCCSOnline;
-
+class ATCCSAddress;
 class ATCCSDeviceController : public ATCCSController, public ATCCSThread
 {
 public:
@@ -17,6 +17,7 @@ public:
     virtual ~ATCCSDeviceController();
     void run() override;
     void setDeviceAddress(const std::string &ip, unsigned short port);
+    void setDeviceAddress(std::shared_ptr<ATCCSAddress> address = nullptr);
     void setRealtimeStatus(std::shared_ptr<ATCCSData> data = nullptr);
     void setRealtimeOnline(bool online, unsigned int time);
     unsigned int setExecutoryInstruction(std::shared_ptr<ATCCSData> data = nullptr);

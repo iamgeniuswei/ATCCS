@@ -37,6 +37,8 @@ using namespace odb::core;
 #include "atccscontroller.h"
 #include "src/at60exceptiondisplayer.h"
 #include "src/at60setting.h"
+#include "atccsdbaddress.h"
+#include "atccsaddress.h"
 
 /**
  * @brief main function, system entry.
@@ -48,114 +50,198 @@ int main(int argc, char** argv)
 {
     std::cout << "----------------------AT60 Controller V1.00.00----------------------\n";
 
+    //declare the thread controllers.
+    std::shared_ptr<std::thread> exceptionThread = nullptr;
+    std::shared_ptr<std::thread> receiverThread = nullptr;
+    std::shared_ptr<std::thread> dispatcherThread = nullptr;
+    std::shared_ptr<std::thread> upgoingThread = nullptr;
+    std::shared_ptr<std::thread> at60GimbalThread = nullptr;
+    std::shared_ptr<std::thread> at60CCDThread = nullptr;
+    std::shared_ptr<std::thread> at60FilterThread = nullptr;
+    std::shared_ptr<std::thread> at60FocusThread = nullptr;
+    std::shared_ptr<std::thread> at60SlaveDomeThread = nullptr;
+
+    //declare the thread class instances.
+    std::shared_ptr<AT60ExceptionDisplayer> exceptionDisplayer = nullptr;
+    std::shared_ptr<ATCCSDataReceiver> dataReceiver = nullptr;
+    std::shared_ptr<ATCCSDataDispatcher> dataDispatcher = nullptr;
+    std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
+    std::shared_ptr<ATCCSDeviceController> at60GimbalController = nullptr;
+    std::shared_ptr<ATCCSDeviceController> at60CCDController = nullptr;
+    std::shared_ptr<ATCCSDeviceController> at60FilterController = nullptr;
+    std::shared_ptr<ATCCSDeviceController> at60FocusController = nullptr;
+    std::shared_ptr<ATCCSDeviceController> at60SlaveDomeController = nullptr;
+
     try
     {
-
-    }
-    catch (std::exception &e)
-    {
-
-    }
-
-
-
-    //    ORMHelper::initDB("pgsql", "lenovo", "123456", "ATCCSDB", "192.168.0.200", 5432);
-
-
-
-    try
-    {
-        //        std::shared_ptr<ATCCSDeviceController> t1 = std::make_shared<ATCCSDeviceController>(GIMBAL);
-        //        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, __FILE__, __func__, __LINE__, "my fault");
-        //        
-        //start a data receiver thread.
-        //you should use following 3 lines.
-        //but you don't modify anything, except "setRecvAddress".
-        //        std::shared_ptr<ATCCSDataReceiver> receiver(new ATCCSDataReceiver);
-        //        receiver->setRecvAddress("192.168.0.115", 4747);
-        //        std::thread th(&ATCCSDataReceiver::run, receiver);
-        //        
-        //        //start a data dispatcher thread.
-        //        //first, you should use the following line to create a "ATCCSDataDispatcher".
-        //        std::shared_ptr<ATCCSDataDispatcher> dispatcher(new ATCCSDataDispatcher);
-        ////        std::shared_ptr<ATCCSDataProcessor> processor (new ATCLevel1DataProcessor(dispatcher));
-        ////        dispatcher->setDataProcessor(processor);
-        //        
-        std::shared_ptr<AT60ExceptionDisplayer> displayer(new AT60ExceptionDisplayer);
-        std::thread the(&AT60ExceptionDisplayer::run, displayer);
+        //initialize Exception Displayer Thread
+        exceptionDisplayer = std::make_shared<AT60ExceptionDisplayer>();
+        if (exceptionDisplayer)
+        {
+            exceptionThread = std::make_shared<std::thread>(&AT60ExceptionDisplayer::run, exceptionDisplayer);
+        }
 
         AT60Setting *set = AT60Setting::instance();
-        set->initSystemSetting("/home/lenovo/at60setting.xml");
-        //        
-        //        //then, you should create a series of subclasses of "ATCCSController"
-        //        //and register them to the instance of "ATCCSDataDispatcher".
-        //        
-        //        //start a upgoing processor thread.
-        //        //"ATCCSUpgoingController" is used to process upgoing-data from Device Controller;
-        //        //such as: ATHEARTBEAT, ATINSTRUCTIONACK, ATSTATUSREPORT
-        //        std::shared_ptr<ATCCSUpgoingController> upgoing(new ATCCSUpgoingController);
-        //        dispatcher->registerDeviceController(ATINSTRUCTIONACK, upgoing);
-        //        dispatcher->registerDeviceController(ATHEARTBEAT, upgoing);
-        //        dispatcher->registerDeviceController(ATSTATUSREPORT, upgoing);        
-        //
-        //        
-        //        //start a series of concrete variable device controller.
-        //        //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
-        //        //"ATCCSDataDispatcher" dispatch control data to device controller.
-        //        //"ATCCSUpgoingController" modify device controller's status according to upgoing-data.
-        //        
-        //        //start a AT60 gimbal controller.
-        //        std::shared_ptr<AT60GimbalController> at60Gimbal(new AT60GimbalController);    
-        //        at60Gimbal->setDeviceAddress("192.168.0.184", 6500);
-        //        upgoing->registerDeviceController(GIMBAL, at60Gimbal);
-        //        dispatcher->registerDeviceController(GIMBAL, at60Gimbal);
-        //        
-        //        std::shared_ptr<AT60CCDController> at60CCD(new AT60CCDController);   
-        //        at60CCD->setDeviceAddress("192.168.0.130",4646);
-        //        upgoing->registerDeviceController(CCD, at60CCD);
-        //        dispatcher->registerDeviceController(CCD, at60CCD);
-        //        
-        //        std::shared_ptr<AT60FocusController> at60Focus(new AT60FocusController);        
-        //        upgoing->registerDeviceController(FOCUS, at60Focus);
-        //        dispatcher->registerDeviceController(FOCUS, at60Focus);
-        //        
-        //        std::shared_ptr<AT60FilterController> at60Filter(new AT60FilterController);  
-        //        at60Filter->setDeviceAddress("192.168.0.130",4646);
-        //        upgoing->registerDeviceController(FILTER, at60Filter);
-        //        dispatcher->registerDeviceController(FILTER, at60Filter);
-        //        
-        //        std::shared_ptr<AT60SlaveDomeController> at60SlaveDome(new AT60SlaveDomeController);        
-        //        upgoing->registerDeviceController(SLAVEDOME, at60SlaveDome);
-        //        dispatcher->registerDeviceController(SLAVEDOME, at60SlaveDome);
-        //        
-        //
-        //        
-        //        std::thread th1(&ATCCSDataDispatcher::run, dispatcher);
-        //        std::thread th2(&ATCCSUpgoingController::run, upgoing);
-        //        std::thread th3(&AT60GimbalController::run, at60Gimbal);
-        //        std::thread th4(&AT60CCDController::run, at60CCD);
-        //        std::thread th5(&AT60FilterController::run, at60Filter);
-        //        std::thread th6(&AT60FocusController::run, at60Focus);
-        //        std::thread th7(&AT60SlaveDomeController::run, at60SlaveDome);
+        if (!(set->initSystemSetting("/home/lenovo/at60setting.xml")))
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                __FILE__, __func__, __LINE__, "");
+#endif
+            exceptionDisplayer->setStop(true);
+            exceptionThread->join();
+            return 0;
+        }
+        //initialize database
+        std::shared_ptr<ATCCSDBAddress> dbAddress = set->dbAddress();
+        if (dbAddress)
+        {
+            ORMHelper::initDB(dbAddress->type(), dbAddress->user(), dbAddress->password(),
+                              dbAddress->db(), dbAddress->ip(), dbAddress->port());
+        }
+
+        //start a data receiver thread.
+        //generally speaking, the following 5 lines is enough.
+        dataReceiver = std::make_shared<ATCCSDataReceiver>();
+        if (dataReceiver)
+        {
+            std::shared_ptr<ATCCSAddress> recvAddress = set->hostAddress();
+            dataReceiver->setRecvAddress(recvAddress);
+            receiverThread = std::make_shared<std::thread>(&ATCCSDataReceiver::run, dataReceiver);
+        }
+
+
+        //start a data dispatcher thread.
+        //generally speaking, the following 5 lines is enough.
+        dataDispatcher = std::make_shared<ATCCSDataDispatcher>();
+        if (dataDispatcher)
+        {
+            std::shared_ptr<ATCCSDataProcessor> processor(new ATCLevel1DataProcessor(dataDispatcher));
+            dataDispatcher->setDataProcessor(processor);
+            dispatcherThread = std::make_shared<std::thread>(&ATCCSDataDispatcher::run, dataDispatcher);
+        }
+
+
+        //then, you should create a series of subclasses of "ATCCSController"
+        //and register them to the instance of "ATCCSDataDispatcher".
+
+        //start a upgoing processor thread.
+        //"ATCCSUpgoingController" is used to process upgoing-data from Device Controller;
+        //such as: ATHEARTBEAT, ATINSTRUCTIONACK, ATSTATUSREPORT
+        upgoingController = std::make_shared<ATCCSUpgoingController>();
+        if (upgoingController)
+        {
+            dataDispatcher->registerDeviceController(ATINSTRUCTIONACK, upgoingController);
+            dataDispatcher->registerDeviceController(ATHEARTBEAT, upgoingController);
+            dataDispatcher->registerDeviceController(ATSTATUSREPORT, upgoingController);
+        }
+
+
+
+
+
+        //start a series of concrete variable device controller.
+        //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
+        //"ATCCSDataDispatcher" dispatch control data to device controller.
+        //"ATCCSUpgoingController" modify device controller's status according to upgoing-data.
+
+        //start a AT60 gimbal controller.
+        at60GimbalController = std::make_shared<AT60GimbalController>();
+        if (at60GimbalController)
+        {
+            std::shared_ptr<ATCCSAddress> address = set->deviceAddress(GIMBAL);
+            at60GimbalController->setDeviceAddress(address);
+            upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
+            dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
+            at60GimbalThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60GimbalController);
+        }
+
+        at60CCDController = std::make_shared<AT60CCDController>();
+        if (at60CCDController)
+        {
+            std::shared_ptr<ATCCSAddress> address = set->deviceAddress(CCD);
+            at60CCDController->setDeviceAddress(address);
+            upgoingController->registerDeviceController(CCD, at60CCDController);
+            dataDispatcher->registerDeviceController(CCD, at60CCDController);
+            at60CCDThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60CCDController);
+        }
+
+        at60FocusController = std::make_shared<AT60FocusController>();
+        if (at60FocusController)
+        {
+            std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FOCUS);
+            at60FocusController->setDeviceAddress(address);
+            upgoingController->registerDeviceController(FOCUS, at60FocusController);
+            dataDispatcher->registerDeviceController(FOCUS, at60FocusController);
+            at60FocusThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60FocusController);
+        }
+
+        at60FilterController = std::make_shared<AT60FilterController>();
+        if (at60FilterController)
+        {
+            std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FILTER);
+            at60FilterController->setDeviceAddress(address);
+            upgoingController->registerDeviceController(FOCUS, at60FilterController);
+            dataDispatcher->registerDeviceController(FOCUS, at60FilterController);
+            at60FilterThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60FilterController);
+        }
+
+        at60SlaveDomeController = std::make_shared<AT60SlaveDomeController>();
+        if (at60SlaveDomeController)
+        {
+            std::shared_ptr<ATCCSAddress> address = set->deviceAddress(SLAVEDOME);
+            at60SlaveDomeController->setDeviceAddress(address);
+            upgoingController->registerDeviceController(FOCUS, at60SlaveDomeController);
+            dataDispatcher->registerDeviceController(FOCUS, at60SlaveDomeController);
+            at60SlaveDomeThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60SlaveDomeController);
+        }
+
         std::cin.get();
-        displayer->setStop(true);
-        the.join();
-        //        receiver->setStop(true);
-        //        dispatcher->setStop(true);
-        //        upgoing->setStop(true);
-        //        at60Gimbal->setStop(true);
-        //        at60CCD->setStop(true);
-        //        at60Filter->setStop(true);
-        //        at60Focus->setStop(true);
-        //        at60SlaveDome->setStop(true);
-        //        th.join();
-        //        th1.join();
-        //        th2.join();
-        //        th3.join();
-        //        th4.join();
-        //        th5.join();
-        //        th6.join();
-        //        th7.join();      
+        if (dataReceiver && receiverThread)
+        {
+            dataReceiver->setStop(true);
+            receiverThread->join();
+        }
+        if (dataDispatcher && dispatcherThread)
+        {
+            dataDispatcher->setStop(true);
+            dispatcherThread->join();
+        }
+        if (upgoingController && upgoingThread)
+        {
+            upgoingController->setStop(true);
+            upgoingThread->join();
+        }
+        if (at60GimbalController && at60GimbalThread)
+        {
+            at60GimbalController->setStop(true);
+            at60GimbalThread->join();
+        }
+        if (at60CCDController && at60CCDThread)
+        {
+            at60CCDController->setStop(true);
+            at60CCDThread->join();
+        }
+        if (at60FocusController && at60FocusThread)
+        {
+            at60FocusController->setStop(true);
+            at60FocusThread->join();
+        }
+        if (at60FilterController && at60FilterThread)
+        {
+            at60FilterController->setStop(true);
+            at60FilterThread->join();
+        }
+        if (at60SlaveDomeController && at60SlaveDomeThread)
+        {
+            at60SlaveDomeController->setStop(true);
+            at60SlaveDomeThread->join();
+        }
+        if (exceptionDisplayer && exceptionThread)
+        {
+            exceptionDisplayer->setStop(true);
+            exceptionThread->join();
+        }
 
     }
     catch (std::exception &e)

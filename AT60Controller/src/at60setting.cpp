@@ -50,7 +50,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
             if (dbElement)
             {
                 bool ret = true;
-                const char *attr = dbElement->Attribute("type1");
+                const char *attr = dbElement->Attribute("type");
                 if (attr)
                 {
                     _dbAddress->setType(attr);
@@ -64,7 +64,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                     ret &= false;
                 }
 
-                XMLElement *ip = dbElement->FirstChildElement("ip1");
+                XMLElement *ip = dbElement->FirstChildElement("ip");
                 if (ip)
                 {
                     _dbAddress->setIp(ip->GetText());
@@ -288,7 +288,7 @@ bool AT60Setting::initDeviceAddresses(XMLElement* element)
 
 bool AT60Setting::initSystemSetting(const std::string &xmlpath)
 {
-    std::shared_ptr<XMLDocument> doc(new XMLDocument);
+    std::shared_ptr<XMLDocument> doc = std::make_shared<XMLDocument>();
     if (doc)
     {
         if (doc->LoadFile(xmlpath.c_str()) != XML_SUCCESS)
