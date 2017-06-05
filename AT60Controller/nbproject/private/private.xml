@@ -20,5 +20,10 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/AT60Controller/src/at60focuscontroller.h</file>
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/AT60Controller/main.cpp</file>
         </group>
+        <group>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60setting.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/main.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60setting.cpp</file>
+        </group>
     </open-files>
 </project-private>

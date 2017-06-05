@@ -15,10 +15,14 @@
 #define AT60SETTING_H
 #include <map>
 #include <memory>
+#include <limits.h>
 #include "atccsmapmanager.h"
 #include "atccs_global.h"
+#include "tinyxml2.h"
+using namespace tinyxml2;
 class ATCCSAddress;
 class ATCCSDBAddress;
+
 class AT60Setting {
 private:
     explicit AT60Setting();
@@ -43,7 +47,14 @@ private:
 private:
     std::shared_ptr<ATCCSAddress> _hostAddress = nullptr;
     std::shared_ptr<ATCCSDBAddress> _dbAddress = nullptr;
-    ATCCSMapManager<ATCCSAddress> _deviceAddresses;
+    std::shared_ptr<ATCCSMapManager<ATCCSAddress>> _deviceAddresses = nullptr;
+    std::shared_ptr<ATCCSMapManager<ATCCSAddress>> deviceAddressesInstance();
+    std::shared_ptr<ATCCSAddress> hostAddressInstance();
+    std::shared_ptr<ATCCSDBAddress> dbAddressInstance();
+    
+    bool initDBAddress(XMLElement *element = nullptr);
+    bool initHostAddress(XMLElement *element = nullptr);    
+    bool initDeviceAddresses(XMLElement *element = nullptr);
     
 public:
     static AT60Setting *instance();
@@ -51,8 +62,7 @@ public:
     virtual ~AT60Setting();
     void setHostAddress(std::shared_ptr<ATCCSAddress> _hostAddress);
     std::shared_ptr<ATCCSAddress> hostAddress() const;
-    void setDeviceAddress(unsigned int device, std::shared_ptr<ATCCSAddress> dveiceAddress);
-    void setDeviceAddress(unsigned int device, const std::string& ip, unsigned short port);
+    std::shared_ptr<ATCCSDBAddress> dbAddress() const;
     std::shared_ptr<ATCCSAddress> deviceAddress(unsigned int device) const;
 };
 

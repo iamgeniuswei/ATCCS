@@ -11,158 +11,382 @@
  * Created on May 6, 2017, 4:58 PM
  */
 
+#include <stdbool.h>
+
 #include "at60setting.h"
 #include "atccsaddress.h"
 #include "atccsdbaddress.h"
 #include "atccs_public_define.h"
-#include "tinyxml2.h"
-using namespace tinyxml2;
+
+#include "atccsexceptionhandler.h"
 AT60Setting *AT60Setting::_instance = nullptr;
 AT60Setting::AT60SettingGarbo AT60Setting::_Garbo;
+
 AT60Setting::AT60Setting()
 {
-    _dbAddress = std::make_shared<ATCCSDBAddress>();
-    _hostAddress = std::make_shared<ATCCSAddress>();
+
 }
 
-
-AT60Setting::~AT60Setting() 
+AT60Setting::~AT60Setting()
 {
 }
 
-AT60Setting* AT60Setting::instance() 
+AT60Setting* AT60Setting::instance()
 {
-    if(_instance == nullptr)
+    if (_instance == nullptr)
         _instance = new AT60Setting;
     return _instance;
 }
 
-
-bool AT60Setting::initSystemSetting(const std::string &xmlpath) 
+bool AT60Setting::initDBAddress(XMLElement * element)
 {
-    std::shared_ptr<XMLDocument> doc(new XMLDocument);
-    if(doc)
+    if (element)
     {
-        if(doc->LoadFile(xmlpath.c_str()) != XML_SUCCESS)
-            return false;
-        XMLElement *titleElement = doc->FirstChildElement("SETTING");
-        if(titleElement)
+        if (_dbAddress == nullptr)
+            _dbAddress = dbAddressInstance();
+        if (_dbAddress)
         {
-            XMLElement *dbElement = titleElement->FirstChildElement("DATABASE");
-            if(dbElement)
+            XMLElement *dbElement = element->FirstChildElement("DATABASE");
+            if (dbElement)
             {
-                const char *attr = dbElement->Attribute("type");
-                if(attr)
+                bool ret = true;
+                const char *attr = dbElement->Attribute("type1");
+                if (attr)
                 {
                     _dbAddress->setType(attr);
                 }
-                XMLElement *ip = dbElement->FirstChildElement("ip");
-                if(ip)
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                            __FILE__, __func__, __LINE__, "");
+#endif
+                    ret &= false;
+                }
+
+                XMLElement *ip = dbElement->FirstChildElement("ip1");
+                if (ip)
                 {
                     _dbAddress->setIp(ip->GetText());
                 }
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                            __FILE__, __func__, __LINE__, "");
+#endif
+                    ret &= false;
+                }
+
                 XMLElement *port = dbElement->FirstChildElement("port");
-                if(port)
+                if (port)
                 {
                     _dbAddress->setPort(atoi(port->GetText()));
                 }
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                            __FILE__, __func__, __LINE__, "");
+#endif
+                    ret &= false;
+                }
+
                 XMLElement *db = dbElement->FirstChildElement("db");
-                if(db)
+                if (db)
                 {
                     _dbAddress->setDb(db->GetText());
                 }
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                            __FILE__, __func__, __LINE__, "");
+#endif
+                    ret &= false;
+                }
+
                 XMLElement *user = dbElement->FirstChildElement("user");
-                if(user)
+                if (user)
                 {
                     _dbAddress->setUser(user->GetText());
                 }
-                XMLElement *pwd = dbElement->FirstChildElement("password1");
-                if(pwd)
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                            __FILE__, __func__, __LINE__, "");
+#endif
+                    ret &= false;
+                }
+
+                XMLElement *pwd = dbElement->FirstChildElement("password");
+                if (pwd)
                 {
                     _dbAddress->setPassword(pwd->GetText());
                 }
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                            __FILE__, __func__, __LINE__, "");
+#endif
+                    ret &= false;
+                }
+                return ret;
             }
-            XMLElement *drElement = titleElement->FirstChildElement("DATARECEIVER");
-            if(drElement)
+            else
             {
-                
+#ifdef OUTDEBUGINFO
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                        __FILE__, __func__, __LINE__, "");
+#endif
+            }
+        }
+        else
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                    __FILE__, __func__, __LINE__, "");
+#endif           
+        }
+    }
+    else
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                __FILE__, __func__, __LINE__, "");
+#endif        
+    }
+    return false;
+}
+
+bool AT60Setting::initHostAddress(XMLElement * element /* = nullptr */)
+{
+    if (element)
+    {
+        if (_hostAddress == nullptr)
+            _hostAddress = hostAddressInstance();
+        if (_hostAddress)
+        {
+            XMLElement *drElement = element->FirstChildElement("DATARECEIVER");
+
+            if (drElement)
+            {                
                 XMLElement *ip = drElement->FirstChildElement("ip");
                 XMLElement *port = drElement->FirstChildElement("port");
-                if(ip && port)
+                if (ip && port)
                 {
                     _hostAddress->setAddress(ip->GetText(), atoi(port->GetText()));
-                }                    
+                    return true;
+                }
+                else
+                {
+#ifdef OUTDEBUGINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                        __FILE__, __func__, __LINE__, "");
+#endif                    
+                }                
             }
-            XMLElement *dcElement = titleElement->FirstChildElement("DEVICECONTROLLER");
-            if(dcElement)
+            else
             {
+#ifdef OUTDEBUGINFO
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                        __FILE__, __func__, __LINE__, "");
+#endif        
+            }
+        }
+        else
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                        __FILE__, __func__, __LINE__, "");
+#endif
+        }
+    }
+    else
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                    __FILE__, __func__, __LINE__, "");
+#endif
+    }
+    return false;
+}
+
+bool AT60Setting::initDeviceAddresses(XMLElement* element)
+{
+    if (element)
+    {
+        if (_deviceAddresses == nullptr)
+            _deviceAddresses = deviceAddressesInstance();
+        if (_deviceAddresses)
+        {
+            XMLElement *dcElement = element->FirstChildElement("DEVICECONTROLLER");
+            if (dcElement)
+            {
+                bool ret = true;
                 XMLElement *deviceElement = dcElement->FirstChildElement("device");
-                while(deviceElement)
+                while (deviceElement)
                 {
                     const char *attr = deviceElement->Attribute("type");
-                    XMLElement *ip = drElement->FirstChildElement("ip");
-                    XMLElement *port = drElement->FirstChildElement("port");
-                    if(ip && port)
+                    XMLElement *ip = deviceElement->FirstChildElement("ip");
+                    XMLElement *port = deviceElement->FirstChildElement("port");
+                    if (attr && ip && port)
                     {
                         std::shared_ptr<ATCCSAddress> address(new ATCCSAddress(ip->GetText(), atoi(port->GetText())));
-                        if(strcmp(attr,"GIMBAL") == 0)
-                            _deviceAddresses.registerController(GIMBAL, address);
-                        else if(strcmp(attr,"CCD") == 0)
-                            _deviceAddresses.registerController(CCD, address);
-                        else if(strcmp(attr,"FILTER") == 0)
-                            _deviceAddresses.registerController(FILTER, address);
-                        else if(strcmp(attr,"FOCUS") == 0)
-                            _deviceAddresses.registerController(FOCUS, address);
-                        else if(strcmp(attr,"SLAVEDOME") == 0)
-                            _deviceAddresses.registerController(SLAVEDOME, address);
-                        else if(strcmp(attr,"FULLOPENEDDOME") == 0)
-                            _deviceAddresses.registerController(FULLOPENEDDOME, address);
+                        if (strcmp(attr, "GIMBAL") == 0)
+                            _deviceAddresses->registerController(GIMBAL, address);
+                        else if (strcmp(attr, "CCD") == 0)
+                            _deviceAddresses->registerController(CCD, address);
+                        else if (strcmp(attr, "FILTER") == 0)
+                            _deviceAddresses->registerController(FILTER, address);
+                        else if (strcmp(attr, "FOCUS") == 0)
+                            _deviceAddresses->registerController(FOCUS, address);
+                        else if (strcmp(attr, "SLAVEDOME") == 0)
+                            _deviceAddresses->registerController(SLAVEDOME, address);
+                        else if (strcmp(attr, "FULLOPENEDDOME") == 0)
+                            _deviceAddresses->registerController(FULLOPENEDDOME, address);
+                    }
+                    else
+                    {
+#ifdef OUTDEBUGINFO
+                        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                __FILE__, __func__, __LINE__, "");
+#endif                        
+                        ret &= false;
                     }
                     deviceElement = deviceElement->NextSiblingElement("device");
                 }
+                return ret;
+            }
+            else
+            {
+#ifdef OUTDEBUGINFO
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                        __FILE__, __func__, __LINE__, "");
+#endif                
             }
         }
+        else
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                    __FILE__, __func__, __LINE__, "");
+#endif
+        }        
     }
-    
+    else
+    {
+#ifdef OUTDEBUGINFO
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                        __FILE__, __func__, __LINE__, "");
+#endif        
+    }
+    return false;
+}
+
+bool AT60Setting::initSystemSetting(const std::string &xmlpath)
+{
+    std::shared_ptr<XMLDocument> doc(new XMLDocument);
+    if (doc)
+    {
+        if (doc->LoadFile(xmlpath.c_str()) != XML_SUCCESS)
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                __FILE__, __func__, __LINE__, "");
+#endif
+            return false;
+        }
+            
+        XMLElement *titleElement = doc->FirstChildElement("SETTING");
+        if (titleElement)
+        {
+            initDBAddress(titleElement);
+            initHostAddress(titleElement);
+            initDeviceAddresses(titleElement);
+        }
+    }
     return true;
 }
 
-
-void AT60Setting::setHostAddress(std::shared_ptr<ATCCSAddress> _hostAddress) {
+void AT60Setting::setHostAddress(std::shared_ptr<ATCCSAddress> _hostAddress)
+{
     this->_hostAddress = _hostAddress;
 }
 
-std::shared_ptr<ATCCSAddress> AT60Setting::hostAddress() const {
+std::shared_ptr<ATCCSAddress> AT60Setting::hostAddress() const
+{
     return _hostAddress;
 }
 
-void AT60Setting::setDeviceAddress(unsigned int device, std::shared_ptr<ATCCSAddress> deviceAddress)
+std::shared_ptr<ATCCSDBAddress> AT60Setting::dbAddress() const
 {
-//    if(deviceAddress == nullptr)
-//        return;
-//    auto search = _deviceAddresses.find(device);
-//    if(search != _deviceAddresses.end())
-//        return;
-//    _deviceAddresses.insert(std::pair<unsigned int, std::shared_ptr<ATCCSAddress>>(device, deviceAddress));
+    return _dbAddress;
 }
 
-void AT60Setting::setDeviceAddress(unsigned int device, const std::string& ip, unsigned short port)
+
+std::shared_ptr<ATCCSMapManager<ATCCSAddress> > AT60Setting::deviceAddressesInstance()
 {
-//    if(ip.size() == 0 || port == 0)
-//        return;
-//    auto search = _deviceAddresses.find(device);
-//    if(search != _deviceAddresses.end())
-//        return;
-//    std::shared_ptr<ATCCSAddress> deviceAddress(new ATCCSAddress(ip, port));    
-//    _deviceAddresses.insert(std::pair<unsigned int, std::shared_ptr<ATCCSAddress>>(device, deviceAddress));
+    try
+    {
+        _deviceAddresses = std::make_shared<ATCCSMapManager < ATCCSAddress >> ();
+    }
+    catch (std::exception &e)
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                __FILE__, __func__, __LINE__, e.what());
+#endif
+    }
+    return _deviceAddresses;
+}
+
+std::shared_ptr<ATCCSAddress> AT60Setting::hostAddressInstance()
+{
+    try
+    {
+        _hostAddress = std::make_shared<ATCCSAddress>();
+    }
+    catch (std::exception &e)
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                __FILE__, __func__, __LINE__, e.what());
+#endif        
+    }
+    return _hostAddress;
+}
+
+std::shared_ptr<ATCCSDBAddress> AT60Setting::dbAddressInstance()
+{
+    try
+    {
+        _dbAddress = std::make_shared<ATCCSDBAddress>();
+    }
+    catch (std::exception &e)
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                __FILE__, __func__, __LINE__, e.what());
+#endif
+    }
+    return _dbAddress;
 }
 
 std::shared_ptr<ATCCSAddress> AT60Setting::deviceAddress(unsigned int device) const
 {
+    if (_deviceAddresses)
+    {
+        return _deviceAddresses->controller(device);
+    }
+    else
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                __FILE__, __func__, __LINE__, "");
+#endif 
+    }
     return nullptr;
-//    auto search = _deviceAddresses.find(device);
-//    if(search == _deviceAddresses.end())
-//        return nullptr;
-//    std::shared_ptr<ATCCSAddress> temp = search->second;
-//    return temp;            
 }

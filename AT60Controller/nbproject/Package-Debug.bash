@@ -377,19 +377,19 @@ copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so
 
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
-copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so" 0755
-
-cd "${TOP}"
-makeDirectory "${NBTMPDIR}/at60controller/bin"
 copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so" 0755
 
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
-copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATController.so" 0755
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so" 0755
 
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
 copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/at60controller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATController.so" 0755
 
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
