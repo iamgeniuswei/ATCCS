@@ -134,12 +134,9 @@ int main(int argc, char** argv)
             dataDispatcher->registerDeviceController(ATINSTRUCTIONACK, upgoingController);
             dataDispatcher->registerDeviceController(ATHEARTBEAT, upgoingController);
             dataDispatcher->registerDeviceController(ATSTATUSREPORT, upgoingController);
+            upgoingThread = std::make_shared<std::thread>(&ATCCSUpgoingController::run, upgoingController);
         }
-
-
-
-
-
+        
         //start a series of concrete variable device controller.
         //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
         //"ATCCSDataDispatcher" dispatch control data to device controller.
