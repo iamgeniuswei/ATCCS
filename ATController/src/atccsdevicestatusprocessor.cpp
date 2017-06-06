@@ -27,6 +27,6 @@ void ATCCSDeviceStatusProcessor::processData(std::shared_ptr<ATCCSData> data)
     if(_controller && header)
     {
         _controller->setDeviceStatus(header->AT.device, data);
-//        std::cout << header->AT.device << "'s status is up-to-date!\n";
+        std::cout << header->AT.device << "'s status is up-to-date!\n";
     }
 }
