@@ -12,13 +12,18 @@
  */
 
 #include "at60plan.h"
-
+#include "ORMHelper.h"
+#include "at60plan-odb.hxx"
 at60plan::at60plan() {
 }
 
 at60plan::at60plan(const at60plan& orig) {
 }
 
-at60plan::~at60plan() {
+unsigned int at60plan::persistPlan()
+{
+    unsigned long long id =0;
+    id = ORMHelper::persist<at60plan*>(this);
+    return id;
 }
 

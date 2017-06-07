@@ -1,7 +1,6 @@
 #ifndef ATCCSPLAN_H
 #define ATCCSPLAN_H
 #include <cstddef>
-#include "atccs_global.h"
 #include <string>
 #include <memory>
 #include <odb/core.hxx>
@@ -19,26 +18,30 @@ public:
         RESULT_SUCCESS
     };
     explicit atccsplan();
-    atccsplan(const atccsplan&);
-    atccsplan& operator =(const atccsplan&);
+    atccsplan(const atccsplan&) = delete;
+    atccsplan& operator =(const atccsplan&) = delete;
     ~atccsplan();
+    virtual unsigned int persistPlan(){return 0;}
     unsigned int setPlan(std::shared_ptr<ATCCSData> data = nullptr);
-    unsigned int at() const;
-
-    unsigned int exposureCount() const;
-    std::string target() const;
-    unsigned int type() const;
-    unsigned int epoch() const;
-    double declination() const;
-    double rightAscension() const;
-    unsigned int exposureTime() const;
-    unsigned int gain() const;
-    unsigned int bin() const;
-    unsigned int readout() const;
     double delayTime() const;
-    std::string filter() const;
+    double reclination() const;
+    double rightAscension() const;
+    double exposureTime() const;
+    unsigned int readout() const;
+    unsigned int bin() const;
+    unsigned int gain() const;
+    unsigned int exposureCount() const;
+    unsigned int epoch() const;
+    unsigned int type() const;
+    unsigned int at() const;
+    unsigned int percent() const;
     unsigned int result() const;
-    void setResult(unsigned int _result);
+    unsigned int msec() const;
+    unsigned int sec() const;
+    std::string filter() const;
+    std::string target() const;
+    std::string project() const;
+    unsigned int user() const;
 
 private:
     friend class odb::access;

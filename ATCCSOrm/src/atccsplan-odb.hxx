@@ -114,9 +114,9 @@ namespace odb
     typedef
     pgsql::query_column<
       pgsql::value_traits<
-        ::std::string,
-        pgsql::id_string >::query_type,
-      pgsql::id_string >
+        unsigned int,
+        pgsql::id_integer >::query_type,
+      pgsql::id_integer >
     user_type_;
 
     static const user_type_ user;
@@ -181,6 +181,18 @@ namespace odb
 
     static const msec_type_ msec;
 
+    // result
+    //
+    typedef
+    pgsql::query_column<
+      pgsql::value_traits<
+        unsigned int,
+        pgsql::id_integer >::query_type,
+      pgsql::id_integer >
+    result_type_;
+
+    static const result_type_ result;
+
     // percent
     //
     typedef
@@ -229,18 +241,6 @@ namespace odb
 
     static const epoch_type_ epoch;
 
-    // exposureTime
-    //
-    typedef
-    pgsql::query_column<
-      pgsql::value_traits<
-        unsigned int,
-        pgsql::id_integer >::query_type,
-      pgsql::id_integer >
-    exposureTime_type_;
-
-    static const exposureTime_type_ exposureTime;
-
     // exposureCount
     //
     typedef
@@ -288,6 +288,18 @@ namespace odb
     readout_type_;
 
     static const readout_type_ readout;
+
+    // exposureTime
+    //
+    typedef
+    pgsql::query_column<
+      pgsql::value_traits<
+        double,
+        pgsql::id_double >::query_type,
+      pgsql::id_double >
+    exposureTime_type_;
+
+    static const exposureTime_type_ exposureTime;
 
     // rightAscension
     //
@@ -362,6 +374,11 @@ namespace odb
   msec (A::table_name, "\"msec\"", 0);
 
   template <typename A>
+  const typename query_columns< ::atccsplan, id_pgsql, A >::result_type_
+  query_columns< ::atccsplan, id_pgsql, A >::
+  result (A::table_name, "\"result\"", 0);
+
+  template <typename A>
   const typename query_columns< ::atccsplan, id_pgsql, A >::percent_type_
   query_columns< ::atccsplan, id_pgsql, A >::
   percent (A::table_name, "\"percent\"", 0);
@@ -382,11 +399,6 @@ namespace odb
   epoch (A::table_name, "\"epoch\"", 0);
 
   template <typename A>
-  const typename query_columns< ::atccsplan, id_pgsql, A >::exposureTime_type_
-  query_columns< ::atccsplan, id_pgsql, A >::
-  exposureTime (A::table_name, "\"exposureTime\"", 0);
-
-  template <typename A>
   const typename query_columns< ::atccsplan, id_pgsql, A >::exposureCount_type_
   query_columns< ::atccsplan, id_pgsql, A >::
   exposureCount (A::table_name, "\"exposureCount\"", 0);
@@ -405,6 +417,11 @@ namespace odb
   const typename query_columns< ::atccsplan, id_pgsql, A >::readout_type_
   query_columns< ::atccsplan, id_pgsql, A >::
   readout (A::table_name, "\"readout\"", 0);
+
+  template <typename A>
+  const typename query_columns< ::atccsplan, id_pgsql, A >::exposureTime_type_
+  query_columns< ::atccsplan, id_pgsql, A >::
+  exposureTime (A::table_name, "\"exposureTime\"", 0);
 
   template <typename A>
   const typename query_columns< ::atccsplan, id_pgsql, A >::rightAscension_type_
@@ -449,8 +466,7 @@ namespace odb
 
       // _user
       //
-      details::buffer _user_value;
-      std::size_t _user_size;
+      int _user_value;
       bool _user_null;
 
       // _project
@@ -481,6 +497,11 @@ namespace odb
       int _msec_value;
       bool _msec_null;
 
+      // _result
+      //
+      int _result_value;
+      bool _result_null;
+
       // _percent
       //
       int _percent_value;
@@ -501,11 +522,6 @@ namespace odb
       int _epoch_value;
       bool _epoch_null;
 
-      // _exposureTime
-      //
-      int _exposureTime_value;
-      bool _exposureTime_null;
-
       // _exposureCount
       //
       int _exposureCount_value;
@@ -525,6 +541,11 @@ namespace odb
       //
       int _readout_value;
       bool _readout_null;
+
+      // _exposureTime
+      //
+      double _exposureTime_value;
+      bool _exposureTime_null;
 
       // _rightAscension
       //
@@ -583,7 +604,7 @@ namespace odb
 
     typedef pgsql::query_base query_base_type;
 
-    static const std::size_t column_count = 19UL;
+    static const std::size_t column_count = 20UL;
     static const std::size_t id_column_count = 1UL;
     static const std::size_t inverse_column_count = 0UL;
     static const std::size_t readonly_column_count = 0UL;

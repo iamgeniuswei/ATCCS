@@ -65,6 +65,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccsinstruction.o \
 	${OBJECTDIR}/src/atccsoccupation-odb.o \
 	${OBJECTDIR}/src/atccsoccupation.o \
+	${OBJECTDIR}/src/atccsplan-odb.o \
 	${OBJECTDIR}/src/atccsplan.o \
 	${OBJECTDIR}/src/atccspublicstatus-odb.o \
 	${OBJECTDIR}/src/atccspublicstatus.o \
@@ -264,6 +265,11 @@ ${OBJECTDIR}/src/atccsoccupation.o: src/atccsoccupation.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsoccupation.o src/atccsoccupation.cpp
+
+${OBJECTDIR}/src/atccsplan-odb.o: src/atccsplan-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsplan-odb.o src/atccsplan-odb.cxx
 
 ${OBJECTDIR}/src/atccsplan.o: src/atccsplan.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -732,6 +738,19 @@ ${OBJECTDIR}/src/atccsoccupation_nomain.o: ${OBJECTDIR}/src/atccsoccupation.o sr
 	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsoccupation_nomain.o src/atccsoccupation.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsoccupation.o ${OBJECTDIR}/src/atccsoccupation_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccsplan-odb_nomain.o: ${OBJECTDIR}/src/atccsplan-odb.o src/atccsplan-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsplan-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsplan-odb_nomain.o src/atccsplan-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsplan-odb.o ${OBJECTDIR}/src/atccsplan-odb_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/atccsplan_nomain.o: ${OBJECTDIR}/src/atccsplan.o src/atccsplan.cpp 

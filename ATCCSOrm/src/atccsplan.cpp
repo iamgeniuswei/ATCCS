@@ -5,35 +5,9 @@
 #include "atccs_plan_define.h"
 atccsplan::atccsplan()
 {
-//    _id = 0;
-//    _sec = 0;
-//    _msec = 0;
-//    _at = 0;
-//    _user = "test";
-//    _project = "test";
-//    _target = "test";
-//    _type = 0;
-//    _rightAscension = 0;
-//    _declination = 0;
-//    _epoch = 0;
-//    _exposureTime = 0;
-//    _delayTime = 0;
-//    _exposureCount = 0;
-//    _filter = "test";
-//    _gain = 0;
-//    _bin = 0;
-    //    _readout = 0;
-}
-
-atccsplan::atccsplan(const atccsplan &)
-{
 
 }
 
-atccsplan &atccsplan::operator =(const atccsplan &)
-{
-
-}
 
 atccsplan::~atccsplan()
 {
@@ -57,7 +31,7 @@ unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
     if(plan)
     {
         _at = plan->at;
-//        _user = std::string(plan->user);
+        _user = plan->user;
         _project = std::string(plan->project);
         _target = std::string(plan->target);
         _type = plan->type;
@@ -75,9 +49,39 @@ unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
     return RESULT_EXECUTED;
 }
 
-unsigned int atccsplan::at() const
+double atccsplan::delayTime() const
 {
-    return _at;
+    return _delayTime;
+}
+
+double atccsplan::reclination() const
+{
+    return _declination;
+}
+
+double atccsplan::rightAscension() const
+{
+    return _rightAscension;
+}
+
+double atccsplan::exposureTime() const
+{
+    return _exposureTime;
+}
+
+unsigned int atccsplan::readout() const
+{
+    return _readout;
+}
+
+unsigned int atccsplan::bin() const
+{
+    return _bin;
+}
+
+unsigned int atccsplan::gain() const
+{
+    return _gain;
 }
 
 unsigned int atccsplan::exposureCount() const
@@ -85,55 +89,59 @@ unsigned int atccsplan::exposureCount() const
     return _exposureCount;
 }
 
-std::string atccsplan::target() const {
-    return _target;
-}
-
-unsigned int atccsplan::type() const {
-    return _type;
-}
-
-unsigned int atccsplan::epoch() const {
+unsigned int atccsplan::epoch() const
+{
     return _epoch;
 }
 
-double atccsplan::declination() const {
-    return _declination;
+unsigned int atccsplan::type() const
+{
+    return _type;
 }
 
-double atccsplan::rightAscension() const {
-    return _rightAscension;
+unsigned int atccsplan::at() const
+{
+    return _at;
 }
 
-unsigned int atccsplan::exposureTime() const {
-    return _exposureTime;
+unsigned int atccsplan::percent() const
+{
+    return _percent;
 }
 
-unsigned int atccsplan::gain() const {
-    return _gain;
-}
-
-unsigned int atccsplan::bin() const {
-    return _bin;
-}
-
-unsigned int atccsplan::readout() const {
-    return _readout;
-}
-
-double atccsplan::delayTime() const {
-    return _delayTime;
-}
-
-std::string atccsplan::filter() const {
-    return _filter;
-}
-
-unsigned int atccsplan::result() const {
+unsigned int atccsplan::result() const
+{
     return _result;
 }
 
-void atccsplan::setResult(unsigned int _result) {
-    this->_result = _result;
+unsigned int atccsplan::msec() const
+{
+    return _msec;
 }
+
+unsigned int atccsplan::sec() const
+{
+    return _sec;
+}
+
+std::string atccsplan::filter() const
+{
+    return _filter;
+}
+
+std::string atccsplan::target() const
+{
+    return _target;
+}
+
+std::string atccsplan::project() const
+{
+    return _project;
+}
+
+unsigned int atccsplan::user() const
+{
+    return _user;
+}
+
 

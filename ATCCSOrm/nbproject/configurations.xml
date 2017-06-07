@@ -33,6 +33,7 @@
       <itemPath>src/atccsinstruction.h</itemPath>
       <itemPath>src/atccsoccupation-odb.hxx</itemPath>
       <itemPath>src/atccsoccupation.h</itemPath>
+      <itemPath>src/atccsplan-odb.hxx</itemPath>
       <itemPath>src/atccsplan.h</itemPath>
       <itemPath>src/atccspublicstatus-odb.hxx</itemPath>
       <itemPath>src/atccspublicstatus.h</itemPath>
@@ -96,6 +97,8 @@
       <itemPath>src/atccsoccupation-odb.cxx</itemPath>
       <itemPath>src/atccsoccupation-odb.ixx</itemPath>
       <itemPath>src/atccsoccupation.cpp</itemPath>
+      <itemPath>src/atccsplan-odb.cxx</itemPath>
+      <itemPath>src/atccsplan-odb.ixx</itemPath>
       <itemPath>src/atccsplan.cpp</itemPath>
       <itemPath>src/atccspublicstatus-odb.cxx</itemPath>
       <itemPath>src/atccspublicstatus-odb.ixx</itemPath>
@@ -322,6 +325,12 @@
       <item path="src/atccsoccupation.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsoccupation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplan-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsplan-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplan-odb.ixx" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsplan.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -560,6 +569,12 @@
       <item path="src/atccsoccupation.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsoccupation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplan-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsplan-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplan-odb.ixx" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsplan.cpp" ex="false" tool="1" flavor2="0">
       </item>

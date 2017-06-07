@@ -47,10 +47,10 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsplan, id_pgsql >::
   persist_statement_types[] =
   {
+    pgsql::int4_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
-    pgsql::text_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
@@ -62,6 +62,7 @@ namespace odb
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
+    pgsql::float8_oid,
     pgsql::float8_oid,
     pgsql::float8_oid,
     pgsql::float8_oid
@@ -76,10 +77,10 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsplan, id_pgsql >::
   update_statement_types[] =
   {
+    pgsql::int4_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
-    pgsql::text_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
@@ -91,6 +92,7 @@ namespace odb
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
+    pgsql::float8_oid,
     pgsql::float8_oid,
     pgsql::float8_oid,
     pgsql::float8_oid,
@@ -166,11 +168,7 @@ namespace odb
 
     // _user
     //
-    if (t[1UL])
-    {
-      i._user_value.capacity (i._user_size);
-      grew = true;
-    }
+    t[1UL] = 0;
 
     // _project
     //
@@ -204,23 +202,23 @@ namespace odb
     //
     t[6UL] = 0;
 
-    // _percent
+    // _result
     //
     t[7UL] = 0;
 
-    // _at
+    // _percent
     //
     t[8UL] = 0;
 
-    // _type
+    // _at
     //
     t[9UL] = 0;
 
-    // _epoch
+    // _type
     //
     t[10UL] = 0;
 
-    // _exposureTime
+    // _epoch
     //
     t[11UL] = 0;
 
@@ -240,17 +238,21 @@ namespace odb
     //
     t[15UL] = 0;
 
-    // _rightAscension
+    // _exposureTime
     //
     t[16UL] = 0;
 
-    // _declination
+    // _rightAscension
     //
     t[17UL] = 0;
 
-    // _delayTime
+    // _declination
     //
     t[18UL] = 0;
+
+    // _delayTime
+    //
+    t[19UL] = 0;
 
     return grew;
   }
@@ -278,10 +280,8 @@ namespace odb
 
     // _user
     //
-    b[n].type = pgsql::bind::text;
-    b[n].buffer = i._user_value.data ();
-    b[n].capacity = i._user_value.capacity ();
-    b[n].size = &i._user_size;
+    b[n].type = pgsql::bind::integer;
+    b[n].buffer = &i._user_value;
     b[n].is_null = &i._user_null;
     n++;
 
@@ -326,6 +326,13 @@ namespace odb
     b[n].is_null = &i._msec_null;
     n++;
 
+    // _result
+    //
+    b[n].type = pgsql::bind::integer;
+    b[n].buffer = &i._result_value;
+    b[n].is_null = &i._result_null;
+    n++;
+
     // _percent
     //
     b[n].type = pgsql::bind::integer;
@@ -354,13 +361,6 @@ namespace odb
     b[n].is_null = &i._epoch_null;
     n++;
 
-    // _exposureTime
-    //
-    b[n].type = pgsql::bind::integer;
-    b[n].buffer = &i._exposureTime_value;
-    b[n].is_null = &i._exposureTime_null;
-    n++;
-
     // _exposureCount
     //
     b[n].type = pgsql::bind::integer;
@@ -387,6 +387,13 @@ namespace odb
     b[n].type = pgsql::bind::integer;
     b[n].buffer = &i._readout_value;
     b[n].is_null = &i._readout_null;
+    n++;
+
+    // _exposureTime
+    //
+    b[n].type = pgsql::bind::double_;
+    b[n].buffer = &i._exposureTime_value;
+    b[n].is_null = &i._exposureTime_null;
     n++;
 
     // _rightAscension
@@ -436,22 +443,15 @@ namespace odb
     // _user
     //
     {
-      ::std::string const& v =
+      unsigned int const& v =
         o._user;
 
       bool is_null (false);
-      std::size_t size (0);
-      std::size_t cap (i._user_value.capacity ());
       pgsql::value_traits<
-          ::std::string,
-          pgsql::id_string >::set_image (
-        i._user_value,
-        size,
-        is_null,
-        v);
+          unsigned int,
+          pgsql::id_integer >::set_image (
+        i._user_value, is_null, v);
       i._user_null = is_null;
-      i._user_size = size;
-      grew = grew || (cap != i._user_value.capacity ());
     }
 
     // _project
@@ -545,6 +545,20 @@ namespace odb
       i._msec_null = is_null;
     }
 
+    // _result
+    //
+    {
+      unsigned int const& v =
+        o._result;
+
+      bool is_null (false);
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_image (
+        i._result_value, is_null, v);
+      i._result_null = is_null;
+    }
+
     // _percent
     //
     {
@@ -601,20 +615,6 @@ namespace odb
       i._epoch_null = is_null;
     }
 
-    // _exposureTime
-    //
-    {
-      unsigned int const& v =
-        o._exposureTime;
-
-      bool is_null (false);
-      pgsql::value_traits<
-          unsigned int,
-          pgsql::id_integer >::set_image (
-        i._exposureTime_value, is_null, v);
-      i._exposureTime_null = is_null;
-    }
-
     // _exposureCount
     //
     {
@@ -669,6 +669,20 @@ namespace odb
           pgsql::id_integer >::set_image (
         i._readout_value, is_null, v);
       i._readout_null = is_null;
+    }
+
+    // _exposureTime
+    //
+    {
+      double const& v =
+        o._exposureTime;
+
+      bool is_null (false);
+      pgsql::value_traits<
+          double,
+          pgsql::id_double >::set_image (
+        i._exposureTime_value, is_null, v);
+      i._exposureTime_null = is_null;
     }
 
     // _rightAscension
@@ -742,15 +756,14 @@ namespace odb
     // _user
     //
     {
-      ::std::string& v =
+      unsigned int& v =
         o._user;
 
       pgsql::value_traits<
-          ::std::string,
-          pgsql::id_string >::set_value (
+          unsigned int,
+          pgsql::id_integer >::set_value (
         v,
         i._user_value,
-        i._user_size,
         i._user_null);
     }
 
@@ -827,6 +840,20 @@ namespace odb
         i._msec_null);
     }
 
+    // _result
+    //
+    {
+      unsigned int& v =
+        o._result;
+
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        v,
+        i._result_value,
+        i._result_null);
+    }
+
     // _percent
     //
     {
@@ -883,20 +910,6 @@ namespace odb
         i._epoch_null);
     }
 
-    // _exposureTime
-    //
-    {
-      unsigned int& v =
-        o._exposureTime;
-
-      pgsql::value_traits<
-          unsigned int,
-          pgsql::id_integer >::set_value (
-        v,
-        i._exposureTime_value,
-        i._exposureTime_null);
-    }
-
     // _exposureCount
     //
     {
@@ -951,6 +964,20 @@ namespace odb
         v,
         i._readout_value,
         i._readout_null);
+    }
+
+    // _exposureTime
+    //
+    {
+      double& v =
+        o._exposureTime;
+
+      pgsql::value_traits<
+          double,
+          pgsql::id_double >::set_value (
+        v,
+        i._exposureTime_value,
+        i._exposureTime_null);
     }
 
     // _rightAscension
@@ -1018,20 +1045,21 @@ namespace odb
   "\"filter\", "
   "\"sec\", "
   "\"msec\", "
+  "\"result\", "
   "\"percent\", "
   "\"at\", "
   "\"type\", "
   "\"epoch\", "
-  "\"exposureTime\", "
   "\"exposureCount\", "
   "\"gain\", "
   "\"bin\", "
   "\"readout\", "
+  "\"exposureTime\", "
   "\"rightAscension\", "
   "\"declination\", "
   "\"delayTime\") "
   "VALUES "
-  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18) "
+  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) "
   "RETURNING \"id\"";
 
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::find_statement[] =
@@ -1043,15 +1071,16 @@ namespace odb
   "\"atccsplan\".\"filter\", "
   "\"atccsplan\".\"sec\", "
   "\"atccsplan\".\"msec\", "
+  "\"atccsplan\".\"result\", "
   "\"atccsplan\".\"percent\", "
   "\"atccsplan\".\"at\", "
   "\"atccsplan\".\"type\", "
   "\"atccsplan\".\"epoch\", "
-  "\"atccsplan\".\"exposureTime\", "
   "\"atccsplan\".\"exposureCount\", "
   "\"atccsplan\".\"gain\", "
   "\"atccsplan\".\"bin\", "
   "\"atccsplan\".\"readout\", "
+  "\"atccsplan\".\"exposureTime\", "
   "\"atccsplan\".\"rightAscension\", "
   "\"atccsplan\".\"declination\", "
   "\"atccsplan\".\"delayTime\" "
@@ -1067,19 +1096,20 @@ namespace odb
   "\"filter\"=$4, "
   "\"sec\"=$5, "
   "\"msec\"=$6, "
-  "\"percent\"=$7, "
-  "\"at\"=$8, "
-  "\"type\"=$9, "
-  "\"epoch\"=$10, "
-  "\"exposureTime\"=$11, "
+  "\"result\"=$7, "
+  "\"percent\"=$8, "
+  "\"at\"=$9, "
+  "\"type\"=$10, "
+  "\"epoch\"=$11, "
   "\"exposureCount\"=$12, "
   "\"gain\"=$13, "
   "\"bin\"=$14, "
   "\"readout\"=$15, "
-  "\"rightAscension\"=$16, "
-  "\"declination\"=$17, "
-  "\"delayTime\"=$18 "
-  "WHERE \"id\"=$19";
+  "\"exposureTime\"=$16, "
+  "\"rightAscension\"=$17, "
+  "\"declination\"=$18, "
+  "\"delayTime\"=$19 "
+  "WHERE \"id\"=$20";
 
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::erase_statement[] =
   "DELETE FROM \"atccsplan\" "
@@ -1094,15 +1124,16 @@ namespace odb
   "\"atccsplan\".\"filter\", "
   "\"atccsplan\".\"sec\", "
   "\"atccsplan\".\"msec\", "
+  "\"atccsplan\".\"result\", "
   "\"atccsplan\".\"percent\", "
   "\"atccsplan\".\"at\", "
   "\"atccsplan\".\"type\", "
   "\"atccsplan\".\"epoch\", "
-  "\"atccsplan\".\"exposureTime\", "
   "\"atccsplan\".\"exposureCount\", "
   "\"atccsplan\".\"gain\", "
   "\"atccsplan\".\"bin\", "
   "\"atccsplan\".\"readout\", "
+  "\"atccsplan\".\"exposureTime\", "
   "\"atccsplan\".\"rightAscension\", "
   "\"atccsplan\".\"declination\", "
   "\"atccsplan\".\"delayTime\" "
