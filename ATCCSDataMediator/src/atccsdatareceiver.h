@@ -22,13 +22,16 @@ public:
     explicit ATCCSDataReceiver();
     ~ATCCSDataReceiver();
     void run() override;
-    void setRecvAddress(std::shared_ptr<ATCCSAddress> address = nullptr);
-    void setRecvAddress(const std::string &ip, unsigned short port);   
+    int setRecvAddress(std::shared_ptr<ATCCSAddress> address = nullptr);
+    int setRecvAddress(const std::string &ip, unsigned short port);   
 
 
 private:
     std::shared_ptr<QPUdpSocket> _recvSocket = nullptr;
+    std::shared_ptr<QPUdpSocket> recvSocketInstance();
     ATCCSDataQueue *_dataQueue = nullptr;
+    bool isReadyToRecv = false;
+    
 };
 
 #endif // ATCADATARECEIVER_H

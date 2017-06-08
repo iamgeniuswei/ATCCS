@@ -39,7 +39,7 @@ using namespace odb::core;
 #include "src/at60setting.h"
 #include "atccsdbaddress.h"
 #include "atccsaddress.h"
-#include "atccsplancontroller.h"
+#include "src/at60plancontroller.h"
 
 /**
  * @brief main function, system entry.
@@ -87,7 +87,7 @@ int main(int argc, char** argv)
         AT60Setting *set = AT60Setting::instance();
         if (!(set->initSystemSetting("/home/lenovo/at60setting.xml")))
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -140,7 +140,7 @@ int main(int argc, char** argv)
             upgoingThread = std::make_shared<std::thread>(&ATCCSUpgoingController::run, upgoingController);
         }
         
-        at60PlanController = std::make_shared<ATCCSPlanController>();
+        at60PlanController = std::make_shared<AT60PlanController>();
         if(at60PlanController)
         {
             dataDispatcher->registerDeviceController(ATPLAN, at60PlanController);
@@ -263,7 +263,7 @@ int main(int argc, char** argv)
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error#1: " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__

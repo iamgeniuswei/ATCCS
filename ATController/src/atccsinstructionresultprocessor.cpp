@@ -25,7 +25,7 @@ void ATCCSInstructionResultProcessor::processData(std::shared_ptr<ATCCSData> dat
     if(_controller && header)
     {
         _controller->setInstructionResult(header->AT.device, data);
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cout << header->AT.device << " ' instruction result is up-to-date!\n";
 #endif
     }

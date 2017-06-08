@@ -26,7 +26,7 @@ public:
     explicit QPUdpSocket();
     ~QPUdpSocket();
     void setTargetAddress(const string &ip, unsigned short port);
-    void setHostAddress(const string &ip, unsigned short port);
+    int setHostAddress(const string &ip, unsigned short port);
     void setRecvTimeout(unsigned int duration);
     ssize_t sendData(const char *data, ssize_t size);
     ssize_t recvData(char *data, unsigned int MAXSIZE);

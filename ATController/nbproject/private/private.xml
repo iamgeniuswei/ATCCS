@@ -11,6 +11,17 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsfocuscontroller.h</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsgimbalcontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsfiltercontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplancontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsgimbalcontroller.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplancontroller.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsupgoingcontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsslavedomecontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatapacker.cpp</file>
+        </group>
     </open-files>
 </project-private>

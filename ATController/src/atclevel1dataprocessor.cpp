@@ -2,6 +2,7 @@
 #include "atccsdatadispatcher.h"
 #include "atccsdata.h"
 #include "atccs_public_define.h"
+#include "atccsexceptionhandler.h"
 ATCLevel1DataProcessor::ATCLevel1DataProcessor(std::shared_ptr<ATCCSDataDispatcher> dispatcher)
     : _dispatcher(dispatcher.get())
 {
@@ -11,8 +12,17 @@ ATCLevel1DataProcessor::ATCLevel1DataProcessor(std::shared_ptr<ATCCSDataDispatch
 
 void ATCLevel1DataProcessor::processData(std::shared_ptr<ATCCSData> data)
 {
-    if(data == nullptr || !(data->validate()))
+    if(data == nullptr)
         return;
+    if(!data->validate())
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                            __FILE__, __func__, __LINE__, 
+                                            "ATCCSData is error, can not be dispatched.");
+#endif
+        return;
+    }
     _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
     if(header && _dispatcher)
     {

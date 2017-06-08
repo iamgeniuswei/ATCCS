@@ -23,7 +23,7 @@ void ATCCSHeartbeatProcessor::processData(std::shared_ptr<ATCCSData> data)
     if(_controller && header)
     {
         _controller->setDeviceOnline(header->AT.device, true, header->tv_sec);
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cout << header->AT.device << " is online at " << header->tv_sec << std::endl;
 #endif
     }

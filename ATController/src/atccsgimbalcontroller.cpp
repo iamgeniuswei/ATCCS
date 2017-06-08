@@ -66,7 +66,7 @@ bool ATCCSGimbalController::isStatusOK() const
         }
         catch(std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif  
@@ -74,7 +74,7 @@ bool ATCCSGimbalController::isStatusOK() const
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -176,7 +176,7 @@ bool ATCCSGimbalController::isExecutoryInstructionOK()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif        
@@ -220,7 +220,7 @@ bool ATCCSGimbalController::canExecutePlan()
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error#" << ERROR_STDEXCEPTRION << ": Device " << id() << " " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__
@@ -261,7 +261,7 @@ bool ATCCSGimbalController::checkResult_Connect()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -269,7 +269,7 @@ bool ATCCSGimbalController::checkResult_Connect()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -292,7 +292,7 @@ bool ATCCSGimbalController::checkResult_FindHome()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -300,7 +300,7 @@ bool ATCCSGimbalController::checkResult_FindHome()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -332,7 +332,7 @@ bool ATCCSGimbalController::checkResult_TrackStar()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -340,7 +340,7 @@ bool ATCCSGimbalController::checkResult_TrackStar()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
                 
@@ -374,7 +374,7 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, 
                                                 "Gimbal has no real-time status instance. Can not check the instruction's result, may be the device doesn't report any real-time status.");
@@ -383,7 +383,7 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
                 
@@ -407,7 +407,7 @@ bool ATCCSGimbalController::checkResult_SlewAzEl()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -415,7 +415,7 @@ bool ATCCSGimbalController::checkResult_SlewAzEl()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -445,7 +445,7 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -453,7 +453,7 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());                
 #endif
@@ -483,7 +483,7 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -491,7 +491,7 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -514,7 +514,7 @@ bool ATCCSGimbalController::checkResult_Stop()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -522,7 +522,7 @@ bool ATCCSGimbalController::checkResult_Stop()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif       
@@ -545,7 +545,7 @@ bool ATCCSGimbalController::checkResult_SpeedCorrect()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -553,7 +553,7 @@ bool ATCCSGimbalController::checkResult_SpeedCorrect()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif       
@@ -576,7 +576,7 @@ bool ATCCSGimbalController::checkResult_Park()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -584,7 +584,7 @@ bool ATCCSGimbalController::checkResult_Park()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif       
@@ -607,7 +607,7 @@ bool ATCCSGimbalController::checkResult_FixedMove()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -615,7 +615,7 @@ bool ATCCSGimbalController::checkResult_FixedMove()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif        
@@ -638,7 +638,7 @@ bool ATCCSGimbalController::checkResult_PositionCorrect()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -646,7 +646,7 @@ bool ATCCSGimbalController::checkResult_PositionCorrect()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif        
@@ -677,7 +677,7 @@ bool ATCCSGimbalController::checkResult_CoverAction()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -685,7 +685,7 @@ bool ATCCSGimbalController::checkResult_CoverAction()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, 
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -715,7 +715,7 @@ bool ATCCSGimbalController::checkResult_FocusAction()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -723,7 +723,7 @@ bool ATCCSGimbalController::checkResult_FocusAction()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -745,7 +745,7 @@ bool ATCCSGimbalController::checkResult_Emergence()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -753,7 +753,7 @@ bool ATCCSGimbalController::checkResult_Emergence()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");        
 #endif

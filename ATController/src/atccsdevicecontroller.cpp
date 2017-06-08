@@ -30,7 +30,7 @@ ATCCSDeviceController::ATCCSDeviceController(unsigned short id)
 
 ATCCSDeviceController::~ATCCSDeviceController()
 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
     std::cout << "~ATCCSDeviceController\n";
 #endif
 }
@@ -60,7 +60,7 @@ void ATCCSDeviceController::run()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 
@@ -93,7 +93,7 @@ int ATCCSDeviceController::sendInstruction(std::shared_ptr<ATCCSData> data)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -157,7 +157,7 @@ void ATCCSDeviceController::waitInstructionResult()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -227,7 +227,7 @@ void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             //FIXME:
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
@@ -236,7 +236,7 @@ void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -276,7 +276,7 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
             }
             else
             {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                     __FILE__, __func__, __LINE__, "");
 #endif
@@ -285,7 +285,7 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -313,7 +313,7 @@ void ATCCSDeviceController::setExecutoryInstructionResult(std::shared_ptr<ATCCSD
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -321,7 +321,7 @@ void ATCCSDeviceController::setExecutoryInstructionResult(std::shared_ptr<ATCCSD
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -352,7 +352,7 @@ void ATCCSDeviceController::setDeviceAddress(const std::string &ip, unsigned sho
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -390,7 +390,7 @@ void ATCCSDeviceController::setRealtimeOnline(bool online, unsigned int time)
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -398,7 +398,7 @@ void ATCCSDeviceController::setRealtimeOnline(bool online, unsigned int time)
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -419,7 +419,7 @@ bool ATCCSDeviceController::isOnline() const
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -428,7 +428,7 @@ bool ATCCSDeviceController::isOnline() const
     catch (std::exception &e)
     {
         //FIXME
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif

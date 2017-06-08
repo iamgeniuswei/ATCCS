@@ -82,7 +82,7 @@ bool ATCCSSlaveDomeController::isExecutoryInstructionOK()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif        
@@ -103,7 +103,7 @@ bool ATCCSSlaveDomeController::canExecutePlan()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif

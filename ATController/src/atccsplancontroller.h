@@ -38,7 +38,7 @@ protected:
     std::shared_ptr<ATCCSMapManager<ATCCSDeviceController>> controllersInstance();
     
 
-private:
+protected:
     std::shared_ptr<atccsplan> _executoryPlan = nullptr;    
     std::shared_ptr<atccsplan> _lastPlan = nullptr;
     std::shared_ptr<ATCCSMapManager<ATCCSDeviceController>> _controllers;

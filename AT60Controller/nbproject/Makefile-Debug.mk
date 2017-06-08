@@ -41,6 +41,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/at60filtercontroller.o \
 	${OBJECTDIR}/src/at60focuscontroller.o \
 	${OBJECTDIR}/src/at60gimbalcontroller.o \
+	${OBJECTDIR}/src/at60plancontroller.o \
 	${OBJECTDIR}/src/at60setting.o \
 	${OBJECTDIR}/src/at60slavedomecontroller.o \
 	${OBJECTDIR}/src/tinyxml2.o
@@ -114,6 +115,11 @@ ${OBJECTDIR}/src/at60gimbalcontroller.o: src/at60gimbalcontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalcontroller.o src/at60gimbalcontroller.cpp
+
+${OBJECTDIR}/src/at60plancontroller.o: src/at60plancontroller.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plancontroller.o src/at60plancontroller.cpp
 
 ${OBJECTDIR}/src/at60setting.o: src/at60setting.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

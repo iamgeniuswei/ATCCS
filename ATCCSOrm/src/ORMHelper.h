@@ -44,7 +44,7 @@ public:
     {
         if(value == nullptr)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#2: The object to persist is null." 
                     << " @" << __func__
                     << " @" << __FILE__
@@ -60,7 +60,7 @@ public:
         } 
         catch (std::exception &e) 
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#1: " << e.what()
                     << " @" << __func__
                     << " @" << __FILE__
@@ -75,7 +75,7 @@ public:
         unsigned long long id = 0;
         if(value == nullptr)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#2: The object to persist is null." 
                     << " @" << __func__
                     << " @" << __FILE__
@@ -91,7 +91,7 @@ public:
         } 
         catch (std::exception &e) 
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#1: " << e.what()
                     << " @" << __func__
                     << " @" << __FILE__
@@ -139,7 +139,7 @@ public:
     {
         if(value == nullptr)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#2: The object to persist is null." 
                     << " @" << __func__
                     << " @" << __FILE__
@@ -154,7 +154,7 @@ public:
         } 
         catch (std::exception &e) 
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#1: " << e.what()
                     << " @" << __func__
                     << " @" << __FILE__
@@ -168,7 +168,7 @@ public:
     {
         if(value == nullptr)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#2: The object to persist is null." 
                     << " @" << __func__
                     << " @" << __FILE__
@@ -183,7 +183,7 @@ public:
         } 
         catch (std::exception &e) 
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error#1: " << e.what()
                     << " @" << __func__
                     << " @" << __FILE__

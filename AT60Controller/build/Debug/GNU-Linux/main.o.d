@@ -21,7 +21,7 @@ build/Debug/GNU-Linux/main.o: main.cpp \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
  ../ATCCSProtocol/src/atccsexception.h src/at60exceptiondisplayer.h \
  src/at60setting.h src/tinyxml2.h ../ATCCSProtocol/src/atccsdbaddress.h \
- ../ATCCSProtocol/src/atccsaddress.h \
+ ../ATCCSProtocol/src/atccsaddress.h src/at60plancontroller.h \
  ../ATController/src/atccsplancontroller.h
 
 ../ATCCSProtocol/src/atccs_global.h:
@@ -89,5 +89,7 @@ src/tinyxml2.h:
 ../ATCCSProtocol/src/atccsdbaddress.h:
 
 ../ATCCSProtocol/src/atccsaddress.h:
+
+src/at60plancontroller.h:
 
 ../ATController/src/atccsplancontroller.h:

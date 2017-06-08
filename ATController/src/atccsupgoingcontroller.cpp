@@ -29,7 +29,7 @@ ATCCSUpgoingController::ATCCSUpgoingController()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error#1: " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__
@@ -40,7 +40,7 @@ ATCCSUpgoingController::ATCCSUpgoingController()
 
 ATCCSUpgoingController::~ATCCSUpgoingController()
 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
     std::cerr << "~ATCCSUpgoingController()" << std::endl;
 #endif
 }
@@ -63,7 +63,7 @@ void ATCCSUpgoingController::run()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error: ATCCSUpgoingDataProcessor is null; " 
                     << " @" << __func__ 
                     << " @" << __FILE__ 
@@ -89,14 +89,14 @@ void ATCCSUpgoingController::processUpgoingData(unsigned int id, std::shared_ptr
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error: no such ATCCSDataProcessor; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
         }        
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error: ATCCSControllerManager is null; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
     }
@@ -118,14 +118,14 @@ void ATCCSUpgoingController::setDeviceOnline(unsigned int id, bool online, unsig
             controller->setRealtimeOnline(online, time);
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error: no such ATCCSDeviceController; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
         }
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error: ATCCSControllerManager is null; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
     }
@@ -145,14 +145,14 @@ void ATCCSUpgoingController::setInstructionResult(unsigned int id, std::shared_p
             controller->setExecutoryInstructionResult(data);
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error: no such ATCCSDeviceController; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
         }
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error: ATCCSControllerManager is null; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
     }
@@ -172,14 +172,14 @@ void ATCCSUpgoingController::setDeviceStatus(unsigned int id, std::shared_ptr<AT
             controller->setRealtimeStatus(data);
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             std::cerr << "error: no such ATCCSDeviceController; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
         }
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error: ATCCSControllerManager is null; " << " @" <<__func__ << " @" << __FILE__ << " @" << __LINE__ << std::endl;
 #endif
     }

@@ -17,6 +17,10 @@
 #define QT 1
 #endif
 
+#ifndef OUTERRORINFO
+#define OUTERRORINFO
+#endif
+
 #ifndef OUTDEBUGINFO
 #define OUTDEBUGINFO
 #endif

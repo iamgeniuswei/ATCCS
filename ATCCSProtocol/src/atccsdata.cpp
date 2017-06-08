@@ -21,7 +21,7 @@ ATCCSData::ATCCSData(unsigned int size):_size(size)
     {
         _data = nullptr;
         _size = 0;
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += e.what();
         debug_info += " @";
@@ -57,7 +57,7 @@ bool ATCCSData::validate() const
 {
     if(_data == nullptr)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "ATCCSData's _data is null";
         debug_info += " @";
@@ -72,7 +72,7 @@ bool ATCCSData::validate() const
 
     if(_size < sizeof(_ATCCSPHeader))
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "ATCCSData's _size is less than sizeof(_ATCCSPHeader)";
         debug_info += " @";
@@ -87,7 +87,7 @@ bool ATCCSData::validate() const
     _ATCCSPHeader *header = (_ATCCSPHeader*)(_data);
     if(header->length != _size)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "ATCCSData's _size is not equal to _ATCCSPHeader's length field";
         debug_info += " @";

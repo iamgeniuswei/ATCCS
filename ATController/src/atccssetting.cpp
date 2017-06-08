@@ -14,7 +14,7 @@ ATCCSSetting::ATCCSSetting()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
 #endif
     }
 }

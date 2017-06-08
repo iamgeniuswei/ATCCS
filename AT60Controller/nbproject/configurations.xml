@@ -9,6 +9,7 @@
       <itemPath>src/at60filtercontroller.h</itemPath>
       <itemPath>src/at60focuscontroller.h</itemPath>
       <itemPath>src/at60gimbalcontroller.h</itemPath>
+      <itemPath>src/at60plancontroller.h</itemPath>
       <itemPath>src/at60setting.h</itemPath>
       <itemPath>src/at60slavedomecontroller.h</itemPath>
       <itemPath>src/tinyxml2.h</itemPath>
@@ -25,6 +26,7 @@
       <itemPath>src/at60filtercontroller.cpp</itemPath>
       <itemPath>src/at60focuscontroller.cpp</itemPath>
       <itemPath>src/at60gimbalcontroller.cpp</itemPath>
+      <itemPath>src/at60plancontroller.cpp</itemPath>
       <itemPath>src/at60setting.cpp</itemPath>
       <itemPath>src/at60slavedomecontroller.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
@@ -719,6 +721,42 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -742,6 +780,10 @@
       <item path="src/at60gimbalcontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/at60gimbalcontroller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plancontroller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60plancontroller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/at60setting.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -797,6 +839,10 @@
       <item path="src/at60gimbalcontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/at60gimbalcontroller.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/at60plancontroller.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/at60plancontroller.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/at60setting.cpp" ex="false" tool="1" flavor2="0">
       </item>

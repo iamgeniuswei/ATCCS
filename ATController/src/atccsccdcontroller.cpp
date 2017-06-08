@@ -49,7 +49,7 @@ bool ATCCSCCDController::isStatusOK() const
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -57,7 +57,7 @@ bool ATCCSCCDController::isStatusOK() const
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -168,7 +168,7 @@ bool ATCCSCCDController::isExecutoryInstructionOK()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif        
@@ -192,7 +192,7 @@ bool ATCCSCCDController::canExecutePlan()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error#"<< ERROR_STDEXCEPTRION << ": Device "<< id() << " " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__
@@ -234,7 +234,7 @@ bool ATCCSCCDController::checkResult_Connect()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -242,7 +242,7 @@ bool ATCCSCCDController::checkResult_Connect()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -269,7 +269,7 @@ bool ATCCSCCDController::checkResult_SetCoolerT()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -277,7 +277,7 @@ bool ATCCSCCDController::checkResult_SetCoolerT()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -319,7 +319,7 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -327,7 +327,7 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -346,7 +346,7 @@ bool ATCCSCCDController::checkResult_StartExposure()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                             __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -354,7 +354,7 @@ bool ATCCSCCDController::checkResult_StartExposure()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
                                                 __FILE__, __func__, __LINE__, "");
 #endif        
@@ -374,7 +374,7 @@ bool ATCCSCCDController::checkResult_StopExposure()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -382,7 +382,7 @@ bool ATCCSCCDController::checkResult_StopExposure()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -401,7 +401,7 @@ bool ATCCSCCDController::checkResult_AbortExposure()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -409,7 +409,7 @@ bool ATCCSCCDController::checkResult_AbortExposure()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -435,7 +435,7 @@ bool ATCCSCCDController::checkResult_SetGain()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -443,7 +443,7 @@ bool ATCCSCCDController::checkResult_SetGain()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -469,7 +469,7 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -477,7 +477,7 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -503,7 +503,7 @@ bool ATCCSCCDController::checkResult_SetBIN()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -511,7 +511,7 @@ bool ATCCSCCDController::checkResult_SetBIN()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -537,7 +537,7 @@ bool ATCCSCCDController::checkResult_SetBaseline()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -545,7 +545,7 @@ bool ATCCSCCDController::checkResult_SetBaseline()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -571,7 +571,7 @@ bool ATCCSCCDController::checkResult_SetCMOSNF()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -579,7 +579,7 @@ bool ATCCSCCDController::checkResult_SetCMOSNF()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -605,7 +605,7 @@ bool ATCCSCCDController::checkResult_SetEM()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -613,7 +613,7 @@ bool ATCCSCCDController::checkResult_SetEM()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -639,7 +639,7 @@ bool ATCCSCCDController::checkResult_SetFullFrame()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -647,7 +647,7 @@ bool ATCCSCCDController::checkResult_SetFullFrame()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -681,7 +681,7 @@ bool ATCCSCCDController::checkResult_SetROI()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -689,7 +689,7 @@ bool ATCCSCCDController::checkResult_SetROI()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -715,7 +715,7 @@ bool ATCCSCCDController::checkResult_SetShutter()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -723,7 +723,7 @@ bool ATCCSCCDController::checkResult_SetShutter()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -749,7 +749,7 @@ bool ATCCSCCDController::checkResult_SetTransferSpeed()
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif            
@@ -757,7 +757,7 @@ bool ATCCSCCDController::checkResult_SetTransferSpeed()
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif        

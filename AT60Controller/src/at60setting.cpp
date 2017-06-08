@@ -57,7 +57,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -71,7 +71,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -85,7 +85,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -99,7 +99,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -113,7 +113,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -127,7 +127,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -137,7 +137,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
             }
             else
             {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                         __FILE__, __func__, __LINE__, "");
 #endif
@@ -145,7 +145,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                     __FILE__, __func__, __LINE__, "");
 #endif           
@@ -153,7 +153,7 @@ bool AT60Setting::initDBAddress(XMLElement * element)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                 __FILE__, __func__, __LINE__, "");
 #endif        
@@ -182,7 +182,7 @@ bool AT60Setting::initHostAddress(XMLElement * element /* = nullptr */)
                 }
                 else
                 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                     ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                         __FILE__, __func__, __LINE__, "");
 #endif                    
@@ -190,7 +190,7 @@ bool AT60Setting::initHostAddress(XMLElement * element /* = nullptr */)
             }
             else
             {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                         __FILE__, __func__, __LINE__, "");
 #endif        
@@ -198,7 +198,7 @@ bool AT60Setting::initHostAddress(XMLElement * element /* = nullptr */)
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                         __FILE__, __func__, __LINE__, "");
 #endif
@@ -206,7 +206,7 @@ bool AT60Setting::initHostAddress(XMLElement * element /* = nullptr */)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                     __FILE__, __func__, __LINE__, "");
 #endif
@@ -250,7 +250,7 @@ bool AT60Setting::initDeviceAddresses(XMLElement* element)
                     }
                     else
                     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                 __FILE__, __func__, __LINE__, "");
 #endif                        
@@ -262,7 +262,7 @@ bool AT60Setting::initDeviceAddresses(XMLElement* element)
             }
             else
             {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                         __FILE__, __func__, __LINE__, "");
 #endif                
@@ -270,7 +270,7 @@ bool AT60Setting::initDeviceAddresses(XMLElement* element)
         }
         else
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                     __FILE__, __func__, __LINE__, "");
 #endif
@@ -278,7 +278,7 @@ bool AT60Setting::initDeviceAddresses(XMLElement* element)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                         __FILE__, __func__, __LINE__, "");
 #endif        
@@ -293,7 +293,7 @@ bool AT60Setting::initSystemSetting(const std::string &xmlpath)
     {
         if (doc->LoadFile(xmlpath.c_str()) != XML_SUCCESS)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
@@ -335,7 +335,7 @@ std::shared_ptr<ATCCSMapManager<ATCCSAddress> > AT60Setting::deviceAddressesInst
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                 __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -351,7 +351,7 @@ std::shared_ptr<ATCCSAddress> AT60Setting::hostAddressInstance()
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                 __FILE__, __func__, __LINE__, e.what());
 #endif        
@@ -367,7 +367,7 @@ std::shared_ptr<ATCCSDBAddress> AT60Setting::dbAddressInstance()
     }
     catch (std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                 __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -383,7 +383,7 @@ std::shared_ptr<ATCCSAddress> AT60Setting::deviceAddress(unsigned int device) co
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                 __FILE__, __func__, __LINE__, "");
 #endif 

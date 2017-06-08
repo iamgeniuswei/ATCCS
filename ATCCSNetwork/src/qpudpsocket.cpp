@@ -57,8 +57,9 @@ void QPUdpSocket::setTargetAddress(const string &ip, unsigned short port)
     _targetAddr.sin_port = htons(_targetPort);
 }
 
-void QPUdpSocket::setHostAddress(const string &ip, unsigned short port)
+int QPUdpSocket::setHostAddress(const string &ip, unsigned short port)
 {
+    int ret = -1;
     _hostIP = ip;
     _hostPort = port;
     memset(&_hostAddr, 0, sizeof(sockaddr_in));
@@ -72,12 +73,13 @@ void QPUdpSocket::setHostAddress(const string &ip, unsigned short port)
     _hostAddr.sin_port = htons(_hostPort);
     if(recv_socket_descriptor != -1)
     {
-        if(-1 == bind(recv_socket_descriptor, (sockaddr*)&_hostAddr, sizeof(sockaddr)))
+        ret = bind(recv_socket_descriptor, (sockaddr*)&_hostAddr, sizeof(sockaddr));
+        if(-1 == ret)
         {
             cerr << "bind udp recv ip and port failed!" << endl;
-            return;
         }
     }
+    return ret;
 }
 
 void QPUdpSocket::setRecvTimeout(unsigned int duration) 

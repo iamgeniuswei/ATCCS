@@ -45,6 +45,11 @@ void ATCCSPlanController::run()
 }
 
 
+/**
+ * judge whether can execute plan, the standard is 
+ * all devices' status are normal.
+ * @return true if can, false if can not.
+ */
 bool ATCCSPlanController::canExecutePlan() const
 {
     return true;
@@ -72,9 +77,10 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
     if(!(data->validate()))
     {
         //FIXME
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__, "");
+                                            __FILE__, __func__, __LINE__, 
+                                            "Plan's raw data is error and can not be resolved, the plan is canceled.");
 #endif
         return;
     }
@@ -105,7 +111,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
             setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME);
             if(!waitInstructionOK(GIMBAL))
             {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                     __FILE__, __func__, __LINE__, "");
 #endif
@@ -118,7 +124,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
             setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR);
             if (!waitInstructionOK(GIMBAL))
             {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                     __FILE__, __func__, __LINE__, "");
 #endif
@@ -144,7 +150,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -159,7 +165,7 @@ void ATCCSPlanController::registerDeviceController(unsigned int id, std::shared_
         _controllers->registerController(id, controller);
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif
@@ -178,7 +184,7 @@ void ATCCSPlanController::resetDeviceInstruction(unsigned int device)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__, "");
 #endif        
@@ -257,50 +263,6 @@ bool ATCCSPlanController::isRelatedDevicesReady()
     return true;
 }
 
-//bool ATCCSPlanController::isDeviceReady() 
-//{
-//    if(_controllers)
-//    {
-//        bool isGimbalOK = false;
-//        std::shared_ptr<ATCCSDeviceController> temp1 = _controllers->controller(GIMBAL);
-//        if(temp1)
-//        {
-//            isGimbalOK = temp1->canExecutePlan();
-//        }
-//        bool isCCDOK = false;
-//        std::shared_ptr<ATCCSDeviceController> temp1 = _controllers->controller(CCD);
-//        if(temp1)
-//        {
-//            isCCDOK = temp1->canExecutePlan();
-//        }
-//        bool isFilterOK = false;
-//        std::shared_ptr<ATCCSDeviceController> temp2 = _controllers->controller(FILTER);
-//        if(temp2)
-//        {
-//            isFilterOK = temp2->canExecutePlan();
-//        }
-//        bool isFocusOK = false;
-//        std::shared_ptr<ATCCSDeviceController> temp3 = _controllers->controller(FOCUS);
-//        if(temp3)
-//        {
-//            isFocusOK = temp3->canExecutePlan();
-//        }
-//        bool isDomeOK = false;
-//        std::shared_ptr<ATCCSDeviceController> temp4 = _controllers->controller(SLAVEDOME);
-//        if(temp4)
-//        {
-//            isDomeOK = temp4->canExecutePlan();
-//        }
-//    }
-//    else
-//    {
-//#ifdef OUTDEBUGINFO
-//        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-//                                            __FILE__, __func__, __LINE__, "");
-//#endif
-//    }
-//    return false;
-//}
 
 std::shared_ptr<ATCCSMapManager<ATCCSDeviceController> > ATCCSPlanController::controllersInstance()
 {
@@ -312,7 +274,7 @@ std::shared_ptr<ATCCSMapManager<ATCCSDeviceController> > ATCCSPlanController::co
         }
         catch(std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -331,7 +293,7 @@ std::shared_ptr<atccsplan> ATCCSPlanController::executoryPlanInstance()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif

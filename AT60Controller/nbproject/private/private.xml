@@ -20,6 +20,13 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/AT60Controller/src/at60focuscontroller.h</file>
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/AT60Controller/main.cpp</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60slavedomecontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60gimbalcontroller.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60filtercontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60gimbalcontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/main.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60setting.cpp</file>
+        </group>
     </open-files>
 </project-private>

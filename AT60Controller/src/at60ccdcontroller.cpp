@@ -41,7 +41,7 @@ std::shared_ptr<atccsinstruction> AT60CCDController::instructionInstance()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif
@@ -66,7 +66,7 @@ std::shared_ptr<atccspublicstatus> AT60CCDController::statusInstance()
         }
         catch (std::exception &e)
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif

@@ -16,7 +16,7 @@ ATCCSDataSender::ATCCSDataSender()
     catch(std::exception &e)
     {
         _udpSocket = nullptr;
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += e.what();
         debug_info += " @";
@@ -31,7 +31,7 @@ ATCCSDataSender::ATCCSDataSender()
 
 ATCCSDataSender::~ATCCSDataSender()
 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
     std::cout << "~ATCCSDataSender\n";
 #endif
 }
@@ -50,7 +50,7 @@ int ATCCSDataSender::sendData(std::shared_ptr<ATCCSData> data)
         return _udpSocket->sendData(data->data(), data->size());
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "QPUdpSocket is null, can not send data.";
         debug_info += " @";
@@ -78,7 +78,7 @@ void ATCCSDataSender::setTargetAddress(const std::string &ip, unsigned short por
         _udpSocket->setTargetAddress(ip, port);
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "QPUdpSocket is null, can not set Address. ";
         debug_info += " @";
@@ -99,7 +99,7 @@ void ATCCSDataSender::setTargetAddress(std::shared_ptr<ATCCSAddress> address)
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "ATCCSAddress is null. ";
         debug_info += " @";

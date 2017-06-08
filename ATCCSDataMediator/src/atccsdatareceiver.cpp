@@ -19,7 +19,7 @@ ATCCSDataReceiver::ATCCSDataReceiver()
     catch(std::exception &e)
     {
         _recvSocket = nullptr;
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += e.what();
         debug_info += " @";
@@ -35,7 +35,7 @@ ATCCSDataReceiver::ATCCSDataReceiver()
 
 ATCCSDataReceiver::~ATCCSDataReceiver()
 {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
     std::cout << "~ATCCSDataReceiver" << std::endl;
 #endif    
 }
@@ -53,19 +53,14 @@ void ATCCSDataReceiver::run()
     try
     {
         data = new char[4096];
+        
     }
     catch(std::exception &e)
     {
         data = nullptr;
-#ifdef OUTDEBUGINFO
-        std::string debug_info;
-        debug_info += e.what();
-        debug_info += " @";
-        debug_info += __func__;
-        debug_info += " @";
-        debug_info += __FILE__;
-        std::shared_ptr<ATCCSException> e1(new ATCCSException(ATCCSException::STDEXCEPTION, debug_info));
-        ATCCSExceptionHandler::addException(e1);
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                            __FILE__, __func__, __LINE__, e.what());
 #endif
     }
     
@@ -73,7 +68,7 @@ void ATCCSDataReceiver::run()
     {
         try 
         {
-            while (!stop() && _recvSocket) 
+            while (!stop() && _recvSocket && isReadyToRecv) 
             {
                 ssize_t size = _recvSocket->recvData(data, 4096);
                 if (size > 0) 
@@ -90,7 +85,7 @@ void ATCCSDataReceiver::run()
         } 
         catch (std::exception &e) 
         {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += e.what();
         debug_info += " @";
@@ -106,7 +101,7 @@ void ATCCSDataReceiver::run()
     }
     else
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::string debug_info;
         debug_info += "can not allocate ATCCSDataReceiver receive buffer. ";
         debug_info += " @";
@@ -128,10 +123,11 @@ void ATCCSDataReceiver::run()
  * @param address   a shared_ptr of ATCCSAddress
  * -----------------------------------------------------------------------------
  */
-void ATCCSDataReceiver::setRecvAddress(std::shared_ptr<ATCCSAddress> address)
+int ATCCSDataReceiver::setRecvAddress(std::shared_ptr<ATCCSAddress> address)
 {
     if(address != nullptr)
-        setRecvAddress(address->ip(), address->port());
+        return setRecvAddress(address->ip(), address->port());
+    return -1;
 }
 
 /**
@@ -144,24 +140,44 @@ void ATCCSDataReceiver::setRecvAddress(std::shared_ptr<ATCCSAddress> address)
  * @param port  4000-65535, unsigned short
  * -----------------------------------------------------------------------------
  */
-void ATCCSDataReceiver::setRecvAddress(const std::string &ip, unsigned short port)
+int ATCCSDataReceiver::setRecvAddress(const std::string &ip, unsigned short port)
 {
+    int ret = -1;
+    if(_recvSocket == nullptr)
+        _recvSocket = recvSocketInstance();
     if(_recvSocket)
     {
-        _recvSocket->setHostAddress(ip, port);
+        ret = _recvSocket->setHostAddress(ip, port);
         _recvSocket->setRecvTimeout(10);
     }
     else
     {
-#ifdef OUTDEBUGINFO
-        std::string debug_info;
-        debug_info += "QPUdpSocket is null.";
-        debug_info += " @";
-        debug_info += __func__;
-        debug_info += " @";
-        debug_info += __FILE__;
-        std::shared_ptr<ATCCSException> e1(new ATCCSException(ATCCSException::POINTERISNULL, debug_info));
-        ATCCSExceptionHandler::addException(e1);
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
+                                            __FILE__, __func__, __LINE__,
+                                            "QPUdpSocket instance is null, can not bind address.");
 #endif
-    }    
+    }
+    if(ret == 0)
+        isReadyToRecv = true;
+    return ret;
+}
+
+std::shared_ptr<QPUdpSocket> ATCCSDataReceiver::recvSocketInstance()
+{
+    if(_recvSocket == nullptr)
+    {
+        try
+        {
+            _recvSocket = std::shared_ptr<QPUdpSocket>();
+        }
+        catch(std::exception &e)
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, e.what());
+#endif
+        }
+    }
+    return _recvSocket;
 }

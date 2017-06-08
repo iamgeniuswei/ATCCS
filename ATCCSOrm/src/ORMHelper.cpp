@@ -40,7 +40,7 @@ void ORMHelper::initDB(const std::string& type, const std::string& user, const s
     }
     catch(std::exception &e)
     {
-#ifdef OUTDEBUGINFO
+#ifdef OUTERRORINFO
         std::cerr << "error#1: " << e.what()
                     << " @" << __func__
                     << " @" << __FILE__

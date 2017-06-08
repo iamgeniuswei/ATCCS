@@ -8,7 +8,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ATCCS"/>
         <group>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccscontroller.cpp</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccs_plan_define.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccsmapmanager.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccscontroller.h</file>
         </group>
     </open-files>
 </project-private>
