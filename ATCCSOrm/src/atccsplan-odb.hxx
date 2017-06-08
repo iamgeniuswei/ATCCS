@@ -114,9 +114,9 @@ namespace odb
     typedef
     pgsql::query_column<
       pgsql::value_traits<
-        unsigned int,
-        pgsql::id_integer >::query_type,
-      pgsql::id_integer >
+        ::std::string,
+        pgsql::id_string >::query_type,
+      pgsql::id_string >
     user_type_;
 
     static const user_type_ user;
@@ -466,7 +466,8 @@ namespace odb
 
       // _user
       //
-      int _user_value;
+      details::buffer _user_value;
+      std::size_t _user_size;
       bool _user_null;
 
       // _project

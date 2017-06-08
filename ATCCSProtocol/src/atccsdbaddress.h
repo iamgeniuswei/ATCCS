@@ -14,14 +14,13 @@
 #ifndef ATCCSDBADDRESS_H
 #define ATCCSDBADDRESS_H
 #include <string>
+
 class ATCCSDBAddress {
 public:
     ATCCSDBAddress();
     ATCCSDBAddress(const std::string& type, const std::string &user, const std::string& password, const std::string& db, const std::string& ip, unsigned short port);
     ATCCSDBAddress(const ATCCSDBAddress& orig);
-    virtual ~ATCCSDBAddress();
-    void setPort(unsigned short _port);
-    unsigned short GetPort() const;
+    virtual ~ATCCSDBAddress();    
     void setIp(const std::string& _ip);
     std::string ip() const;
     void setDb(const std::string& _db);
@@ -32,6 +31,8 @@ public:
     std::string user() const;
     void setType(const std::string& _type);
     std::string type() const;
+    void setPort(unsigned short _port);
+    unsigned short port() const;
 private:
     std::string _type;
     std::string _user;

@@ -24,7 +24,7 @@ public:
     virtual unsigned int persistPlan(){return 0;}
     unsigned int setPlan(std::shared_ptr<ATCCSData> data = nullptr);
     double delayTime() const;
-    double reclination() const;
+    double declination() const;
     double rightAscension() const;
     double exposureTime() const;
     unsigned int readout() const;
@@ -41,13 +41,13 @@ public:
     std::string filter() const;
     std::string target() const;
     std::string project() const;
-    unsigned int user() const;
+    std::string user() const;
 
 private:
     friend class odb::access;
 #pragma db id auto
     unsigned int _id = 0;
-    unsigned int _user = 0;
+    std::string _user;
     std::string _project;
     std::string _target;
     std::string _filter;

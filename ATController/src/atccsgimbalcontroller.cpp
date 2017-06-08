@@ -184,6 +184,21 @@ bool ATCCSGimbalController::isExecutoryInstructionOK()
     return ret;
 }
 
+bool ATCCSGimbalController::isExecutoryInstructionOK(unsigned int instruction)
+{
+    if(_executoryInstruction)
+    {
+        if(_executoryInstruction->instruction() == instruction)
+            return isExecutoryInstructionOK();
+        return false;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+
 bool ATCCSGimbalController::canExecutePlan()
 {
     try
@@ -361,7 +376,8 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
         {
 #ifdef OUTDEBUGINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+                                                __FILE__, __func__, __LINE__, 
+                                                "Gimbal has no real-time status instance. Can not check the instruction's result, may be the device doesn't report any real-time status.");
 #endif
         }
     }

@@ -29,6 +29,9 @@ using namespace odb::core;
 #include "atccsutilization-odb.hxx"
 #include "ORMHelper.h"
 
+//TEST
+#include "at60plan.h"
+
 /*
  * 
  */
@@ -39,6 +42,7 @@ int main(int argc, char** argv)
     try
     {
         ORMHelper::initDB("pgsql", "lenovo", "123456", "ATCCSDB", "192.168.0.200", 5432);
+        
         std::shared_ptr<database> db = ORMHelper::db();
         transaction t(db->begin());
         t.tracer(stderr_tracer);

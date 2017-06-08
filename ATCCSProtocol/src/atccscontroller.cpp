@@ -49,3 +49,9 @@ void ATCCSController::clearControlData()
         _fifoQueue.wait_and_pop();
     }
 }
+
+std::shared_ptr<ATCCSData> ATCCSController::popControlData()
+{
+    std::shared_ptr<ATCCSData> temp = _fifoQueue.wait_and_pop();
+    return temp;
+}

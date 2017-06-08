@@ -11,33 +11,41 @@
 #include <string.h>
 #include <thread>
 #include "atccsdatapacker.h"
-ATCCSPlanController::ATCCSPlanController():
-    _controllers(new ATCCSMapManager<ATCCSDeviceController>())
+#include "atccsexceptionhandler.h"
+#include "at60plan.h"
+ATCCSPlanController::ATCCSPlanController(unsigned short at)
+    : _at(at)
 {
-    _curPlan = std::make_shared<atccsplan>();
+    
 }
 
-void ATCCSPlanController::handleControlData()
+ATCCSPlanController::~ATCCSPlanController()
+{
+
+}
+
+void ATCCSPlanController::run()
 {
     while (!stop())
     {
-        std::shared_ptr<ATCCSData> data = _fifoQueue.wait_and_pop();
+        std::shared_ptr<ATCCSData> data = popControlData();
         if(data == nullptr)
             continue;
         
-        while(!stop() && !nextOK())
+        while(!stop() && !canExecutePlan())
         {
             std::chrono::milliseconds dura(2000);
             std::this_thread::sleep_for(dura);
         }
-        if(!stop() && nextOK())
+        if(!stop() && canExecutePlan())
         {
             controlPlan(data);
         }
     }
 }
 
-bool ATCCSPlanController::nextOK() const
+
+bool ATCCSPlanController::canExecutePlan() const
 {
     return true;
 }
@@ -59,59 +67,103 @@ void ATCCSPlanController::dispatchControlData(unsigned int id, std::shared_ptr<A
 
 void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
 {
-    if(data == nullptr || (!data->validate()))
+    if(data == nullptr)
         return;
-    if(_curPlan)
+    if(!(data->validate()))
     {
-        if(_curPlan->setPlan(data) != atccsplan::RESULT_EXECUTED)
-        {
+        //FIXME
 #ifdef OUTDEBUGINFO
-            std::cout << "error#" << ERROR_CUSTOM << ": Plan is error, cannot execute."
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                            __FILE__, __func__, __LINE__, "");
 #endif
-        }
-        //reset ATCCSDeviceController's instruction
-        resetDeviceInstruction(GIMBAL);
-        resetDeviceInstruction(CCD);
-        
-        //set ATCCSDeviceController's instruction
-        if(!isDeviceReady())
-            return;
-        setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME);
-        if(!waitInstructionOK(GIMBAL))
+        return;
+    }
+    
+    if(!_executoryPlan)
+    {
+        _executoryPlan = executoryPlanInstance();
+    }
+    
+    if(_executoryPlan)
+    {
+        if(_executoryPlan->setPlan(data) == atccsplan::RESULT_EXECUTED)
         {
-            std::cout << "plan canceled!" << std::endl;
-        }
-        if(!isDeviceReady())
-            return;
-        setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR);
-        if(!waitInstructionOK(GIMBAL))
-        {
-            std::cout << "plan canceled!" << std::endl;
-        } 
+            std::cout << "Start to execute plan" << std::endl;
+#ifdef DATAPERSISTENCE
+            _executoryPlan->persistPlan();
+#endif
+            //reset ATCCSDeviceController's instruction
+            resetDeviceInstruction(GIMBAL);
+            resetDeviceInstruction(CCD);
 
-        for(int i=0; i<_curPlan->exposureCount(); i++)
-        {
-            if(!isDeviceReady())
-                break;
-            setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC);
-            if(!waitInstructionOK(CCD))
-                break;
-            if(!isDeviceReady())
-                break;
-            setDeviceInstruction(CCD, _CCD_INSTRUCTION_STARTEXPOSURE);
-            if(!waitInstructionOK(CCD))
-                break;
+            //Send GImbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
+            //check all the related devices' status, if they are ready?
+            //if ready, go on;
+            //else, abandon this plan.
+            if (!isRelatedDevicesReady())
+                return;
+            setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+            if(!waitInstructionOK(GIMBAL))
+            {
+#ifdef OUTDEBUGINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                    __FILE__, __func__, __LINE__, "");
+#endif
+                return;
+            }
+
+            //Send GImbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
+            if (!isRelatedDevicesReady())
+                return;
+            setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR);
+            if (!waitInstructionOK(GIMBAL))
+            {
+#ifdef OUTDEBUGINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                    __FILE__, __func__, __LINE__, "");
+#endif
+                return;
+            }
+
+            for (int i = 0; i < _executoryPlan->exposureCount(); i++)
+            {
+                //Send CCD's instruction: _CCD_INSTRUCTION_SETEXPOSURETACTIC
+                if (!isRelatedDevicesReady())
+                    break;
+                setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC);
+                if (!waitInstructionOK(CCD))
+                    break;
+                //Send CCD's instruction: _CCD_INSTRUCTION_STARTEXPOSURE
+                if (!isRelatedDevicesReady())
+                    break;
+                setDeviceInstruction(CCD, _CCD_INSTRUCTION_STARTEXPOSURE);
+                if (!waitInstructionOK(CCD))
+                    break;
+            }            
         }
+    }
+    else
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__, "");
+#endif
     }
 }
 
 void ATCCSPlanController::registerDeviceController(unsigned int id, std::shared_ptr<ATCCSDeviceController> controller)
 {
+    if(!_controllers)
+        _controllers = controllersInstance();
     if(_controllers)
         _controllers->registerController(id, controller);
+    else
+    {
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__, "");
+#endif
+    }
 }
 
 void ATCCSPlanController::resetDeviceInstruction(unsigned int device) 
@@ -126,8 +178,16 @@ void ATCCSPlanController::resetDeviceInstruction(unsigned int device)
     }
     else
     {
-        
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__, "");
+#endif        
     }
+}
+
+unsigned short ATCCSPlanController::at() const
+{
+    return _at;
 }
 
 void ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int instruction) 
@@ -140,19 +200,19 @@ void ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int
             std::shared_ptr<ATCCSData> pendingData = nullptr;
             if(instruction == _GIMBAL_INSTRUCTION_SETOBJECTNAME)
             {
-                pendingData = ATCCSDataPacker::packGimbalInstruction_SetObjectName(_curPlan);
+                pendingData = ATCCSDataPacker::packGimbalInstruction_SetObjectName(_executoryPlan);
             }
             else if(instruction == _GIMBAL_INSTRUCTION_TRACKSTAR)
             {
-                pendingData = ATCCSDataPacker::packGimbalInstruction_TrackStar(_curPlan);
+                pendingData = ATCCSDataPacker::packGimbalInstruction_TrackStar(_executoryPlan);
             }
             else if(instruction == _CCD_INSTRUCTION_SETEXPOSURETACTIC)
             {
-                pendingData = ATCCSDataPacker::packCCDInstruction_SetExposureTactic(_curPlan);
+                pendingData = ATCCSDataPacker::packCCDInstruction_SetExposureTactic(_executoryPlan);
             }
             else if(instruction == _CCD_INSTRUCTION_STARTEXPOSURE)
             {
-                pendingData = ATCCSDataPacker::packCCDInstruction_StartExposure(_curPlan);
+                pendingData = ATCCSDataPacker::packCCDInstruction_StartExposure(_executoryPlan);
             }
             temp->pushControlData(pendingData);
         }
@@ -163,7 +223,7 @@ void ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int
     }
 }
 
-bool ATCCSPlanController::waitInstructionOK(unsigned int device) 
+bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int instruction /* = 0 */) 
 {
     if(_controllers)
     {
@@ -174,14 +234,15 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device)
             while (!temp->isExecutoryInstructionOK()) 
             {
                 auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-                if ((now - base) > 60)
+                if ((now - base) > temp->timeout())
                     break;
                 std::chrono::milliseconds dura(1000);
                 std::this_thread::sleep_for(dura);
             }
             if(temp->isExecutoryInstructionOK())
                 return true;
-            else return false;
+            else 
+                return false;
         }
     }
     else
@@ -191,42 +252,90 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device)
     return false;
 }
 
-bool ATCCSPlanController::isDeviceReady() 
+bool ATCCSPlanController::isRelatedDevicesReady()
 {
-    if(_controllers)
-    {
-        bool isGimbalOK = false;
-        std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(GIMBAL);
-        if(temp)
-        {
-            isGimbalOK = temp->canExecutePlan();
-        }
-        bool isCCDOK = false;
-        std::shared_ptr<ATCCSDeviceController> temp1 = _controllers->controller(CCD);
-        if(temp1)
-        {
-            isCCDOK = temp1->canExecutePlan();
-        }
-        bool isFilterOK = false;
-        std::shared_ptr<ATCCSDeviceController> temp2 = _controllers->controller(FILTER);
-        if(temp2)
-        {
-            isFilterOK = temp2->canExecutePlan();
-        }
-        bool isFocusOK = false;
-        std::shared_ptr<ATCCSDeviceController> temp3 = _controllers->controller(FOCUS);
-        if(temp3)
-        {
-            isFocusOK = temp3->canExecutePlan();
-        }
-        bool isDomeOK = false;
-        std::shared_ptr<ATCCSDeviceController> temp4 = _controllers->controller(SLAVEDOME);
-        if(temp4)
-        {
-            isDomeOK = temp4->canExecutePlan();
-        }
-    }
-    return false;
+    return true;
 }
 
+//bool ATCCSPlanController::isDeviceReady() 
+//{
+//    if(_controllers)
+//    {
+//        bool isGimbalOK = false;
+//        std::shared_ptr<ATCCSDeviceController> temp1 = _controllers->controller(GIMBAL);
+//        if(temp1)
+//        {
+//            isGimbalOK = temp1->canExecutePlan();
+//        }
+//        bool isCCDOK = false;
+//        std::shared_ptr<ATCCSDeviceController> temp1 = _controllers->controller(CCD);
+//        if(temp1)
+//        {
+//            isCCDOK = temp1->canExecutePlan();
+//        }
+//        bool isFilterOK = false;
+//        std::shared_ptr<ATCCSDeviceController> temp2 = _controllers->controller(FILTER);
+//        if(temp2)
+//        {
+//            isFilterOK = temp2->canExecutePlan();
+//        }
+//        bool isFocusOK = false;
+//        std::shared_ptr<ATCCSDeviceController> temp3 = _controllers->controller(FOCUS);
+//        if(temp3)
+//        {
+//            isFocusOK = temp3->canExecutePlan();
+//        }
+//        bool isDomeOK = false;
+//        std::shared_ptr<ATCCSDeviceController> temp4 = _controllers->controller(SLAVEDOME);
+//        if(temp4)
+//        {
+//            isDomeOK = temp4->canExecutePlan();
+//        }
+//    }
+//    else
+//    {
+//#ifdef OUTDEBUGINFO
+//        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+//                                            __FILE__, __func__, __LINE__, "");
+//#endif
+//    }
+//    return false;
+//}
 
+std::shared_ptr<ATCCSMapManager<ATCCSDeviceController> > ATCCSPlanController::controllersInstance()
+{
+    if(_controllers == nullptr)
+    {
+        try
+        {
+            _controllers = std::make_shared<ATCCSMapManager<ATCCSDeviceController>>();
+        }
+        catch(std::exception &e)
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, e.what());
+#endif
+        }
+    }
+    return _controllers;
+}
+
+std::shared_ptr<atccsplan> ATCCSPlanController::executoryPlanInstance()
+{
+    if (_executoryPlan == nullptr)
+    {
+        try
+        {
+            _executoryPlan = std::make_shared<at60plan>();
+        }
+        catch (std::exception &e)
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, e.what());
+#endif
+        }
+    }
+    return _executoryPlan;
+}

@@ -31,7 +31,7 @@ unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
     if(plan)
     {
         _at = plan->at;
-        _user = plan->user;
+        _user.assign(plan->user);
         _project = std::string(plan->project);
         _target = std::string(plan->target);
         _type = plan->type;
@@ -54,7 +54,7 @@ double atccsplan::delayTime() const
     return _delayTime;
 }
 
-double atccsplan::reclination() const
+double atccsplan::declination() const
 {
     return _declination;
 }
@@ -139,7 +139,7 @@ std::string atccsplan::project() const
     return _project;
 }
 
-unsigned int atccsplan::user() const
+std::string atccsplan::user() const
 {
     return _user;
 }

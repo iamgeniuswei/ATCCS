@@ -22,6 +22,8 @@ public:
     ATCCSGimbalController();
     virtual ~ATCCSGimbalController();    
     bool isExecutoryInstructionOK() override;
+    bool isExecutoryInstructionOK(unsigned int instruction) override;
+
     bool isStatusOK() const override;
     bool canExecutePlan() override;
 

@@ -20,6 +20,7 @@ using namespace std;
 #include "atccs_focus_define.h"
 #include "atccs_filter_define.h"
 #include "atccs_dome_define.h"
+#include "atccs_plan_define.h"
 #include <memory>
 
 class Test{
@@ -97,11 +98,13 @@ inline void write_line(const T& t, const Args& ... data)
 
 int main(int argc, char** argv)
 {
+    
+    cout << sizeof(_AT_PLAN) << endl;
 
 //    write_line("dfaf", "dfd", 34, 343, "dfd");
-    double d1 = 0.012343;
-    double d2 = 0.012344;
-    cout << (d1==d2) << endl;
+//    double d1 = 0.012343;
+//    double d2 = 0.012344;
+//    cout << (d1==d2) << endl;
     
     
     cin.get();

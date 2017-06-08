@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS "atccsplan" CASCADE;
 
 CREATE TABLE "atccsplan" (
   "id" SERIAL NOT NULL PRIMARY KEY,
-  "user" INTEGER NOT NULL,
+  "user" TEXT NOT NULL,
   "project" TEXT NOT NULL,
   "target" TEXT NOT NULL,
   "filter" TEXT NOT NULL,

@@ -2,7 +2,7 @@ build/Debug/GNU-Linux/src/atccsslavedomecontroller.o: \
  src/atccsslavedomecontroller.cpp src/atccsslavedomecontroller.h \
  src/atccsdevicecontroller.h ../ATCCSProtocol/src/atccscontroller.h \
  ../ATCCSProtocol/src/atccsqueue.h ../ATCCSProtocol/src/atccs_global.h \
- ../ATCCSProtocol/src/atccsthread.h \
+ ../ATCCSProtocol/src/atccsdata.h ../ATCCSProtocol/src/atccsthread.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_dome_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
@@ -22,6 +22,8 @@ src/atccsdevicecontroller.h:
 ../ATCCSProtocol/src/atccsqueue.h:
 
 ../ATCCSProtocol/src/atccs_global.h:
+
+../ATCCSProtocol/src/atccsdata.h:
 
 ../ATCCSProtocol/src/atccsthread.h:
 

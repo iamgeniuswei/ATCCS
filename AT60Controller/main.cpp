@@ -39,6 +39,7 @@ using namespace odb::core;
 #include "src/at60setting.h"
 #include "atccsdbaddress.h"
 #include "atccsaddress.h"
+#include "atccsplancontroller.h"
 
 /**
  * @brief main function, system entry.
@@ -55,6 +56,7 @@ int main(int argc, char** argv)
     std::shared_ptr<std::thread> receiverThread = nullptr;
     std::shared_ptr<std::thread> dispatcherThread = nullptr;
     std::shared_ptr<std::thread> upgoingThread = nullptr;
+    std::shared_ptr<std::thread> at60PlanThread = nullptr;
     std::shared_ptr<std::thread> at60GimbalThread = nullptr;
     std::shared_ptr<std::thread> at60CCDThread = nullptr;
     std::shared_ptr<std::thread> at60FilterThread = nullptr;
@@ -66,6 +68,7 @@ int main(int argc, char** argv)
     std::shared_ptr<ATCCSDataReceiver> dataReceiver = nullptr;
     std::shared_ptr<ATCCSDataDispatcher> dataDispatcher = nullptr;
     std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
+    std::shared_ptr<ATCCSPlanController> at60PlanController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60GimbalController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60CCDController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60FilterController = nullptr;
@@ -137,6 +140,13 @@ int main(int argc, char** argv)
             upgoingThread = std::make_shared<std::thread>(&ATCCSUpgoingController::run, upgoingController);
         }
         
+        at60PlanController = std::make_shared<ATCCSPlanController>();
+        if(at60PlanController)
+        {
+            dataDispatcher->registerDeviceController(ATPLAN, at60PlanController);
+            at60PlanThread = std::make_shared<std::thread>(&ATCCSPlanController::run, at60PlanController);
+        }
+        
         //start a series of concrete variable device controller.
         //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
         //"ATCCSDataDispatcher" dispatch control data to device controller.
@@ -149,6 +159,7 @@ int main(int argc, char** argv)
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(GIMBAL);
             at60GimbalController->setDeviceAddress(address);
             upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
+            at60PlanController->registerDeviceController(GIMBAL, at60GimbalController);
             dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
             at60GimbalThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60GimbalController);
         }
@@ -159,6 +170,7 @@ int main(int argc, char** argv)
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(CCD);
             at60CCDController->setDeviceAddress(address);
             upgoingController->registerDeviceController(CCD, at60CCDController);
+            at60PlanController->registerDeviceController(CCD, at60CCDController);
             dataDispatcher->registerDeviceController(CCD, at60CCDController);
             at60CCDThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60CCDController);
         }
@@ -169,6 +181,7 @@ int main(int argc, char** argv)
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FOCUS);
             at60FocusController->setDeviceAddress(address);
             upgoingController->registerDeviceController(FOCUS, at60FocusController);
+            at60PlanController->registerDeviceController(FOCUS, at60FocusController);
             dataDispatcher->registerDeviceController(FOCUS, at60FocusController);
             at60FocusThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60FocusController);
         }
@@ -179,6 +192,7 @@ int main(int argc, char** argv)
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FILTER);
             at60FilterController->setDeviceAddress(address);
             upgoingController->registerDeviceController(FOCUS, at60FilterController);
+            at60PlanController->registerDeviceController(FOCUS, at60FilterController);
             dataDispatcher->registerDeviceController(FOCUS, at60FilterController);
             at60FilterThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60FilterController);
         }
@@ -189,6 +203,7 @@ int main(int argc, char** argv)
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(SLAVEDOME);
             at60SlaveDomeController->setDeviceAddress(address);
             upgoingController->registerDeviceController(FOCUS, at60SlaveDomeController);
+            at60PlanController->registerDeviceController(FOCUS, at60SlaveDomeController);
             dataDispatcher->registerDeviceController(FOCUS, at60SlaveDomeController);
             at60SlaveDomeThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60SlaveDomeController);
         }
@@ -208,6 +223,11 @@ int main(int argc, char** argv)
         {
             upgoingController->setStop(true);
             upgoingThread->join();
+        }
+        if(at60PlanThread && at60PlanController)
+        {
+            at60PlanController->setStop(true);
+            at60PlanThread->join();
         }
         if (at60GimbalController && at60GimbalThread)
         {

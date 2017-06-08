@@ -48,7 +48,7 @@ namespace odb
   const unsigned int access::object_traits_impl< ::at60plan, id_pgsql >::
   persist_statement_types[] =
   {
-    pgsql::int4_oid,
+    pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
@@ -78,7 +78,7 @@ namespace odb
   const unsigned int access::object_traits_impl< ::at60plan, id_pgsql >::
   update_statement_types[] =
   {
-    pgsql::int4_oid,
+    pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
@@ -720,7 +720,7 @@ namespace odb
         {
           db.execute ("CREATE TABLE \"at60plan\" (\n"
                       "  \"id\" SERIAL NOT NULL PRIMARY KEY,\n"
-                      "  \"user\" INTEGER NOT NULL,\n"
+                      "  \"user\" TEXT NOT NULL,\n"
                       "  \"project\" TEXT NOT NULL,\n"
                       "  \"target\" TEXT NOT NULL,\n"
                       "  \"filter\" TEXT NOT NULL,\n"

@@ -3,7 +3,8 @@ build/Debug/GNU-Linux/src/at60focuscontroller.o: \
  ../ATController/src/atccsfocuscontroller.h \
  ../ATController/src/atccsdevicecontroller.h \
  ../ATCCSProtocol/src/atccscontroller.h ../ATCCSProtocol/src/atccsqueue.h \
- ../ATCCSProtocol/src/atccs_global.h ../ATCCSProtocol/src/atccsthread.h \
+ ../ATCCSProtocol/src/atccs_global.h ../ATCCSProtocol/src/atccsdata.h \
+ ../ATCCSProtocol/src/atccsthread.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_focus_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
@@ -24,6 +25,8 @@ src/at60focuscontroller.h:
 ../ATCCSProtocol/src/atccsqueue.h:
 
 ../ATCCSProtocol/src/atccs_global.h:
+
+../ATCCSProtocol/src/atccsdata.h:
 
 ../ATCCSProtocol/src/atccsthread.h:
 

@@ -28,9 +28,11 @@ public:
     virtual bool isOnline() const;
     virtual bool isStatusOK() const;
     virtual bool isExecutoryInstructionOK();
+    virtual bool isExecutoryInstructionOK(unsigned int instruction);
     virtual bool canExecuteInstruction() const;
     virtual bool canExecutePlan();
     unsigned int id() const;
+    unsigned int timeout();
     
     
 protected:    
@@ -56,7 +58,8 @@ protected:
     std::shared_ptr<atccsinstruction>   _executoryInstruction = nullptr;
     std::shared_ptr<ATCCSData>      _executoryInstructionRawData = nullptr;
     std::shared_ptr<atccspublicstatus>  _realtimeStatus = nullptr;
-    std::shared_ptr<ATCCSOnline>    _realtimeOnline = nullptr;    
+    std::shared_ptr<ATCCSOnline>    _realtimeOnline = nullptr;
+    unsigned int _timeout = 30;
     static unsigned int INSTRUCTION_TIMEOUT;
     static unsigned int INSTRUCTION_RETRANSMISSION;
     

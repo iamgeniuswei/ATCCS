@@ -119,6 +119,7 @@ void ATCCSDeviceController::waitInstructionResult()
         }
         if (_executoryInstruction->result() == atccsinstruction::RESULT_EXECUTING)
         {
+            _timeout = _executoryInstruction->timeout();
             base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             while (!isExecutoryInstructionOK())
             {
@@ -134,6 +135,7 @@ void ATCCSDeviceController::waitInstructionResult()
                 _executoryInstruction->setResult(atccsinstruction::RESULT_SUCCESS);
                 _executoryInstruction->persistInstructionResult();
 #endif
+                std::cout << "Executory Instruction OK" << std::endl;
             }
             else
             {
@@ -141,6 +143,7 @@ void ATCCSDeviceController::waitInstructionResult()
                 _executoryInstruction->setResult(atccsinstruction::RESULT_TIMEOUT);
                 _executoryInstruction->persistInstructionResult();
 #endif
+                std::cout << "Executory Instruction Timeout" << std::endl;
             }
         }
         else
@@ -149,6 +152,7 @@ void ATCCSDeviceController::waitInstructionResult()
             _executoryInstruction->setResult(atccsinstruction::RESULT_TIMEOUT);
             _executoryInstruction->persistInstructionResult();
 #endif
+            std::cout << "Executory Instruction Timeout" << std::endl;
         }
     }
     else
@@ -158,6 +162,11 @@ void ATCCSDeviceController::waitInstructionResult()
                                             __FILE__, __func__, __LINE__, "");
 #endif
     }
+}
+
+unsigned int ATCCSDeviceController::timeout()
+{
+    return _timeout;             
 }
 
 /**
@@ -180,6 +189,12 @@ bool ATCCSDeviceController::isExecutoryInstructionOK()
 {
     return true;
 }
+
+bool ATCCSDeviceController::isExecutoryInstructionOK(unsigned int instruction)
+{
+    return true;
+}
+
 
 std::shared_ptr<atccsinstruction> ATCCSDeviceController::instructionInstance()
 {

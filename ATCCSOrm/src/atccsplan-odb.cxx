@@ -47,7 +47,7 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsplan, id_pgsql >::
   persist_statement_types[] =
   {
-    pgsql::int4_oid,
+    pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
@@ -77,7 +77,7 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsplan, id_pgsql >::
   update_statement_types[] =
   {
-    pgsql::int4_oid,
+    pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
@@ -168,7 +168,11 @@ namespace odb
 
     // _user
     //
-    t[1UL] = 0;
+    if (t[1UL])
+    {
+      i._user_value.capacity (i._user_size);
+      grew = true;
+    }
 
     // _project
     //
@@ -280,8 +284,10 @@ namespace odb
 
     // _user
     //
-    b[n].type = pgsql::bind::integer;
-    b[n].buffer = &i._user_value;
+    b[n].type = pgsql::bind::text;
+    b[n].buffer = i._user_value.data ();
+    b[n].capacity = i._user_value.capacity ();
+    b[n].size = &i._user_size;
     b[n].is_null = &i._user_null;
     n++;
 
@@ -443,15 +449,22 @@ namespace odb
     // _user
     //
     {
-      unsigned int const& v =
+      ::std::string const& v =
         o._user;
 
       bool is_null (false);
+      std::size_t size (0);
+      std::size_t cap (i._user_value.capacity ());
       pgsql::value_traits<
-          unsigned int,
-          pgsql::id_integer >::set_image (
-        i._user_value, is_null, v);
+          ::std::string,
+          pgsql::id_string >::set_image (
+        i._user_value,
+        size,
+        is_null,
+        v);
       i._user_null = is_null;
+      i._user_size = size;
+      grew = grew || (cap != i._user_value.capacity ());
     }
 
     // _project
@@ -756,14 +769,15 @@ namespace odb
     // _user
     //
     {
-      unsigned int& v =
+      ::std::string& v =
         o._user;
 
       pgsql::value_traits<
-          unsigned int,
-          pgsql::id_integer >::set_value (
+          ::std::string,
+          pgsql::id_string >::set_value (
         v,
         i._user_value,
+        i._user_size,
         i._user_null);
     }
 

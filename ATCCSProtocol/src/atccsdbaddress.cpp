@@ -33,9 +33,7 @@ void ATCCSDBAddress::setPort(unsigned short _port) {
     this->_port = _port;
 }
 
-unsigned short ATCCSDBAddress::GetPort() const {
-    return _port;
-}
+
 
 void ATCCSDBAddress::setIp(const std::string& _ip) {
     this->_ip = _ip;
@@ -75,5 +73,10 @@ void ATCCSDBAddress::setType(const std::string& _type) {
 
 std::string ATCCSDBAddress::type() const {
     return _type;
+}
+
+unsigned short ATCCSDBAddress::port() const
+{
+    return _port;
 }
 

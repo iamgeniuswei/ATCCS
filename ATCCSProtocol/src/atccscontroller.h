@@ -18,6 +18,7 @@
 
 
 #include "atccsqueue.h"
+#include "atccsdata.h"
 #include <memory>
 #include <mutex>
 class ATCCSData;
@@ -37,6 +38,7 @@ public:
     void clearControlData();
 protected:
     ATCCSQueue<std::shared_ptr<ATCCSData>> _fifoQueue;
+    std::shared_ptr<ATCCSData> popControlData();
 };
 
 #endif // ATCCSCONTROLLER_H

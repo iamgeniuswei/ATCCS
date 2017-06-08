@@ -11,9 +11,6 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsfocuscontroller.h</file>
         </group>
-        <group>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
