@@ -77,67 +77,67 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}: ${O
 ${OBJECTDIR}/src/atccs_global.o: src/atccs_global.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccs_global.o src/atccs_global.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccs_global.o src/atccs_global.cpp
 
 ${OBJECTDIR}/src/atccsaddress.o: src/atccsaddress.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsaddress.o src/atccsaddress.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsaddress.o src/atccsaddress.cpp
 
 ${OBJECTDIR}/src/atccscontroller.o: src/atccscontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccscontroller.o src/atccscontroller.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccscontroller.o src/atccscontroller.cpp
 
 ${OBJECTDIR}/src/atccsdata.o: src/atccsdata.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdata.o src/atccsdata.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdata.o src/atccsdata.cpp
 
 ${OBJECTDIR}/src/atccsdatahandler.o: src/atccsdatahandler.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatahandler.o src/atccsdatahandler.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatahandler.o src/atccsdatahandler.cpp
 
 ${OBJECTDIR}/src/atccsdataprocessor.o: src/atccsdataprocessor.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdataprocessor.o src/atccsdataprocessor.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdataprocessor.o src/atccsdataprocessor.cpp
 
 ${OBJECTDIR}/src/atccsdbaddress.o: src/atccsdbaddress.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdbaddress.o src/atccsdbaddress.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdbaddress.o src/atccsdbaddress.cpp
 
 ${OBJECTDIR}/src/atccsexception.o: src/atccsexception.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsexception.o src/atccsexception.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsexception.o src/atccsexception.cpp
 
 ${OBJECTDIR}/src/atccsexceptionhandler.o: src/atccsexceptionhandler.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsexceptionhandler.o src/atccsexceptionhandler.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsexceptionhandler.o src/atccsexceptionhandler.cpp
 
 ${OBJECTDIR}/src/atccsmapmanager.o: src/atccsmapmanager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsmapmanager.o src/atccsmapmanager.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsmapmanager.o src/atccsmapmanager.cpp
 
 ${OBJECTDIR}/src/atccsonline.o: src/atccsonline.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsonline.o src/atccsonline.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsonline.o src/atccsonline.cpp
 
 ${OBJECTDIR}/src/atccsqueue.o: src/atccsqueue.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsqueue.o src/atccsqueue.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsqueue.o src/atccsqueue.cpp
 
 ${OBJECTDIR}/src/atccsthread.o: src/atccsthread.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsthread.o src/atccsthread.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsthread.o src/atccsthread.cpp
 
 # Subprojects
 .build-subprojects:

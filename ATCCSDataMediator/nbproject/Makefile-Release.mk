@@ -65,11 +65,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-Wl,-rpath,'../ATCCSProtocol/dist/Release/GNU-Linux' -L../ATCCSProtocol/dist/Release/GNU-Linux -lATCCSProtocol -Wl,-rpath,'../ATCCSNetwork/dist/Release/GNU-Linux' -L../ATCCSNetwork/dist/Release/GNU-Linux -lATCCSNetwork
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}: ../ATCCSProtocol/dist/Release/GNU-Linux/libATCCSProtocol.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}: ../ATCCSNetwork/dist/Release/GNU-Linux/libATCCSNetwork.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -78,25 +82,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}:
 ${OBJECTDIR}/src/atccsdatadispatcher.o: src/atccsdatadispatcher.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatadispatcher.o src/atccsdatadispatcher.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatadispatcher.o src/atccsdatadispatcher.cpp
 
 ${OBJECTDIR}/src/atccsdataqueue.o: src/atccsdataqueue.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdataqueue.o src/atccsdataqueue.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdataqueue.o src/atccsdataqueue.cpp
 
 ${OBJECTDIR}/src/atccsdatareceiver.o: src/atccsdatareceiver.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatareceiver.o src/atccsdatareceiver.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatareceiver.o src/atccsdatareceiver.cpp
 
 ${OBJECTDIR}/src/atccsdatasender.o: src/atccsdatasender.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatasender.o src/atccsdatasender.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatasender.o src/atccsdatasender.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Release
+	cd ../ATCCSNetwork && ${MAKE}  -f Makefile CONF=Release
 
 # Build Test Targets
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
@@ -110,7 +116,7 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newsimpletest.o ${OBJECTFILES:%.o=%_no
 ${TESTDIR}/tests/newsimpletest.o: tests/newsimpletest.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newsimpletest.o tests/newsimpletest.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newsimpletest.o tests/newsimpletest.cpp
 
 
 ${OBJECTDIR}/src/atccsdatadispatcher_nomain.o: ${OBJECTDIR}/src/atccsdatadispatcher.o src/atccsdatadispatcher.cpp 
@@ -121,7 +127,7 @@ ${OBJECTDIR}/src/atccsdatadispatcher_nomain.o: ${OBJECTDIR}/src/atccsdatadispatc
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatadispatcher_nomain.o src/atccsdatadispatcher.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatadispatcher_nomain.o src/atccsdatadispatcher.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsdatadispatcher.o ${OBJECTDIR}/src/atccsdatadispatcher_nomain.o;\
 	fi
@@ -134,7 +140,7 @@ ${OBJECTDIR}/src/atccsdataqueue_nomain.o: ${OBJECTDIR}/src/atccsdataqueue.o src/
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdataqueue_nomain.o src/atccsdataqueue.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdataqueue_nomain.o src/atccsdataqueue.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsdataqueue.o ${OBJECTDIR}/src/atccsdataqueue_nomain.o;\
 	fi
@@ -147,7 +153,7 @@ ${OBJECTDIR}/src/atccsdatareceiver_nomain.o: ${OBJECTDIR}/src/atccsdatareceiver.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatareceiver_nomain.o src/atccsdatareceiver.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatareceiver_nomain.o src/atccsdatareceiver.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsdatareceiver.o ${OBJECTDIR}/src/atccsdatareceiver_nomain.o;\
 	fi
@@ -160,7 +166,7 @@ ${OBJECTDIR}/src/atccsdatasender_nomain.o: ${OBJECTDIR}/src/atccsdatasender.o sr
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatasender_nomain.o src/atccsdatasender.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatasender_nomain.o src/atccsdatasender.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsdatasender.o ${OBJECTDIR}/src/atccsdatasender_nomain.o;\
 	fi
@@ -177,9 +183,13 @@ ${OBJECTDIR}/src/atccsdatasender_nomain.o: ${OBJECTDIR}/src/atccsdatasender.o sr
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}
 
 # Subprojects
 .clean-subprojects:
+	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Release clean
+	cd ../ATCCSNetwork && ${MAKE}  -f Makefile CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

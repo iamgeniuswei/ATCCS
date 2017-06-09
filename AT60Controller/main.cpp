@@ -47,10 +47,11 @@ using namespace odb::core;
  * @param argv
  * @return 
  */
+#include <unistd.h>
 int main(int argc, char** argv)
 {
     std::cout << "----------------------AT60 Controller V1.00.00----------------------\n";
-
+    
     //declare the thread controllers.
     std::shared_ptr<std::thread> exceptionThread = nullptr;
     std::shared_ptr<std::thread> receiverThread = nullptr;
@@ -85,7 +86,7 @@ int main(int argc, char** argv)
         }
 
         AT60Setting *set = AT60Setting::instance();
-        if (!(set->initSystemSetting("/home/lenovo/at60setting.xml")))
+        if (!(set->initSystemSetting()))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,

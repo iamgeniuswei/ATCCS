@@ -21,9 +21,21 @@ ATCCSDataQueue *ATCCSDataQueue::instance()
 
 ATCCSDataQueue::~ATCCSDataQueue()
 {
-    std::lock_guard<std::mutex> lk(_queueLock);
-    while (_dataQueue.size() > 0) {
-        _dataQueue.pop();
+    try
+    {
+        std::lock_guard<std::mutex> lk(_queueLock);
+        while (_dataQueue.size() > 0)
+        {
+            _dataQueue.pop();
+        }
     }
-    std::cout << "~ATCCSDataQueue()\n";
+    catch(std::exception &e)
+    {
+#ifdef OUTERRORINFO
+        std::cout << e.what() << std::endl;
+#endif
+    }
+#ifdef OUTDEBUGINFO
+    std::cout << "~ATCCSDataQueue\n";
+#endif
 }

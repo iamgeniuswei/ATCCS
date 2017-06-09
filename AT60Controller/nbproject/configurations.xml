@@ -757,6 +757,42 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -810,6 +846,16 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <stripSymbols>true</stripSymbols>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../ATCCSProtocol/src</pElem>
+            <pElem>../ATCCSNetwork/src</pElem>
+            <pElem>../ATCCSDataMediator/src</pElem>
+            <pElem>../ATCCSOrm/src</pElem>
+            <pElem>../ATController/src</pElem>
+          </incDir>
+          <commandLine>-Wl,--no-as-needed -pthread</commandLine>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -817,7 +863,121 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <linkerDynSerch>
+            <pElem>/usr/local/lib</pElem>
+          </linkerDynSerch>
+          <linkerDepDynSerchKind>2</linkerDepDynSerchKind>
+          <linkerCopySharedLibs>true</linkerCopySharedLibs>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSNetwork"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSNetwork"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSOrm"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSOrm"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATController"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATController"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSDataMediator"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSDataMediator"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lodb -lodb-pgsql</commandLine>
+        </linkerTool>
       </compileType>
+      <packaging>
+        <packType>Tar</packType>
+        <packFileList>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+        </packFileList>
+      </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/at60ccdcontroller.cpp" ex="false" tool="1" flavor2="0">

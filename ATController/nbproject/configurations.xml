@@ -68,6 +68,9 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <developmentMode>0</developmentMode>
+        </cTool>
         <ccTool>
           <standard>8</standard>
           <incDir>
@@ -189,10 +192,17 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>0</developmentMode>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
+          <standard>8</standard>
+          <incDir>
+            <pElem>../ATCCSProtocol/src</pElem>
+            <pElem>../ATCCSOrm/src</pElem>
+            <pElem>../ATCCSNetwork/src</pElem>
+            <pElem>../ATCCSDataMediator/src</pElem>
+          </incDir>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -200,6 +210,46 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSNetwork"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSNetwork"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSOrm"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSOrm"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="src/atccsccdcontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>

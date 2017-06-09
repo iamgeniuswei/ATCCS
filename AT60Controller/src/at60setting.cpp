@@ -17,8 +17,11 @@
 #include "atccsaddress.h"
 #include "atccsdbaddress.h"
 #include "atccs_public_define.h"
-
 #include "atccsexceptionhandler.h"
+#ifdef WIN32
+#else
+#include <unistd.h>
+#endif
 AT60Setting *AT60Setting::_instance = nullptr;
 AT60Setting::AT60SettingGarbo AT60Setting::_Garbo;
 
@@ -286,12 +289,40 @@ bool AT60Setting::initDeviceAddresses(XMLElement* element)
     return false;
 }
 
-bool AT60Setting::initSystemSetting(const std::string &xmlpath)
+std::string AT60Setting::xmlPath()
 {
+    std::string xml;
+    char pwd[2048];
+    memset(pwd, 0, 2048);
+#ifdef WIN32
+#else
+    if(getcwd(pwd, 1024))
+    {
+        xml.assign(pwd);
+        xml.append("/");
+        xml.append("at60setting.xml");        
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                            __FILE__, __func__, __LINE__,
+                                            "Can not get configuration file's path");
+#endif
+    }
+#endif
+    return xml;
+}
+
+
+
+bool AT60Setting::initSystemSetting()
+{
+    std::string xml(xmlPath());
     std::shared_ptr<XMLDocument> doc = std::make_shared<XMLDocument>();
     if (doc)
     {
-        if (doc->LoadFile(xmlpath.c_str()) != XML_SUCCESS)
+        if (doc->LoadFile(xml.c_str()) != XML_SUCCESS)
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,

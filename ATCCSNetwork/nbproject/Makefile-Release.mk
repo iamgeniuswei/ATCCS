@@ -65,7 +65,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.${CND_DLIB_EXT}: ${OB
 ${OBJECTDIR}/src/qpudpsocket.o: src/qpudpsocket.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/qpudpsocket.o src/qpudpsocket.cpp
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/qpudpsocket.o src/qpudpsocket.cpp
 
 # Subprojects
 .build-subprojects:

@@ -7,31 +7,15 @@
 #include "atccs_global.h"
 #include "atccsexception.h"
 #include "atccsexceptionhandler.h"
+
 ATCCSDataSender::ATCCSDataSender()
 {
-    try
-    {
-        _udpSocket = std::make_shared<QPUdpSocket>();
-    }
-    catch(std::exception &e)
-    {
-        _udpSocket = nullptr;
-#ifdef OUTERRORINFO
-        std::string debug_info;
-        debug_info += e.what();
-        debug_info += " @";
-        debug_info += __func__;
-        debug_info += " @";
-        debug_info += __FILE__;
-        std::shared_ptr<ATCCSException> e1(new ATCCSException(ATCCSException::STDEXCEPTION, debug_info));
-        ATCCSExceptionHandler::addException(e1);
-#endif
-    }
+
 }
 
 ATCCSDataSender::~ATCCSDataSender()
 {
-#ifdef OUTERRORINFO
+#ifdef OUTDEBUGINFO
     std::cout << "~ATCCSDataSender\n";
 #endif
 }
@@ -46,22 +30,17 @@ ATCCSDataSender::~ATCCSDataSender()
  */
 int ATCCSDataSender::sendData(std::shared_ptr<ATCCSData> data)
 {
-    if(_udpSocket)
+    if (_udpSocket)
         return _udpSocket->sendData(data->data(), data->size());
     else
     {
 #ifdef OUTERRORINFO
-        std::string debug_info;
-        debug_info += "QPUdpSocket is null, can not send data.";
-        debug_info += " @";
-        debug_info += __func__;
-        debug_info += " @";
-        debug_info += __FILE__;
-        std::shared_ptr<ATCCSException> e1(new ATCCSException(ATCCSException::CUSTOMEXCEPTION, debug_info));
-        ATCCSExceptionHandler::addException(e1);
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__,
+                                            "QPUdpSocket instance is null, send data fails.");
 #endif
-        return 0;
     }
+    return -1;
 }
 
 /**
@@ -74,40 +53,45 @@ int ATCCSDataSender::sendData(std::shared_ptr<ATCCSData> data)
  */
 void ATCCSDataSender::setTargetAddress(const std::string &ip, unsigned short port)
 {
-    if(_udpSocket)
+    if (_udpSocket == nullptr)
+    {
+        try
+        {
+            _udpSocket = std::make_shared<QPUdpSocket>();
+        }
+        catch (std::exception &e)
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, e.what());
+#endif
+            return;
+        }
+    }
+    if (_udpSocket)
         _udpSocket->setTargetAddress(ip, port);
     else
     {
 #ifdef OUTERRORINFO
-        std::string debug_info;
-        debug_info += "QPUdpSocket is null, can not set Address. ";
-        debug_info += " @";
-        debug_info += __func__;
-        debug_info += " @";
-        debug_info += __FILE__;
-        std::shared_ptr<ATCCSException> e1(new ATCCSException(ATCCSException::CUSTOMEXCEPTION, debug_info));
-        ATCCSExceptionHandler::addException(e1);
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__,
+                                            "QPUdpSocket instance is null, set Target Address fails.");
 #endif        
     }
 }
 
-void ATCCSDataSender::setTargetAddress(std::shared_ptr<ATCCSAddress> address) 
+void ATCCSDataSender::setTargetAddress(std::shared_ptr<ATCCSAddress> address)
 {
-    if(address)
+    if (address)
     {
         setTargetAddress(address->ip(), address->port());
     }
     else
     {
 #ifdef OUTERRORINFO
-        std::string debug_info;
-        debug_info += "ATCCSAddress is null. ";
-        debug_info += " @";
-        debug_info += __func__;
-        debug_info += " @";
-        debug_info += __FILE__;
-        std::shared_ptr<ATCCSException> e1(new ATCCSException(ATCCSException::CUSTOMEXCEPTION, debug_info));
-        ATCCSExceptionHandler::addException(e1);
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__,
+                                            "ATCCSAddress instance is null, set Target Address fails.");        
 #endif
-    }    
+    }
 }

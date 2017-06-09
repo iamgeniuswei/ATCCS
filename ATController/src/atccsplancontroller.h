@@ -27,7 +27,7 @@ public:
     unsigned short at() const;
 private:
     void resetDeviceInstruction(unsigned int device = 0);    
-    void setDeviceInstruction(unsigned int device = 0, unsigned int instruction = 0);
+    bool setDeviceInstruction(unsigned int device = 0, unsigned int instruction = 0);
     bool waitInstructionOK(unsigned int device, unsigned int instruction = 0);
 
     

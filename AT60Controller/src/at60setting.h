@@ -56,11 +56,13 @@ private:
     bool initDBAddress(XMLElement *element = nullptr);
     bool initHostAddress(XMLElement *element = nullptr);    
     bool initDeviceAddresses(XMLElement *element = nullptr);
+    std::string xmlPath();
     
 public:
     virtual ~AT60Setting();
     static AT60Setting *instance();
-    bool initSystemSetting(const std::string &xmlpath);    
+    
+    bool initSystemSetting();    
     void setHostAddress(std::shared_ptr<ATCCSAddress> _hostAddress);
     
     std::shared_ptr<ATCCSAddress> hostAddress() const;

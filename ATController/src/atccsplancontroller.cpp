@@ -70,6 +70,10 @@ void ATCCSPlanController::dispatchControlData(unsigned int id, std::shared_ptr<A
     }
 }
 
+/**
+ * control a plan's procedure.
+ * @param data, the raw plan encapsulated in ATCCSData.
+ */
 void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
 {
     if(data == nullptr)
@@ -94,11 +98,14 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
     {
         if(_executoryPlan->setPlan(data) == atccsplan::RESULT_EXECUTED)
         {
-            std::cout << "Start to execute plan" << std::endl;
+#ifdef OUTDEBUGINFO
+            std::cout << "-------------------Start to execute plan------------------" << std::endl;
+#endif
+            
 #ifdef DATAPERSISTENCE
             _executoryPlan->persistPlan();
 #endif
-            //reset ATCCSDeviceController's instruction
+            //reset ATCCSDeviceController's instruction queue.
             resetDeviceInstruction(GIMBAL);
             resetDeviceInstruction(CCD);
 
@@ -108,12 +115,19 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
             //else, abandon this plan.
             if (!isRelatedDevicesReady())
                 return;
-            setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+            if(!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
+            {
+#ifdef OUTDEBUGINFO
+                std::cout << "ERROR: fails to set Gimbal's _GIMBAL_INSTRUCTION_SETOBJECTNAME, plan is canceled." << std::endl;
+#endif
+                return;
+            }
             if(!waitInstructionOK(GIMBAL))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, "");
+                                                    __FILE__, __func__, __LINE__, 
+                                                    "Gimbal's _GIMBAL_INSTRUCTION_SETOBJECTNAME fails to execute, plan is canceled.");
 #endif
                 return;
             }
@@ -121,12 +135,20 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
             //Send GImbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
             if (!isRelatedDevicesReady())
                 return;
-            setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR);
+            if(!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
+            {
+#ifdef OUTDEBUGINFO
+                std::cout << "ERROR: fails to set Gimbal's _GIMBAL_INSTRUCTION_TRACKSTAR, plan is canceled." << std::endl;
+#endif
+                return;
+            }
+            
             if (!waitInstructionOK(GIMBAL))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, "");
+                                                    __FILE__, __func__, __LINE__, 
+                                                    "Gimbal's _GIMBAL_INSTRUCTION_TRACKSTAR fails to execute, plan is canceled.");
 #endif
                 return;
             }
@@ -136,15 +158,37 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
                 //Send CCD's instruction: _CCD_INSTRUCTION_SETEXPOSURETACTIC
                 if (!isRelatedDevicesReady())
                     break;
-                setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC);
+                if(!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
+                {
+#ifdef OUTDEBUGINFO
+                    std::cout << "ERROR: fails to set CCD's _CCD_INSTRUCTION_SETEXPOSURETACTIC, plan is canceled." << std::endl;
+#endif
+                    return;                    
+                }
                 if (!waitInstructionOK(CCD))
+                {
+#ifdef OUTDEBUGINFO
+                    std::cout << "ERROR: CCD's _CCD_INSTRUCTION_SETEXPOSURETACTIC fails to execute, plan is canceled." << std::endl;
+#endif                    
                     break;
+                }
                 //Send CCD's instruction: _CCD_INSTRUCTION_STARTEXPOSURE
                 if (!isRelatedDevicesReady())
                     break;
-                setDeviceInstruction(CCD, _CCD_INSTRUCTION_STARTEXPOSURE);
+                if(!setDeviceInstruction(CCD, _CCD_INSTRUCTION_STARTEXPOSURE))
+                {
+#ifdef OUTDEBUGINFO
+                    std::cout << "ERROR: fails to set CCD's _CCD_INSTRUCTION_STARTEXPOSURE, plan is canceled." << std::endl;
+#endif
+                    return;                     
+                }
                 if (!waitInstructionOK(CCD))
+                {
+#ifdef OUTDEBUGINFO
+                    std::cout << "ERROR: CCD's _CCD_INSTRUCTION_STARTEXPOSUREni fails to execute, plan is canceled." << std::endl;
+#endif                    
                     break;
+                }
             }            
         }
     }
@@ -196,7 +240,7 @@ unsigned short ATCCSPlanController::at() const
     return _at;
 }
 
-void ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int instruction) 
+bool ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int instruction) 
 {
     if(_controllers)
     {
@@ -221,12 +265,18 @@ void ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int
                 pendingData = ATCCSDataPacker::packCCDInstruction_StartExposure(_executoryPlan);
             }
             temp->pushControlData(pendingData);
+            return true;
         }
     }
     else
     {
-        
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__,
+                                            "ATCCSMapManager instance is null, can not send plan's sub-instruction.");
+#endif
     }
+    return false;
 }
 
 bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int instruction /* = 0 */) 
@@ -237,7 +287,7 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int in
         auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         if(temp)
         {
-            while (!temp->isExecutoryInstructionOK()) 
+            while (!temp->isExecutoryInstructionOK(instruction)) 
             {
                 auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
                 if ((now - base) > temp->timeout())
@@ -245,7 +295,7 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int in
                 std::chrono::milliseconds dura(1000);
                 std::this_thread::sleep_for(dura);
             }
-            if(temp->isExecutoryInstructionOK())
+            if(temp->isExecutoryInstructionOK(instruction))
                 return true;
             else 
                 return false;
