@@ -40,7 +40,7 @@ std::shared_ptr<ATCCSData> ATCCSDataPacker::packGimbalInstruction_SetObjectName(
         _ATCCSPHeader header;
         packATCCSHeader(header, size, plan->at(), GIMBAL);
         _AT_INSTRUCTION_HEADER in;
-        packInstructionHeader(in, plan->at(), GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+        packInstructionHeader(in, plan->at(), GIMBAL, plan->id(), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
         
         _AT_GIMBAL_PARAM_SETOBJECTNAME param;
         memcpy(&param.objectName, plan->target().c_str(), 48);
@@ -64,7 +64,7 @@ std::shared_ptr<ATCCSData> ATCCSDataPacker::packGimbalInstruction_TrackStar(std:
         _ATCCSPHeader header;
         packATCCSHeader(header, size, plan->at(), GIMBAL);
         _AT_INSTRUCTION_HEADER in;
-        packInstructionHeader(in, plan->at(), GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR);
+        packInstructionHeader(in, plan->at(), GIMBAL, plan->id(), _GIMBAL_INSTRUCTION_TRACKSTAR);
         
         _AT_GIMBAL_PARAM_TRACKSTAR param;
         param.epoch = plan->epoch();
@@ -91,7 +91,7 @@ std::shared_ptr<ATCCSData> ATCCSDataPacker::packCCDInstruction_SetExposureTactic
         _ATCCSPHeader header;
         packATCCSHeader(header, size, plan->at(), CCD);
         _AT_INSTRUCTION_HEADER in;
-        packInstructionHeader(in, plan->at(), CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC);
+        packInstructionHeader(in, plan->at(), CCD, plan->id(), _CCD_INSTRUCTION_SETEXPOSURETACTIC);
         
         _AT_CCD_PARAM_SETEXPOSURETACTIC param;
         memset(&param, 0, sizeof(_AT_CCD_PARAM_SETEXPOSURETACTIC));
@@ -123,7 +123,7 @@ std::shared_ptr<ATCCSData> ATCCSDataPacker::packCCDInstruction_StartExposure(std
         _ATCCSPHeader header;
         packATCCSHeader(header, size, plan->at(), CCD);
         _AT_INSTRUCTION_HEADER in;
-        packInstructionHeader(in, plan->at(), CCD, _CCD_INSTRUCTION_STARTEXPOSURE);
+        packInstructionHeader(in, plan->at(), CCD, plan->id(), _CCD_INSTRUCTION_STARTEXPOSURE);
         
         _AT_CCD_PARAM_STARTEXPOSURE param;
         memset(&param, 0, sizeof(_AT_CCD_PARAM_STARTEXPOSURE));
@@ -151,11 +151,12 @@ void ATCCSDataPacker::packATCCSHeader(_ATCCSPHeader& header, unsigned int size, 
     header.AT.device = device;
 }
 
-void ATCCSDataPacker::packInstructionHeader(_AT_INSTRUCTION_HEADER& in, unsigned short at, unsigned short device, unsigned int instruction) 
+void ATCCSDataPacker::packInstructionHeader(_AT_INSTRUCTION_HEADER& in, unsigned short at, unsigned short device, unsigned int plan, unsigned int instruction) 
 {
     memset(&in, 0, sizeof(_AT_INSTRUCTION_HEADER));
     in.at = at;
     in.device = device;
+    in.plan = plan;
     in.sequence = seq++;
     in.operation = instruction;
 }

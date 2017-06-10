@@ -42,6 +42,7 @@ public:
     std::string target() const;
     std::string project() const;
     std::string user() const;
+    unsigned int id() const;
 
 private:
     friend class odb::access;

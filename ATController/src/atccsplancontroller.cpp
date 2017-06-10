@@ -80,7 +80,6 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
         return;
     if(!(data->validate()))
     {
-        //FIXME
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                             __FILE__, __func__, __LINE__, 
