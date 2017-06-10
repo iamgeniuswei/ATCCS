@@ -122,7 +122,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
 #endif
                 return;
             }
-            if(!waitInstructionOK(GIMBAL))
+            if(!waitInstructionOK(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
@@ -143,7 +143,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
                 return;
             }
             
-            if (!waitInstructionOK(GIMBAL))
+            if (!waitInstructionOK(GIMBAL,_GIMBAL_INSTRUCTION_TRACKSTAR))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
@@ -152,7 +152,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
 #endif
                 return;
             }
-
+            std::cout << "track star ok!----\n";
             for (int i = 0; i < _executoryPlan->exposureCount(); i++)
             {
                 //Send CCD's instruction: _CCD_INSTRUCTION_SETEXPOSURETACTIC
@@ -165,7 +165,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
 #endif
                     return;                    
                 }
-                if (!waitInstructionOK(CCD))
+                if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
                 {
 #ifdef OUTDEBUGINFO
                     std::cout << "ERROR: CCD's _CCD_INSTRUCTION_SETEXPOSURETACTIC fails to execute, plan is canceled." << std::endl;
@@ -182,7 +182,7 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
 #endif
                     return;                     
                 }
-                if (!waitInstructionOK(CCD))
+                if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_STARTEXPOSURE))
                 {
 #ifdef OUTDEBUGINFO
                     std::cout << "ERROR: CCD's _CCD_INSTRUCTION_STARTEXPOSUREni fails to execute, plan is canceled." << std::endl;
@@ -240,11 +240,11 @@ unsigned short ATCCSPlanController::at() const
     return _at;
 }
 
-bool ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int instruction) 
+bool ATCCSPlanController::setGimbalInstruction(unsigned int instruction)
 {
     if(_controllers)
     {
-        std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(device);
+        std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(GIMBAL);
         if(temp)
         {
             std::shared_ptr<ATCCSData> pendingData = nullptr;
@@ -256,7 +256,30 @@ bool ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int
             {
                 pendingData = ATCCSDataPacker::packGimbalInstruction_TrackStar(_executoryPlan);
             }
-            else if(instruction == _CCD_INSTRUCTION_SETEXPOSURETACTIC)
+            temp->pushControlData(pendingData);
+            return true;
+        }
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__,
+                                            "ATCCSMapManager instance is null, can not send plan's sub-instruction.");
+#endif
+    }
+    return false;
+}
+
+bool ATCCSPlanController::setCCDInstruction(unsigned int instruction)
+{
+    if(_controllers)
+    {
+        std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(CCD);
+        if(temp)
+        {
+            std::shared_ptr<ATCCSData> pendingData = nullptr;
+            if(instruction == _CCD_INSTRUCTION_SETEXPOSURETACTIC)
             {
                 pendingData = ATCCSDataPacker::packCCDInstruction_SetExposureTactic(_executoryPlan);
             }
@@ -277,6 +300,23 @@ bool ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int
 #endif
     }
     return false;
+}
+
+
+
+bool ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int instruction) 
+{
+    switch(device)
+    {
+        case GIMBAL:
+            return setGimbalInstruction(instruction);
+            break;
+        case CCD:
+            return setCCDInstruction(instruction);
+            break;
+        default:
+            return false;
+    }
 }
 
 bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int instruction /* = 0 */) 

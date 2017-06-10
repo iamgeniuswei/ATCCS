@@ -52,6 +52,7 @@ void ATCCSDeviceController::run()
             if (ret == atccsinstruction::INSTRUCTION_PASS)
             {
                 int size = sendInstruction(data);
+                std::cout << "size --" << size << std::endl;
                 if (size == data->size())
                 {
                     waitInstructionResult();

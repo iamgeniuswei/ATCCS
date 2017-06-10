@@ -326,6 +326,8 @@ bool ATCCSGimbalController::checkResult_TrackStar()
             _AT_GIMBAL_PARAM_TRACKSTAR *param = (_AT_GIMBAL_PARAM_TRACKSTAR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
+            std::cout << param->rightAscension <<"---" << temp->targetJ2000RightAscension() << std::endl;
+            std::cout << param->declination << "---" << temp->targetJ2000Declination() << std::endl;
             return (temp->curstatus() == _GIMBAL_STATUS_TRACKING)&&
                     (cmpDouble(param->rightAscension, temp->targetJ2000RightAscension(), 0.0001))&&
                     (cmpDouble(param->declination, temp->targetJ2000Declination(), 0.0001));

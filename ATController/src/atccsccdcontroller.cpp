@@ -294,13 +294,13 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
                 return false;
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETCOOLERT)))
+            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEXPOSURETACTIC)))
                 return false;
             _AT_CCD_PARAM_SETEXPOSURETACTIC *param = (_AT_CCD_PARAM_SETEXPOSURETACTIC*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);            
             std::string name = std::string(param->objectName);
-            std::string band = std::string(param->band);
+            std::string band = std::string(param->objectBand);
             std::cout << temp->curstatus() << "-" << _CCD_STATUS_WAITINGEXPOSURE << std::endl;
             std::cout << temp->epoch() << "-" << param->objectEpoch << std::endl;
             std::cout << temp->observeType() << "-" << param->objectType << std::endl;

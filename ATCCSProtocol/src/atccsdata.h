@@ -36,7 +36,7 @@ public:
         {
             delete [] _data;
             _data = nullptr;
-            std::cout << "~ATCCSData\n";
+//            std::cout << "~ATCCSData\n";
         }
     }
     char* data();
