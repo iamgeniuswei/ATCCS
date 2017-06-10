@@ -17,6 +17,9 @@ private:
     // ATCCSPublicStatus interface
 public:
     virtual void setStatus(std::shared_ptr<ATCCSData> data) override;
+    unsigned short isHomed() const;
+    unsigned short targetFilterPosition() const;
+    unsigned short filterPosition() const;
 };
 
 #endif // FILTERSTATUS_H

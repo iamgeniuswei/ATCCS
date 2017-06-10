@@ -33,6 +33,7 @@ public:
     virtual bool canExecutePlan();
     unsigned int id() const;
     unsigned int timeout();
+    bool executoryInstructionSuccess(unsigned int instruction);
     
     
 protected:    
@@ -50,7 +51,7 @@ protected:
 protected:
     unsigned int _id = 0;
     mutable bool _currentStatusOK;
-    mutable bool _nextInstructionOK;
+    mutable bool _executoryInstructionSuccess = false;
     mutable std::mutex _statusLock;
     mutable std::mutex _instructionLock;
 

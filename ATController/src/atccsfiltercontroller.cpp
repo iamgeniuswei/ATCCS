@@ -92,7 +92,8 @@ bool ATCCSFilterController::isExecutoryInstructionOK()
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+                                            __FILE__, __func__, __LINE__, 
+                                            "atccsinstruction instance is null, fails to check filter's instruction result.");
 #endif        
     }
     return ret;
@@ -100,7 +101,44 @@ bool ATCCSFilterController::isExecutoryInstructionOK()
 
 bool ATCCSFilterController::checkResult_Connect()
 {
-    return true;
+    if (_realtimeStatus)
+    {
+        if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            return false;
+        if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
+            return false;
+        _AT_FILTER_PARAM_CONNECT *param = (_AT_FILTER_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+        try
+        {
+            std::lock_guard<std::mutex> lk(_statusLock);
+            unsigned int curStatus = _realtimeStatus->curstatus();
+            if (param->connect == CONNECT)
+            {
+                return (curStatus != _FILTER_STATUS_DISCONNECT)&&
+                        (curStatus != _FILTER_STATUS_CONNECTING)&&
+                        (curStatus != _FILTER_STATUS_DISCONNECTING);
+            }
+            else if (param->connect == DISCONNECT)
+            {
+                return curStatus == _FILTER_STATUS_DISCONNECT;
+            }
+        }
+        catch (std::exception &e)
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, e.what());
+#endif        
+        }
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
+                                            __FILE__, __func__, __LINE__, "");
+#endif
+    }
+    return false;
 }
 
 bool ATCCSFilterController::checkResult_FindHome()
@@ -110,7 +148,50 @@ bool ATCCSFilterController::checkResult_FindHome()
 
 bool ATCCSFilterController::checkResult_SetFilterPosition()
 {
-    return true;
+    if(_realtimeStatus)
+    {
+        std::shared_ptr<atccsfilterstatus> temp = std::dynamic_pointer_cast<atccsfilterstatus>(_realtimeStatus);
+        if (temp)
+        {
+            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+                return false;
+            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
+                return false;
+            _AT_FILTER_PARAM_SETPOSITION *param = (_AT_FILTER_PARAM_SETPOSITION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            try
+            {
+                std::lock_guard<std::mutex> lk(_statusLock);
+                std::cout << temp->curstatus() <<"--"<<_FILTER_STATUS_SLEWED << std::endl;
+                std::cout << temp->filterPosition() << "--" << param->position << std::endl;
+                return (temp->curstatus() == _FILTER_STATUS_SLEWED)
+                        &&(temp->filterPosition() == param->position);
+            }
+            catch(std::exception &e)
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                    __FILE__, __func__, __LINE__, e.what());
+#endif
+            }
+        }
+        else
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                                __FILE__, __func__, __LINE__,
+                                                "atccsfilterstatus instance is nullptr, fails to check instruction's result.");
+#endif
+        }
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
+                                            __FILE__, __func__, __LINE__, 
+                                            "atccsfilterstatus instance is null, fails to check instruction's result.");
+#endif        
+    }
+    return false;
 }
 
 

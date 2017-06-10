@@ -342,7 +342,9 @@ bool ATCCSCCDController::checkResult_StartExposure()
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
-            return _realtimeStatus->curstatus() == _CCD_STATUS_EXPOSING;
+            std::cout << _realtimeStatus ->laststatus() << "--" << _realtimeStatus->curstatus() << std::endl;
+            return (_realtimeStatus->laststatus() == _CCD_STATUS_SAVING)&&
+                    (_realtimeStatus->curstatus() == _CCD_STATUS_IDLE);
         }
         catch (std::exception &e)
         {

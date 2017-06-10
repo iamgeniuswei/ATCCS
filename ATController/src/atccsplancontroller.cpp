@@ -327,7 +327,7 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int in
         auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         if(temp)
         {
-            while (!temp->isExecutoryInstructionOK(instruction)) 
+            while (!temp->executoryInstructionSuccess(instruction)) 
             {
                 auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
                 if ((now - base) > temp->timeout())
@@ -335,7 +335,7 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int in
                 std::chrono::milliseconds dura(1000);
                 std::this_thread::sleep_for(dura);
             }
-            if(temp->isExecutoryInstructionOK(instruction))
+            if(temp->executoryInstructionSuccess(instruction))
                 return true;
             else 
                 return false;
