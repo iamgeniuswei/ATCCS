@@ -153,25 +153,6 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
             }
             std::cout << "track star ok!----\n";
 
-            //Send CCD's instruction: _CCD_INSTRUCTION_SETBIN
-            if (!isRelatedDevicesReady())
-                return;
-            if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETBIN))
-            {
-#ifdef OUTDEBUGINFO
-                std::cout << "ERROR: fails to set CCD's _CCD_INSTRUCTION_SETBIN, plan is canceled." << std::endl;
-#endif
-                return;
-            }
-            if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETBIN))
-            {
-#ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                    __FILE__, __func__, __LINE__,
-                                                    "CCD's _CCD_INSTRUCTION_SETBIN fails to execute, plan is canceled.");
-#endif
-                return;
-            }
             //Send CCD's instruction: _CCD_INSTRUCTION_SETGAIN
             if (!isRelatedDevicesReady())
                 return;
@@ -212,9 +193,27 @@ void ATCCSPlanController::controlPlan(std::shared_ptr<ATCCSData> data)
                 return;
             }
 
-
-
-
+            
+            
+            //Send CCD's instruction: _CCD_INSTRUCTION_SETBIN
+            if (!isRelatedDevicesReady())
+                return;
+            if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETBIN))
+            {
+#ifdef OUTDEBUGINFO
+                std::cout << "ERROR: fails to set CCD's _CCD_INSTRUCTION_SETBIN, plan is canceled." << std::endl;
+#endif
+                return;
+            }
+            if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETBIN))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                    __FILE__, __func__, __LINE__,
+                                                    "CCD's _CCD_INSTRUCTION_SETBIN fails to execute, plan is canceled.");
+#endif
+                return;
+            }
 
             for (int i = 0; i < _executoryPlan->exposureCount(); i++)
             {

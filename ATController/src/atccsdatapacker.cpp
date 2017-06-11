@@ -114,8 +114,8 @@ std::shared_ptr<ATCCSData> ATCCSDataPacker::packCCDInstruction_SetGain(std::shar
         _AT_INSTRUCTION_HEADER in;
         packInstructionHeader(in, plan->at(), CCD, plan->id(), _CCD_INSTRUCTION_SETGAIN);
         _AT_CCD_PARAM_SETGAIN param;
-        param.mode = plan->gain();
-        param.gear = 0;
+        param.mode = 0;
+        param.gear = plan->gain();
         
         memcpy(pendingData->data(), &header, sizeof(_ATCCSPHeader));
         memcpy(pendingData->data()+sizeof(_ATCCSPHeader), &in, sizeof(_AT_INSTRUCTION_HEADER));

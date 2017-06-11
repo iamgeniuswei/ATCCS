@@ -14,6 +14,7 @@
 #include "at60slavedomestatus.h"
 #include "at60slavedomestatus-odb.hxx"
 #include "ORMHelper.h"
+#include <iostream>
 at60slavedomestatus::at60slavedomestatus() {
 }
 
