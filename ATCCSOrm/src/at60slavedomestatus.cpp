@@ -25,7 +25,7 @@ at60slavedomestatus::~at60slavedomestatus() {
 
 unsigned long long at60slavedomestatus::persistStatus() {
     unsigned long long id =0;
-//    id = ORMHelper::persist<at60slavedomestatus*>(this);
+    id = ORMHelper::persist<at60slavedomestatus*>(this);
     return id;
 }
 

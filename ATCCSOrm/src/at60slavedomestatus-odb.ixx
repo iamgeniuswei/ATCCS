@@ -14,6 +14,24 @@ namespace odb
   {
     return object_traits< ::atccspublicstatus >::id (o);
   }
+
+  inline
+  void access::object_traits< ::at60slavedomestatus >::
+  callback (database& db, object_type& x, callback_event e)
+  {
+    ODB_POTENTIALLY_UNUSED (db);
+    ODB_POTENTIALLY_UNUSED (x);
+    ODB_POTENTIALLY_UNUSED (e);
+  }
+
+  inline
+  void access::object_traits< ::at60slavedomestatus >::
+  callback (database& db, const object_type& x, callback_event e)
+  {
+    ODB_POTENTIALLY_UNUSED (db);
+    ODB_POTENTIALLY_UNUSED (x);
+    ODB_POTENTIALLY_UNUSED (e);
+  }
 }
 
 namespace odb
@@ -49,6 +67,25 @@ namespace odb
   init (id_image_type& i, const id_type& id)
   {
     object_traits_impl< ::atccspublicstatus, id_pgsql >::init (i, id);
+  }
+
+  inline
+  void access::object_traits_impl< ::at60slavedomestatus, id_pgsql >::
+  erase (database& db, const object_type& obj)
+  {
+    callback (db, obj, callback_event::pre_erase);
+    erase (db, id (obj));
+    callback (db, obj, callback_event::post_erase);
+  }
+
+  inline
+  void access::object_traits_impl< ::at60slavedomestatus, id_pgsql >::
+  load_ (statements_type& sts,
+         object_type& obj,
+         bool)
+  {
+    ODB_POTENTIALLY_UNUSED (sts);
+    ODB_POTENTIALLY_UNUSED (obj);
   }
 }
 

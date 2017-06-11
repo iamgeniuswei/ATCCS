@@ -27,6 +27,9 @@ public:
     static unsigned int seq;
     static std::shared_ptr<ATCCSData> packGimbalInstruction_SetObjectName(std::shared_ptr<atccsplan> plan = nullptr);
     static std::shared_ptr<ATCCSData> packGimbalInstruction_TrackStar(std::shared_ptr<atccsplan> plan = nullptr);
+    static std::shared_ptr<ATCCSData> packCCDInstruction_SetBIN(std::shared_ptr<atccsplan> plan = nullptr);
+    static std::shared_ptr<ATCCSData> packCCDInstruction_SetGain(std::shared_ptr<atccsplan> plan = nullptr);
+    static std::shared_ptr<ATCCSData> packCCDInstruction_SetReadSpeedMode(std::shared_ptr<atccsplan> plan = nullptr);
     static std::shared_ptr<ATCCSData> packCCDInstruction_SetExposureTactic(std::shared_ptr<atccsplan> plan = nullptr);
     static std::shared_ptr<ATCCSData> packCCDInstruction_StartExposure(std::shared_ptr<atccsplan> plan = nullptr);
     static void packATCCSHeader(_ATCCSPHeader& header, unsigned int size, unsigned short at, unsigned short device);
