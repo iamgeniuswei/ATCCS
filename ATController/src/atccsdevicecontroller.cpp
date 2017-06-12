@@ -52,6 +52,7 @@ void ATCCSDeviceController::run()
             if (ret == atccsinstruction::INSTRUCTION_PASS)
             {
                 int size = sendInstruction(data);
+                std::cout << "size --" << size << std::endl;
                 if (size == data->size())
                 {
                     waitInstructionResult();
@@ -135,6 +136,7 @@ void ATCCSDeviceController::waitInstructionResult()
                 _executoryInstruction->setResult(atccsinstruction::RESULT_SUCCESS);
                 _executoryInstruction->persistInstructionResult();
 #endif
+                _executoryInstructionSuccess = true;
                 std::cout << "Executory Instruction OK" << std::endl;
             }
             else
@@ -167,6 +169,20 @@ void ATCCSDeviceController::waitInstructionResult()
 unsigned int ATCCSDeviceController::timeout()
 {
     return _timeout;             
+}
+
+bool ATCCSDeviceController::executoryInstructionSuccess(unsigned int instruction)
+{
+    if(_executoryInstruction)
+    {
+    std::lock_guard<std::mutex> lk(_instructionLock);
+    return (_executoryInstruction->instruction() == instruction) && _executoryInstructionSuccess;
+    }
+    else
+    {
+        
+    }
+    return false;
 }
 
 /**
@@ -263,6 +279,7 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
             if (ret == atccsinstruction::INSTRUCTION_PASS)
             {
                 _executoryInstructionRawData = data;
+                _executoryInstructionSuccess = false;
 #ifdef DATAPERSISTENCE
                 _executoryInstruction->persistInstruction();
 #endif

@@ -21,8 +21,11 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/AT60Controller/main.cpp</file>
         </group>
         <group>
+<<<<<<< HEAD
             <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60setting.h</file>
             <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60plancontroller.cpp</file>
+=======
+>>>>>>> origin/develop
             <file>file:/home/lenovo/Project/ATCCS/AT60Controller/main.cpp</file>
             <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60setting.cpp</file>
         </group>

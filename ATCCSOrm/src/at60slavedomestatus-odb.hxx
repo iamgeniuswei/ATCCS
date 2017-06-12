@@ -60,10 +60,28 @@ namespace odb
 
     static const bool auto_id = object_traits< ::atccspublicstatus >::auto_id;
 
-    static const bool abstract = true;
+    static const bool abstract = false;
 
     static id_type
     id (const object_type&);
+
+    typedef
+    odb::pointer_cache_traits<
+      pointer_type,
+      odb::session >
+    pointer_cache_traits;
+
+    typedef
+    odb::reference_cache_traits<
+      object_type,
+      odb::session >
+    reference_cache_traits;
+
+    static void
+    callback (database&, object_type&, callback_event);
+
+    static void
+    callback (database&, const object_type&, callback_event);
   };
 }
 
@@ -103,7 +121,10 @@ namespace odb
 
     struct image_type: object_traits_impl< ::atccsslavedomestatus, id_pgsql >::image_type
     {
+      std::size_t version;
     };
+
+    struct extra_statement_cache_type;
 
     using object_traits<object_type>::id;
 
@@ -137,6 +158,84 @@ namespace odb
 
     static void
     init (id_image_type&, const id_type&);
+
+    typedef pgsql::object_statements<object_type> statements_type;
+
+    typedef pgsql::query_base query_base_type;
+
+    static const std::size_t column_count = 16UL;
+    static const std::size_t id_column_count = 1UL;
+    static const std::size_t inverse_column_count = 0UL;
+    static const std::size_t readonly_column_count = 0UL;
+    static const std::size_t managed_optimistic_column_count = 0UL;
+
+    static const std::size_t separate_load_column_count = 0UL;
+    static const std::size_t separate_update_column_count = 0UL;
+
+    static const bool versioned = false;
+
+    static const char persist_statement[];
+    static const char find_statement[];
+    static const char update_statement[];
+    static const char erase_statement[];
+    static const char query_statement[];
+    static const char erase_query_statement[];
+
+    static const char table_name[];
+
+    static void
+    persist (database&, object_type&);
+
+    static pointer_type
+    find (database&, const id_type&);
+
+    static bool
+    find (database&, const id_type&, object_type&);
+
+    static bool
+    reload (database&, object_type&);
+
+    static void
+    update (database&, const object_type&);
+
+    static void
+    erase (database&, const id_type&);
+
+    static void
+    erase (database&, const object_type&);
+
+    static result<object_type>
+    query (database&, const query_base_type&);
+
+    static unsigned long long
+    erase_query (database&, const query_base_type&);
+
+    static const char persist_statement_name[];
+    static const char find_statement_name[];
+    static const char update_statement_name[];
+    static const char erase_statement_name[];
+    static const char query_statement_name[];
+    static const char erase_query_statement_name[];
+
+    static const unsigned int persist_statement_types[];
+    static const unsigned int find_statement_types[];
+    static const unsigned int update_statement_types[];
+
+    public:
+    static bool
+    find_ (statements_type&,
+           const id_type*);
+
+    static void
+    load_ (statements_type&,
+           object_type&,
+           bool reload);
+  };
+
+  template <>
+  class access::object_traits_impl< ::at60slavedomestatus, id_common >:
+    public access::object_traits_impl< ::at60slavedomestatus, id_pgsql >
+  {
   };
 
   // at60slavedomestatus

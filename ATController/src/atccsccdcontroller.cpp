@@ -294,13 +294,13 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
                 return false;
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETCOOLERT)))
+            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEXPOSURETACTIC)))
                 return false;
             _AT_CCD_PARAM_SETEXPOSURETACTIC *param = (_AT_CCD_PARAM_SETEXPOSURETACTIC*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);            
             std::string name = std::string(param->objectName);
-            std::string band = std::string(param->band);
+            std::string band = std::string(param->objectBand);
             std::cout << temp->curstatus() << "-" << _CCD_STATUS_WAITINGEXPOSURE << std::endl;
             std::cout << temp->epoch() << "-" << param->objectEpoch << std::endl;
             std::cout << temp->observeType() << "-" << param->objectType << std::endl;
@@ -342,7 +342,9 @@ bool ATCCSCCDController::checkResult_StartExposure()
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
-            return _realtimeStatus->curstatus() == _CCD_STATUS_EXPOSING;
+            std::cout << _realtimeStatus ->laststatus() << "--" << _realtimeStatus->curstatus() << std::endl;
+            return (_realtimeStatus->laststatus() == _CCD_STATUS_SAVING)&&
+                    (_realtimeStatus->curstatus() == _CCD_STATUS_IDLE);
         }
         catch (std::exception &e)
         {
@@ -431,6 +433,8 @@ bool ATCCSCCDController::checkResult_SetGain()
             _AT_CCD_PARAM_SETGAIN *param = (_AT_CCD_PARAM_SETGAIN*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
             
             std::lock_guard<std::mutex> lk(_statusLock);
+            std::cout << temp->indexOfGain() << "--" << param->gear << std::endl;
+            std::cout << temp->indexOfGainMode() << "--" << param->mode << std::endl;
             return (temp->indexOfGain() == param->gear && temp->indexOfGainMode() == param->mode);
         }
         else
@@ -465,6 +469,7 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
             _AT_CCD_PARAM_SETRSMODE *param = (_AT_CCD_PARAM_SETRSMODE*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
             
             std::lock_guard<std::mutex> lk(_statusLock);
+            std::cout << temp->indexOfRSMode() << "--" << param->mode << std::endl;
             return temp->indexOfRSMode() == param->mode;
         }
         else
@@ -499,6 +504,8 @@ bool ATCCSCCDController::checkResult_SetBIN()
             _AT_CCD_PARAM_SETBIN *param = (_AT_CCD_PARAM_SETBIN*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
             
             std::lock_guard<std::mutex> lk(_statusLock);
+            std::cout << temp->binX() << "--" << param->binX << std::endl;
+            std::cout << temp->binY() << "--" << param->binY << std::endl;
             return (temp->binX() == param->binX) && (temp->binY() == param->binY);
         }
         else

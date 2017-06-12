@@ -69,8 +69,8 @@ enum ENUM__AT_CCD_STATUS
     _CCD_STATUS_EXPOSING,               // =0x5
     _CCD_STATUS_READING,                // =0x6
     _CCD_STATUS_SAVING,                 // =0x7
-    _CCD_STATUS_ABORTING,               // =0x9
-    _CCD_STATUS_IDLE                    // =0x10
+    _CCD_STATUS_ABORTING,               // =0x8
+    _CCD_STATUS_IDLE                    // =0x9
 };
 
 

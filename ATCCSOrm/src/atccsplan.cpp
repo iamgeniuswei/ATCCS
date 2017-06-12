@@ -144,4 +144,9 @@ std::string atccsplan::user() const
     return _user;
 }
 
+unsigned int atccsplan::id() const
+{
+    return _id;
+}
+
 

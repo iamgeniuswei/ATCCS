@@ -9,8 +9,15 @@ ATCCSFullOpenedDomeStatus::ATCCSFullOpenedDomeStatus()
 
 void ATCCSFullOpenedDomeStatus::setStatus(std::shared_ptr<ATCCSData> data)
 {
-    if(data == nullptr ||!(data->validate()))
+    atccspublicstatus::setStatus(data);
+    if(data == nullptr || !(data->validate()))
         return;
+    _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
+    if(header)
+    {
+        _sec = header->tv_sec;
+        _msec = header->tv_usec;
+    }
     _AT_FULLOPENEDDOME_STATUS *status = (_AT_FULLOPENEDDOME_STATUS*)(data->data() + sizeof(_ATCCSPHeader));
     if(status)
     {
