@@ -188,6 +188,20 @@ bool ATCCSDeviceController::executoryInstructionSuccess(unsigned int instruction
     return false;
 }
 
+bool ATCCSDeviceController::executoryInstructionSuccess(unsigned int instruction)
+{
+    if(_executoryInstruction)
+    {
+    std::lock_guard<std::mutex> lk(_instructionLock);
+    return (_executoryInstruction->instruction() == instruction) && _executoryInstructionSuccess;
+    }
+    else
+    {
+        
+    }
+    return false;
+}
+
 /**
  * decide whether to execute instruction.
  * @return true if can, false if can not.

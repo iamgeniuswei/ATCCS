@@ -8,7 +8,7 @@
 		<password>123456</password>
 	</DATABASE>
 	<DATARECEIVER>
-		<ip>192.168.0.115</ip>
+		<ip>192.168.160.170</ip>
 		<port>4747</port>
 	</DATARECEIVER>
 	<DEVICECONTROLLER>

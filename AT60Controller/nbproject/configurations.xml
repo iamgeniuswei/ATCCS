@@ -1156,7 +1156,7 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
-          <packFileListElem type="File"
+       <packFileListElem type="File"
                             to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
                             from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
                             perm="755"
