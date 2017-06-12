@@ -17,7 +17,7 @@
 #include "atccsexceptionhandler.h"
 
 AT60GimbalController::AT60GimbalController()
-: ATCCSGimbalController()
+: ATCCSGimbalController(AT60, GIMBAL)
 {
 
 }

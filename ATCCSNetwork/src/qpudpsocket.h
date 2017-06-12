@@ -23,6 +23,12 @@ enum ERRORCODE{
 class QPUdpSocket
 {
 public:
+    enum RETCODE
+    {
+        FAIL = -1,
+        SUCCESS = 0
+    };
+public:
     explicit QPUdpSocket();
     ~QPUdpSocket();
     void setTargetAddress(const string &ip, unsigned short port);

@@ -34,7 +34,6 @@ public:
 private:
     ATCCSDataQueue *_dataQueue = nullptr;
     std::shared_ptr<ATCCSMapManager<ATCCSController>> _controllerManager = nullptr;
-    std::shared_ptr<ATCCSMapManager<ATCCSController>> controllerManagerInstance();
     std::shared_ptr<ATCCSDataProcessor> _dataProcessor = nullptr;
 };
 

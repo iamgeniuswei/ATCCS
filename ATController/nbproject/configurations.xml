@@ -5,6 +5,7 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>src/atccsccdcontroller.h</itemPath>
+      <itemPath>src/atccsdatadispatcherprocessor.h</itemPath>
       <itemPath>src/atccsdatapacker.h</itemPath>
       <itemPath>src/atccsdevicecontroller.h</itemPath>
       <itemPath>src/atccsdevicestatusprocessor.h</itemPath>
@@ -20,7 +21,6 @@
       <itemPath>src/atccsslavedomecontroller.h</itemPath>
       <itemPath>src/atccsupgoingcontroller.h</itemPath>
       <itemPath>src/atccsupgoingdataprocessor.h</itemPath>
-      <itemPath>src/atclevel1dataprocessor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -30,6 +30,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/atccsccdcontroller.cpp</itemPath>
+      <itemPath>src/atccsdatadispatcherprocessor.cpp</itemPath>
       <itemPath>src/atccsdatapacker.cpp</itemPath>
       <itemPath>src/atccsdevicecontroller.cpp</itemPath>
       <itemPath>src/atccsdevicestatusprocessor.cpp</itemPath>
@@ -45,7 +46,6 @@
       <itemPath>src/atccsslavedomecontroller.cpp</itemPath>
       <itemPath>src/atccsupgoingcontroller.cpp</itemPath>
       <itemPath>src/atccsupgoingdataprocessor.cpp</itemPath>
-      <itemPath>src/atclevel1dataprocessor.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -113,6 +113,13 @@
       </item>
       <item path="src/atccsccdcontroller.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsdatadispatcherprocessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/atccsdatadispatcherprocessor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsdatapacker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsdatapacker.h" ex="false" tool="3" flavor2="0">
@@ -178,10 +185,6 @@
       <item path="src/atccsupgoingdataprocessor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsupgoingdataprocessor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/atclevel1dataprocessor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/atclevel1dataprocessor.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -255,6 +258,13 @@
       </item>
       <item path="src/atccsccdcontroller.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsdatadispatcherprocessor.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/atccsdatadispatcherprocessor.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsdatapacker.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsdatapacker.h" ex="false" tool="3" flavor2="0">
@@ -320,10 +330,6 @@
       <item path="src/atccsupgoingdataprocessor.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsupgoingdataprocessor.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/atclevel1dataprocessor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/atclevel1dataprocessor.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

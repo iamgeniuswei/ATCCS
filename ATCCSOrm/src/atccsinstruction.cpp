@@ -15,13 +15,12 @@ atccsinstruction::atccsinstruction()
 
 atccsinstruction::~atccsinstruction()
 {
-    std::cout << "~ATCCSInstruction\n";
+    std::cout << "~ATCCSInstruction" << std::endl;
 }
 
 unsigned int atccsinstruction::validateParam(unsigned int device, unsigned int instruction, std::shared_ptr<ATCCSData> data) 
 {
     unsigned int ret = INSTRUCTION_PASS;
-
     switch (device) 
     {
         case GIMBAL:
@@ -618,21 +617,28 @@ unsigned int atccsinstruction::validateFullOpenedDomeParam(unsigned int instruct
 
 unsigned int atccsinstruction::setInstructionValue(std::shared_ptr<ATCCSData> data)
 {
-    if(data == nullptr || (!data->validate()))
+    //Level 1 validation.
+    if(data == nullptr)
+        return INSTRUCTION_NULL;
+    if(!data->validate())
         return INSTRUCTION_SIZEERROR;
     if(data->size() < (sizeof(_ATCCSPHeader) + sizeof(_AT_INSTRUCTION_HEADER)))
         return INSTRUCTION_SIZEERROR;
+    
+    //Level 2 validation.
     _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
     _AT_INSTRUCTION_HEADER *instruction = (_AT_INSTRUCTION_HEADER*)(data->data()+sizeof(_ATCCSPHeader));
     unsigned int ret = validateParam(instruction->device, instruction->operation, data);
     if(ret != INSTRUCTION_PASS && ret != INSTRUCTION_PARAMOUTOFRANGE)
         return ret;
+    
+    //resolve ATCCSData to set atccsinstruction.
     if(header)
     {
         _sec = header->tv_sec;
         _msec = header->tv_usec;
     }
-
+    
     if(instruction)
     {
         _user = instruction->user;
@@ -640,13 +646,14 @@ unsigned int atccsinstruction::setInstructionValue(std::shared_ptr<ATCCSData> da
         _device = instruction->device;
         _sequence = instruction->sequence;
         _plan = instruction->plan;
+        _timeout = 30;
         _instruction = instruction->operation;
         if(ret == INSTRUCTION_PASS)
             _result = RESULT_WAITINGTOEXECUTE;
         else
             _result = RESULT_PARAMOUTOFRANGE;                
     }
-    return ret;
+    return RESULT_PARAMOUTOFRANGE;
 }
 
 unsigned int atccsinstruction::setInstructionResult(std::shared_ptr<ATCCSData> data)
@@ -673,6 +680,12 @@ unsigned int atccsinstruction::setInstructionResult(std::shared_ptr<ATCCSData> d
     }
 
 }
+
+void atccsinstruction::reset()
+{
+    _id = _sec = _msec = _user = _at = _device = _sequence = _timeout = _plan = _instruction = _result = 0;
+}
+
 
 unsigned int atccsinstruction::sec() const
 {

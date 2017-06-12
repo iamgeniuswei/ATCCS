@@ -12,7 +12,7 @@ ATCCSDataDispatcher::ATCCSDataDispatcher()
 
 ATCCSDataDispatcher::~ATCCSDataDispatcher()
 {
-#ifdef OUTERRORINFO
+#ifdef OUTDEBUGINFO
     std::cout << "~ATCCSDataDispatcher" << std::endl;
 #endif
 }
@@ -63,7 +63,7 @@ void ATCCSDataDispatcher::run()
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__,
-                                            "ATCCSDataQueue instance is null, can not dispatch data, thread ATCCSDataDispatcher is canceled.");
+                                            "ATCCSDataQueue instance is null, can not dispatch data, fails to execute data dispatcher thread.");
 #endif        
     }
 }
@@ -101,7 +101,7 @@ void ATCCSDataDispatcher::dispatchControlData(unsigned int id, std::shared_ptr<A
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
                                             __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager is null, can not find ATCCSController.");
+                                            "ATCCSMapManager is null, ATCCSData can not be dispatched.");
 #endif
     }
 }
@@ -119,7 +119,9 @@ void ATCCSDataDispatcher::dispatchControlData(unsigned int id, std::shared_ptr<A
 void ATCCSDataDispatcher::setDataProcessor(std::shared_ptr<ATCCSDataProcessor> processor) 
 {
     if(processor)
+    {
         _dataProcessor = processor;
+    }
     else
     {
 #ifdef OUTERRORINFO
@@ -142,22 +144,6 @@ void ATCCSDataDispatcher::setDataProcessor(std::shared_ptr<ATCCSDataProcessor> p
 void ATCCSDataDispatcher::registerDeviceController(unsigned int id, std::shared_ptr<ATCCSController> controller)
 {
     if(_controllerManager == nullptr)
-        _controllerManager = controllerManagerInstance();    
-    if(_controllerManager)
-        _controllerManager->registerController(id, controller);
-    else
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager is null, can not register ATCCSController.");
-#endif
-    }
-}
-
-std::shared_ptr<ATCCSMapManager<ATCCSController> > ATCCSDataDispatcher::controllerManagerInstance()
-{
-    if(_controllerManager == nullptr)
     {
         try
         {
@@ -170,6 +156,19 @@ std::shared_ptr<ATCCSMapManager<ATCCSController> > ATCCSDataDispatcher::controll
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif
         }
+        return;
     }
-    return _controllerManager;
+        
+    if(_controllerManager)
+    {
+        _controllerManager->registerController(id, controller);
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__,
+                                            "ATCCSMapManager instance is null, can not register ATCCSController.");
+#endif
+    }
 }

@@ -107,8 +107,6 @@ cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
-<<<<<<< HEAD
-=======
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
 copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so" 0755
@@ -157,7 +155,6 @@ cd "${TOP}"
 makeDirectory "${NBTMPDIR}/at60controller/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
->>>>>>> origin/develop
 
 # Generate tar file
 cd "${TOP}"

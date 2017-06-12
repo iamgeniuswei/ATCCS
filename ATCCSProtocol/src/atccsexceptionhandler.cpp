@@ -81,6 +81,104 @@ void ATCCSExceptionHandler::addException(unsigned int type, const char* file, co
     }
 }
 
+void ATCCSExceptionHandler::addException(unsigned int type, const char* file, const char* func, unsigned long line, char msg[])
+{
+    try 
+    {
+        std::string debug_info;
+        switch (type) {
+            case ATCCSException::STDEXCEPTION:
+            {
+                debug_info += "std exception: ";
+                break;
+            }
+            case ATCCSException::POINTERISNULL:
+            {
+                debug_info += "pointer is null: ";
+                break;
+            }
+            case ATCCSException::CUSTOMEXCEPTION:
+            {
+                debug_info += "custom error: ";
+                break;
+            }
+            default:
+            {
+                debug_info += "undefined error: ";
+                break;
+            }
+        }
+        debug_info += msg;
+        debug_info += " @";
+        debug_info += file;
+        debug_info += " @";
+        debug_info += func;
+        debug_info += " @";
+        char *line_str = new char[10];
+        memset(line_str, 0, 10);
+        sprintf(line_str, "%d", line);
+        debug_info += line_str;
+        std::shared_ptr<ATCCSException> e = std::make_shared<ATCCSException>(type, debug_info);
+        _exceptions.push(e);
+    }
+    catch(std::exception &e)
+    {
+        std::cerr << e.what() << " @" << __FILE__ << " @" << __func__ << __LINE__ << std::endl;
+    }    
+}
+
+void ATCCSExceptionHandler::addException(unsigned int type, const char* file, const char* func, unsigned long line, unsigned int at, unsigned device, const char* msg)
+{
+    try 
+    {
+        std::string debug_info;
+        char at_device[64] = {0};
+        snprintf(at_device, 256, "%s%d%s%d", "AT id: ", at, " Device id: ", device);
+        debug_info += at_device;
+                
+        switch (type) 
+        {
+            case ATCCSException::STDEXCEPTION:
+            {
+                debug_info += " std exception: ";
+                break;
+            }
+            case ATCCSException::POINTERISNULL:
+            {
+                debug_info += " pointer is null: ";
+                break;
+            }
+            case ATCCSException::CUSTOMEXCEPTION:
+            {
+                debug_info += " custom error: ";
+                break;
+            }
+            default:
+            {
+                debug_info += " undefined error: ";
+                break;
+            }
+        }
+        debug_info += msg;
+        debug_info += " @";
+        debug_info += file;
+        debug_info += " @";
+        debug_info += func;
+        debug_info += " @";
+        char *line_str = new char[10];
+        memset(line_str, 0, 10);
+        snprintf(line_str, 10, "%d", line);
+        debug_info += line_str;
+        std::shared_ptr<ATCCSException> e = std::make_shared<ATCCSException>(type, debug_info);
+        _exceptions.push(e);
+    }
+    catch(std::exception &e)
+    {
+        std::cerr << e.what() << " @" << __FILE__ << " @" << __func__ << __LINE__ << std::endl;
+    }
+}
+
+
 //template<typename ... ARGS>
 //void
 //ATCCSExceptionHandler::addException(unsigned int type, ARGS args)

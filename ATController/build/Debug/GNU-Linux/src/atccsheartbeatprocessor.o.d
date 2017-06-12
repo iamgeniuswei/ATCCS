@@ -6,7 +6,9 @@ build/Debug/GNU-Linux/src/atccsheartbeatprocessor.o: \
  ../ATCCSProtocol/src/atccs_global.h src/atccsupgoingcontroller.h \
  ../ATCCSProtocol/src/atccscontroller.h ../ATCCSProtocol/src/atccsqueue.h \
  ../ATCCSProtocol/src/atccsthread.h ../ATCCSProtocol/src/atccsqueue.h \
- ../ATCCSProtocol/src/atccsmapmanager.h
+ ../ATCCSProtocol/src/atccsmapmanager.h \
+ ../ATCCSProtocol/src/atccsexceptionhandler.h \
+ ../ATCCSProtocol/src/atccsexception.h
 
 src/atccsheartbeatprocessor.h:
 
@@ -29,3 +31,7 @@ src/atccsupgoingcontroller.h:
 ../ATCCSProtocol/src/atccsqueue.h:
 
 ../ATCCSProtocol/src/atccsmapmanager.h:
+
+../ATCCSProtocol/src/atccsexceptionhandler.h:
+
+../ATCCSProtocol/src/atccsexception.h:

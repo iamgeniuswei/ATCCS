@@ -59,7 +59,7 @@ void QPUdpSocket::setTargetAddress(const string &ip, unsigned short port)
 
 int QPUdpSocket::setHostAddress(const string &ip, unsigned short port)
 {
-    int ret = -1;
+    int ret = FAIL;
     _hostIP = ip;
     _hostPort = port;
     memset(&_hostAddr, 0, sizeof(sockaddr_in));
@@ -74,9 +74,9 @@ int QPUdpSocket::setHostAddress(const string &ip, unsigned short port)
     if(recv_socket_descriptor != -1)
     {
         ret = bind(recv_socket_descriptor, (sockaddr*)&_hostAddr, sizeof(sockaddr));
-        if(-1 == ret)
+        if(ret == FAIL)
         {
-            cerr << "bind udp recv ip and port failed!" << endl;
+            cerr << "ERROR: fails to bind IP and PORT, can not receive any data!" << endl;
         }
     }
     return ret;

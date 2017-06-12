@@ -25,7 +25,7 @@ using namespace odb::core;
 #include "ORMHelper.h"
 #include <memory>
 #include <future>
-#include "atclevel1dataprocessor.h"
+#include "atccsdatadispatcherprocessor.h"
 #include "src/at60ccdcontroller.h"
 #include "src/at60filtercontroller.h"
 #include "src/at60focuscontroller.h"
@@ -50,7 +50,7 @@ using namespace odb::core;
 #include <unistd.h>
 int main(int argc, char** argv)
 {
-    std::cout << "----------------------AT60 Controller V1.00.00----------------------\n";
+    std::cout << "----------------------AT60 Controller V2.00.00----------------------\n";
     
     //declare the thread controllers.
     std::shared_ptr<std::thread> exceptionThread = nullptr;
@@ -120,7 +120,7 @@ int main(int argc, char** argv)
         dataDispatcher = std::make_shared<ATCCSDataDispatcher>();
         if (dataDispatcher)
         {
-            std::shared_ptr<ATCCSDataProcessor> processor(new ATCLevel1DataProcessor(dataDispatcher));
+            std::shared_ptr<ATCCSDataProcessor> processor(new ATCCSDataDispatcherProcessor(dataDispatcher));
             dataDispatcher->setDataProcessor(processor);
             dispatcherThread = std::make_shared<std::thread>(&ATCCSDataDispatcher::run, dataDispatcher);
         }
@@ -159,7 +159,7 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(GIMBAL);
             at60GimbalController->setDeviceAddress(address);
-            upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
+//            upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
             at60PlanController->registerDeviceController(GIMBAL, at60GimbalController);
             dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
             at60GimbalThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60GimbalController);

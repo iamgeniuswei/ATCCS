@@ -29,7 +29,8 @@ public:
         INSTRUCTION_UNKOWNN = 0,  // =0
         INSTRUCTION_PASS = 1,     // =1
         INSTRUCTION_PARAMOUTOFRANGE,   // =2
-        INSTRUCTION_SIZEERROR     // =3
+        INSTRUCTION_SIZEERROR,     // =3
+        INSTRUCTION_NULL          // =4
     };
     explicit atccsinstruction();
     virtual ~atccsinstruction();
@@ -37,6 +38,7 @@ public:
     unsigned int setInstructionResult(std::shared_ptr<ATCCSData> data = nullptr);
     virtual unsigned long long persistInstruction() = 0;
     virtual void persistInstructionResult() = 0;
+    void reset();
     void out()
     {
         std::cout <<"id:"<< _id << "- sec:" << _sec << "- msec:" << _msec << "- user:" << _user << "- at:" << _at << "- device:"

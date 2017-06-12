@@ -19,7 +19,7 @@ class ATCCSData;
 class ATCCSGimbalController : public ATCCSDeviceController
 {
 public:
-    ATCCSGimbalController();
+    ATCCSGimbalController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSGimbalController();    
     bool isExecutoryInstructionOK() override;
     bool isExecutoryInstructionOK(unsigned int instruction) override;

@@ -19,6 +19,12 @@ class ATCCSAddress;
 class ATCCSDataReceiver : public ATCCSThread
 {    
 public:
+    enum RETCODE
+    {
+        FAIL = -1,
+        SUCCESS = 0
+    };
+public:
     explicit ATCCSDataReceiver();
     ~ATCCSDataReceiver();
     void run() override;
@@ -28,10 +34,9 @@ public:
 
 private:
     std::shared_ptr<QPUdpSocket> _recvSocket = nullptr;
-    std::shared_ptr<QPUdpSocket> recvSocketInstance();
     ATCCSDataQueue *_dataQueue = nullptr;
     bool isReadyToRecv = false;
-    
+    static const int BUFFER_SIZE = 4096;
 };
 
 #endif // ATCADATARECEIVER_H

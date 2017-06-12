@@ -95,12 +95,18 @@ inline void write_line(const T& t, const Args& ... data)
     std::cout << test << std::endl;
 }
 
+enum
+{
+    FAIL = -3,
+    SUCCECSS
+};
 
 int main(int argc, char** argv)
 {
     
     cout << sizeof(_AT_PLAN) << endl;
-
+    cout << FAIL << endl;
+    cout << SUCCECSS << endl;
 //    write_line("dfaf", "dfd", 34, 343, "dfd");
 //    double d1 = 0.012343;
 //    double d2 = 0.012344;

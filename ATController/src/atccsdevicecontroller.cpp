@@ -17,21 +17,20 @@ using namespace odb::core;
 #include "atccsexception.h"
 #include "atccsexceptionhandler.h"
 
-//
 
 unsigned int ATCCSDeviceController::INSTRUCTION_TIMEOUT = 30;
 unsigned int ATCCSDeviceController::INSTRUCTION_RETRANSMISSION = 3;
 
-ATCCSDeviceController::ATCCSDeviceController(unsigned short id)
-: _id(id)
+ATCCSDeviceController::ATCCSDeviceController(unsigned short at, unsigned short device)
+: _at(at), _device(device)
 {
 
 }
 
 ATCCSDeviceController::~ATCCSDeviceController()
 {
-#ifdef OUTERRORINFO
-    std::cout << "~ATCCSDeviceController\n";
+#ifdef OUTDEBUGINFO
+    std::cout << "~ATCCSDeviceController" << std::endl;
 #endif
 }
 
@@ -42,11 +41,11 @@ void ATCCSDeviceController::run()
         try
         {
             //fetch a raw data of the instruction from the instruction queue.
-            std::shared_ptr<ATCCSData> data = _fifoQueue.wait_and_pop();
+            std::shared_ptr<ATCCSData> data = popControlData();
             //the queue returns per 1 second, so sometimes there is no data.
             if (data == nullptr)
                 continue;
-            //            setCurrentInstruction(data);
+
             unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
             ret = setExecutoryInstruction(data);
             if (ret == atccsinstruction::INSTRUCTION_PASS)
@@ -58,13 +57,17 @@ void ATCCSDeviceController::run()
                     waitInstructionResult();
                 }
             }
+            else
+            {
+
+            }
+
         }
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
-
 #endif
         }
     }
@@ -168,19 +171,19 @@ void ATCCSDeviceController::waitInstructionResult()
 
 unsigned int ATCCSDeviceController::timeout()
 {
-    return _timeout;             
+    return _timeout;
 }
 
 bool ATCCSDeviceController::executoryInstructionSuccess(unsigned int instruction)
 {
-    if(_executoryInstruction)
+    if (_executoryInstruction)
     {
-    std::lock_guard<std::mutex> lk(_instructionLock);
-    return (_executoryInstruction->instruction() == instruction) && _executoryInstructionSuccess;
+        std::lock_guard<std::mutex> lk(_instructionLock);
+        return (_executoryInstruction->instruction() == instruction) && _executoryInstructionSuccess;
     }
     else
     {
-        
+
     }
     return false;
 }
@@ -210,7 +213,6 @@ bool ATCCSDeviceController::isExecutoryInstructionOK(unsigned int instruction)
 {
     return true;
 }
-
 
 std::shared_ptr<atccsinstruction> ATCCSDeviceController::instructionInstance()
 {
@@ -268,11 +270,13 @@ void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
 unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCCSData> data)
 {
     unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
-    try
+    if (_executoryInstruction == nullptr)
     {
-        if (!_executoryInstruction)
-            _executoryInstruction = instructionInstance();
-        if (_executoryInstruction)
+        _executoryInstruction = instructionInstance();
+    }
+    if (_executoryInstruction)
+    {
+        try
         {
             std::lock_guard<std::mutex> lk(_instructionLock);
             ret = _executoryInstruction->setInstructionValue(data);
@@ -283,29 +287,43 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
 #ifdef DATAPERSISTENCE
                 _executoryInstruction->persistInstruction();
 #endif
+#ifdef OUTDEBUGINFO
                 _executoryInstruction->out();
+#endif                
             }
             else if (ret == atccsinstruction::INSTRUCTION_PARAMOUTOFRANGE)
             {
 #ifdef DATAPERSISTENCE
                 _executoryInstruction->persistInstruction();
 #endif
+#ifdef OUTERRORINFO
+                char msg[256] = {0};
+                snprintf(msg, 256, "%s%d%s%d%s%d%s", "AT id: ", _at, " Device id: ", _device, " instruction: ", _executoryInstruction->instruction(), " parameter out of range.");
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                    __FILE__, __func__, __LINE__, msg);
+#endif
+                _executoryInstruction->reset();
+                _executoryInstructionSuccess = false;
             }
             else
             {
 #ifdef OUTERRORINFO
+                char msg[256] = {0};
+                snprintf(msg, 256, "%s%d%s%d%s", "AT id: ", _at, " Device id: ", _device, " an instruction's size is error.");
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, "");
+                                                    __FILE__, __func__, __LINE__, msg);
 #endif
+                _executoryInstruction.reset();
+                _executoryInstructionSuccess = false;
             }
         }
-    }
-    catch (std::exception &e)
-    {
+        catch (std::exception &e)
+        {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                            __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif
+        }
     }
     return ret;
 }
@@ -460,5 +478,5 @@ bool ATCCSDeviceController::canExecutePlan()
 
 unsigned int ATCCSDeviceController::id() const
 {
-    return _id;
+    return _device;
 }

@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/atccsccdcontroller.o \
+	${OBJECTDIR}/src/atccsdatadispatcherprocessor.o \
 	${OBJECTDIR}/src/atccsdatapacker.o \
 	${OBJECTDIR}/src/atccsdevicecontroller.o \
 	${OBJECTDIR}/src/atccsdevicestatusprocessor.o \
@@ -50,8 +51,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccssetting.o \
 	${OBJECTDIR}/src/atccsslavedomecontroller.o \
 	${OBJECTDIR}/src/atccsupgoingcontroller.o \
-	${OBJECTDIR}/src/atccsupgoingdataprocessor.o \
-	${OBJECTDIR}/src/atclevel1dataprocessor.o
+	${OBJECTDIR}/src/atccsupgoingdataprocessor.o
 
 
 # C Compiler Flags
@@ -86,6 +86,11 @@ ${OBJECTDIR}/src/atccsccdcontroller.o: src/atccsccdcontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsccdcontroller.o src/atccsccdcontroller.cpp
+
+${OBJECTDIR}/src/atccsdatadispatcherprocessor.o: src/atccsdatadispatcherprocessor.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdatadispatcherprocessor.o src/atccsdatadispatcherprocessor.cpp
 
 ${OBJECTDIR}/src/atccsdatapacker.o: src/atccsdatapacker.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -161,11 +166,6 @@ ${OBJECTDIR}/src/atccsupgoingdataprocessor.o: src/atccsupgoingdataprocessor.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsupgoingdataprocessor.o src/atccsupgoingdataprocessor.cpp
-
-${OBJECTDIR}/src/atclevel1dataprocessor.o: src/atclevel1dataprocessor.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atclevel1dataprocessor.o src/atclevel1dataprocessor.cpp
 
 # Subprojects
 .build-subprojects:

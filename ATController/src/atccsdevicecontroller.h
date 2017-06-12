@@ -13,7 +13,7 @@ class ATCCSAddress;
 class ATCCSDeviceController : public ATCCSController, public ATCCSThread
 {
 public:
-    explicit ATCCSDeviceController(unsigned short id);
+    explicit ATCCSDeviceController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSDeviceController();
     void run() override;
     void setDeviceAddress(const std::string &ip, unsigned short port);
@@ -49,7 +49,8 @@ protected:
     
 
 protected:
-    unsigned int _id = 0;
+    unsigned int _device = 0;
+    unsigned int _at = 0;
     mutable bool _currentStatusOK;
     mutable bool _executoryInstructionSuccess = false;
     mutable std::mutex _statusLock;
@@ -62,8 +63,7 @@ protected:
     std::shared_ptr<ATCCSOnline>    _realtimeOnline = nullptr;
     unsigned int _timeout = 30;
     static unsigned int INSTRUCTION_TIMEOUT;
-    static unsigned int INSTRUCTION_RETRANSMISSION;
-    
+    static unsigned int INSTRUCTION_RETRANSMISSION;    
 };
 
 #endif // DEVICECONTROLLER_H

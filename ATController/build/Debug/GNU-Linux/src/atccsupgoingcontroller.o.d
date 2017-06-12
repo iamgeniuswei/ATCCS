@@ -10,7 +10,9 @@ build/Debug/GNU-Linux/src/atccsupgoingcontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccsdataprocessor.h src/atccsheartbeatprocessor.h \
  src/atccsinstructionresultprocessor.h src/atccsdevicestatusprocessor.h \
- src/atccsupgoingdataprocessor.h
+ src/atccsupgoingdataprocessor.h \
+ ../ATCCSProtocol/src/atccsexceptionhandler.h \
+ ../ATCCSProtocol/src/atccsexception.h
 
 src/atccsupgoingcontroller.h:
 
@@ -47,3 +49,7 @@ src/atccsinstructionresultprocessor.h:
 src/atccsdevicestatusprocessor.h:
 
 src/atccsupgoingdataprocessor.h:
+
+../ATCCSProtocol/src/atccsexceptionhandler.h:
+
+../ATCCSProtocol/src/atccsexception.h:

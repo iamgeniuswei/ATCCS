@@ -41,8 +41,10 @@ public:
     ~ATCCSExceptionHandler();
     static void addException(std::shared_ptr<ATCCSException> exception = nullptr);
     static void addException(unsigned int type, const char *file, const char *func, unsigned long line, const char *msg);
-    template <typename ... ARGS>
-    static void addException(unsigned int type, const char *file, const char *func, unsigned long line, ARGS ... args);
+    static void addException(unsigned int type, const char *file, const char *func, unsigned long line, char msg[]);
+    static void addException(unsigned int type, const char *file, const char *func, unsigned long line, unsigned int at, unsigned int device, const char *msg);
+//    template <typename ... ARGS>
+//    static void addException(unsigned int type, const char *file, const char *func, unsigned long line, ARGS ... args);
     static std::shared_ptr<ATCCSException> lastException();
     
 private:

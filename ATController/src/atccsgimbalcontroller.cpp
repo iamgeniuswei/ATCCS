@@ -36,8 +36,8 @@ using namespace odb::core;
 
 #include "atccsexceptionhandler.h"
 
-ATCCSGimbalController::ATCCSGimbalController()
-: ATCCSDeviceController(GIMBAL)
+ATCCSGimbalController::ATCCSGimbalController(unsigned short at, unsigned short device)
+: ATCCSDeviceController(at,GIMBAL)
 {
 
 }
