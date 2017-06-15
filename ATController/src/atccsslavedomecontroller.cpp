@@ -17,8 +17,8 @@
 #include "at60instruction.h"
 #include "at60slavedomestatus.h"
 #include "atccsexceptionhandler.h"
-ATCCSSlaveDomeController::ATCCSSlaveDomeController() 
-    :ATCCSDeviceController(SLAVEDOME)
+ATCCSSlaveDomeController::ATCCSSlaveDomeController(unsigned short at, unsigned short device) 
+    :ATCCSDeviceController(at, device)
 {
 
 }

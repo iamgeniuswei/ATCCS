@@ -52,7 +52,7 @@ ATCCSException::ATCCSException(const ATCCSException& orig) {
 
 ATCCSException::~ATCCSException() 
 {
-    std::cout << "~ATCCSException\n";
+
 }
 
 ATCCSException::ATCCSException(unsigned int type, const std::string& errorString) 

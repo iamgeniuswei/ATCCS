@@ -16,15 +16,13 @@ public:
     ATCCSPlanController(unsigned short at = 0);
     ~ATCCSPlanController();
     void run() override;    
-    
-    bool canExecutePlan() const;
-    bool exposureOK() const;
-    bool abortExposureOK() const;
-    bool stopExposureOK() const;
-    void dispatchControlData(unsigned int id, std::shared_ptr<ATCCSData> data = nullptr);
-    void controlPlan(std::shared_ptr<ATCCSData> data = nullptr);
     void registerDeviceController(unsigned int id, std::shared_ptr<ATCCSDeviceController> controller = nullptr);
     unsigned short at() const;
+    
+protected:
+    bool canExecutePlan() const;
+    void executePlan(std::shared_ptr<ATCCSData> data = nullptr);   
+    
 private:
     void resetDeviceInstruction(unsigned int device = 0);    
     bool setDeviceInstruction(unsigned int device = 0, unsigned int instruction = 0);
@@ -37,7 +35,6 @@ private:
 protected:
     virtual std::shared_ptr<atccsplan> executoryPlanInstance();
     virtual bool isRelatedDevicesReady();
-    std::shared_ptr<ATCCSMapManager<ATCCSDeviceController>> controllersInstance();
     
 
 protected:

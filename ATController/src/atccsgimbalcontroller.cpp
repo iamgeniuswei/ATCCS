@@ -37,7 +37,7 @@ using namespace odb::core;
 #include "atccsexceptionhandler.h"
 
 ATCCSGimbalController::ATCCSGimbalController(unsigned short at, unsigned short device)
-: ATCCSDeviceController(at,GIMBAL)
+: ATCCSDeviceController(at,device)
 {
 
 }
@@ -221,7 +221,7 @@ bool ATCCSGimbalController::canExecutePlan()
     catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-        std::cerr << "error#" << ERROR_STDEXCEPTRION << ": Device " << id() << " " << e.what()
+        std::cerr << "error#" << ERROR_STDEXCEPTRION << ": Device " << at() << " " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__
                 << " @" << __LINE__ << std::endl;

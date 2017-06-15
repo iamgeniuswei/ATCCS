@@ -159,7 +159,7 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(GIMBAL);
             at60GimbalController->setDeviceAddress(address);
-//            upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
+            upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
             at60PlanController->registerDeviceController(GIMBAL, at60GimbalController);
             dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
             at60GimbalThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60GimbalController);

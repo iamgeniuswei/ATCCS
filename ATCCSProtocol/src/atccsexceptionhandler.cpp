@@ -133,7 +133,7 @@ void ATCCSExceptionHandler::addException(unsigned int type, const char* file, co
     {
         std::string debug_info;
         char at_device[64] = {0};
-        snprintf(at_device, 256, "%s%d%s%d", "AT id: ", at, " Device id: ", device);
+        snprintf(at_device, 256, "%s%d%s%d", " AT: ", at, " Device: ", device);
         debug_info += at_device;
                 
         switch (type) 

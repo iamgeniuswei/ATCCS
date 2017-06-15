@@ -230,7 +230,7 @@ void ATCCSDataPacker::packInstructionHeader(_AT_INSTRUCTION_HEADER& in, unsigned
     in.device = device;
     in.plan = plan;
     in.sequence = seq++;
-    in.operation = instruction;
+    in.instruction = instruction;
 }
 
 

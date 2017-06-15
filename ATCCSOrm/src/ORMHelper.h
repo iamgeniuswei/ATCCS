@@ -24,174 +24,102 @@
 using namespace odb::core;
 #endif
 
-class ORMHelper {
+class ORMHelper
+{
 private:
     ORMHelper();
     ORMHelper(const ORMHelper& orig) = delete;
 public:
     virtual ~ORMHelper();
     static void initDB(const std::string& type,
-                const std::string& user,
-                const std::string& password,
-                const std::string& db,
-                const std::string& host = "",
-                unsigned int port = 0);
+            const std::string& user,
+            const std::string& password,
+            const std::string& db,
+            const std::string& host = "",
+            unsigned int port = 0);
 #ifdef DATAPERSISTENCE
     static std::shared_ptr<database> db();
 
+    /**
+     * persist the std::shared_ptr<T> into database.
+     * throw std::execption.
+     * @param value
+     * @return if succuss, the record's id,
+     *         if fail, 0 
+     */
     template<typename T>
-    static unsigned int persist(std::shared_ptr<T> value) 
+    static unsigned long long persist(std::shared_ptr<T> value)
     {
-        if(value == nullptr)
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#2: The object to persist is null." 
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
+        if (value == nullptr) {
             return 0;
         }
-        try 
-        {
-            transaction t(_db->begin());
-            _db->persist(*value);
-            t.commit();
-        } 
-        catch (std::exception &e) 
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#1: " << e.what()
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
-        }
-    }
-    
-    template<typename T>
-    static unsigned long long persist(T value) 
-    {        
+
         unsigned long long id = 0;
-        if(value == nullptr)
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#2: The object to persist is null." 
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
-            return 0;
-        }
-        try 
-        {
-            transaction t(_db->begin());
-            _db->persist(value);
-            t.commit();
-        } 
-        catch (std::exception &e) 
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#1: " << e.what()
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
-        }
+        transaction t(_db->begin());
+        id = _db->persist(*value);
+        t.commit();
         return id;
     }
-    
-//    template<typename T>
-//    static unsigned int persist(T value) 
-//    {        
-//        unsigned int id = 0;
-//        if(value == nullptr)
-//        {
-//#ifdef OUTDEBUGINFO
-//            std::cerr << "error#2: The object to persist is null." 
-//                    << " @" << __func__
-//                    << " @" << __FILE__
-//                    << " @" << __LINE__ << std::endl;
-//#endif
-//            return 0;
-//        }
-//        try 
-//        {
-//            transaction t(_db->begin());
-//            id = _db->persist(value);
-//            t.commit();
-//        } 
-//        catch (std::exception &e) 
-//        {
-//#ifdef OUTDEBUGINFO
-//            std::cerr << "error#1: " << e.what()
-//                    << " @" << __func__
-//                    << " @" << __FILE__
-//                    << " @" << __LINE__ << std::endl;
-//#endif
-//        }
-//        return id;
-//    }
 
-    
+    /**
+     * persist the T into database.
+     * throw std::execption.
+     * @param value
+     * @return if succuss, the record's id,
+     *         if fail, 0 
+     */
+    template<typename T>
+    static unsigned long long persist(T value)
+    {
+
+        if (value == nullptr) {
+            return 0;
+        }
+
+        unsigned long long id = 0;
+        transaction t(_db->begin());
+        id = _db->persist(value);
+        t.commit();
+        return id;
+    }
+
+    /**
+     * update std::shared_ptr<T> in database.
+     * throw std::exception.
+     * @param value
+     */
     template<typename T>
     static void update(std::shared_ptr<T> value)
     {
-        if(value == nullptr)
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#2: The object to persist is null." 
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
+        if (value == nullptr) {
+            return;
         }
-        try 
-        {
-            transaction t(_db->begin());
-            _db->update(*value);
-            t.commit();
-        } 
-        catch (std::exception &e) 
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#1: " << e.what()
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
-        }
+
+        transaction t(_db->begin());
+        _db->update(*value);
+        t.commit();
+
     }
-    
+
+    /**
+     * update T in database.
+     * throw std::exception.
+     * @param value
+     */
     template<typename T>
     static void update(T value)
     {
-        if(value == nullptr)
+        if (value == nullptr) 
         {
-#ifdef OUTERRORINFO
-            std::cerr << "error#2: The object to persist is null." 
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
+            return;
         }
-        try 
-        {
-            transaction t(_db->begin());
-            _db->update(value);
-            t.commit();
-        } 
-        catch (std::exception &e) 
-        {
-#ifdef OUTERRORINFO
-            std::cerr << "error#1: " << e.what()
-                    << " @" << __func__
-                    << " @" << __FILE__
-                    << " @" << __LINE__ << std::endl;
-#endif
-        }
+
+        transaction t(_db->begin());
+        _db->update(value);
+        t.commit();
+
     }
-    
+
 #endif
 private:
 #ifdef DATAPERSISTENCE

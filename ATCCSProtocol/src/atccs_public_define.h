@@ -262,7 +262,7 @@ struct _AT_INSTRUCTION_HEADER{
     unsigned short at;
     unsigned short device;
     unsigned int sequence;
-    unsigned int operation;
+    unsigned int instruction;
 };
 #pragma pack()
 /*!
@@ -292,7 +292,7 @@ struct _AT_INSTRUCTION_RESULT{
     unsigned short device;
     unsigned int sequence;
     unsigned int timeout;
-    unsigned int operation;
+    unsigned int instruction;
     unsigned int result;
 };
 #pragma pack()

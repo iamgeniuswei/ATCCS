@@ -17,8 +17,8 @@
 #include "at60instruction.h"
 #include "at60focusstatus.h"
 #include "atccsexceptionhandler.h"
-ATCCSFocusController::ATCCSFocusController() 
-    :ATCCSDeviceController(FOCUS)
+ATCCSFocusController::ATCCSFocusController(unsigned short at, unsigned short device) 
+    :ATCCSDeviceController(at, device)
 {
 
 }

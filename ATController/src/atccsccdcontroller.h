@@ -19,7 +19,7 @@
 class ATCCSCCDController : public ATCCSDeviceController
 {
 public:
-    ATCCSCCDController();
+    ATCCSCCDController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSCCDController();
     
     bool isStatusOK() const override;

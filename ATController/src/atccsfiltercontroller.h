@@ -18,7 +18,7 @@
 class ATCCSFilterController : public ATCCSDeviceController
 {
 public:
-    ATCCSFilterController();
+    ATCCSFilterController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSFilterController();
     
     bool isStatusOK() const override;

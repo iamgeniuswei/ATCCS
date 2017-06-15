@@ -55,24 +55,13 @@ std::shared_ptr<atccsinstruction> AT60GimbalController::instructionInstance()
  * create the concrete AT's gimbal's real-time status shared_ptr,
  * which is persisted into database by ODB. here, function returns
  * at60gimbalstatus's shared_ptr.
+ * here, we do not handle the exception, the exception will be handled 
+ * by the invoker.
  * @return std::shared_ptr<atccspublicstatus>
  */
 std::shared_ptr<atccspublicstatus> AT60GimbalController::statusInstance()
 {
-    if(_realtimeStatus == nullptr)
-    {
-        try
-        {
-            _realtimeStatus = std::make_shared<at60gimbalstatus>();
-        }
-        catch (std::exception &e)
-        {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif
-        }   
-    }
+    _realtimeStatus = std::make_shared<at60gimbalstatus>();
     return _realtimeStatus;
 }
 

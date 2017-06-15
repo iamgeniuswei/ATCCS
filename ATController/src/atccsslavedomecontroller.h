@@ -18,7 +18,7 @@
 class ATCCSSlaveDomeController : public ATCCSDeviceController
 {
 public:
-    ATCCSSlaveDomeController();
+    ATCCSSlaveDomeController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSSlaveDomeController();
     
     bool isStatusOK() const override;

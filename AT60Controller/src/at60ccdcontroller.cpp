@@ -16,7 +16,7 @@
 #include "at60ccdstatus.h"
 #include "atccsexceptionhandler.h"
 AT60CCDController::AT60CCDController() 
-    :ATCCSCCDController()
+    :ATCCSCCDController(AT60, CCD)
 {
 
 }

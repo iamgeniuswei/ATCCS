@@ -18,7 +18,7 @@
 class ATCCSFocusController : public ATCCSDeviceController
 {
 public:
-    ATCCSFocusController();
+    ATCCSFocusController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSFocusController();
 
     bool isStatusOK() const override;

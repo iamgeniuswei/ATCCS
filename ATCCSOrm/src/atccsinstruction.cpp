@@ -628,7 +628,7 @@ unsigned int atccsinstruction::setInstructionValue(std::shared_ptr<ATCCSData> da
     //Level 2 validation.
     _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
     _AT_INSTRUCTION_HEADER *instruction = (_AT_INSTRUCTION_HEADER*)(data->data()+sizeof(_ATCCSPHeader));
-    unsigned int ret = validateParam(instruction->device, instruction->operation, data);
+    unsigned int ret = validateParam(instruction->device, instruction->instruction, data);
     if(ret != INSTRUCTION_PASS && ret != INSTRUCTION_PARAMOUTOFRANGE)
         return ret;
     
@@ -647,18 +647,20 @@ unsigned int atccsinstruction::setInstructionValue(std::shared_ptr<ATCCSData> da
         _sequence = instruction->sequence;
         _plan = instruction->plan;
         _timeout = 30;
-        _instruction = instruction->operation;
+        _instruction = instruction->instruction;
         if(ret == INSTRUCTION_PASS)
             _result = RESULT_WAITINGTOEXECUTE;
         else
             _result = RESULT_PARAMOUTOFRANGE;                
     }
-    return RESULT_PARAMOUTOFRANGE;
+    return ret;
 }
 
 unsigned int atccsinstruction::setInstructionResult(std::shared_ptr<ATCCSData> data)
 {
-    if(data == nullptr || (!data->validate()))
+    if(data == nullptr)
+        return RESULT_SIZEERROR;
+    if(!data->validate())
         return RESULT_SIZEERROR;
     if(data->size() != (sizeof(_ATCCSPHeader) + sizeof(_AT_INSTRUCTION_RESULT)))
         return RESULT_SIZEERROR;
@@ -668,7 +670,7 @@ unsigned int atccsinstruction::setInstructionResult(std::shared_ptr<ATCCSData> d
             result->at == _at &&
             result->device == _device &&
             result->sequence == _sequence &&
-            result->operation == _instruction)
+            result->instruction == _instruction)
     {
         _timeout = result->timeout;
         _result = result->result;

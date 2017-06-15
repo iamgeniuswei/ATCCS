@@ -12,7 +12,10 @@ build/Debug/GNU-Linux/src/atccsplancontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
  ../ATCCSProtocol/src/atccsexception.h ../ATCCSOrm/src/at60plan.h \
- ../ATCCSOrm/src/atccsplan.h
+ ../ATCCSOrm/src/atccsplan.h ../ATCCSOrm/src/at60plan-odb.hxx \
+ ../ATCCSOrm/src/at60plan.h ../ATCCSOrm/src/atccsplan-odb.hxx \
+ ../ATCCSOrm/src/atccsplan-odb.ixx ../ATCCSOrm/src/at60plan-odb.ixx \
+ ../ATCCSOrm/src/ORMHelper.h
 
 src/atccsplancontroller.h:
 
@@ -53,3 +56,15 @@ src/atccsdatapacker.h:
 ../ATCCSOrm/src/at60plan.h:
 
 ../ATCCSOrm/src/atccsplan.h:
+
+../ATCCSOrm/src/at60plan-odb.hxx:
+
+../ATCCSOrm/src/at60plan.h:
+
+../ATCCSOrm/src/atccsplan-odb.hxx:
+
+../ATCCSOrm/src/atccsplan-odb.ixx:
+
+../ATCCSOrm/src/at60plan-odb.ixx:
+
+../ATCCSOrm/src/ORMHelper.h:

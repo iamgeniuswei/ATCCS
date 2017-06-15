@@ -22,7 +22,8 @@ public:
         RESULT_SENDERROR,       // =4    
         RESULT_SIZEERROR,       // =5
         RESULT_SUCCESS,         // =6
-        RESULT_TIMEOUT          // =7
+        RESULT_TIMEOUT,          // =7,
+        RESULT_NOFEEDBACK
     };
     enum ENUM_AT_INSTRUCTION_VALIDATION
     {

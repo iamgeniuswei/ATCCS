@@ -36,7 +36,7 @@ std::shared_ptr<atccsplan> AT60PlanController::executoryPlanInstance()
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+                                                __FILE__, __func__, __LINE__, _at, 0, e.what());
 #endif
         }
     }

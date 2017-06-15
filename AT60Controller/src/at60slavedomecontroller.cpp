@@ -18,7 +18,7 @@
 #include "at60slavedomestatus.h"
 #include "atccsexceptionhandler.h"
 AT60SlaveDomeController::AT60SlaveDomeController() 
-    :ATCCSSlaveDomeController()
+    :ATCCSSlaveDomeController(AT60, SLAVEDOME)
 {
 
 }

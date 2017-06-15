@@ -11,12 +11,16 @@ atccsplan::atccsplan()
 
 atccsplan::~atccsplan()
 {
-    std::cout << "~ATCCSPlan()\n";
+#ifdef OUTDEBUGINFO
+    std::cout << "~ATCCSPlan" << std::endl;
+#endif    
 }
 
 unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
 {
-    if(data == nullptr || !(data->validate()))
+    if(data == nullptr)
+        return RESULT_PLANERROR;
+    if(!data->validate())
         return RESULT_PLANERROR;
     if(data->size() != (sizeof(_ATCCSPHeader) + sizeof(_AT_PLAN)))
         return RESULT_PLANERROR;

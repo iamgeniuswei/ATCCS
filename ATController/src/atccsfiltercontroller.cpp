@@ -18,8 +18,8 @@
 #include "at60filterstatus.h"
 #include "atccsexceptionhandler.h"
 
-ATCCSFilterController::ATCCSFilterController()
-: ATCCSDeviceController(FILTER)
+ATCCSFilterController::ATCCSFilterController(unsigned short at, unsigned short device)
+: ATCCSDeviceController(at, device)
 {
 
 }

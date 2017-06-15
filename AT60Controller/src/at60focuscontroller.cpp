@@ -18,7 +18,7 @@
 #include "at60focusstatus.h"
 #include "atccsexceptionhandler.h"
 AT60FocusController::AT60FocusController() 
-    :ATCCSFocusController()
+    :ATCCSFocusController(AT60, FOCUS)
 {
 
 }

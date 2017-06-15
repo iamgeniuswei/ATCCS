@@ -18,7 +18,7 @@ using namespace odb::core;
 #include "atccsexceptionhandler.h"
 
 
-unsigned int ATCCSDeviceController::INSTRUCTION_TIMEOUT = 30;
+unsigned int ATCCSDeviceController::INSTRUCTION_TIMEOUT = 5;
 unsigned int ATCCSDeviceController::INSTRUCTION_RETRANSMISSION = 3;
 
 ATCCSDeviceController::ATCCSDeviceController(unsigned short at, unsigned short device)
@@ -45,33 +45,53 @@ void ATCCSDeviceController::run()
             //the queue returns per 1 second, so sometimes there is no data.
             if (data == nullptr)
                 continue;
-
-            unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
-            ret = setExecutoryInstruction(data);
-            if (ret == atccsinstruction::INSTRUCTION_PASS)
-            {
-                int size = sendInstruction(data);
-                std::cout << "size --" << size << std::endl;
-                if (size == data->size())
-                {
-                    waitInstructionResult();
-                }
-            }
-            else
-            {
-
-            }
+            
+            executeInstruction(data);
 
         }
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+                                                __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif
         }
     }
 }
+
+void ATCCSDeviceController::executeInstruction(std::shared_ptr<ATCCSData> data)
+{    
+    _isExecutoryInstructionDone = false;
+    //Only the instruction is all right, and the parameters are validated,
+    //the instruction can be sent to according device.
+    unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
+    ret = setExecutoryInstruction(data);
+    if (ret == atccsinstruction::INSTRUCTION_PASS)
+    {
+        int size = sendInstruction(data);
+        if (size == data->size())
+        {
+#ifdef OUTDEBUGINFO
+            std::cout << "AT: " << _at << " Device: " << _device << " Instruction: " << _executoryInstruction->instruction() << " has been sent to device correctly." << std::endl;
+#endif
+            waitInstructionResult();
+        }
+        else
+        {
+#ifdef OUTERRORINFO
+            char msg[256] = {0};
+            snprintf(msg, 256, "%s%d%s%d%s%d%s", "AT: ", _at, " Device: ", _device, " instruction: ", _executoryInstruction->instruction(), " is failed to be sent. The instruction is neglected.");
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                __FILE__, __func__, __LINE__, msg);
+#endif
+        }
+    }
+    _isExecutoryInstructionDone = true;
+}
+
+
+
+
 
 /**
  * send the raw instruction data to the target device.
@@ -99,7 +119,8 @@ int ATCCSDeviceController::sendInstruction(std::shared_ptr<ATCCSData> data)
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+                                            __FILE__, __func__, __LINE__, _at, _device,
+                                            "ATCCSDataSender instance is null, fails to send instruction.");
 #endif
     }
     return ret;
@@ -110,9 +131,14 @@ int ATCCSDeviceController::sendInstruction(std::shared_ptr<ATCCSData> data)
  */
 void ATCCSDeviceController::waitInstructionResult()
 {
-    auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+    //There are 2 phases in the process of waiting instruction result.    
     if (_executoryInstruction)
     {
+        //phase 1: wait the feedback of the instruction from the device.
+        //  1) RESULT_EXECUTING,         // =1
+        //  2) RESULT_PARAMOUTOFRANGE, // =2
+        //  3) RESULT_CANNTEXECUTE,    // =3
+        auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
         while (_executoryInstruction->result() == atccsinstruction::RESULT_WAITINGTOEXECUTE)
         {
             auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -121,10 +147,15 @@ void ATCCSDeviceController::waitInstructionResult()
             std::chrono::milliseconds dura(1000);
             std::this_thread::sleep_for(dura);
         }
+
+        //phase 2: if the feedback is RESULT_EXECUTING, wait the device's status.
         if (_executoryInstruction->result() == atccsinstruction::RESULT_EXECUTING)
         {
             _timeout = _executoryInstruction->timeout();
             base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+
+            //The device's feedback contains the instruction's timeout
+            //here, the waiting time changes from INSTRUCTION_TIMEOUT to timeout.
             while (!isExecutoryInstructionOK())
             {
                 auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
@@ -136,35 +167,76 @@ void ATCCSDeviceController::waitInstructionResult()
             if (isExecutoryInstructionOK())
             {
 #ifdef DATAPERSISTENCE
-                _executoryInstruction->setResult(atccsinstruction::RESULT_SUCCESS);
-                _executoryInstruction->persistInstructionResult();
+                try
+                {
+                    _executoryInstruction->setResult(atccsinstruction::RESULT_SUCCESS);
+                    _executoryInstruction->persistInstructionResult();
+                }
+                catch (std::exception &e)
+                {
+#ifdef OUTERRORINFO 
+                    ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                        __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif
-                _executoryInstructionSuccess = true;
-                std::cout << "Executory Instruction OK" << std::endl;
+                }
+#endif
+                _isExecutoryInstructionSuccess = true;
+                std::cout << "AT: " << _at << " Device: " << _device << " Instruction: " << _executoryInstruction->instruction() << " is success." << std::endl;
             }
             else
             {
 #ifdef DATAPERSISTENCE
-                _executoryInstruction->setResult(atccsinstruction::RESULT_TIMEOUT);
-                _executoryInstruction->persistInstructionResult();
+                try
+                {
+                    _executoryInstruction->setResult(atccsinstruction::RESULT_TIMEOUT);
+                    _executoryInstruction->persistInstructionResult();
+                }
+                catch (std::exception &e)
+                {
+#ifdef OUTERRORINFO 
+                    ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                        __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif
-                std::cout << "Executory Instruction Timeout" << std::endl;
+                }
+#endif
+#ifdef OUTERRORINFO
+                char msg[256] = {0};
+                snprintf(msg, 256, "%s%d%s%d%s%d%s", "AT: ", _at, " Device: ", _device, " Instruction: ", _executoryInstruction->instruction(), " is time out. The instruction is neglected.");
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                    __FILE__, __func__, __LINE__, msg);
+#endif
             }
         }
         else
         {
 #ifdef DATAPERSISTENCE
-            _executoryInstruction->setResult(atccsinstruction::RESULT_TIMEOUT);
-            _executoryInstruction->persistInstructionResult();
+            try
+            {
+                _executoryInstruction->setResult(atccsinstruction::RESULT_NOFEEDBACK);
+                _executoryInstruction->persistInstructionResult();
+            }
+            catch (std::exception &e)
+            {
+#ifdef OUTERRORINFO 
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                    __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif
-            std::cout << "Executory Instruction Timeout" << std::endl;
+            }
+#endif
+#ifdef OUTERRORINFO
+            char msg[256] = {0};
+            snprintf(msg, 256, "%s%d%s%d%s%d%s", "AT : ", _at, " Device : ", _device, " instruction: ", _executoryInstruction->instruction(), " 's feedback is time out. The instruction is neglected.");
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+                                                __FILE__, __func__, __LINE__, msg);
+#endif
         }
     }
     else
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+                                            __FILE__, __func__, __LINE__, _at, _device,
+                                            "atccsinstruction instance is null, fails to wait instruction result.");
 #endif
     }
 }
@@ -174,30 +246,17 @@ unsigned int ATCCSDeviceController::timeout()
     return _timeout;
 }
 
-bool ATCCSDeviceController::executoryInstructionSuccess(unsigned int instruction)
+bool ATCCSDeviceController::isExecutoryInstructionSuccess(unsigned int instruction) const
 {
     if (_executoryInstruction)
     {
         std::lock_guard<std::mutex> lk(_instructionLock);
-        return (_executoryInstruction->instruction() == instruction) && _executoryInstructionSuccess;
+        return (_executoryInstruction->instruction() == instruction) 
+                && (_executoryInstruction->result() == atccsinstruction::RESULT_SUCCESS);
     }
     else
     {
 
-    }
-    return false;
-}
-
-bool ATCCSDeviceController::executoryInstructionSuccess(unsigned int instruction)
-{
-    if(_executoryInstruction)
-    {
-    std::lock_guard<std::mutex> lk(_instructionLock);
-    return (_executoryInstruction->instruction() == instruction) && _executoryInstructionSuccess;
-    }
-    else
-    {
-        
     }
     return false;
 }
@@ -245,32 +304,39 @@ std::shared_ptr<atccspublicstatus> ATCCSDeviceController::statusInstance()
  */
 void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
 {
-    try
+    if(_realtimeStatus == nullptr)
     {
-        if (!_realtimeStatus)
-            _realtimeStatus = statusInstance();
-        if (_realtimeStatus)
+        //here, we can not define _realtimeStatus directly.
+        //atccspublicstatus will be persisted in database,
+        //so we have to create a concrete sub-class instance
+        //of atccspublicstaus.
+        try
         {
-            std::lock_guard<std::mutex> lk(_statusLock);
-            _realtimeStatus->setStatus(data);
-#ifdef DATAPERSISTENCE
-            _realtimeStatus->persistStatus();
-#endif
+            _realtimeStatus = statusInstance();
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            //FIXME:
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
-#endif        
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                            __FILE__, __func__, __LINE__, _at, _device, e.what());
+#endif
+            return;
         }
+    }
+    
+    try
+    {
+        std::lock_guard<std::mutex> lk(_statusLock);
+        _realtimeStatus->setStatus(data);
+#ifdef DATAPERSISTENCE
+        _realtimeStatus->persistStatus();
+#endif
     }
     catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+                                            __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif        
     }
 }
@@ -297,10 +363,21 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
             if (ret == atccsinstruction::INSTRUCTION_PASS)
             {
                 _executoryInstructionRawData = data;
-                _executoryInstructionSuccess = false;
+                _isExecutoryInstructionSuccess = false;
 #ifdef DATAPERSISTENCE
-                _executoryInstruction->persistInstruction();
+                try
+                {
+                    _executoryInstruction->persistInstruction();
+                }
+                catch (std::exception &e)
+                {
+#ifdef OUTERRORINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                        __FILE__, __func__, __LINE__, _at, _device, e.what());
+#endif                    
+                }                
 #endif
+                
 #ifdef OUTDEBUGINFO
                 _executoryInstruction->out();
 #endif                
@@ -308,34 +385,44 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
             else if (ret == atccsinstruction::INSTRUCTION_PARAMOUTOFRANGE)
             {
 #ifdef DATAPERSISTENCE
-                _executoryInstruction->persistInstruction();
+                try
+                {
+                    _executoryInstruction->persistInstruction();
+                }
+                catch (std::exception &e)
+                {
+#ifdef OUTERRORINFO
+                    ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                        __FILE__, __func__, __LINE__, _at, _device, e.what());
+#endif
+                }
 #endif
 #ifdef OUTERRORINFO
                 char msg[256] = {0};
-                snprintf(msg, 256, "%s%d%s%d%s%d%s", "AT id: ", _at, " Device id: ", _device, " instruction: ", _executoryInstruction->instruction(), " parameter out of range.");
+                snprintf(msg, 256, "%s%d%s%d%s%d%s", "AT: ", _at, " Device: ", _device, " instruction: ", _executoryInstruction->instruction(), " parameter out of range. The instruction is neglected.");
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                     __FILE__, __func__, __LINE__, msg);
 #endif
                 _executoryInstruction->reset();
-                _executoryInstructionSuccess = false;
+                _isExecutoryInstructionSuccess = false;
             }
             else
             {
 #ifdef OUTERRORINFO
                 char msg[256] = {0};
-                snprintf(msg, 256, "%s%d%s%d%s", "AT id: ", _at, " Device id: ", _device, " an instruction's size is error.");
+                snprintf(msg, 256, "%s%d%s%d%s", "AT id: ", _at, " Device id: ", _device, " an instruction's size is error.  The instruction is neglected.");
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
                                                     __FILE__, __func__, __LINE__, msg);
 #endif
-                _executoryInstruction.reset();
-                _executoryInstructionSuccess = false;
+                _executoryInstruction->reset();
+                _isExecutoryInstructionSuccess = false;
             }
         }
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, _at, _device, e.what());
+                                                __FILE__, __func__, __LINE__, _at, _device, e.what());
 #endif
         }
     }
@@ -349,66 +436,78 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
  */
 void ATCCSDeviceController::setExecutoryInstructionResult(std::shared_ptr<ATCCSData> data)
 {
-    try
+    if (_executoryInstruction)
     {
-        if (_executoryInstruction)
+        try
         {
             std::lock_guard<std::mutex> lk(_instructionLock);
             unsigned int ret = _executoryInstruction->setInstructionResult(data);
-#ifdef DATAPERSISTENCE
             if (ret == atccsinstruction::RESULT_EXECUTING)
+            {
+#ifdef DATAPERSISTENCE
                 _executoryInstruction->persistInstructionResult();
 #endif
+            }
         }
-        else
+        catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, _at, _device, e.what());
+#endif            
         }
     }
-    catch (std::exception &e)
+    else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__, _at, _device,
+                                            "atccsinstruction instance is null, fails to set instruction result.");
 #endif        
     }
 }
 
 /**
- * set the device address.
- * @param ip
- * @param port
+ * set the device's address.
+ * @param ip    std::string
+ * @param port  unsigned short
  */
 void ATCCSDeviceController::setDeviceAddress(const std::string &ip, unsigned short port)
 {
-    try
+    if (_instructionSender == nullptr)
     {
-        if (!_instructionSender)
+        try
+        {
             _instructionSender = std::make_shared<ATCCSDataSender>();
-        if (_instructionSender)
-        {
-            _instructionSender->setTargetAddress(ip, port);
         }
-        else
+        catch (std::exception &e)
         {
+#ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__,
-                                                "");
+                                                __FILE__, __func__, __LINE__, _at, _device, e.what());
+#endif  
+            return;
         }
     }
-    catch (std::exception &e)
+
+    if (_instructionSender)
+    {
+        _instructionSender->setTargetAddress(ip, port);
+    }
+    else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
-#endif
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__, _at, _device, 
+                                            "ATCCSDataSender instance is null, fails to setTargetAddress.");
+#endif        
     }
-
 }
 
+/**
+ * set the device's address
+ * @param address   std::shared_ptr<ATCCSAddress>
+ */
 void ATCCSDeviceController::setDeviceAddress(std::shared_ptr<ATCCSAddress> address)
 {
     if (address)
@@ -417,39 +516,47 @@ void ATCCSDeviceController::setDeviceAddress(std::shared_ptr<ATCCSAddress> addre
     }
     else
     {
+#ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+                                            __FILE__, __func__, __LINE__, _at, _device,
+                                            "The source ATCCSAddress is null, fails to setDeviceAddress.");
+#endif        
     }
 }
 
 /**
  * set device real-time online status.
- * @param online true(online), false(offline)
- * @param time  UTC, last time when to get the status.
+ * @param online bool
+ * @param time  unsigned int
  */
 void ATCCSDeviceController::setRealtimeOnline(bool online, unsigned int time)
 {
-    try
+    if(_realtimeOnline == nullptr)
     {
-        if (!_realtimeOnline)
-            _realtimeOnline = std::make_shared<ATCCSOnline>();
-        if (_realtimeOnline)
+        try
         {
-            _realtimeOnline->setOnline(online, time);
+            _realtimeOnline = std::make_shared<ATCCSOnline>();
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                                __FILE__, __func__, __LINE__, _at, _device, e.what());
+#endif            
+            return;
         }
     }
-    catch (std::exception &e)
+
+    if (_realtimeOnline)
+    {
+        _realtimeOnline->setOnline(online, time);
+    }
+    else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                            __FILE__, __func__, __LINE__, _at, _device,
+                                            "ATCCSOnline instance is null, fails to setRealtimeOnline.");
 #endif
     }
 }
@@ -460,27 +567,27 @@ void ATCCSDeviceController::setRealtimeOnline(bool online, unsigned int time)
  */
 bool ATCCSDeviceController::isOnline() const
 {
-    try
+    if(_realtimeOnline)
     {
-        if (_realtimeOnline)
+        try
         {
             return _realtimeOnline->online();
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+                                                __FILE__, __func__, __LINE__, _at, _device, e.what());            
 #endif
         }
     }
-    catch (std::exception &e)
+    else
     {
-        //FIXME
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
+                                                __FILE__, __func__, __LINE__, _at, _device,
+                                                "ATCCSOnline instance is null, fails to execute isOnline.");
+#endif        
     }
     return false;
 }
@@ -490,7 +597,25 @@ bool ATCCSDeviceController::canExecutePlan()
     return true;
 }
 
-unsigned int ATCCSDeviceController::id() const
+unsigned int ATCCSDeviceController::at() const
+{
+    return _at;
+}
+
+unsigned int ATCCSDeviceController::device() const
 {
     return _device;
+}
+
+bool ATCCSDeviceController::isExecutoryInstructionFinished(unsigned int instructon) const
+{
+    if(_executoryInstruction)
+    {
+        return (_executoryInstruction->instruction() == instructon) && _isExecutoryInstructionDone;
+    }
+    else
+    {
+        
+    }
+    return false;
 }

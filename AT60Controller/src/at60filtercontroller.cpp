@@ -16,7 +16,7 @@
 #include "at60filterstatus.h"
 #include "atccsexceptionhandler.h"
 AT60FilterController::AT60FilterController() 
-    :ATCCSFilterController()
+    :ATCCSFilterController(AT60, FILTER)
 {
 
 }

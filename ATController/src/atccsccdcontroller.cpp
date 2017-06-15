@@ -19,8 +19,8 @@
 #include "atccspublicstatus.h"
 #include "at60ccdstatus.h"
 #include "atccsexceptionhandler.h"
-ATCCSCCDController::ATCCSCCDController() 
-    :ATCCSDeviceController(CCD)
+ATCCSCCDController::ATCCSCCDController(unsigned short at, unsigned short device) 
+    :ATCCSDeviceController(at, device)
 {
 
 }
@@ -193,7 +193,7 @@ bool ATCCSCCDController::canExecutePlan()
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        std::cerr << "error#"<< ERROR_STDEXCEPTRION << ": Device "<< id() << " " << e.what()
+        std::cerr << "error#"<< ERROR_STDEXCEPTRION << ": Device "<< at() << " " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__
                 << " @" << __LINE__ << std::endl;

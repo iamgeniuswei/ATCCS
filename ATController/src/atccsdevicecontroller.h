@@ -31,12 +31,15 @@ public:
     virtual bool isExecutoryInstructionOK(unsigned int instruction);
     virtual bool canExecuteInstruction() const;
     virtual bool canExecutePlan();
-    unsigned int id() const;
+    unsigned int at() const;
+    unsigned int device() const;
     unsigned int timeout();
-    bool executoryInstructionSuccess(unsigned int instruction);
+    bool isExecutoryInstructionSuccess(unsigned int instruction) const;
+    bool isExecutoryInstructionFinished(unsigned int instructon) const;
     
     
-protected:    
+protected:
+    void executeInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     virtual std::shared_ptr<atccsinstruction> instructionInstance();
     virtual std::shared_ptr<atccspublicstatus> statusInstance();
     int sendInstruction(std::shared_ptr<ATCCSData> data = nullptr);
@@ -52,7 +55,8 @@ protected:
     unsigned int _device = 0;
     unsigned int _at = 0;
     mutable bool _currentStatusOK;
-    mutable bool _executoryInstructionSuccess = false;
+    mutable bool _isExecutoryInstructionSuccess = false;
+    mutable bool _isExecutoryInstructionDone = false;
     mutable std::mutex _statusLock;
     mutable std::mutex _instructionLock;
 
