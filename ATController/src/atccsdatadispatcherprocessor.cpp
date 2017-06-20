@@ -11,25 +11,21 @@ ATCCSDataDispatcherProcessor::ATCCSDataDispatcherProcessor(std::shared_ptr<ATCCS
 
 
 void ATCCSDataDispatcherProcessor::processData(std::shared_ptr<ATCCSData> data)
-{
+{    
+    if(data == nullptr)
+        return;
     if(_dispatcher == nullptr)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__, 
-                                            "ATCCSDataDispatcher instance is null, ATCCSData can not be dispatched.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The data dispatcher is fail to be created, fails to process ATCCSData."));
 #endif
     }
-    
-    if(data == nullptr)
-        return;
-
     if(!data->validate())
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__, 
-                                            "ATCCSData is error, can not be dispatched.");
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s",
+                                            gettext("The ATCCSData is error and is neglected."));
 #endif
         return;
     }

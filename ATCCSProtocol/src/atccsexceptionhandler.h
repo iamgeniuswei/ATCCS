@@ -15,6 +15,7 @@
 #define ATCCSEXCEPTIONHANDLER_H
 #include "atccsqueue.h"
 #include "atccsexception.h"
+#include <libintl.h>
 class ATCCSException;
 class ATCCSExceptionHandler {
 private:
@@ -39,7 +40,9 @@ private:
     static ATCCSExceptionHandlerGarbo _ehGarbo;
 public:
     ~ATCCSExceptionHandler();
-    static void addException(std::shared_ptr<ATCCSException> exception = nullptr);
+    static void setMsg(std::string& msg, const char* format, ...);
+    static void addException(unsigned int type, const char* format, ...);
+    static void addException(unsigned int type, const char *file, const char *func, unsigned long line, const std::string& msg);
     static void addException(unsigned int type, const char *file, const char *func, unsigned long line, const char *msg);
     static void addException(unsigned int type, const char *file, const char *func, unsigned long line, char msg[]);
     static void addException(unsigned int type, const char *file, const char *func, unsigned long line, unsigned int at, unsigned int device, const char *msg);

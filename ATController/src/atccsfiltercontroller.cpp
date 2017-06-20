@@ -91,9 +91,9 @@ bool ATCCSFilterController::isExecutoryInstructionOK()
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, 
-                                            "atccsinstruction instance is null, fails to check filter's instruction result.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                            gettext("The instruction is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device);
 #endif        
     }
     return ret;
@@ -104,9 +104,25 @@ bool ATCCSFilterController::checkResult_Connect()
     if (_realtimeStatus)
     {
         if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _FILTER_INSTRUCTION_CONNECT);
+#endif             
             return false;
+        }
         if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _FILTER_INSTRUCTION_CONNECT);
+#endif            
             return false;
+        }
         _AT_FILTER_PARAM_CONNECT *param = (_AT_FILTER_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
         try
         {
@@ -126,16 +142,21 @@ bool ATCCSFilterController::checkResult_Connect()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _FILTER_INSTRUCTION_CONNECT,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _FILTER_INSTRUCTION_CONNECT);
 #endif
     }
     return false;
@@ -148,47 +169,58 @@ bool ATCCSFilterController::checkResult_FindHome()
 
 bool ATCCSFilterController::checkResult_SetFilterPosition()
 {
-    if(_realtimeStatus)
+    try
     {
         std::shared_ptr<atccsfilterstatus> temp = std::dynamic_pointer_cast<atccsfilterstatus>(_realtimeStatus);
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
-                return false;
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
-                return false;
-            _AT_FILTER_PARAM_SETPOSITION *param = (_AT_FILTER_PARAM_SETPOSITION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
-            try
-            {
-                std::lock_guard<std::mutex> lk(_statusLock);
-                std::cout << temp->curstatus() <<"--"<<_FILTER_STATUS_SLEWED << std::endl;
-                std::cout << temp->filterPosition() << "--" << param->position << std::endl;
-                return (temp->curstatus() == _FILTER_STATUS_SLEWED)
-                        &&(temp->filterPosition() == param->position);
-            }
-            catch(std::exception &e)
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, e.what());
-#endif
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _FILTER_INSTRUCTION_SETPOSITION);
+#endif 
+                return false;
             }
+            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _FILTER_INSTRUCTION_SETPOSITION);
+#endif                
+                return false;
+            }
+            _AT_FILTER_PARAM_SETPOSITION *param = (_AT_FILTER_PARAM_SETPOSITION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
+            std::lock_guard<std::mutex> lk(_statusLock);
+            std::cout << temp->curstatus() << "--" << _FILTER_STATUS_SLEWED << std::endl;
+            std::cout << temp->filterPosition() << "--" << param->position << std::endl;
+            return (temp->curstatus() == _FILTER_STATUS_SLEWED)
+                    &&(temp->filterPosition() == param->position);
+
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__,
-                                                "atccsfilterstatus instance is nullptr, fails to check instruction's result.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _FILTER_INSTRUCTION_SETPOSITION);
 #endif
         }
     }
-    else
+    catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                            __FILE__, __func__, __LINE__, 
-                                            "atccsfilterstatus instance is null, fails to check instruction's result.");
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _FILTER_INSTRUCTION_SETPOSITION,
+                                            e.what());
 #endif        
     }
     return false;

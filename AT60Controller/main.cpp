@@ -48,10 +48,14 @@ using namespace odb::core;
  * @return 
  */
 #include <unistd.h>
+#include <locale>
 int main(int argc, char** argv)
 {
-    std::cout << "----------------------AT60 Controller V2.00.00----------------------\n";
     
+    setlocale(LC_ALL, "");
+    bindtextdomain( "AT60Controller", "/usr/share/locale" );
+    textdomain( "AT60Controller" );
+    std::cout << "----------------------" <<gettext("AT60 Controller V3.00.00") << "----------------------" <<std::endl;
     //declare the thread controllers.
     std::shared_ptr<std::thread> exceptionThread = nullptr;
     std::shared_ptr<std::thread> receiverThread = nullptr;
@@ -84,12 +88,17 @@ int main(int argc, char** argv)
         {
             exceptionThread = std::make_shared<std::thread>(&AT60ExceptionDisplayer::run, exceptionDisplayer);
         }
+//        std::string msg;
+//        gett
+//        ATCCSExceptionHandler::setMsg(msg, "%s%d%d", gettext("AT: %d Device %d"), 12, 23);
+//        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,
+//                                            __FILE__, __func__, __LINE__, msg);
 
         AT60Setting *set = AT60Setting::instance();
         if (!(set->initSystemSetting()))
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
             exceptionDisplayer->setStop(true);

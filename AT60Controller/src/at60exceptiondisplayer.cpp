@@ -31,7 +31,7 @@ void AT60ExceptionDisplayer::run()
         std::shared_ptr<ATCCSException> temp = ATCCSExceptionHandler::lastException();
         if(temp == nullptr)
             continue;
-        std::cout << temp->id() << "--" << temp->type() << "--" << temp->errorString() << std::endl;
+        std::cout << temp->what() << std::endl;
     }
 
 }

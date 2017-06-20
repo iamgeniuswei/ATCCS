@@ -22,6 +22,8 @@ public:
     at60plan(const at60plan& orig);
     ~at60plan(){}
     unsigned int persistPlan() override;
+    void persistPlanResult() override;
+
 };
 
 #endif /* AT60PLAN_H */

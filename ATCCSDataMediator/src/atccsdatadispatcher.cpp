@@ -1,3 +1,5 @@
+#include <locale>
+
 #include "atccsdatadispatcher.h"
 #include "atccsdataqueue.h"
 #include "atccsdataprocessor.h"
@@ -12,26 +14,23 @@ ATCCSDataDispatcher::ATCCSDataDispatcher()
 
 ATCCSDataDispatcher::~ATCCSDataDispatcher()
 {
-#ifdef OUTDEBUGINFO
-    std::cout << "~ATCCSDataDispatcher" << std::endl;
-#endif
+
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       Thread function, This function will be executed in a new thread.
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
+ * Thread function, This function will be executed in a new thread.
+ * run() will dispatch the ATCCSData in MSG Queue to the according 
+ * device's fifo queue.
+ * @access public
  */
 void ATCCSDataDispatcher::run()
 {
     _dataQueue = ATCCSDataQueue::instance();
     if (_dataQueue)
     {
-        try
+        while(!stop())
         {
-            while (!stop())
+            try
             {
                 std::shared_ptr<ATCCSData> data = _dataQueue->wait_and_pop();
                 if (data == nullptr)
@@ -43,78 +42,75 @@ void ATCCSDataDispatcher::run()
                 else
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                        __FILE__, __func__, __LINE__,
-                                                        "ATCCSDataProcessor instance is null, can not process and dispatch data.");
+                    ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,"%s",
+                                                        "The data processor is fail to create, fails to dispatch data.");
 #endif
                 }
             }
-        }
-        catch (std::exception &e)
-        {
+            catch(std::exception &e)
+            {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif        
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%s",
+                                                    gettext("Fails to fetch data from MSG Queue."), e.what());
+#endif                
+            }
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSDataQueue instance is null, can not dispatch data, fails to execute data dispatcher thread.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                           gettext("The MSG Queue is fail to create, fails to execute data dispatcher thread."));
 #endif        
     }
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       dispatch data to ATCCSController according to id
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
+ * dispatch data to ATCCSController according to id
  * @param id    The ATCCSController's id
  * @param data  The pending data
- * -----------------------------------------------------------------------------
+ * @access public
  */
 void ATCCSDataDispatcher::dispatchControlData(unsigned int id, std::shared_ptr<ATCCSData> data)
 {
     if(_controllerManager)
     {
-        std::shared_ptr<ATCCSController> temp = _controllerManager->controller(id);
-        if(temp)
+        try
         {
-            temp->pushControlData(data);
+            std::shared_ptr<ATCCSController> temp = _controllerManager->controller(id);
+            if (temp)
+            {
+                temp->pushControlData(data);
+            }
+            else
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,"%s%d",
+                                                    gettext("There is no such AT Controller, fails to dispatch data. The id is: "), id);
+#endif
+            }            
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "There is no such ATCCSController, ATCCSData can not be dispatched.");
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s",
+                                                gettext("Fails to find AT Controller and dispatch data. The id is: "), id, e.what());
+#endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager is null, ATCCSData can not be dispatched.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The AT Controllers' manager is null, fails to dispatch data."));
 #endif
     }
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       set The ATCCSDataDispatcher's ATCCSDataProcessor
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
- * @param processor The ATCCSDataProcessor's instance that process the ATCCSData and decide
- *  how to dispatch the ATCCSData.
- * -----------------------------------------------------------------------------
+ * set the data processor
+ * @param processor
+ * @access public
  */
 void ATCCSDataDispatcher::setDataProcessor(std::shared_ptr<ATCCSDataProcessor> processor) 
 {
@@ -125,21 +121,17 @@ void ATCCSDataDispatcher::setDataProcessor(std::shared_ptr<ATCCSDataProcessor> p
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSDataProcessor is null, set value failed.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,"%s",
+                                            gettext("The data processor is null, fails to set data processor."));                                            
 #endif
     }
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       register ATCCSController to ATCCSDataDispatcher
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
- * @param id    The ATCCSController's id
- * @param controller    The ATCCSController's instance
+ * register the AT Controller by the id
+ * @param id    The AT Controller's id
+ * @param controller    The AT Controller
+ * @access public
  */
 void ATCCSDataDispatcher::registerDeviceController(unsigned int id, std::shared_ptr<ATCCSController> controller)
 {
@@ -152,23 +144,24 @@ void ATCCSDataDispatcher::registerDeviceController(unsigned int id, std::shared_
         catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("The AT Controllers' manager is fail to be created, fails to register AT Controller. The id is: "), id, e.what());
 #endif
+            return;
         }
-        return;
+        
     }
         
-    if(_controllerManager)
+    try
     {
         _controllerManager->registerController(id, controller);
     }
-    else
+    catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager instance is null, can not register ATCCSController.");
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("Fails to register AT Controller. The id is: "), id, e.what());
+#endif        
     }
+
 }

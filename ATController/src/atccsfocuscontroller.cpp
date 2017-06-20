@@ -83,8 +83,9 @@ bool ATCCSFocusController::isExecutoryInstructionOK()
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                            gettext("The instruction is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device);
 #endif        
     }
     return ret;

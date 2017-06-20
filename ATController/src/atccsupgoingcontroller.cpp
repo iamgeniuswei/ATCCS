@@ -30,17 +30,15 @@ ATCCSUpgoingController::ATCCSUpgoingController()
     catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
-#endif
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s",
+                                            gettext("Fails to initialize the upgoing data processors."));
+#endif 
     }
 }
 
 ATCCSUpgoingController::~ATCCSUpgoingController()
 {
-#ifdef OUTDEBUGINFO
-    std::cout << "~ATCCSUpgoingController" << std::endl;
-#endif
+
 }
 
 /**
@@ -50,34 +48,30 @@ ATCCSUpgoingController::~ATCCSUpgoingController()
  */
 void ATCCSUpgoingController::run()
 {
-    try
-    {        
-        while (!stop())
+
+    while (!stop())
+    {
+        try
         {
             std::shared_ptr<ATCCSData> data = popControlData();
             if (data == nullptr)
                 continue;
-            if (_dataProcessor)
-            {
-                _dataProcessor->processData(data);
-            }
-            else
-            {
+            if(!data->validate())
+                continue;
+            
+            _ATCCSPHeader *header = (_ATCCSPHeader*) (data->data());
+            processUpgoingData(header->msg, data);
+
+        }
+        catch (std::exception &e)
+        {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                    __FILE__, __func__, __LINE__,
-                                                    "ATCCSUpgoingDataProcessor instance is null, fails to process up-going ATCCSData.");
-#endif            
-            }
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%s",
+                                                gettext("Fails to process upgoing data."), e.what());
+#endif
         }
     }
-    catch(std::exception &e)
-    {
-#ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, e.what());
-#endif        
-    }
+
 }
 
 /**
@@ -89,27 +83,34 @@ void ATCCSUpgoingController::processUpgoingData(unsigned int id, std::shared_ptr
 {
     if (_processors)
     {
-        std::shared_ptr<ATCCSDataProcessor> handler = _processors->controller(id);
-        if (handler)
+        try
         {
-            handler->processData(data);
+            std::shared_ptr<ATCCSDataProcessor> handler = _processors->controller(id);
+            if (handler)
+            {
+                handler->processData(data);
+            }
+            else
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to find upgoing data processor. upgoing data: "), id);
+#endif
+            }
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            char msg[256] = {0};
-            snprintf(msg, 256, "%s%d%s", "MSG id is: ", id, ", there is no such ATCCSDataProcessor");
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                __FILE__, __func__, __LINE__, msg);
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                gettext("Fails to process upgoing data. upgoing data: "), id);
+#endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager<ATCCSDataProcessor> instance is null, fails to process up-going data.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d",
+                                           gettext("The upgoing data processors' manager is fail to be created, fails to process upgoing data. upgoing data: "), id);
 #endif
     }
 
@@ -125,27 +126,34 @@ void ATCCSUpgoingController::setDeviceOnline(unsigned int id, bool online, unsig
 {
     if (_controllerManager)
     {
-        std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
-        if (controller)
+        try
         {
-            controller->setRealtimeOnline(online, time);
+            std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
+            if (controller)
+            {
+                controller->setRealtimeOnline(online, time);
+            }
+            else
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to find AT Controller and set device online status. Device: "), id);
+#endif
+            }
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            char msg[256] = {0};
-            snprintf(msg, 256, "%s%d%s", "Device id is: ", id, ", there is no such ATCCSDeviceController, fails to setDeviceOnline");
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                __FILE__, __func__, __LINE__, msg);
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to set device online status. Device: "), id);
+#endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, 
-                                            "ATCCSMapManager<ATCCSDeviceController> instance is null, fails to setDeviceOnline");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d",
+                                           gettext("The AT Controllers' manager is fail to be created, fails to set device online status. Device: "), id);
 #endif
     }
 }
@@ -159,27 +167,34 @@ void ATCCSUpgoingController::setInstructionResult(unsigned int id, std::shared_p
 {
     if (_controllerManager)
     {
-        std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
-        if (controller)
+        try
         {
-            controller->setExecutoryInstructionResult(data);
+            std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
+            if (controller)
+            {
+                controller->setExecutoryInstructionResult(data);
+            }
+            else
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to find AT Controller and set device's instruction result. Device: "), id);
+#endif
+            }
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            char msg[256] = {0};
-            snprintf(msg, 256, "%s%d%s", "Device id is: ", id, ", there is no such ATCCSDeviceController, fails to setInstructionResult");
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                __FILE__, __func__, __LINE__, msg);
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to set device's instruction result. Device: "), id);
+#endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, 
-                                            "ATCCSMapManager<ATCCSDeviceController> instance is null, fails to setInstructionResult");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d",
+                                           gettext("The AT Controllers' manager is fail to be created, fails to set device's instruction result. Device: "), id);
 #endif
     }
 }
@@ -193,27 +208,34 @@ void ATCCSUpgoingController::setDeviceStatus(unsigned int id, std::shared_ptr<AT
 {
     if (_controllerManager)
     {
-        std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
-        if (controller)
+        try
         {
-            controller->setRealtimeStatus(data);
+            std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
+            if (controller)
+            {
+                controller->setRealtimeStatus(data);
+            }
+            else
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to find AT Controller and set device's status. Device: "), id);
+#endif
+            }
         }
-        else
+        catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            char msg[256] = {0};
-            snprintf(msg, 256, "%s%d%s", "Device id is: ", id, ", there is no such ATCCSDeviceController, fails to setDeviceStatus");
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                __FILE__, __func__, __LINE__, msg);
-#endif
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                    gettext("Fails to set device's status. Device: "), id);
+#endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, 
-                                            "ATCCSMapManager<ATCCSDeviceController> instance is null, fails to setDeviceStatus");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d",
+                                           gettext("The AT Controllers' manager is fail to be created, fails to set device's status. Device: "), id);
 #endif
     }
 }
@@ -234,24 +256,26 @@ void ATCCSUpgoingController::registerDataProcessor(unsigned int id, std::shared_
         catch(std::exception &e)
         {
 #ifdef OUTDEBUGINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("The upgoing data processors' manager is fail to be created, fails to register upgoing data processor. upgoing data: "), id,
+                                                e.what());
 #endif
+            return;
         }
     }
-    
-    if (_processors)
+    try
     {
         _processors->registerController(id, processor);
     }
-    else
+    catch(std::exception &e)
     {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager<ATCCSDataProcessor> instance is null, can not register ATCCSDataProcessor.");
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                            gettext("Fails to register upgoing data processor. upgoing data: "), id,
+                                            e.what());
 #endif        
     }
+
 }
 
 /**
@@ -269,25 +293,26 @@ void ATCCSUpgoingController::registerDeviceController(unsigned int id, std::shar
         }
         catch (std::exception &e)
         {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("The AT Controllers' manager is fail to be created, fails to register AT Controller. Device: "), id,
+                                                e.what());
 #endif
             return;
         }
         
     }
     
-    if (_controllerManager)
+    try
     {
         _controllerManager->registerController(id, controller);
     }
-    else
+    catch(std::exception &e)
     {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSMapManager<ATCCSDeviceController> instance is null, can not register ATCCSDeviceController.");
+#ifdef OUTDEBUGINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                            gettext("Fails to register AT Controller. Device: "), id,
+                                            e.what());
 #endif        
     }
 }

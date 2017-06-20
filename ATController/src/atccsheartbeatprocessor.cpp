@@ -22,12 +22,11 @@ void ATCCSHeartbeatProcessor::processData(std::shared_ptr<ATCCSData> data)
         return;
     if (!data->validate())
     {
-#ifdef OUTDEBUGINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSData is error, can not resolve heartbeat information.");
-        return;
-#endif        
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s",
+                                            gettext("The heartbeat's raw data is error and is neglected."));
+#endif
+        return;      
     }
     
     if (_controller)
@@ -40,11 +39,9 @@ void ATCCSHeartbeatProcessor::processData(std::shared_ptr<ATCCSData> data)
     }
     else
     {
-#ifdef OUTDEBUGINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSUpgoingController instance is null, fails to process Heartbeat ATCCSData.");
-        return;
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The upgoing controller is fail to be created, fails to process heartbeat."));
 #endif
     }
 }

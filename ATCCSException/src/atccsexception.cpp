@@ -21,6 +21,15 @@ ATCCSException::ATCCSException(const std::string& msg) noexcept
 {
     
 }
+ATCCSException::ATCCSException(const char* file, const char* func, unsigned int line, const std::string& msg)
+    :_file(file),
+        _func(func),
+        _line(line),
+        _msg(msg)
+{
+
+}
+
     
 ATCCSException::~ATCCSException() noexcept
 {

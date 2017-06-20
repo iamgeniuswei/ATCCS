@@ -107,6 +107,9 @@ int main(int argc, char** argv)
     cout << sizeof(_AT_PLAN) << endl;
     cout << FAIL << endl;
     cout << SUCCECSS << endl;
+    char test[8] = {0};
+    snprintf(test, 8, "%s", 100);
+    cout << test << endl;
 //    write_line("dfaf", "dfd", 34, 343, "dfd");
 //    double d1 = 0.012343;
 //    double d2 = 0.012344;

@@ -13,53 +13,131 @@
 
 #include "atccsexception.h"
 #include <iostream>
+#include <libintl.h>
 /**
  * initialize static data members
  */
 unsigned int ATCCSException::ID = 1;
 std::mutex ATCCSException::ID_MUTEX;
 
-ATCCSException::ATCCSException() {
+ATCCSException::ATCCSException(unsigned int type, const std::string& msg) noexcept
+    :_type(type),
+        _msg(msg)
+{
+try
+    {
+        std::lock_guard<std::mutex> lk(ID_MUTEX);
+        _id = ID++;
+        char id[24] = {0};
+        snprintf(id, 24, "%d", _id);
+        _exceptionString += id;
+        switch (_type)
+        {
+            case STDEXCEPTION:
+            {
+                _exceptionString += gettext("-<std exception#1>: ");
+                break;
+            }
+            case POINTERISNULL:
+            {
+                _exceptionString += gettext("-<pointer is null#2>: ");
+                break;
+            }
+            case CUSTOMERROR:
+            {
+                _exceptionString += gettext("-<custom error#3>: ");
+                break;
+            }
+            case DEBUGINFO:
+            {
+                _exceptionString += gettext("-<debug info#4>: ");
+                break;
+            }
+            default:
+            {
+                _exceptionString += gettext("-<undefined error#5>: ");
+                break;
+            }
+        }
+        _exceptionString += _msg;
+    }
+    catch(std::exception &e)
+    {
+        std::cerr << type << "--" << msg << std::endl;
+    }
 }
 
-void ATCCSException::setErrorString(std::string _errorString) {
-    this->_errorString = _errorString;
+
+
+
+ATCCSException::ATCCSException(unsigned int type, const char* file, const char* func, unsigned int line, const std::string& msg) noexcept
+    :_type(type),
+        _file(file),
+        _func(func),
+        _line(line),
+        _msg(msg)
+{
+    try
+    {
+        std::lock_guard<std::mutex> lk(ID_MUTEX);
+        _id = ID++;
+        char id[24] = {0};
+        snprintf(id, 24, "%d", _id);
+        _exceptionString += id;
+        switch (_type)
+        {
+            case STDEXCEPTION:
+            {
+                _exceptionString += gettext("-<std exception#1>: ");
+                break;
+            }
+            case POINTERISNULL:
+            {
+                _exceptionString += gettext("-<pointer is null#2>: ");
+                break;
+            }
+            case CUSTOMERROR:
+            {
+                _exceptionString += gettext("-<custom error#3>: ");
+                break;
+            }
+            case DEBUGINFO:
+            {
+                _exceptionString += gettext("-<debug info#4>: ");
+                break;
+            }
+            default:
+            {
+                _exceptionString += gettext("-<undefined error#5>: ");
+                break;
+            }
+        }
+        _exceptionString += _msg;
+        _exceptionString += " @";
+        _exceptionString += file;
+        _exceptionString += " @";
+        _exceptionString += func;
+        char li[24] = {0};
+        snprintf(li, 24, "%d", line);
+        _exceptionString += " @";
+        _exceptionString += li;
+    }
+    catch(std::exception &e)
+    {
+        std::cerr << type << "--" << msg << " @" << file << " @" << func << " @" << line << std::endl;
+    }
 }
 
-std::string ATCCSException::errorString() const {
-    return _errorString;
-}
-
-void ATCCSException::setType(unsigned int _type) {
-    this->_type = _type;
-}
-
-unsigned int ATCCSException::type() const {
-    return _type;
-}
-
-void ATCCSException::setId(unsigned int _id) {
-    this->_id = _id;
-    
-}
-
-unsigned int ATCCSException::id() const {
-    return _id;
-}
-
-ATCCSException::ATCCSException(const ATCCSException& orig) {
-}
-
-ATCCSException::~ATCCSException() 
+ATCCSException::~ATCCSException() noexcept
 {
 
 }
 
-ATCCSException::ATCCSException(unsigned int type, const std::string& errorString) 
-    : _type(type), _errorString(errorString)
+const char* ATCCSException::what() const noexcept
 {
-    std::lock_guard<std::mutex> lk(ID_MUTEX);
-    _id = ID++;
+    return _exceptionString.c_str();
 }
+
+
 
 

@@ -18,13 +18,13 @@ ATCCSThread::ATCCSThread() {
 
 void ATCCSThread::setStop(bool _stop) 
 {
-    std::lock_guard<std::mutex> lk(_stopLock);
+//    std::lock_guard<std::mutex> lk(_stopLock);
     this->_stop = _stop;
 }
 
 bool ATCCSThread::stop() const 
 {
-    std::lock_guard<std::mutex> lk(_stopLock);
+//    std::lock_guard<std::mutex> lk(_stopLock);
     return _stop;
 }
 

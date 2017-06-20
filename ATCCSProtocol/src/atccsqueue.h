@@ -18,7 +18,7 @@ public:
     }
     virtual ~ATCCSQueue()
     {
-        std::cout << "~ATCCSQueue()\n";
+        
     }
 
     ATCCSQueue(ATCCSQueue const& other)

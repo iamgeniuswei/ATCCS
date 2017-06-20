@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
+#include <locale>
 #include "atccsaddress.h"
 #include "atccs_global.h"
 #include "atccsexception.h"
@@ -17,17 +18,13 @@ ATCCSDataReceiver::ATCCSDataReceiver()
 
 ATCCSDataReceiver::~ATCCSDataReceiver()
 {
-#ifdef OUTERRORINFO
-    std::cout << "~ATCCSDataReceiver" << std::endl;
-#endif    
+  
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       Thread function, This function will be executed in a new thread.
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
+ * Thread function.
+ * This function will be executed in a new thread.
+ * @access public
  */
 void ATCCSDataReceiver::run()
 {
@@ -35,26 +32,24 @@ void ATCCSDataReceiver::run()
     if(_dataQueue == nullptr)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSDataQueue instance is null,fails to execute data receiver thread.");
-#endif          
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The MSG Queue is fail to create, fails to execute data receiver thread."));
+#endif  
+        return;
     }
-    if(!isReadyToRecv)
+    if(!_isReadyToRecv)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__,
-                                            "There is error in socket setting, fails to execute data receiver thread.");
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,"%s",
+                                            gettext("There is error in socket, fails to execute data receiver thread."));
 #endif
         return;
     }
     if(_recvSocket == nullptr)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "QPUdpSocket instance is null, fails to execute data receiver thread.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The socket is fail to create, fails to execute data receiver thread."));
 #endif
         return;
     }
@@ -65,20 +60,19 @@ void ATCCSDataReceiver::run()
         
     }
     catch(std::exception &e)
-    {
-        data = nullptr;
+    {       
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,"%s%s",
+                                            gettext("The receiver buffer is fail to create, fails to execute data receiver thread."), e.what());
 #endif
         return;
     }
     
     if(data)
     {
-        try 
+        while (!stop())
         {
-            while (!stop() && isReadyToRecv) 
+            try
             {
                 ssize_t size = _recvSocket->recvData(data, BUFFER_SIZE);
                 if (size > 0) 
@@ -89,16 +83,15 @@ void ATCCSDataReceiver::run()
                         memcpy(newdata->data(), data, size);
                         _dataQueue->push(newdata);
                     }
-                }
+                }                
             }
-            
-        } 
-        catch (std::exception &e) 
-        {
+            catch(std::exception &e)
+            {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%s",
+                                                    gettext("Fails to receive data and push it into MSG Queue."), e.what());
+#endif                
+            }
         }
         delete [] data;
         data = nullptr;
@@ -106,38 +99,40 @@ void ATCCSDataReceiver::run()
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "fails to allocate temporary receive buffer, fails to execute data receiver thread.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,"%s",
+                                            gettext("The receiver buffer fails to create, fails to execute data receiver thread."));
 #endif
     }
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       set the address of ATCCSDataReceiver
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
- * @param address   a shared_ptr of ATCCSAddress
- * -----------------------------------------------------------------------------
+ * set the receive address.
+ * @param address
+ * @return SUCCESS(0) if success, FAIL(-1) if fails.
+ * @access public
  */
 int ATCCSDataReceiver::setRecvAddress(std::shared_ptr<ATCCSAddress> address)
 {
     if(address != nullptr)
+    {
         return setRecvAddress(address->ip(), address->port());
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,"%s",
+                                            gettext("The address is null, fails to set receive address."));
+#endif        
+    }
     return FAIL;
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       set the address of ATCCSDataReceiver
- * -----------------------------------------------------------------------------
- * @access      public
- * -----------------------------------------------------------------------------
- * @param ip    ip v4 address, std::string
- * @param port  4000-65535, unsigned short
- * -----------------------------------------------------------------------------
+ * set the receive address.
+ * @param ip
+ * @param port
+ * @return SUCCESS(0) if success, FAIL(-1) if fails.
+ * @access public
  */
 int ATCCSDataReceiver::setRecvAddress(const std::string &ip, unsigned short port)
 {
@@ -151,26 +146,17 @@ int ATCCSDataReceiver::setRecvAddress(const std::string &ip, unsigned short port
         catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%s",
+                                                gettext("The socket is fails to create, fails to set receive address."), e.what());
 #endif
             return ret;
         }        
     }
-    if(_recvSocket)
-    {
-        ret = _recvSocket->setHostAddress(ip, port);
-        _recvSocket->setRecvTimeout(10);
-    }
-    else
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                            __FILE__, __func__, __LINE__,
-                                            "QPUdpSocket instance is null, can not bind address.");
-#endif
-    }
+
+    ret = _recvSocket->setHostAddress(ip, port);
+    _recvSocket->setRecvTimeout(10);
+
     if(ret == QPUdpSocket::SUCCESS)
-        isReadyToRecv = true;
+        _isReadyToRecv = true;
     return ret;
 }

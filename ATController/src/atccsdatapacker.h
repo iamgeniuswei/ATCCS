@@ -22,7 +22,9 @@ class ATCCSDataPacker {
 private:
     ATCCSDataPacker();
     ATCCSDataPacker(const ATCCSDataPacker& orig) = delete;
-    virtual ~ATCCSDataPacker();    
+    ATCCSDataPacker(const ATCCSDataPacker&& orig) = delete;
+    ATCCSDataPacker& operator=(const ATCCSDataPacker& orig) = delete;
+    ATCCSDataPacker& operator=(const ATCCSDataPacker&& orig) = delete;
 public:
     static unsigned int seq;
     static std::shared_ptr<ATCCSData> packGimbalInstruction_SetObjectName(std::shared_ptr<atccsplan> plan = nullptr);

@@ -7,7 +7,6 @@ class ATCCSAddress
 public:
     ATCCSAddress();
     ATCCSAddress(const std::string &ip, unsigned short port);
-    virtual ~ATCCSAddress();
     void setAddress(const std::string &ip, unsigned short port);
 
     std::string ip() const;

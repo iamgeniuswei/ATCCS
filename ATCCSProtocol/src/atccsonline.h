@@ -6,9 +6,8 @@ class ATCCSOnline
 {
 public:
     explicit ATCCSOnline();
-    ~ATCCSOnline();
     static unsigned int interval();
-    static void setInterval(unsigned int interval);
+    static void setInterval(unsigned int interval = 0);
 
     bool online() const;
     void setOnline(bool online, unsigned int time);

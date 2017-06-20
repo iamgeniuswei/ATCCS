@@ -17,12 +17,11 @@ void ATCCSDeviceStatusProcessor::processData(std::shared_ptr<ATCCSData> data)
     }
     if(!data->validate())
     {
-#ifdef OUTDEBUGINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSData is error, can not resolve device status information.");
-        return;
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s",
+                                            gettext("The status' raw data is error and is neglected."));
 #endif 
+        return;
     }
     if (_controller)
     {
@@ -35,9 +34,8 @@ void ATCCSDeviceStatusProcessor::processData(std::shared_ptr<ATCCSData> data)
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSUpgoingController instance is null, can not process device status ATCCSData.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The upgoing controller is fail to be created, fails to process device status."));
 #endif
     }
 }

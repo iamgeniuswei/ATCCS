@@ -24,10 +24,6 @@ unsigned int ATCCSDataPacker::seq = 1;
 ATCCSDataPacker::ATCCSDataPacker() {
 }
 
-ATCCSDataPacker::~ATCCSDataPacker() {
-}
-
-
 
 std::shared_ptr<ATCCSData> ATCCSDataPacker::packGimbalInstruction_SetObjectName(std::shared_ptr<atccsplan> plan) 
 {

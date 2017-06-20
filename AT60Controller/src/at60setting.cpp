@@ -305,7 +305,7 @@ std::string AT60Setting::xmlPath()
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,
                                             __FILE__, __func__, __LINE__,
                                             "Can not get configuration file's path");
 #endif
@@ -325,7 +325,7 @@ bool AT60Setting::initSystemSetting()
         if (doc->LoadFile(xml.c_str()) != XML_SUCCESS)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
             return false;

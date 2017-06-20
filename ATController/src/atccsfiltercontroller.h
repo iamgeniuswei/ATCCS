@@ -30,10 +30,6 @@ protected:
     virtual bool checkResult_Connect();
     virtual bool checkResult_FindHome();
     virtual bool checkResult_SetFilterPosition();
-
-
-
-
 };
 
 #endif /* ATCCSFILTERCONTROLLER_H */

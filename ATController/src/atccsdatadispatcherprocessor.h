@@ -8,10 +8,6 @@ class ATCCSDataDispatcherProcessor : public ATCCSDataProcessor
 {
 public:
     ATCCSDataDispatcherProcessor(std::shared_ptr<ATCCSDataDispatcher> dispatcher = nullptr);
-    ~ATCCSDataDispatcherProcessor()
-    {
-        
-    }
 public:
     void processData(std::shared_ptr<ATCCSData> data) override;
 private:

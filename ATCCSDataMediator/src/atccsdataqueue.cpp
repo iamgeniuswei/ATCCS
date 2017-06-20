@@ -35,7 +35,4 @@ ATCCSDataQueue::~ATCCSDataQueue()
         std::cout << e.what() << std::endl;
 #endif
     }
-#ifdef OUTDEBUGINFO
-    std::cout << "~ATCCSDataQueue\n";
-#endif
 }

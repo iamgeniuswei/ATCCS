@@ -27,3 +27,8 @@ unsigned int at60plan::persistPlan()
     return id;
 }
 
+void at60plan::persistPlanResult()
+{
+    ORMHelper::update<at60plan*>(this);
+}
+

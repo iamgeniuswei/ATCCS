@@ -19,6 +19,7 @@ class ATCCSException : std::exception
 {
 public:
     ATCCSException(const std::string& msg) noexcept;
+    ATCCSException(const char *file, const char *func, unsigned int line, const std::string& msg) noexcept;            
     ATCCSException(const ATCCSException& orig) = delete;
     ATCCSException(const ATCCSException&& orig) = delete;
     ATCCSException& operator=(const ATCCSException& orig) = delete;
@@ -33,7 +34,6 @@ protected:
     const char *_file;
     const char *_func;
     unsigned int _line;
-
 private:
 
 };

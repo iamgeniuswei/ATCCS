@@ -35,7 +35,7 @@ public:
 private:
     std::shared_ptr<QPUdpSocket> _recvSocket = nullptr;
     ATCCSDataQueue *_dataQueue = nullptr;
-    bool isReadyToRecv = false;
+    bool _isReadyToRecv = false;
     static const int BUFFER_SIZE = 4096;
 };
 

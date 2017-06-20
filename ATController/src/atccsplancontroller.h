@@ -28,7 +28,7 @@ private:
     bool setDeviceInstruction(unsigned int device = 0, unsigned int instruction = 0);
     bool setGimbalInstruction(unsigned int instruction = 0);
     bool setCCDInstruction(unsigned int instruction = 0);
-    bool waitInstructionOK(unsigned int device, unsigned int instruction = 0);
+    bool waitInstructionFinish(unsigned int device, unsigned int instruction = 0);
 
     
 

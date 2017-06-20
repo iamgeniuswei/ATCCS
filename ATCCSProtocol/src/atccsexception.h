@@ -16,31 +16,39 @@
 #include <string>
 #include <memory>
 #include <mutex>
+#include <exception>
 #include "atccsqueue.h"
-class ATCCSException 
+
+class ATCCSException : public std::exception
 {
 public:
+
     enum Exception
     {
         STDEXCEPTION = 1,
         POINTERISNULL,
-        CUSTOMEXCEPTION
+        CUSTOMERROR,
+        DEBUGINFO,
     };
 public:
-    ATCCSException();
-    ATCCSException(unsigned int type, const std::string& errorString);
-    ATCCSException(const ATCCSException& orig);
-    virtual ~ATCCSException();
-    void setErrorString(std::string _errorString);
-    std::string errorString() const;
-    void setType(unsigned int _type);
-    unsigned int type() const;
-    void setId(unsigned int _id);
-    unsigned int id() const;
-private:
+    ATCCSException(unsigned int type, const char *file, const char *func, unsigned int line, const std::string& msg) noexcept;
+    ATCCSException(unsigned int type, const std::string& msg) noexcept;
+    ATCCSException(const ATCCSException& orig) = delete;
+    ATCCSException(const ATCCSException&& orig) = delete;
+    ATCCSException& operator=(const ATCCSException& orig) = delete;
+    ATCCSException& operator=(const ATCCSException&& orig) = delete;
+    virtual ~ATCCSException() noexcept;
+    const char* what() const noexcept override;
+
+protected:
     unsigned int _id = 0;
-    unsigned int _type = 0; 
-    std::string _errorString;
+    unsigned int _type = 0;
+    std::string _msg;
+    std::string _file;
+    std::string _func;
+    std::string _exceptionString;
+    unsigned int _line = 0;
+private:
     static std::mutex ID_MUTEX;
     static unsigned int ID;
 };

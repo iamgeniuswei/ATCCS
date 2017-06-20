@@ -29,7 +29,7 @@ ATCCSPlanController::~ATCCSPlanController()
 
 void ATCCSPlanController::run()
 {
-    while(!stop())
+    while (!stop())
     {
         try
         {
@@ -50,8 +50,9 @@ void ATCCSPlanController::run()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, 0, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("Fails to execute the plan. AT: "), _at,
+                                                e.what());
 #endif
         }
     }
@@ -67,10 +68,6 @@ bool ATCCSPlanController::canExecutePlan() const
     return true;
 }
 
-
-
-
-
 /**
  * control a plan's procedure.
  * @param data, the raw plan encapsulated in ATCCSData.
@@ -82,9 +79,8 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
     if (!(data->validate()))
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCS Plan's raw data is error and can not be resolved, the plan is canceled.");
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                            gettext("The plan's raw data is error and the plan is neglected. AT: "), _at);
 #endif
         return;
     }
@@ -96,27 +92,30 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
 
     if (_executoryPlan)
     {
-        if (_executoryPlan->setPlan(data) == atccsplan::RESULT_EXECUTED)
+        if (_executoryPlan->setPlan(data) == atccsplan::RESULT_EXECUTING)
         {
 #ifdef OUTDEBUGINFO
-            std::cout << "---------------------------Start to execute plan--------------------------" << std::endl;
+            ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s%s%s",
+                                                "--------------------------",
+                                                gettext("Start execute a plan"),
+                                                "--------------------------");
 #endif
-
+            //persist the plan.
+#ifdef DATAPERSISTENCE
             try
             {
-#ifdef DATAPERSISTENCE
                 _executoryPlan->persistPlan();
-#endif
             }
             catch (std::exception &e)
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, _at, 0,
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                    gettext("Fails to persist the plan. AT: "), _at,
                                                     e.what());
 #endif
             }
-            
+#endif
+
             try
             {
                 //reset ATCCSDeviceController's instruction queue.
@@ -132,20 +131,22 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                 if (!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0,
-                                                        "Gimbal's _GIMBAL_INSTRUCTION_SETOBJECTNAME fails to dispatch, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), GIMBAL,
+                                                        gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
 #endif
-//                    return;
+                    //                    return;
                 }
-                if (!waitInstructionOK(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
+                if (!waitInstructionFinish(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0, 
-                                                        "Gimbal's _GIMBAL_INSTRUCTION_SETOBJECTNAME fails to execute, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), GIMBAL,
+                                                        gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
 #endif
-//                    return;
+                    //                    return;
                 }
 
                 //Send GImbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
@@ -154,21 +155,23 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                 if (!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0,
-                                                        "Gimbal's _GIMBAL_INSTRUCTION_TRACKSTAR fails to dispatch, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), GIMBAL,
+                                                        gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
 #endif
-//                    return;
+                    //                    return;
                 }
 
-                if (!waitInstructionOK(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
+                if (!waitInstructionFinish(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0,
-                                                        "Gimbal's _GIMBAL_INSTRUCTION_TRACKSTAR fails to execute, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), GIMBAL,
+                                                        gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
 #endif
-//                    return;
+                    //                    return;
                 }
 
                 //Send CCD's instruction: _CCD_INSTRUCTION_SETGAIN
@@ -177,20 +180,22 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                 if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETGAIN))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0, 
-                                                        "CCD's _CCD_INSTRUCTION_SETGAIN fails to dispatch, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), CCD,
+                                                        gettext(" Instruction: "), _CCD_INSTRUCTION_SETGAIN);
 #endif
-//                    return;
+                    //                    return;
                 }
-                if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETGAIN))
+                if (!waitInstructionFinish(CCD, _CCD_INSTRUCTION_SETGAIN))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0, 
-                                                        "CCD's _CCD_INSTRUCTION_SETGAIN fails to execute, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), CCD,
+                                                        gettext(" Instruction: "), _CCD_INSTRUCTION_SETGAIN);
 #endif
-//                    return;
+                    //                    return;
                 }
 
                 //Send CCD's instruction: _CCD_INSTRUCTION_SETRSMODE
@@ -199,20 +204,22 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                 if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETRSMODE))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0,
-                                                        "CCD's _CCD_INSTRUCTION_SETRSMODE fails to dispatch, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), CCD,
+                                                        gettext(" Instruction: "), _CCD_INSTRUCTION_SETRSMODE);
 #endif
-//                    return;
+                    //                    return;
                 }
-                if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETRSMODE))
+                if (!waitInstructionFinish(CCD, _CCD_INSTRUCTION_SETRSMODE))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0,
-                                                        "CCD's _CCD_INSTRUCTION_SETRSMODE fails to execute, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), CCD,
+                                                        gettext(" Instruction: "), _CCD_INSTRUCTION_SETRSMODE);
 #endif
-//                    return;
+                    //                    return;
                 }
 
                 //Send CCD's instruction: _CCD_INSTRUCTION_SETBIN
@@ -221,21 +228,23 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                 if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETBIN))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0,
-                                                        "CCD's _CCD_INSTRUCTION_SETBIN fails to dispatch, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), CCD,
+                                                        gettext(" Instruction: "), _CCD_INSTRUCTION_SETBIN);
 #endif
-//                    return;
+                    //                    return;
                 }
-                if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETBIN))
+                if (!waitInstructionFinish(CCD, _CCD_INSTRUCTION_SETBIN))
                 {
 #ifdef OUTERRORINFO
-                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                        __FILE__, __func__, __LINE__, _at, 0, 
-                                                        "CCD's _CCD_INSTRUCTION_SETBIN fails to execute, plan is canceled.");
+                    ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                        gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                        gettext(" Device: "), CCD,
+                                                        gettext(" Instruction: "), _CCD_INSTRUCTION_SETBIN);
 #endif
-//                    return;
-                }  
+                    //                    return;
+                }
 
                 for (int i = 0; i < _executoryPlan->exposureCount(); i++)
                 {
@@ -245,20 +254,22 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                     if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
                     {
 #ifdef OUTERRORINFO
-                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                            __FILE__, __func__, __LINE__, _at, 0, 
-                                                            "CCD's _CCD_INSTRUCTION_SETEXPOSURETACTIC fails to dispatch, plan is canceled.");
+                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                            gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                            gettext(" Device: "), CCD,
+                                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETEXPOSURETACTIC);
 #endif
-//                        break;
+                        //                        break;
                     }
-                    if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
+                    if (!waitInstructionFinish(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
                     {
 #ifdef OUTERRORINFO
-                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                            __FILE__, __func__, __LINE__, _at, 0, 
-                                                            "CCD's _CCD_INSTRUCTION_SETEXPOSURETACTIC fails to execute, plan is canceled.");
+                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                            gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                            gettext(" Device: "), CCD,
+                                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETEXPOSURETACTIC);
 #endif                    
-//                        break;
+                        //                        break;
                     }
                     //Send CCD's instruction: _CCD_INSTRUCTION_STARTEXPOSURE
                     if (!isRelatedDevicesReady())
@@ -266,48 +277,48 @@ void ATCCSPlanController::executePlan(std::shared_ptr<ATCCSData> data)
                     if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_STARTEXPOSURE))
                     {
 #ifdef OUTERRORINFO
-                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                            __FILE__, __func__, __LINE__, _at, 0,
-                                                            "CCD's _CCD_INSTRUCTION_STARTEXPOSURE fails to dispatch, plan is canceled.");
+                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                            gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                            gettext(" Device: "), CCD,
+                                                            gettext(" Instruction: "), _CCD_INSTRUCTION_STARTEXPOSURE);
 #endif
-//                        break;
+                        //                        break;
                     }
-                    if (!waitInstructionOK(CCD, _CCD_INSTRUCTION_STARTEXPOSURE))
+                    if (!waitInstructionFinish(CCD, _CCD_INSTRUCTION_STARTEXPOSURE))
                     {
 #ifdef OUTERRORINFO
-                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                            __FILE__, __func__, __LINE__, _at, 0,
-                                                            "CCD's _CCD_INSTRUCTION_STARTEXPOSURE fails to execute, plan is canceled.");
+                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                            gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                            gettext(" Device: "), CCD,
+                                                            gettext(" Instruction: "), _CCD_INSTRUCTION_STARTEXPOSURE);
 #endif                    
-//                        break;
+                        //                        break;
                     }
-                    std::cout << "i=" << i<< std::endl;
-                }                
+
+                }
             }
-            catch(std::exception &e)
+            catch (std::exception &e)
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                    __FILE__, __func__, __LINE__, _at, 0,
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                    gettext("Fails to execute the plan and the plan is neglected. AT: "), _at,
                                                     e.what());
 #endif                
-            }  
+            }
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, 0,
-                                                "Plan's raw data is error and can not be resolved, the plan is canceled.");
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                                gettext("The plan is fail to be set and neglected. AT: "), _at);
 #endif
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, _at, 0,
-                                            "atccsplan instance is null, the plan is canceled.");
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+                                            gettext("The plan is fail to be created and neglected. AT: "), _at);
 #endif
     }
 }
@@ -323,22 +334,22 @@ void ATCCSPlanController::registerDeviceController(unsigned int id, std::shared_
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, 0, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("The AT Controllers' manager is fail to be created, fails to register AT Controller. The id is: "), id, e.what());
 #endif
             return;
-        }        
+        }
     }
-    
+
     try
     {
         _controllers->registerController(id, controller);
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, _at, 0, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
+                                                gettext("Fails to register AT Controller. The id is: "), id, e.what());
 #endif        
     }
 }
@@ -357,26 +368,27 @@ void ATCCSPlanController::resetDeviceInstruction(unsigned int device)
             else
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                    __FILE__, __func__, __LINE__, _at, device,
-                                                    "There is no such ATCCSDeviceController, fails to resetDeviceInstruction.");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                                gettext("Fails to find AT Controller and AT Controller's instruction queue. AT: "), _at,
+                                                gettext(" Device: "), device);
 #endif        
             }
         }
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, device, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s",
+                                                gettext("Fails to clear the AT Controller's instruction queue. AT: "), _at, 
+                                                gettext(" Device: "), device, e.what());
 #endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, _at, 0,
-                                            "ATCCSMapManager<ATCCSDeviceController> is null, fails to resetDeviceInstruction.");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                                gettext("The AT Controllers' manager is fail to be created, fails to clear AT Controller's instruction queue. AT: "), _at,
+                                                gettext(" Device: "), device);
 #endif        
     }
 }
@@ -410,26 +422,30 @@ bool ATCCSPlanController::setGimbalInstruction(unsigned int instruction)
             else
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                    __FILE__, __func__, __LINE__, _at, GIMBAL,
-                                                    "There is no such ATCCSDeviceController, fails to dispatch plan's instruction to GIMBAL.");
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                    gettext(" Fails to find AT Controller and  set AT Controller's instruction. AT: "), _at,
+                                                    gettext(" Device: "), GIMBAL,
+                                                    gettext(" Instruction: "), instruction);
 #endif            
             }
         }
-        catch(std::exception &e)
+        catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, GIMBAL, e.what());
-#endif            
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("Fails to set AT Controller's instruction. AT: "), _at,
+                                                gettext(" Device: "), GIMBAL,
+                                                gettext(" Instruction: "), instruction);
+#endif           
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, _at, GIMBAL,
-                                            "ATCCSMapManager<ATCCSDeviceController> is null, fails to dispatch plan's instruction to GIMBAL.");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The AT Controllers' manager is fail to be created, fails to set AT Controller's instruction. AT: "), _at,
+                                                gettext(" Device: "), GIMBAL,
+                                                gettext(" Instruction: "), instruction);
 #endif
     }
     return false;
@@ -472,26 +488,30 @@ bool ATCCSPlanController::setCCDInstruction(unsigned int instruction)
             else
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                    __FILE__, __func__, __LINE__, _at, CCD,
-                                                    "There is no such ATCCSDeviceController, fails to dispatch plan's instruction to CCD.");
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                    gettext(" Fails to find AT Controller and  set AT Controller's instruction. AT: "), _at,
+                                                    gettext(" Device: "), CCD,
+                                                    gettext(" Instruction: "), instruction);
 #endif                
             }
         }
-        catch(std::exception &e)
+        catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, CCD, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("Fails to set AT Controller's instruction. AT: "), _at,
+                                                gettext(" Device: "), CCD,
+                                                gettext(" Instruction: "), instruction);
 #endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, _at, CCD,
-                                            "ATCCSMapManager<ATCCSDeviceController> is null, fails to dispatch plan's instruction to CCD.");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The AT Controllers' manager is fail to be created, fails to set AT Controller's instruction. AT: "), _at,
+                                                gettext(" Device: "), CCD,
+                                                gettext(" Instruction: "), instruction);
 #endif
     }
     return false;
@@ -512,21 +532,21 @@ bool ATCCSPlanController::setDeviceInstruction(unsigned int device, unsigned int
     }
 }
 
-bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int instruction)
+bool ATCCSPlanController::waitInstructionFinish(unsigned int device, unsigned int instruction)
 {
     if (_controllers)
     {
         try
         {
-            std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(device);            
+            std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(device);
             if (temp)
             {
                 auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
                 while (!temp->isExecutoryInstructionFinished(instruction))
                 {
-//                    auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-//                    if ((now - base) > temp->timeout())
-//                        break;
+                    //                    auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+                    //                    if ((now - base) > temp->timeout())
+                    //                        break;
                     std::chrono::milliseconds dura(1000);
                     std::this_thread::sleep_for(dura);
                 }
@@ -538,26 +558,30 @@ bool ATCCSPlanController::waitInstructionOK(unsigned int device, unsigned int in
             else
             {
 #ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                    __FILE__, __func__, __LINE__, _at, device,
-                                                    "There is no such ATCCSDeviceController, fails to check the result of device's instruction.");
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                    gettext("Fails to find AT Controller and wait AT Controller's instruction result. AT: "), _at,
+                                                    gettext(" Device: "), device,
+                                                    gettext(" Instruction: "), instruction);
 #endif                
             }
         }
-        catch(std::exception &e)
+        catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, _at, device, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("Fails to wait AT Controller's instruction result. AT: "), _at,
+                                                gettext(" Device: "), device,
+                                                gettext(" Instruction: "), instruction);
 #endif            
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, _at, device,
-                                            "ATCCSMapManager<ATCCSDeviceController> is null, fails to check the result of device's instruction.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The AT Controllers' manager is fail to be created, fails to wait AT Controller's instruction result. AT: "), _at,
+                                            gettext(" Device: "), device,
+                                            gettext(" Instruction: "), instruction);
 #endif
     }
     return false;
@@ -567,7 +591,6 @@ bool ATCCSPlanController::isRelatedDevicesReady()
 {
     return true;
 }
-
 
 std::shared_ptr<atccsplan> ATCCSPlanController::executoryPlanInstance()
 {

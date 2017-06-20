@@ -29,7 +29,7 @@ unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
     {
         _sec = header->tv_sec;
         _msec = header->tv_usec;
-        _result = RESULT_EXECUTED;
+        _result = RESULT_EXECUTING;
     }
     _AT_PLAN *plan = (_AT_PLAN*)(data->data()+sizeof(_ATCCSPHeader));
     if(plan)
@@ -50,7 +50,7 @@ unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
         _bin = plan->bin;
         _readout = plan->readout;
     }
-    return RESULT_EXECUTED;
+    return RESULT_EXECUTING;
 }
 
 double atccsplan::delayTime() const

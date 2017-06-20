@@ -26,17 +26,14 @@
  */
 class ATCCSData
 {
-private:
-    ATCCSData();
 public:
-    ATCCSData(unsigned int size);
+    ATCCSData(unsigned int size) noexcept;
     ~ATCCSData()
     {        
         if(nullptr != _data)
         {
             delete [] _data;
             _data = nullptr;
-//            std::cout << "~ATCCSData\n";
         }
     }
     char* data();

@@ -1,0 +1,23 @@
+# Chinese translations for CppApplication package
+# CppApplication 软件包的简体中文翻译.
+# Copyright (C) 2017 THE CppApplication'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the CppApplication package.
+#  <lenovo@localhost>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: CppApplication 1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-06-16 11:09+0800\n"
+"PO-Revision-Date: 2017-06-16 11:13+0800\n"
+"Last-Translator:  <lenovo@localhost>\n"
+"Language-Team: Chinese (simplified) <translation-team-zh-cn@lists."
+"sourceforge.net>\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=GB2312\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: main.cpp:27
+msgid "test"
+msgstr "你好"

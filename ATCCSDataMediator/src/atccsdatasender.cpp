@@ -8,25 +8,21 @@
 #include "atccsexception.h"
 #include "atccsexceptionhandler.h"
 
+
 ATCCSDataSender::ATCCSDataSender()
 {
-
 }
 
 ATCCSDataSender::~ATCCSDataSender()
 {
-#ifdef OUTDEBUGINFO
-    std::cout << "~ATCCSDataSender\n";
-#endif
 }
 
+
 /**
- * -----------------------------------------------------------------------------
- * @brief       send ATCCSData to The Target
- * -----------------------------------------------------------------------------
- * @param data  the pending data
- * @return size actually send
- * -----------------------------------------------------------------------------
+ * send ATCCSData to the targetDevice
+ * @param data
+ * @return the size has been sent
+ * @access public
  */
 int ATCCSDataSender::sendData(std::shared_ptr<ATCCSData> data)
 {
@@ -35,21 +31,18 @@ int ATCCSDataSender::sendData(std::shared_ptr<ATCCSData> data)
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "QPUdpSocket instance is null, send data fails.");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,"%s",
+                                            gettext("The socket is fail to create, fails to send data."));
 #endif
     }
-    return -1;
+    return FAIL;
 }
 
 /**
- * -----------------------------------------------------------------------------
- * @brief       set The Target Address
- * -----------------------------------------------------------------------------
- * @param ip    ip v4 address, std::string, 
- * @param port  4000-65535, unsigned short, 
- * -----------------------------------------------------------------------------
+ * set the target address
+ * @param ip
+ * @param port
+ * @return void
  */
 void ATCCSDataSender::setTargetAddress(const std::string &ip, unsigned short port)
 {
@@ -62,22 +55,15 @@ void ATCCSDataSender::setTargetAddress(const std::string &ip, unsigned short por
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%s",
+                                                gettext("The socket is fail to create, fails to set target address."), e.what());
 #endif
             return;
         }
     }
-    if (_udpSocket)
-        _udpSocket->setTargetAddress(ip, port);
-    else
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "QPUdpSocket instance is null, set Target Address fails.");
-#endif        
-    }
+    
+    _udpSocket->setTargetAddress(ip, port);
+
 }
 
 void ATCCSDataSender::setTargetAddress(std::shared_ptr<ATCCSAddress> address)
@@ -89,9 +75,8 @@ void ATCCSDataSender::setTargetAddress(std::shared_ptr<ATCCSAddress> address)
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSAddress instance is null, set Target Address fails.");        
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The address is null, fails to set target address."));        
 #endif
     }
 }

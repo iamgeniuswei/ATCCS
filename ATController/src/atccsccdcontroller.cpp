@@ -19,14 +19,14 @@
 #include "atccspublicstatus.h"
 #include "at60ccdstatus.h"
 #include "atccsexceptionhandler.h"
-ATCCSCCDController::ATCCSCCDController(unsigned short at, unsigned short device) 
-    :ATCCSDeviceController(at, device)
+
+ATCCSCCDController::ATCCSCCDController(unsigned short at, unsigned short device)
+: ATCCSDeviceController(at, device)
 {
 
 }
 
-
-ATCCSCCDController::~ATCCSCCDController() 
+ATCCSCCDController::~ATCCSCCDController()
 {
 }
 
@@ -37,29 +37,32 @@ ATCCSCCDController::~ATCCSCCDController()
  * status is normal.
  * @return true if ok, false if not.
  */
-bool ATCCSCCDController::isStatusOK() const 
+bool ATCCSCCDController::isStatusOK() const
 {
-    if(_realtimeStatus)
+    if (_realtimeStatus)
     {
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
             return _realtimeStatus->error() == _CCD_ERROR_NORMAL;
-            
+
         }
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s",
+                                                gettext("Fails to query whether status is ok. AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                e.what());
 #endif
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to query whether status is ok. AT: "), _at,
+                                            gettext(" Device: "), _device);
 #endif
     }
     return false;
@@ -70,12 +73,12 @@ bool ATCCSCCDController::isStatusOK() const
  * and judge the progress it has executed.
  * @return true if has done, false if in progress.
  */
-bool ATCCSCCDController::isExecutoryInstructionOK() 
+bool ATCCSCCDController::isExecutoryInstructionOK()
 {
     bool ret = false;
-    if(_executoryInstruction)
+    if (_executoryInstruction)
     {
-        switch(_executoryInstruction->instruction())
+        switch (_executoryInstruction->instruction())
         {
             case _CCD_INSTRUCTION_CONNECT:
             {
@@ -111,7 +114,7 @@ bool ATCCSCCDController::isExecutoryInstructionOK()
             {
                 ret = checkResult_SetGain();
                 break;
-            }            
+            }
             case _CCD_INSTRUCTION_SETBIN:
             {
                 ret = checkResult_SetBIN();
@@ -169,31 +172,32 @@ bool ATCCSCCDController::isExecutoryInstructionOK()
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                            gettext("The instruction is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device);
 #endif        
     }
     return ret;
 }
 
-bool ATCCSCCDController::canExecutePlan() 
+bool ATCCSCCDController::canExecutePlan()
 {
     try
     {
         std::lock_guard<std::mutex> lk(_statusLock);
-        if(_realtimeStatus)
+        if (_realtimeStatus)
         {
             unsigned int temp = _realtimeStatus->curstatus();
-            return _realtimeStatus->error() == _CCD_ERROR_NORMAL && 
+            return _realtimeStatus->error() == _CCD_ERROR_NORMAL &&
                     temp != _CCD_STATUS_DISCONNECT &&
                     temp != _CCD_STATUS_CONNECTING &&
                     temp != _CCD_STATUS_DISCONNECTING;
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-        std::cerr << "error#"<< ERROR_STDEXCEPTRION << ": Device "<< at() << " " << e.what()
+        std::cerr << "error#" << ERROR_STDEXCEPTRION << ": Device " << at() << " " << e.what()
                 << " @" << __func__
                 << " @" << __FILE__
                 << " @" << __LINE__ << std::endl;
@@ -202,19 +206,34 @@ bool ATCCSCCDController::canExecutePlan()
     return false;
 }
 
-
 /**
  * check the result of Gimbal's instruction: _CCD_INSTRUCTION_CONNECT
  * @return true if success, false if fails. 
  */
-bool ATCCSCCDController::checkResult_Connect() 
+bool ATCCSCCDController::checkResult_Connect()
 {
     if (_realtimeStatus)
     {
         if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_CONNECT);
+#endif            
             return false;
+        }
         if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_CONNECT)))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_CONNECT);
+#endif            
             return false;
+        }
         _AT_CCD_PARAM_CONNECT *param = (_AT_CCD_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
         try
         {
@@ -235,34 +254,55 @@ bool ATCCSCCDController::checkResult_Connect()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_CONNECT,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_CONNECT);
 #endif
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetCoolerT() 
+bool ATCCSCCDController::checkResult_SetCoolerT()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETCOOLERT);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETCOOLERT)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETCOOLERT);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETCOOLERT *param = (_AT_CCD_PARAM_SETCOOLERT*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));
-            
+            }
+            _AT_CCD_PARAM_SETCOOLERT *param = (_AT_CCD_PARAM_SETCOOLERT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             std::cout << param->temperature << "--" << temp->coolerT() << std::endl;
             return ((temp->warning() == _CCD_WARN_NORMAL) && (cmpDouble(temp->coolerT(), param->temperature, 5)));
@@ -270,35 +310,56 @@ bool ATCCSCCDController::checkResult_SetCoolerT()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETCOOLERT);
 #endif
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETCOOLERT,
+                                            e.what());
 #endif
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetExposureTactics() 
+bool ATCCSCCDController::checkResult_SetExposureTactics()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETEXPOSURETACTIC);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEXPOSURETACTIC)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETEXPOSURETACTIC);
+#endif                 
                 return false;
-            _AT_CCD_PARAM_SETEXPOSURETACTIC *param = (_AT_CCD_PARAM_SETEXPOSURETACTIC*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));
-            
-            std::lock_guard<std::mutex> lk(_statusLock);            
+            }
+            _AT_CCD_PARAM_SETEXPOSURETACTIC *param = (_AT_CCD_PARAM_SETEXPOSURETACTIC*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
+            std::lock_guard<std::mutex> lk(_statusLock);
             std::string name = std::string(param->objectName);
             std::string band = std::string(param->objectBand);
             std::cout << temp->curstatus() << "-" << _CCD_STATUS_WAITINGEXPOSURE << std::endl;
@@ -308,7 +369,7 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
             std::cout << temp->band() << "-" << band << std::endl;
             std::cout << temp->J2000RightAscension() << "-" << param->objectRightAscension << std::endl;
             std::cout << temp->J2000Declination() << "-" << param->objectDeclination << std::endl;
-            
+
             return (temp->curstatus() == _CCD_STATUS_WAITINGEXPOSURE)&&
                     (temp->epoch() == param->objectEpoch) &&
                     (temp->observeType() == param->objectType) &&
@@ -320,24 +381,29 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                                __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETEXPOSURETACTIC);
 #endif
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETEXPOSURETACTIC,
+                                            e.what());
 #endif
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_StartExposure() 
+bool ATCCSCCDController::checkResult_StartExposure()
 {
-    if(_realtimeStatus)
+    if (_realtimeStatus)
     {
         try
         {
@@ -349,22 +415,27 @@ bool ATCCSCCDController::checkResult_StartExposure()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_STARTEXPOSURE,
+                                                e.what());
 #endif        
-        }        
+        }
     }
     else
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                                __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_STARTEXPOSURE);
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_StopExposure() 
+bool ATCCSCCDController::checkResult_StopExposure()
 {
     if (_realtimeStatus)
     {
@@ -377,22 +448,27 @@ bool ATCCSCCDController::checkResult_StopExposure()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_STOPEXPOSURE,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_STOPEXPOSURE);
 #endif
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_AbortExposure() 
+bool ATCCSCCDController::checkResult_AbortExposure()
 {
     if (_realtimeStatus)
     {
@@ -404,34 +480,55 @@ bool ATCCSCCDController::checkResult_AbortExposure()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_ABORTEXPOSURE,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_ABORTEXPOSURE);
 #endif
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetGain() 
+bool ATCCSCCDController::checkResult_SetGain()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETGAIN);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETGAIN)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETGAIN);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETGAIN *param = (_AT_CCD_PARAM_SETGAIN*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETGAIN *param = (_AT_CCD_PARAM_SETGAIN*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             std::cout << temp->indexOfGain() << "--" << param->gear << std::endl;
             std::cout << temp->indexOfGainMode() << "--" << param->mode << std::endl;
@@ -440,34 +537,55 @@ bool ATCCSCCDController::checkResult_SetGain()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETGAIN);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETGAIN,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetReadSpeedMode() 
+bool ATCCSCCDController::checkResult_SetReadSpeedMode()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETRSMODE);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETRSMODE)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETRSMODE);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETRSMODE *param = (_AT_CCD_PARAM_SETRSMODE*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETRSMODE *param = (_AT_CCD_PARAM_SETRSMODE*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             std::cout << temp->indexOfRSMode() << "--" << param->mode << std::endl;
             return temp->indexOfRSMode() == param->mode;
@@ -475,34 +593,55 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETRSMODE);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETRSMODE,
+                                            e.what());
 #endif        
     }
-    return false;    
+    return false;
 }
 
-bool ATCCSCCDController::checkResult_SetBIN() 
+bool ATCCSCCDController::checkResult_SetBIN()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETBIN);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETBIN)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETBIN);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETBIN *param = (_AT_CCD_PARAM_SETBIN*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETBIN *param = (_AT_CCD_PARAM_SETBIN*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             std::cout << temp->binX() << "--" << param->binX << std::endl;
             std::cout << temp->binY() << "--" << param->binY << std::endl;
@@ -511,262 +650,414 @@ bool ATCCSCCDController::checkResult_SetBIN()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETBIN);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETBIN,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetBaseline() 
+bool ATCCSCCDController::checkResult_SetBaseline()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETBASELINE);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETBASELINE)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETBASELINE);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETBASELINE *param = (_AT_CCD_PARAM_SETBASELINE*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETBASELINE *param = (_AT_CCD_PARAM_SETBASELINE*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return (temp->isBaseline() == param->isBaseline) && (temp->baseline() == param->baseline);
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETBASELINE);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETBASELINE,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetCMOSNF() 
+bool ATCCSCCDController::checkResult_SetCMOSNF()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETNOISEFILTER);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETNOISEFILTER)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETNOISEFILTER);
+#endif                 
                 return false;
-            _AT_CCD_PARAM_SETNOISEFILTER *param = (_AT_CCD_PARAM_SETNOISEFILTER*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETNOISEFILTER *param = (_AT_CCD_PARAM_SETNOISEFILTER*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->isNoiseFilter() == param->isNoiseFilter;
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETNOISEFILTER);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETNOISEFILTER,
+                                            e.what());
 #endif        
     }
-    return false; 
+    return false;
 }
 
-bool ATCCSCCDController::checkResult_SetEM() 
+bool ATCCSCCDController::checkResult_SetEM()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETEM);
+#endif                 
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEM)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETEM);
+#endif
                 return false;
-            _AT_CCD_PARAM_SETEM *param = (_AT_CCD_PARAM_SETEM*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETEM *param = (_AT_CCD_PARAM_SETEM*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return (temp->isEM() == param->isEM) && (temp->EM() == param->EM);
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETEM);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETEM,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetFullFrame() 
+bool ATCCSCCDController::checkResult_SetFullFrame()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETFULLFRAME);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETFULLFRAME)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETFULLFRAME);
+#endif 
                 return false;
-            _AT_CCD_PARAM_SETFULLFRAME *param = (_AT_CCD_PARAM_SETFULLFRAME*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETFULLFRAME *param = (_AT_CCD_PARAM_SETFULLFRAME*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->isFullFrame() == param->fullFrame;
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETFULLFRAME);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETFULLFRAME,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetOverScan() 
+bool ATCCSCCDController::checkResult_SetOverScan()
 {
     return true;
 }
 
-bool ATCCSCCDController::checkResult_SetROI() 
+bool ATCCSCCDController::checkResult_SetROI()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETROI);
+#endif                 
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETROI)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETROI);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETROI *param = (_AT_CCD_PARAM_SETROI*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETROI *param = (_AT_CCD_PARAM_SETROI*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return (temp->startX() == param->startX) &&
-                        (temp->startY() == param->startY) &&
-                        (temp->imageHeight() == param->imageHeight) &&
-                        (temp->imageWidth() == param->imageWidth);
+                    (temp->startY() == param->startY) &&
+                    (temp->imageHeight() == param->imageHeight) &&
+                    (temp->imageWidth() == param->imageWidth);
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETROI);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETROI,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetShutter() 
+bool ATCCSCCDController::checkResult_SetShutter()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETSHUTTER);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETSHUTTER)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETSHUTTER);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETSHUTTER *param = (_AT_CCD_PARAM_SETSHUTTER*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETSHUTTER *param = (_AT_CCD_PARAM_SETSHUTTER*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->shutterMode() == param->shutter;
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETSHUTTER);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETSHUTTER,
+                                            e.what());
 #endif        
     }
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetTransferSpeed() 
+bool ATCCSCCDController::checkResult_SetTransferSpeed()
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
-        if(temp)
+        if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETTSMODE);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETTSMODE)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _CCD_INSTRUCTION_SETTSMODE);
+#endif                
                 return false;
-            _AT_CCD_PARAM_SETTSMODE *param = (_AT_CCD_PARAM_SETTSMODE*)(_executoryInstructionRawData->data()+sizeof(_ATCCSPHeader)+sizeof(_AT_INSTRUCTION_HEADER));    
-            
+            }
+            _AT_CCD_PARAM_SETTSMODE *param = (_AT_CCD_PARAM_SETTSMODE*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->indexOfTSMode() == param->mode;
         }
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _CCD_INSTRUCTION_SETTSMODE);
 #endif            
         }
     }
-    catch(std::exception &e)
+    catch (std::exception &e)
     {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                            gettext("Fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _CCD_INSTRUCTION_SETTSMODE,
+                                            e.what());
 #endif        
     }
     return false;

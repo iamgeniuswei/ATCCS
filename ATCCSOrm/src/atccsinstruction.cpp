@@ -15,7 +15,7 @@ atccsinstruction::atccsinstruction()
 
 atccsinstruction::~atccsinstruction()
 {
-    std::cout << "~ATCCSInstruction" << std::endl;
+    
 }
 
 unsigned int atccsinstruction::validateParam(unsigned int device, unsigned int instruction, std::shared_ptr<ATCCSData> data) 

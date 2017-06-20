@@ -15,7 +15,6 @@ public:
     ~ATCCSMapManager()
     {
         _controllers.clear();
-        std::cout << "~ATCCSMapManager\n";
     }
 
     bool registerController(unsigned int id, std::shared_ptr<T> controller = nullptr)

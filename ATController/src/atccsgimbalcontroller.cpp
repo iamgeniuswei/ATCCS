@@ -67,16 +67,19 @@ bool ATCCSGimbalController::isStatusOK() const
         catch(std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s",
+                                                gettext("Fails to query whether status is ok. AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                e.what());
 #endif  
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to query whether status is ok. AT: "), _at,
+                                            gettext(" Device: "), _device);
 #endif
     }
     return false;
@@ -177,8 +180,9 @@ bool ATCCSGimbalController::isExecutoryInstructionOK()
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+                                            gettext("The instruction is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device);
 #endif        
     }
     return ret;
@@ -239,9 +243,25 @@ bool ATCCSGimbalController::checkResult_Connect()
     if (_realtimeStatus)
     {
         if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONNECT);
+#endif            
             return false;
+        }
         if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_CONNECT)))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONNECT);
+#endif            
             return false;
+        }
         _AT_GIMBAL_PARAM_CONNECT *param = (_AT_GIMBAL_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
         try
         {
@@ -262,16 +282,21 @@ bool ATCCSGimbalController::checkResult_Connect()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONNECT,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, 
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONNECT);
 #endif
     }
     return false;
@@ -293,16 +318,21 @@ bool ATCCSGimbalController::checkResult_FindHome()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FINDHOME,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FINDHOME);
 #endif
     }
     return false;
@@ -320,9 +350,25 @@ bool ATCCSGimbalController::checkResult_TrackStar()
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
+#endif                 
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_TRACKSTAR)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
+#endif                
                 return false;
+            }
             _AT_GIMBAL_PARAM_TRACKSTAR *param = (_AT_GIMBAL_PARAM_TRACKSTAR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -335,17 +381,21 @@ bool ATCCSGimbalController::checkResult_TrackStar()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
 #endif
         }
     }
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
-                
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR,
+                                                e.what());
 #endif
     }    
     return false;
@@ -363,9 +413,25 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_SETOBJECTNAME)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+#endif                
                 return false;
+            }
             _AT_GIMBAL_PARAM_SETOBJECTNAME *param = (_AT_GIMBAL_PARAM_SETOBJECTNAME*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -377,18 +443,21 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, 
-                                                "Gimbal has no real-time status instance. Can not check the instruction's result, may be the device doesn't report any real-time status.");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
 #endif
         }
     }
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
-                
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME,
+                                                e.what());
 #endif        
     }
     return false;
@@ -410,16 +479,21 @@ bool ATCCSGimbalController::checkResult_SlewAzEl()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SLEWAZEL,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SLEWAZEL);
 #endif
     }
     return false;
@@ -437,9 +511,25 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SLEWDEROTATOR);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_SLEWDEROTATOR)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SLEWDEROTATOR);
+#endif                
                 return false;
+            }
             _AT_GIMBAL_PARAM_SLEWDEROTATOR *param = (_AT_GIMBAL_PARAM_SLEWDEROTATOR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -448,16 +538,21 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SLEWDEROTATOR);
 #endif
         }
     }
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());                
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SLEWDEROTATOR,
+                                                e.what());
 #endif
     }
     return false;
@@ -475,9 +570,25 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONFIGDEROTATOR);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_CONFIGDEROTATOR)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONFIGDEROTATOR);
+#endif                
                 return false;
+            }
             _AT_GIMBAL_PARAM_CONFIGDEROTATOR *param = (_AT_GIMBAL_PARAM_CONFIGDEROTATOR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
            
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -486,16 +597,21 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONFIGDEROTATOR);
 #endif
         }        
     }
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_CONFIGDEROTATOR,
+                                                e.what());
 #endif
     }    
     return false;
@@ -517,16 +633,21 @@ bool ATCCSGimbalController::checkResult_Stop()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_STOP,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_STOP);
 #endif       
     }
     return false;
@@ -548,17 +669,22 @@ bool ATCCSGimbalController::checkResult_SpeedCorrect()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SPEEDCORRECT,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
-#endif       
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SPEEDCORRECT);
+#endif      
     }
     return false;
 }
@@ -579,16 +705,21 @@ bool ATCCSGimbalController::checkResult_Park()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_PARK,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_PARK);
 #endif       
     }
     return false; 
@@ -610,16 +741,21 @@ bool ATCCSGimbalController::checkResult_FixedMove()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FIXEDMOVE,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FIXEDMOVE);
 #endif        
     }
     return false;
@@ -641,16 +777,21 @@ bool ATCCSGimbalController::checkResult_PositionCorrect()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_POSITIONCORRECT,
+                                                e.what());
 #endif        
         }
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_POSITIONCORRECT);
 #endif        
     }
     return false;
@@ -669,9 +810,25 @@ bool ATCCSGimbalController::checkResult_CoverAction()
         if(temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_COVERACTION);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_COVERACTION)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_COVERACTION);
+#endif                
                 return false;
+            }
             _AT_GIMBAL_PARAM_COVERACTION *param = (_AT_GIMBAL_PARAM_COVERACTION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -680,16 +837,21 @@ bool ATCCSGimbalController::checkResult_CoverAction()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
-#endif
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_COVERACTION);
+#endif 
         }            
     }
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, 
-                                            __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_COVERACTION,
+                                                e.what());
 #endif
     }
     return false;
@@ -707,9 +869,25 @@ bool ATCCSGimbalController::checkResult_FocusAction()
         if(temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FOCUSACTION);
+#endif                
                 return false;
+            }
             if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_FOCUSACTION)))
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                    gettext("The Instruction's raw data is error, fails to check instruction's result: AT: "), _at,
+                                                    gettext(" Device: "), _device,
+                                                    gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FOCUSACTION);
+#endif                
                 return false;
+            }
             _AT_GIMBAL_PARAM_FOCUSACTION *param = (_AT_GIMBAL_PARAM_FOCUSACTION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -718,16 +896,21 @@ bool ATCCSGimbalController::checkResult_FocusAction()
         else
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                                __FILE__, __func__, __LINE__, "");
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FOCUSACTION);
 #endif
         }            
     }
     catch(std::exception &e)
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                            __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_FOCUSACTION,
+                                                e.what());
 #endif
     }
     return false;
@@ -748,16 +931,21 @@ bool ATCCSGimbalController::checkResult_Emergence()
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                gettext("Fails to check instruction's result: AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_EMERGENCYSTOP,
+                                                e.what());
 #endif        
         }    
     }
     else
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__, "");        
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The status is fail to be created, fails to check instruction's result: AT: "), _at,
+                                            gettext(" Device: "), _device,
+                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_EMERGENCYSTOP);
 #endif
     }
     return false;

@@ -13,7 +13,7 @@ public:
     enum RESULT_PLAN
     {
         RESULT_PLANERROR,
-        RESULT_EXECUTED,
+        RESULT_EXECUTING,
         RESULT_ABORTED,
         RESULT_SUCCESS
     };
@@ -22,6 +22,7 @@ public:
     atccsplan& operator =(const atccsplan&) = delete;
     ~atccsplan();
     virtual unsigned int persistPlan(){return 0;}
+    virtual void persistPlanResult(){}
     unsigned int setPlan(std::shared_ptr<ATCCSData> data = nullptr);
     double delayTime() const;
     double declination() const;

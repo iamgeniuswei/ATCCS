@@ -34,14 +34,6 @@ protected:
     virtual bool checkResult_SetTCompensateCoefficiency();
     virtual bool checkResult_Stop();
 
-
-
-
-
-
-
-private:
-
 };
 
 #endif /* ATCCSFOCUSCONTROLLER_H */

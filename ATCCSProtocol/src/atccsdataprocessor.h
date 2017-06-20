@@ -21,8 +21,6 @@ class ATCCSData;
 class ATCCSDataProcessor
 {
 public:
-    ATCCSDataProcessor();
-public:
     virtual void processData(std::shared_ptr<ATCCSData> data = nullptr) = 0;
 };
 

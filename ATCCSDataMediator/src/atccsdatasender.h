@@ -31,6 +31,11 @@ class ATCCSAddress;
  */
 class ATCCSDataSender
 {
+public:
+    enum RETCODE
+    {
+        FAIL = -1
+    };
 public:    
     ATCCSDataSender();
     virtual ~ATCCSDataSender();

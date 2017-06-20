@@ -12,11 +12,6 @@ ATCCSAddress::ATCCSAddress(const std::string& ip, unsigned short port)
 }
 
 
-ATCCSAddress::~ATCCSAddress()
-{
-    std::cout << "~ATCCSAddress\n";
-}
-
 void ATCCSAddress::setAddress(const std::string &ip, unsigned short port)
 {
     _ip = ip;

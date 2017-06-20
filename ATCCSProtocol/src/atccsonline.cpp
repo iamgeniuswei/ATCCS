@@ -7,10 +7,6 @@ ATCCSOnline::ATCCSOnline()
 
 }
 
-ATCCSOnline::~ATCCSOnline()
-{
-    
-}
 
 unsigned int ATCCSOnline::interval()
 {
@@ -22,6 +18,11 @@ void ATCCSOnline::setInterval(unsigned int interval)
     _interval = interval;
 }
 
+/**
+ * query the device's online status.
+ * @exception std::exception
+ * @return true if online, false if offline or timeout.
+ */
 bool ATCCSOnline::online() const
 {
     std::lock_guard<std::mutex> lk(_onlineLock);
@@ -31,6 +32,11 @@ bool ATCCSOnline::online() const
     return _online;
 }
 
+/**
+ * set the device's online status.
+ * @exception std::exception
+ * @return void
+ */
 void ATCCSOnline::setOnline(bool online, unsigned int time)
 {
     std::lock_guard<std::mutex> lk(_onlineLock);

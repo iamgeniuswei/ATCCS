@@ -12,19 +12,13 @@ ATCCSController::~ATCCSController()
     {
         _fifoQueue.wait_and_pop();
     }
-    std::cout << "~ATCCSController\n";
 }
 
 /**
- * ----------------------------------------------------------------------------------------------------------------------------------------------------------
- * push Control Data into first in first out queue.
- * -----------------------------------------------------------------------------
- * @param:  data
- * @return: none
- * -----------------------------------------------------------------------------
- * @author: Geniuswei
- * @date:   2017-05-24
- * -----------------------------------------------------------------------------
+ * push a shared_ptr of ATCCSData into fifo queue.
+ * @param data
+ * @return void
+ * @access public
  */
 void ATCCSController::pushControlData(std::shared_ptr<ATCCSData> data)
 {
@@ -32,15 +26,9 @@ void ATCCSController::pushControlData(std::shared_ptr<ATCCSData> data)
 }
 
 /**
- * -----------------------------------------------------------------------------
- * clear all Control Data.
- * -----------------------------------------------------------------------------
- * @param:  none
- * @return: none
- * -----------------------------------------------------------------------------
- * @author: Geniuswei
- * @date:   2017-05-24
- * -----------------------------------------------------------------------------
+ * clear the fifo queue.
+ * @return void
+ * @access public
  */
 void ATCCSController::clearControlData()
 {
@@ -50,6 +38,12 @@ void ATCCSController::clearControlData()
     }
 }
 
+/**
+ * fetch a share_ptr of ATCCSData from fifo queue.
+ * @exception std::exception
+ * @return std::shared_ptr<ATCCSData>
+ * @access protected
+ */
 std::shared_ptr<ATCCSData> ATCCSController::popControlData()
 {
     std::shared_ptr<ATCCSData> temp = _fifoQueue.wait_and_pop();

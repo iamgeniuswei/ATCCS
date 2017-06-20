@@ -24,9 +24,8 @@ void ATCCSInstructionResultProcessor::processData(std::shared_ptr<ATCCSData> dat
     if(!data->validate())
     {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMEXCEPTION,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSData is error, can not resolve device instruction result.");
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s",
+                                            gettext("The instruction result's raw data is error and is neglected."));
 #endif
         return;
     }
@@ -41,10 +40,9 @@ void ATCCSInstructionResultProcessor::processData(std::shared_ptr<ATCCSData> dat
     }
     else
     {
-#ifdef OUTDEBUGINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL,
-                                            __FILE__, __func__, __LINE__,
-                                            "ATCCSUpgoingController instance is null, fails to process Instruction Result ATCCSData.");
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s",
+                                            gettext("The upgoing controller is fail to be created, fails to process instruction result."));
 #endif        
     }
 }
