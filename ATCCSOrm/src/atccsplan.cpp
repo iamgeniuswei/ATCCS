@@ -11,9 +11,7 @@ atccsplan::atccsplan()
 
 atccsplan::~atccsplan()
 {
-#ifdef OUTDEBUGINFO
-    std::cout << "~ATCCSPlan" << std::endl;
-#endif    
+   
 }
 
 unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)

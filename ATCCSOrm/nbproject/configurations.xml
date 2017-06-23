@@ -5,6 +5,8 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>src/ORMHelper.h</itemPath>
+      <itemPath>src/ascrealtimedata-odb.hxx</itemPath>
+      <itemPath>src/ascrealtimedata.h</itemPath>
       <itemPath>src/at60ccdstatus-odb.hxx</itemPath>
       <itemPath>src/at60ccdstatus.h</itemPath>
       <itemPath>src/at60filterstatus-odb.hxx</itemPath>
@@ -44,8 +46,20 @@
       <itemPath>src/atccsutilization-odb.hxx</itemPath>
       <itemPath>src/atccsutilization.h</itemPath>
       <itemPath>src/atccsutilizationlog.h</itemPath>
+      <itemPath>src/csrealtimedata-odb.hxx</itemPath>
+      <itemPath>src/csrealtimedata.h</itemPath>
+      <itemPath>src/dimmrealtimedata-odb.hxx</itemPath>
+      <itemPath>src/dimmrealtimedata.h</itemPath>
       <itemPath>src/dpmstatus.h</itemPath>
+      <itemPath>src/dustrealtimedata-odb.hxx</itemPath>
+      <itemPath>src/dustrealtimedata.h</itemPath>
+      <itemPath>src/emerealtimedata-odb.hxx</itemPath>
+      <itemPath>src/emerealtimedata.h</itemPath>
       <itemPath>src/guidescopestatus.h</itemPath>
+      <itemPath>src/sqmrealtimedata-odb.hxx</itemPath>
+      <itemPath>src/sqmrealtimedata.h</itemPath>
+      <itemPath>src/wsrealtimedata-odb.hxx</itemPath>
+      <itemPath>src/wsrealtimedata.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -55,6 +69,9 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/ORMHelper.cpp</itemPath>
+      <itemPath>src/ascrealtimedata-odb.cxx</itemPath>
+      <itemPath>src/ascrealtimedata-odb.ixx</itemPath>
+      <itemPath>src/ascrealtimedata.cpp</itemPath>
       <itemPath>src/at60ccdstatus-odb.cxx</itemPath>
       <itemPath>src/at60ccdstatus-odb.ixx</itemPath>
       <itemPath>src/at60ccdstatus.cpp</itemPath>
@@ -113,18 +130,68 @@
       <itemPath>src/atccsutilization-odb.ixx</itemPath>
       <itemPath>src/atccsutilization.cpp</itemPath>
       <itemPath>src/atccsutilizationlog.cpp</itemPath>
+      <itemPath>src/csrealtimedata-odb.cxx</itemPath>
+      <itemPath>src/csrealtimedata-odb.ixx</itemPath>
+      <itemPath>src/csrealtimedata.cpp</itemPath>
+      <itemPath>src/dimmrealtimedata-odb.cxx</itemPath>
+      <itemPath>src/dimmrealtimedata-odb.ixx</itemPath>
+      <itemPath>src/dimmrealtimedata.cpp</itemPath>
       <itemPath>src/dpmstatus.cpp</itemPath>
+      <itemPath>src/dustrealtimedata-odb.cxx</itemPath>
+      <itemPath>src/dustrealtimedata-odb.ixx</itemPath>
+      <itemPath>src/dustrealtimedata.cpp</itemPath>
+      <itemPath>src/emerealtimedata-odb.cxx</itemPath>
+      <itemPath>src/emerealtimedata-odb.ixx</itemPath>
+      <itemPath>src/emerealtimedata.cpp</itemPath>
       <itemPath>src/guidescopestatus.cpp</itemPath>
+      <itemPath>src/sqmrealtimedata-odb.cxx</itemPath>
+      <itemPath>src/sqmrealtimedata-odb.ixx</itemPath>
+      <itemPath>src/sqmrealtimedata.cpp</itemPath>
+      <itemPath>src/wsrealtimedata-odb.cxx</itemPath>
+      <itemPath>src/wsrealtimedata-odb.ixx</itemPath>
+      <itemPath>src/wsrealtimedata.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
       <logicalFolder name="f1"
-                     displayName="New C++ Simple Test"
+                     displayName="Test_ascrealtimedata"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/newsimpletest.cpp</itemPath>
+        <itemPath>tests/testclass_ascrealtimedata.cpp</itemPath>
+        <itemPath>tests/testclass_ascrealtimedata.h</itemPath>
+        <itemPath>tests/testrunner_ascrealtimedata.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="Test_csrealtimedata"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Testclass_csrealtimedata.cpp</itemPath>
+        <itemPath>tests/Testclass_csrealtimedata.h</itemPath>
+        <itemPath>tests/Testclass_dimmrealtimedata.cpp</itemPath>
+        <itemPath>tests/Testclass_dimmrealtimedata.h</itemPath>
+        <itemPath>tests/Testclass_dustrealtimedata.cpp</itemPath>
+        <itemPath>tests/Testclass_dustrealtimedata.h</itemPath>
+        <itemPath>tests/Testclass_sqmrealtimedata.cpp</itemPath>
+        <itemPath>tests/Testclass_sqmrealtimedata.h</itemPath>
+        <itemPath>tests/Testrunner_csrealtimedata.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2"
+                     displayName="Test_emerealtimedata"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/newtestclass.cpp</itemPath>
+        <itemPath>tests/newtestclass.h</itemPath>
+        <itemPath>tests/newtestrunner.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="Test_wsrealtimedata"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/Testclass_wsrealtimedata.cpp</itemPath>
+        <itemPath>tests/Testclass_wsrealtimedata.h</itemPath>
+        <itemPath>tests/Testrunner_wsrealtimedata.cpp</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -169,22 +236,149 @@
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
         </cTool>
         <ccTool>
           <incDir>
-            <pElem>.</pElem>
+            <pElem>src</pElem>
           </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerDepDynSerchKind>2</linkerDepDynSerchKind>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lodb -lodb-pgsql -lcppunit</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerAddLib>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <linkerDynSerch>
+            <pElem>/usr/local/lib</pElem>
+          </linkerDynSerch>
+          <linkerDepDynSerchKind>2</linkerDepDynSerchKind>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lodb -lodb-pgsql -lcppunit</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerDepDynSerchKind>2</linkerDepDynSerchKind>
+          <linkerCopySharedLibs>true</linkerCopySharedLibs>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lodb -lodb-pgsql -lcppunit</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>src</pElem>
+          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerDepDynSerchKind>2</linkerDepDynSerchKind>
+          <linkerCopySharedLibs>true</linkerCopySharedLibs>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+          <commandLine>-lodb -lodb-pgsql -lcppunit</commandLine>
         </linkerTool>
       </folder>
       <item path="src/ORMHelper.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ORMHelper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/at60ccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -380,15 +574,130 @@
       </item>
       <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/csrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/dpmstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/dpmstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/guidescopestatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/guidescopestatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/newsimpletest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/sqmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Testclass_csrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_dimmrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testclass_dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_dustrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testclass_dustrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_sqmrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testclass_sqmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_wsrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Testclass_wsrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testrunner_csrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testrunner_wsrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/newtestclass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/newtestclass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/newtestrunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/testclass_ascrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/testclass_ascrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/testrunner_ascrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="2">
@@ -434,22 +743,73 @@
       </compileType>
       <folder path="TestFiles/f1">
         <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
         </cTool>
         <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
+          <commandLine>`cppunit-config --cflags`</commandLine>
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </cTool>
+        <ccTool>
+          <commandLine>`cppunit-config --cflags`</commandLine>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerOptionItem>`cppunit-config --libs`</linkerOptionItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <item path="src/ORMHelper.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ORMHelper.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ascrealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/at60ccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -645,15 +1005,130 @@
       </item>
       <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/csrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/csrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/dpmstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/dpmstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/dustrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/emerealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/guidescopestatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/guidescopestatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/newsimpletest.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/sqmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/sqmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/wsrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Testclass_csrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_dimmrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testclass_dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_dustrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testclass_dustrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_sqmrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testclass_sqmrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testclass_wsrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/Testclass_wsrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/Testrunner_csrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/Testrunner_wsrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/newtestclass.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/newtestclass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/newtestrunner.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/testclass_ascrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="tests/testclass_ascrealtimedata.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/testrunner_ascrealtimedata.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
       </item>
     </conf>
   </confs>

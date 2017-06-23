@@ -36,6 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/ORMHelper.o \
+	${OBJECTDIR}/src/ascrealtimedata-odb.o \
+	${OBJECTDIR}/src/ascrealtimedata.o \
 	${OBJECTDIR}/src/at60ccdstatus-odb.o \
 	${OBJECTDIR}/src/at60ccdstatus.o \
 	${OBJECTDIR}/src/at60filterstatus-odb.o \
@@ -76,19 +78,44 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccsutilization-odb.o \
 	${OBJECTDIR}/src/atccsutilization.o \
 	${OBJECTDIR}/src/atccsutilizationlog.o \
+	${OBJECTDIR}/src/csrealtimedata-odb.o \
+	${OBJECTDIR}/src/csrealtimedata.o \
+	${OBJECTDIR}/src/dimmrealtimedata-odb.o \
+	${OBJECTDIR}/src/dimmrealtimedata.o \
 	${OBJECTDIR}/src/dpmstatus.o \
-	${OBJECTDIR}/src/guidescopestatus.o
+	${OBJECTDIR}/src/dustrealtimedata-odb.o \
+	${OBJECTDIR}/src/dustrealtimedata.o \
+	${OBJECTDIR}/src/emerealtimedata-odb.o \
+	${OBJECTDIR}/src/emerealtimedata.o \
+	${OBJECTDIR}/src/guidescopestatus.o \
+	${OBJECTDIR}/src/sqmrealtimedata-odb.o \
+	${OBJECTDIR}/src/sqmrealtimedata.o \
+	${OBJECTDIR}/src/wsrealtimedata-odb.o \
+	${OBJECTDIR}/src/wsrealtimedata.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f4 \
+	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f3
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/newsimpletest.o
+	${TESTDIR}/tests/Testclass_csrealtimedata.o \
+	${TESTDIR}/tests/Testclass_dimmrealtimedata.o \
+	${TESTDIR}/tests/Testclass_dustrealtimedata.o \
+	${TESTDIR}/tests/Testclass_sqmrealtimedata.o \
+	${TESTDIR}/tests/Testclass_wsrealtimedata.o \
+	${TESTDIR}/tests/Testrunner_csrealtimedata.o \
+	${TESTDIR}/tests/Testrunner_wsrealtimedata.o \
+	${TESTDIR}/tests/newtestclass.o \
+	${TESTDIR}/tests/newtestrunner.o \
+	${TESTDIR}/tests/testclass_ascrealtimedata.o \
+	${TESTDIR}/tests/testrunner_ascrealtimedata.o
 
 # C Compiler Flags
 CFLAGS=
@@ -120,6 +147,16 @@ ${OBJECTDIR}/src/ORMHelper.o: src/ORMHelper.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ORMHelper.o src/ORMHelper.cpp
+
+${OBJECTDIR}/src/ascrealtimedata-odb.o: src/ascrealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata-odb.o src/ascrealtimedata-odb.cxx
+
+${OBJECTDIR}/src/ascrealtimedata.o: src/ascrealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata.o src/ascrealtimedata.cpp
 
 ${OBJECTDIR}/src/at60ccdstatus-odb.o: src/at60ccdstatus-odb.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -321,15 +358,75 @@ ${OBJECTDIR}/src/atccsutilizationlog.o: src/atccsutilizationlog.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsutilizationlog.o src/atccsutilizationlog.cpp
 
+${OBJECTDIR}/src/csrealtimedata-odb.o: src/csrealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata-odb.o src/csrealtimedata-odb.cxx
+
+${OBJECTDIR}/src/csrealtimedata.o: src/csrealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata.o src/csrealtimedata.cpp
+
+${OBJECTDIR}/src/dimmrealtimedata-odb.o: src/dimmrealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata-odb.o src/dimmrealtimedata-odb.cxx
+
+${OBJECTDIR}/src/dimmrealtimedata.o: src/dimmrealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata.o src/dimmrealtimedata.cpp
+
 ${OBJECTDIR}/src/dpmstatus.o: src/dpmstatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dpmstatus.o src/dpmstatus.cpp
 
+${OBJECTDIR}/src/dustrealtimedata-odb.o: src/dustrealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata-odb.o src/dustrealtimedata-odb.cxx
+
+${OBJECTDIR}/src/dustrealtimedata.o: src/dustrealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata.o src/dustrealtimedata.cpp
+
+${OBJECTDIR}/src/emerealtimedata-odb.o: src/emerealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata-odb.o src/emerealtimedata-odb.cxx
+
+${OBJECTDIR}/src/emerealtimedata.o: src/emerealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata.o src/emerealtimedata.cpp
+
 ${OBJECTDIR}/src/guidescopestatus.o: src/guidescopestatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/guidescopestatus.o src/guidescopestatus.cpp
+
+${OBJECTDIR}/src/sqmrealtimedata-odb.o: src/sqmrealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata-odb.o src/sqmrealtimedata-odb.cxx
+
+${OBJECTDIR}/src/sqmrealtimedata.o: src/sqmrealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata.o src/sqmrealtimedata.cpp
+
+${OBJECTDIR}/src/wsrealtimedata-odb.o: src/wsrealtimedata-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata-odb.o src/wsrealtimedata-odb.cxx
+
+${OBJECTDIR}/src/wsrealtimedata.o: src/wsrealtimedata.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata.o src/wsrealtimedata.cpp
 
 # Subprojects
 .build-subprojects:
@@ -338,16 +435,92 @@ ${OBJECTDIR}/src/guidescopestatus.o: src/guidescopestatus.cpp
 # Build Test Targets
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
+	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug
+	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug
+	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug
+	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newsimpletest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/testclass_ascrealtimedata.o ${TESTDIR}/tests/testrunner_ascrealtimedata.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}  -lodb -lodb-pgsql -lcppunit `cppunit-config --libs` -Wl,-rpath,'../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol   
+
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/Testclass_csrealtimedata.o ${TESTDIR}/tests/Testclass_dimmrealtimedata.o ${TESTDIR}/tests/Testclass_dustrealtimedata.o ${TESTDIR}/tests/Testclass_sqmrealtimedata.o ${TESTDIR}/tests/Testrunner_csrealtimedata.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}  -lodb -lodb-pgsql -lcppunit `cppunit-config --libs` -Wl,-rpath,'../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol   
+
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/newtestclass.o ${TESTDIR}/tests/newtestrunner.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}  -lodb -lodb-pgsql -lcppunit -L/usr/local/lib -Wl,-rpath,'/usr/local/lib' `cppunit-config --libs` -Wl,-rpath,'../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol   
+
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/Testclass_wsrealtimedata.o ${TESTDIR}/tests/Testrunner_wsrealtimedata.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}  -lodb -lodb-pgsql -lcppunit `cppunit-config --libs` -Wl,-rpath,'../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol   
 
 
-${TESTDIR}/tests/newsimpletest.o: tests/newsimpletest.cpp 
+${TESTDIR}/tests/testclass_ascrealtimedata.o: tests/testclass_ascrealtimedata.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newsimpletest.o tests/newsimpletest.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/testclass_ascrealtimedata.o tests/testclass_ascrealtimedata.cpp
+
+
+${TESTDIR}/tests/testrunner_ascrealtimedata.o: tests/testrunner_ascrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/testrunner_ascrealtimedata.o tests/testrunner_ascrealtimedata.cpp
+
+
+${TESTDIR}/tests/Testclass_csrealtimedata.o: tests/Testclass_csrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testclass_csrealtimedata.o tests/Testclass_csrealtimedata.cpp
+
+
+${TESTDIR}/tests/Testclass_dimmrealtimedata.o: tests/Testclass_dimmrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testclass_dimmrealtimedata.o tests/Testclass_dimmrealtimedata.cpp
+
+
+${TESTDIR}/tests/Testclass_dustrealtimedata.o: tests/Testclass_dustrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testclass_dustrealtimedata.o tests/Testclass_dustrealtimedata.cpp
+
+
+${TESTDIR}/tests/Testclass_sqmrealtimedata.o: tests/Testclass_sqmrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testclass_sqmrealtimedata.o tests/Testclass_sqmrealtimedata.cpp
+
+
+${TESTDIR}/tests/Testrunner_csrealtimedata.o: tests/Testrunner_csrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testrunner_csrealtimedata.o tests/Testrunner_csrealtimedata.cpp
+
+
+${TESTDIR}/tests/newtestclass.o: tests/newtestclass.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newtestclass.o tests/newtestclass.cpp
+
+
+${TESTDIR}/tests/newtestrunner.o: tests/newtestrunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newtestrunner.o tests/newtestrunner.cpp
+
+
+${TESTDIR}/tests/Testclass_wsrealtimedata.o: tests/Testclass_wsrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testclass_wsrealtimedata.o tests/Testclass_wsrealtimedata.cpp
+
+
+${TESTDIR}/tests/Testrunner_wsrealtimedata.o: tests/Testrunner_wsrealtimedata.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -Isrc -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/Testrunner_wsrealtimedata.o tests/Testrunner_wsrealtimedata.cpp
 
 
 ${OBJECTDIR}/src/ORMHelper_nomain.o: ${OBJECTDIR}/src/ORMHelper.o src/ORMHelper.cpp 
@@ -361,6 +534,32 @@ ${OBJECTDIR}/src/ORMHelper_nomain.o: ${OBJECTDIR}/src/ORMHelper.o src/ORMHelper.
 	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ORMHelper_nomain.o src/ORMHelper.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ORMHelper.o ${OBJECTDIR}/src/ORMHelper_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/ascrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/ascrealtimedata-odb.o src/ascrealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ascrealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata-odb_nomain.o src/ascrealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/ascrealtimedata-odb.o ${OBJECTDIR}/src/ascrealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/ascrealtimedata_nomain.o: ${OBJECTDIR}/src/ascrealtimedata.o src/ascrealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ascrealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata_nomain.o src/ascrealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/ascrealtimedata.o ${OBJECTDIR}/src/ascrealtimedata_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/at60ccdstatus-odb_nomain.o: ${OBJECTDIR}/src/at60ccdstatus-odb.o src/at60ccdstatus-odb.cxx 
@@ -883,6 +1082,58 @@ ${OBJECTDIR}/src/atccsutilizationlog_nomain.o: ${OBJECTDIR}/src/atccsutilization
 	    ${CP} ${OBJECTDIR}/src/atccsutilizationlog.o ${OBJECTDIR}/src/atccsutilizationlog_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/csrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/csrealtimedata-odb.o src/csrealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/csrealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata-odb_nomain.o src/csrealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/csrealtimedata-odb.o ${OBJECTDIR}/src/csrealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/csrealtimedata_nomain.o: ${OBJECTDIR}/src/csrealtimedata.o src/csrealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/csrealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata_nomain.o src/csrealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/csrealtimedata.o ${OBJECTDIR}/src/csrealtimedata_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/dimmrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/dimmrealtimedata-odb.o src/dimmrealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dimmrealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata-odb_nomain.o src/dimmrealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/dimmrealtimedata-odb.o ${OBJECTDIR}/src/dimmrealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/dimmrealtimedata_nomain.o: ${OBJECTDIR}/src/dimmrealtimedata.o src/dimmrealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dimmrealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata_nomain.o src/dimmrealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/dimmrealtimedata.o ${OBJECTDIR}/src/dimmrealtimedata_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/dpmstatus_nomain.o: ${OBJECTDIR}/src/dpmstatus.o src/dpmstatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dpmstatus.o`; \
@@ -894,6 +1145,58 @@ ${OBJECTDIR}/src/dpmstatus_nomain.o: ${OBJECTDIR}/src/dpmstatus.o src/dpmstatus.
 	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dpmstatus_nomain.o src/dpmstatus.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/dpmstatus.o ${OBJECTDIR}/src/dpmstatus_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/dustrealtimedata-odb.o src/dustrealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dustrealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o src/dustrealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/dustrealtimedata-odb.o ${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/dustrealtimedata_nomain.o: ${OBJECTDIR}/src/dustrealtimedata.o src/dustrealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dustrealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata_nomain.o src/dustrealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/dustrealtimedata.o ${OBJECTDIR}/src/dustrealtimedata_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/emerealtimedata-odb_nomain.o: ${OBJECTDIR}/src/emerealtimedata-odb.o src/emerealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/emerealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata-odb_nomain.o src/emerealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/emerealtimedata-odb.o ${OBJECTDIR}/src/emerealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/emerealtimedata_nomain.o: ${OBJECTDIR}/src/emerealtimedata.o src/emerealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/emerealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata_nomain.o src/emerealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/emerealtimedata.o ${OBJECTDIR}/src/emerealtimedata_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/guidescopestatus_nomain.o: ${OBJECTDIR}/src/guidescopestatus.o src/guidescopestatus.cpp 
@@ -909,11 +1212,66 @@ ${OBJECTDIR}/src/guidescopestatus_nomain.o: ${OBJECTDIR}/src/guidescopestatus.o 
 	    ${CP} ${OBJECTDIR}/src/guidescopestatus.o ${OBJECTDIR}/src/guidescopestatus_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/sqmrealtimedata-odb.o src/sqmrealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/sqmrealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o src/sqmrealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/sqmrealtimedata-odb.o ${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/sqmrealtimedata_nomain.o: ${OBJECTDIR}/src/sqmrealtimedata.o src/sqmrealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/sqmrealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata_nomain.o src/sqmrealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/sqmrealtimedata.o ${OBJECTDIR}/src/sqmrealtimedata_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/wsrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/wsrealtimedata-odb.o src/wsrealtimedata-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/wsrealtimedata-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata-odb_nomain.o src/wsrealtimedata-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/wsrealtimedata-odb.o ${OBJECTDIR}/src/wsrealtimedata-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/wsrealtimedata_nomain.o: ${OBJECTDIR}/src/wsrealtimedata.o src/wsrealtimedata.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/wsrealtimedata.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata_nomain.o src/wsrealtimedata.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/wsrealtimedata.o ${OBJECTDIR}/src/wsrealtimedata_nomain.o;\
+	fi
+
 # Run Test Targets
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f4 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f3 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi
