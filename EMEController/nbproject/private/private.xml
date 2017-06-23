@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <activeConfTypeElem>1</activeConfTypeElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
+    </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/src/EMEDataGather.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/src/ascgather.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/src/EMEDataGather.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/tests/TESTRUNNER.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/main.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/tests/TEST_EMEDataGather.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/src/ascgather.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/EMEController/tests/TEST_EMEDataGather.h</file>
+        </group>
+    </open-files>
+</project-private>
