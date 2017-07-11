@@ -43,8 +43,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/at60gimbalcontroller.o \
 	${OBJECTDIR}/src/at60plancontroller.o \
 	${OBJECTDIR}/src/at60setting.o \
-	${OBJECTDIR}/src/at60slavedomecontroller.o \
-	${OBJECTDIR}/src/tinyxml2.o
+	${OBJECTDIR}/src/at60slavedomecontroller.o
 
 
 # C Compiler Flags
@@ -130,11 +129,6 @@ ${OBJECTDIR}/src/at60slavedomecontroller.o: src/at60slavedomecontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -s -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomecontroller.o src/at60slavedomecontroller.cpp
-
-${OBJECTDIR}/src/tinyxml2.o: src/tinyxml2.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -s -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/tinyxml2.o src/tinyxml2.cpp
 
 # Subprojects
 .build-subprojects:

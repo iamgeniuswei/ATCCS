@@ -52,7 +52,7 @@ using namespace odb::core;
 int main(int argc, char** argv)
 {
     
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "zh_CN.UTF8");
     bindtextdomain( "AT60Controller", "/usr/share/locale" );
     textdomain( "AT60Controller" );
     std::cout << "----------------------" <<gettext("AT60 Controller V3.00.00") << "----------------------" <<std::endl;

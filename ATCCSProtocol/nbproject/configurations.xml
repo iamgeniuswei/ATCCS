@@ -26,6 +26,7 @@
       <itemPath>src/atccsmapmanager.h</itemPath>
       <itemPath>src/atccsonline.h</itemPath>
       <itemPath>src/atccsqueue.h</itemPath>
+      <itemPath>src/atccssetting.h</itemPath>
       <itemPath>src/atccsthread.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -47,6 +48,7 @@
       <itemPath>src/atccsmapmanager.cpp</itemPath>
       <itemPath>src/atccsonline.cpp</itemPath>
       <itemPath>src/atccsqueue.cpp</itemPath>
+      <itemPath>src/atccssetting.cpp</itemPath>
       <itemPath>src/atccsthread.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -145,6 +147,10 @@
       </item>
       <item path="src/atccsqueue.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccssetting.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccssetting.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsthread.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsthread.h" ex="false" tool="3" flavor2="0">
@@ -238,6 +244,10 @@
       <item path="src/atccsqueue.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsqueue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccssetting.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccssetting.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsthread.cpp" ex="false" tool="1" flavor2="0">
       </item>

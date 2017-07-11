@@ -45,11 +45,12 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f2
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/newsimpletest.o
+	${TESTDIR}/tests/TC_ATCCSDataReceiver.o \
+	${TESTDIR}/tests/TestRunner.o
 
 # C Compiler Flags
 CFLAGS=
@@ -108,15 +109,21 @@ ${OBJECTDIR}/src/atccsdatasender.o: src/atccsdatasender.cpp
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/newsimpletest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/TC_ATCCSDataReceiver.o ${TESTDIR}/tests/TestRunner.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   `cppunit-config --libs`   
 
 
-${TESTDIR}/tests/newsimpletest.o: tests/newsimpletest.cpp 
+${TESTDIR}/tests/TC_ATCCSDataReceiver.o: tests/TC_ATCCSDataReceiver.cpp 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I. -std=c++11 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/newsimpletest.o tests/newsimpletest.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/TC_ATCCSDataReceiver.o tests/TC_ATCCSDataReceiver.cpp
+
+
+${TESTDIR}/tests/TestRunner.o: tests/TestRunner.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSNetwork/src -std=c++11 `cppunit-config --cflags` -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/TestRunner.o tests/TestRunner.cpp
 
 
 ${OBJECTDIR}/src/atccsdatadispatcher_nomain.o: ${OBJECTDIR}/src/atccsdatadispatcher.o src/atccsdatadispatcher.cpp 
@@ -175,7 +182,7 @@ ${OBJECTDIR}/src/atccsdatasender_nomain.o: ${OBJECTDIR}/src/atccsdatasender.o sr
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

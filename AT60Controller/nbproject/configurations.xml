@@ -12,7 +12,6 @@
       <itemPath>src/at60plancontroller.h</itemPath>
       <itemPath>src/at60setting.h</itemPath>
       <itemPath>src/at60slavedomecontroller.h</itemPath>
-      <itemPath>src/tinyxml2.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -30,7 +29,6 @@
       <itemPath>src/at60setting.cpp</itemPath>
       <itemPath>src/at60slavedomecontroller.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>src/tinyxml2.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -61,6 +59,7 @@
             <pElem>../ATCCSDataMediator/src</pElem>
             <pElem>../ATCCSOrm/src</pElem>
             <pElem>../ATController/src</pElem>
+            <pElem>../ATCCSUtility/src</pElem>
           </incDir>
           <commandLine>-Wl,--no-as-needed -pthread</commandLine>
         </ccTool>
@@ -136,6 +135,18 @@
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSUtility"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSUtility"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
@@ -1009,6 +1020,84 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSUtility.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -1044,10 +1133,6 @@
       <item path="src/at60slavedomecontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/at60slavedomecontroller.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/tinyxml2.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/tinyxml2.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -1408,6 +1493,78 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATController.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
@@ -1443,10 +1600,6 @@
       <item path="src/at60slavedomecontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/at60slavedomecontroller.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/tinyxml2.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/tinyxml2.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

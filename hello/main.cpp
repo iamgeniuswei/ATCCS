@@ -23,12 +23,12 @@ using namespace std;
  */
 int main(int argc, char** argv)
 {
-    setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "zh_CN.UTF8");
     bindtextdomain( "hello", "/usr/share/locale" );
     textdomain( "hello" );
     std::string msg;
-//    msg += gettext("what");
-//    msg += gettext("funk");
+    msg += gettext("what");
+    msg += gettext("funk");
             
     cout << msg.c_str() << endl;
     return 0;

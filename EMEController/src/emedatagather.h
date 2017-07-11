@@ -16,7 +16,7 @@
 #include "atccscontroller.h"
 #include "atccsthread.h"
 #include <memory>
-//class emerealtimedata;
+class emerealtimedata;
 class EMEDataGather : public ATCCSController, public ATCCSThread
 {
 public:
@@ -35,12 +35,13 @@ public:
     void run() override;
 
 
-protected:
-//    std::shared_ptr<emerealtimedata> realtimeData();
+public:
+    std::shared_ptr<emerealtimedata> realtimeData();
+    unsigned long long resolveRealtimeData(std::shared_ptr<ATCCSData> data = nullptr);
 
 private:
     unsigned int _type = 0;
-//    std::shared_ptr<emerealtimedata> _realtimeData = nullptr;
+    std::shared_ptr<emerealtimedata> _realtimeData = nullptr;
 
 };
 

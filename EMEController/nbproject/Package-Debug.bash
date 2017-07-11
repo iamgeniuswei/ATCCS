@@ -83,6 +83,78 @@ cd "${TOP}"
 makeDirectory "${NBTMPDIR}/emecontroller/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSUtility.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSUtility.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSUtility.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/emecontroller/bin"
+copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
+
 
 # Generate tar file
 cd "${TOP}"

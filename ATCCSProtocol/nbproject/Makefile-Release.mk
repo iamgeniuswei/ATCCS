@@ -47,6 +47,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccsmapmanager.o \
 	${OBJECTDIR}/src/atccsonline.o \
 	${OBJECTDIR}/src/atccsqueue.o \
+	${OBJECTDIR}/src/atccssetting.o \
 	${OBJECTDIR}/src/atccsthread.o
 
 
@@ -133,6 +134,11 @@ ${OBJECTDIR}/src/atccsqueue.o: src/atccsqueue.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsqueue.o src/atccsqueue.cpp
+
+${OBJECTDIR}/src/atccssetting.o: src/atccssetting.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccssetting.o src/atccssetting.cpp
 
 ${OBJECTDIR}/src/atccsthread.o: src/atccsthread.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

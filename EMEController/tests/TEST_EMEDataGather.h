@@ -21,7 +21,9 @@ class TEST_EMEDataGather : public CPPUNIT_NS::TestFixture
 {
     CPPUNIT_TEST_SUITE(TEST_EMEDataGather);
 
-    CPPUNIT_TEST(testEMEDataGather);
+    CPPUNIT_TEST(testASCEMEDataGather);
+    CPPUNIT_TEST(testRealtimeInstance);
+    CPPUNIT_TEST(testASCResolveData);
     CPPUNIT_TEST(testType);
     CPPUNIT_TEST(testRun);
 
@@ -34,9 +36,11 @@ public:
     void tearDown();
 
 private:
-    void testEMEDataGather();
+    void testASCEMEDataGather();
+    void testASCResolveData();
     void testType();
     void testRun();
+    void testRealtimeInstance();
     std::shared_ptr<EMEDataGather> dataGather = nullptr;
 
 };

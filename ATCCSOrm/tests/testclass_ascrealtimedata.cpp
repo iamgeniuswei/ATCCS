@@ -53,7 +53,7 @@ void testclass_ascrealtimedata::testAscrealtimedata()
 
 void testclass_ascrealtimedata::testPersistRealtimeData()
 {
-        std::shared_ptr<ATCCSData> data = std::make_shared<ATCCSData>(sizeof (_ATCCSPHeader) + sizeof (_EME_ASC_REALTIME_DATA));
+    std::shared_ptr<ATCCSData> data = std::make_shared<ATCCSData>(sizeof (_ATCCSPHeader) + sizeof (_EME_ASC_REALTIME_DATA));
     _ATCCSPHeader header;
     memset(&header, 0, sizeof (_ATCCSPHeader));
     header.length = sizeof (_ATCCSPHeader) + sizeof (_EME_ASC_REALTIME_DATA);

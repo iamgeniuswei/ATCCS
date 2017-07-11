@@ -11,23 +11,6 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsfocuscontroller.h</file>
         </group>
-        <group>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatadispatcherprocessor.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicestatusprocessor.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsgimbalcontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsccdcontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicestatusprocessor.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsgimbalcontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatadispatcherprocessor.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatapacker.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsfiltercontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsccdcontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsfocuscontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsfocuscontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsfiltercontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatapacker.cpp</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
