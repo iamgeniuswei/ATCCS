@@ -81,10 +81,6 @@ copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so
 
 cd "${TOP}"
 makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
-copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCOrm.so" 0755
-
-cd "${TOP}"
-makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
 copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
 
 cd "${TOP}"

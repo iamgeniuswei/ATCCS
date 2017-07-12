@@ -23,6 +23,7 @@
 using namespace odb;
 using namespace odb::core;
 #include <odb/pgsql/database.hxx>
+#include <locale>
 //#include <atutilization.h>
 //#include <atutilization-odb.hxx>
 #include "atccsutilization.h"
@@ -40,7 +41,7 @@ int main(int argc, char** argv)
     std::cout << "-----------------ATCCS Database Manager-------------------------\n";
     
     try
-    {
+    {        
         ORMHelper::initDB("pgsql", "lenovo", "123456", "ATCCSDB", "192.168.0.200", 5432);
         
         std::shared_ptr<database> db = ORMHelper::db();
@@ -63,9 +64,7 @@ int main(int argc, char** argv)
         ORMHelper::persist<atccsutilization>(at80);
         ORMHelper::persist<atccsutilization>(at60);
         ORMHelper::persist<atccsutilization>(at50);
-        ORMHelper::persist<atccsutilization>(atAE);
-        
-        
+        ORMHelper::persist<atccsutilization>(atAE); 
     }
     catch(std::exception &e)
     {

@@ -10,7 +10,6 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
                 <make-dep-project>../ATCCSOrm</make-dep-project>
-                <make-dep-project>../ATCCOrm</make-dep-project>
                 <make-dep-project>../ATCCSProtocol</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>

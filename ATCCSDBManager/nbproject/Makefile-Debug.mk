@@ -52,18 +52,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,'$$ORIGIN/../../../../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -Wl,-rpath,'$$ORIGIN/../../../../ATCCOrm/dist/Debug/GNU-Linux' -L../ATCCOrm/dist/Debug/GNU-Linux -lATCCOrm -Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm
+LDLIBSOPTIONS=-Wl,-rpath,'$$ORIGIN/../../../../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/atccsdbmanager
 	${CP} ../ATCCSProtocol/dist/Debug/GNU-Linux/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${CP} ../ATCCOrm/dist/Debug/GNU-Linux/libATCCOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${CP} ../ATCCSOrm/dist/Debug/GNU-Linux/libATCCSOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/atccsdbmanager: ../ATCCSProtocol/dist/Debug/GNU-Linux/libATCCSProtocol.so
-
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/atccsdbmanager: ../ATCCOrm/dist/Debug/GNU-Linux/libATCCOrm.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/atccsdbmanager: ../ATCCSOrm/dist/Debug/GNU-Linux/libATCCSOrm.so
 
@@ -79,19 +76,17 @@ ${OBJECTDIR}/main.o: main.cpp
 # Subprojects
 .build-subprojects:
 	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug
-	cd ../ATCCOrm && ${MAKE}  -f Makefile CONF=Debug
 	cd ../ATCCSOrm && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so
 	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/atccsdbmanager
 
 # Subprojects
 .clean-subprojects:
 	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../ATCCOrm && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../ATCCSOrm && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
