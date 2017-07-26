@@ -35,6 +35,8 @@ public:
     void run() override;
 
 
+    
+    
 public:
     std::shared_ptr<emerealtimedata> realtimeData();
     unsigned long long resolveRealtimeData(std::shared_ptr<ATCCSData> data = nullptr);
