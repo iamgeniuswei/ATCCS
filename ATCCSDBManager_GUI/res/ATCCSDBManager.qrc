@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RCC version="1.0">
+    <qresource prefix="/qss">
+        <file alias="default">qss/default.qss</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file alias="affirm">img/affirm.png</file>
+        <file alias="cancel">img/cancel.png</file>   
+        <file alias="test">img/test.png</file>
+        <file alias="add_db_logo">img/add_db_logo.png</file>
+        <file alias="close_pressed">img/close_pressed.png</file>
+        <file alias="close_normal">img/close_normal.png</file>
+        <file alias="close_hover">img/close_hover.png</file>
+        <file alias="mw_logo">img/mw_logo.png</file>
+        <file alias="success">img/success.png</file>
+        <file alias="fail">img/fail.png</file>
+    </qresource>
+    <qresource>
+        <!--
+                List files that you want to include into resources like this:
+                <file>images/copy.png</file>
+        -->
+    </qresource>
+</RCC>

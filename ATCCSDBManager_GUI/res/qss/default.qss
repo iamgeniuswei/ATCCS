@@ -1,0 +1,73 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jul 28, 2017, 10:19:49 AM
+    Author     : lenovo
+*/
+
+QWidget
+{
+    background-color:rgb(38,42,51);
+}
+
+QLabel#add_db_logo
+{
+    qproperty-pixmap:url(:/img/add_db_logo);
+    qproperty-maximumSize: 32px 32px;
+    qproperty-scaledContents: true;
+}
+
+QLabel#add_db_text
+{
+    qproperty-text:"ATCCS DB Manager";
+    color: rgb(84,152,166);
+}
+
+QToolButton#atccs_mt_close
+{
+    border-image:url(:/img/close_normal);
+}
+QToolButton#atccs_mt_close:hover
+{
+    border-image:url(:/img/close_hover);
+}
+QToolButton#atccs_mt_close:pressed
+{
+    border-image:url(:/img/close_pressed);
+}
+
+QLabel
+{
+    color:rgb(86, 187, 117);
+}
+QLineEdit
+{
+    color:rgb(86, 187, 117);
+}
+
+QPushButton
+{
+    color:rgb(86, 187, 117);
+}
+
+QLabel#mw_main_title
+{
+    font-size:32px;
+}
+
+QCheckBox
+{
+    color:white;
+}
+
+QListWidget::item::selected
+{
+    background:rgb(38,42,51);
+}
+QListWidget
+{
+    border:none;
+}

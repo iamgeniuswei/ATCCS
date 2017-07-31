@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <activeConfTypeElem>4</activeConfTypeElem>
+        <activeConfIndexElem>0</activeConfIndexElem>
+    </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMWEditPancel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMStarupEditPanel.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMAT60TablePanel.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/ATCCSDBMStartup.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMWEditPancel.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMAT60TablePanel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/main.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMWTitleBar.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/ATCCSDBMMainWindow.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMPublicTablePanel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/ATCCSDBMStartup.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMPublicTablePanel.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/ATCCSDBMMainWindow.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/res/qss/default.qss</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMEMETablePanel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMWOutPancel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMStartupBtnPanel.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMWTitleBar.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMStartupBtnPanel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMStarupEditPanel.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMEMETablePanel.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSDBManager_GUI/src/DBMWOutPancel.cpp</file>
+        </group>
+    </open-files>
+</project-private>
