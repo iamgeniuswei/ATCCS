@@ -4,10 +4,10 @@
 #include <odb/core.hxx>
 #include "atccspublicstatus.h"
 #pragma db object
-class DPMStatus : public atccspublicstatus
+class atccsdpmstatus : public atccspublicstatus
 {
 public:
-    DPMStatus();
+    atccsdpmstatus();
 private:
     friend class odb::access;
     std::string _imagePath;

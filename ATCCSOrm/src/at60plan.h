@@ -14,6 +14,13 @@
 #ifndef AT60PLAN_H
 #define AT60PLAN_H
 #include "atccsplan.h"
+
+/**
+ * @brief at60plan is the persistence class of AT60's plan
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name at60plan
+ */
 #pragma db object
 class at60plan : public atccsplan
 {

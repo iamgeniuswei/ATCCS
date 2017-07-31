@@ -3,6 +3,9 @@
 #include "atccspublicstatus.h"
 #include <odb/core.hxx>
 
+/** 
+ * @brief atccsfilterstatus is the base class of the filter's real-time status.
+ */
 #pragma db object
 class atccsfilterstatus : public atccspublicstatus
 {

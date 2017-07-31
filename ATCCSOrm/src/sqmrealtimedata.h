@@ -14,6 +14,15 @@
 #ifndef SQMREALTIMEDATA_H
 #define SQMREALTIMEDATA_H
 #include "emerealtimedata.h"
+
+/**
+ * @brief sqmrealtimedata is a persistence class which encapsulates the 
+ * sqm real-time data.
+ * @modified 2017-07-26
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name sqmrealtimedata
+ * 
+ */
 #pragma db object
 class sqmrealtimedata : public emerealtimedata
 {

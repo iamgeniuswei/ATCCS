@@ -7,8 +7,11 @@
 #include "atccs_public_define.h"
 
 #include <iostream>
-
 class ATCCSData;
+
+/**
+ * @brief atccsinstruction is the base class of the instruction.
+ */
 #pragma db object
 class atccsinstruction
 {

@@ -3,15 +3,16 @@
 #include <odb/core.hxx>
 #include "atccspublicstatus.h"
 #include "atccs_public_define.h"
+
+/**
+ * atccsgimbalstatus is the base class of the gimbal's real-time status.
+ */
 #pragma db object
 class atccsgimbalstatus : public atccspublicstatus
 {
 public:
     explicit atccsgimbalstatus();
-    ~atccsgimbalstatus()
-    {
-        std::cout << "~atccsgimbalstatus\n";
-    }
+    ~atccsgimbalstatus(){}
     void setStatus(std::shared_ptr<ATCCSData> data = nullptr);
     double targetJ2000Declination() const;
     double targetJ2000RightAscension() const;

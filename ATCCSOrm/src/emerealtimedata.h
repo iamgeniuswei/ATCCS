@@ -17,6 +17,11 @@
 #include <memory>
 class ATCCSData;
 
+/**
+ * @brief emerealtimedata is the base class of the enviromental monitor 
+ * equipment's real-time data, which is also a persistence class but will
+ * not be persisted in database.
+ */
 #pragma db object
 class emerealtimedata
 {

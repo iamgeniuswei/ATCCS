@@ -52,17 +52,26 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/at60plan.o \
 	${OBJECTDIR}/src/at60slavedomestatus-odb.o \
 	${OBJECTDIR}/src/at60slavedomestatus.o \
+	${OBJECTDIR}/src/atccsat-odb.o \
 	${OBJECTDIR}/src/atccsat.o \
 	${OBJECTDIR}/src/atccsccdstatus-odb.o \
 	${OBJECTDIR}/src/atccsccdstatus.o \
+	${OBJECTDIR}/src/atccsdevice-odb.o \
 	${OBJECTDIR}/src/atccsdevice.o \
+	${OBJECTDIR}/src/atccsdpmstatus-odb.o \
+	${OBJECTDIR}/src/atccsdpmstatus.o \
+	${OBJECTDIR}/src/atccseme-odb.o \
+	${OBJECTDIR}/src/atccseme.o \
 	${OBJECTDIR}/src/atccsfilterstatus-odb.o \
 	${OBJECTDIR}/src/atccsfilterstatus.o \
 	${OBJECTDIR}/src/atccsfocusstatus-odb.o \
 	${OBJECTDIR}/src/atccsfocusstatus.o \
+	${OBJECTDIR}/src/atccsfullopeneddomestatus-odb.o \
 	${OBJECTDIR}/src/atccsfullopeneddomestatus.o \
 	${OBJECTDIR}/src/atccsgimbalstatus-odb.o \
 	${OBJECTDIR}/src/atccsgimbalstatus.o \
+	${OBJECTDIR}/src/atccsguidescopestatus-odb.o \
+	${OBJECTDIR}/src/atccsguidescopestatus.o \
 	${OBJECTDIR}/src/atccsinstruction-odb.o \
 	${OBJECTDIR}/src/atccsinstruction.o \
 	${OBJECTDIR}/src/atccsoccupation-odb.o \
@@ -77,17 +86,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccsuser.o \
 	${OBJECTDIR}/src/atccsutilization-odb.o \
 	${OBJECTDIR}/src/atccsutilization.o \
+	${OBJECTDIR}/src/atccsutilizationlog-odb.o \
 	${OBJECTDIR}/src/atccsutilizationlog.o \
 	${OBJECTDIR}/src/csrealtimedata-odb.o \
 	${OBJECTDIR}/src/csrealtimedata.o \
 	${OBJECTDIR}/src/dimmrealtimedata-odb.o \
 	${OBJECTDIR}/src/dimmrealtimedata.o \
-	${OBJECTDIR}/src/dpmstatus.o \
 	${OBJECTDIR}/src/dustrealtimedata-odb.o \
 	${OBJECTDIR}/src/dustrealtimedata.o \
 	${OBJECTDIR}/src/emerealtimedata-odb.o \
 	${OBJECTDIR}/src/emerealtimedata.o \
-	${OBJECTDIR}/src/guidescopestatus.o \
 	${OBJECTDIR}/src/sqmrealtimedata-odb.o \
 	${OBJECTDIR}/src/sqmrealtimedata.o \
 	${OBJECTDIR}/src/wsrealtimedata-odb.o \
@@ -228,6 +236,11 @@ ${OBJECTDIR}/src/at60slavedomestatus.o: src/at60slavedomestatus.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomestatus.o src/at60slavedomestatus.cpp
 
+${OBJECTDIR}/src/atccsat-odb.o: src/atccsat-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsat-odb.o src/atccsat-odb.cxx
+
 ${OBJECTDIR}/src/atccsat.o: src/atccsat.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -243,10 +256,35 @@ ${OBJECTDIR}/src/atccsccdstatus.o: src/atccsccdstatus.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsccdstatus.o src/atccsccdstatus.cpp
 
+${OBJECTDIR}/src/atccsdevice-odb.o: src/atccsdevice-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdevice-odb.o src/atccsdevice-odb.cxx
+
 ${OBJECTDIR}/src/atccsdevice.o: src/atccsdevice.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdevice.o src/atccsdevice.cpp
+
+${OBJECTDIR}/src/atccsdpmstatus-odb.o: src/atccsdpmstatus-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdpmstatus-odb.o src/atccsdpmstatus-odb.cxx
+
+${OBJECTDIR}/src/atccsdpmstatus.o: src/atccsdpmstatus.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdpmstatus.o src/atccsdpmstatus.cpp
+
+${OBJECTDIR}/src/atccseme-odb.o: src/atccseme-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccseme-odb.o src/atccseme-odb.cxx
+
+${OBJECTDIR}/src/atccseme.o: src/atccseme.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccseme.o src/atccseme.cpp
 
 ${OBJECTDIR}/src/atccsfilterstatus-odb.o: src/atccsfilterstatus-odb.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -268,6 +306,11 @@ ${OBJECTDIR}/src/atccsfocusstatus.o: src/atccsfocusstatus.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsfocusstatus.o src/atccsfocusstatus.cpp
 
+${OBJECTDIR}/src/atccsfullopeneddomestatus-odb.o: src/atccsfullopeneddomestatus-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsfullopeneddomestatus-odb.o src/atccsfullopeneddomestatus-odb.cxx
+
 ${OBJECTDIR}/src/atccsfullopeneddomestatus.o: src/atccsfullopeneddomestatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -282,6 +325,16 @@ ${OBJECTDIR}/src/atccsgimbalstatus.o: src/atccsgimbalstatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsgimbalstatus.o src/atccsgimbalstatus.cpp
+
+${OBJECTDIR}/src/atccsguidescopestatus-odb.o: src/atccsguidescopestatus-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsguidescopestatus-odb.o src/atccsguidescopestatus-odb.cxx
+
+${OBJECTDIR}/src/atccsguidescopestatus.o: src/atccsguidescopestatus.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsguidescopestatus.o src/atccsguidescopestatus.cpp
 
 ${OBJECTDIR}/src/atccsinstruction-odb.o: src/atccsinstruction-odb.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -353,6 +406,11 @@ ${OBJECTDIR}/src/atccsutilization.o: src/atccsutilization.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsutilization.o src/atccsutilization.cpp
 
+${OBJECTDIR}/src/atccsutilizationlog-odb.o: src/atccsutilizationlog-odb.cxx
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsutilizationlog-odb.o src/atccsutilizationlog-odb.cxx
+
 ${OBJECTDIR}/src/atccsutilizationlog.o: src/atccsutilizationlog.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -378,11 +436,6 @@ ${OBJECTDIR}/src/dimmrealtimedata.o: src/dimmrealtimedata.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata.o src/dimmrealtimedata.cpp
 
-${OBJECTDIR}/src/dpmstatus.o: src/dpmstatus.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dpmstatus.o src/dpmstatus.cpp
-
 ${OBJECTDIR}/src/dustrealtimedata-odb.o: src/dustrealtimedata-odb.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -402,11 +455,6 @@ ${OBJECTDIR}/src/emerealtimedata.o: src/emerealtimedata.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata.o src/emerealtimedata.cpp
-
-${OBJECTDIR}/src/guidescopestatus.o: src/guidescopestatus.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/guidescopestatus.o src/guidescopestatus.cpp
 
 ${OBJECTDIR}/src/sqmrealtimedata-odb.o: src/sqmrealtimedata-odb.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -740,6 +788,19 @@ ${OBJECTDIR}/src/at60slavedomestatus_nomain.o: ${OBJECTDIR}/src/at60slavedomesta
 	    ${CP} ${OBJECTDIR}/src/at60slavedomestatus.o ${OBJECTDIR}/src/at60slavedomestatus_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/atccsat-odb_nomain.o: ${OBJECTDIR}/src/atccsat-odb.o src/atccsat-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsat-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsat-odb_nomain.o src/atccsat-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsat-odb.o ${OBJECTDIR}/src/atccsat-odb_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/atccsat_nomain.o: ${OBJECTDIR}/src/atccsat.o src/atccsat.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsat.o`; \
@@ -779,6 +840,19 @@ ${OBJECTDIR}/src/atccsccdstatus_nomain.o: ${OBJECTDIR}/src/atccsccdstatus.o src/
 	    ${CP} ${OBJECTDIR}/src/atccsccdstatus.o ${OBJECTDIR}/src/atccsccdstatus_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/atccsdevice-odb_nomain.o: ${OBJECTDIR}/src/atccsdevice-odb.o src/atccsdevice-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsdevice-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdevice-odb_nomain.o src/atccsdevice-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsdevice-odb.o ${OBJECTDIR}/src/atccsdevice-odb_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/atccsdevice_nomain.o: ${OBJECTDIR}/src/atccsdevice.o src/atccsdevice.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsdevice.o`; \
@@ -790,6 +864,58 @@ ${OBJECTDIR}/src/atccsdevice_nomain.o: ${OBJECTDIR}/src/atccsdevice.o src/atccsd
 	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdevice_nomain.o src/atccsdevice.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsdevice.o ${OBJECTDIR}/src/atccsdevice_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccsdpmstatus-odb_nomain.o: ${OBJECTDIR}/src/atccsdpmstatus-odb.o src/atccsdpmstatus-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsdpmstatus-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdpmstatus-odb_nomain.o src/atccsdpmstatus-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsdpmstatus-odb.o ${OBJECTDIR}/src/atccsdpmstatus-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccsdpmstatus_nomain.o: ${OBJECTDIR}/src/atccsdpmstatus.o src/atccsdpmstatus.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsdpmstatus.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsdpmstatus_nomain.o src/atccsdpmstatus.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsdpmstatus.o ${OBJECTDIR}/src/atccsdpmstatus_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccseme-odb_nomain.o: ${OBJECTDIR}/src/atccseme-odb.o src/atccseme-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccseme-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccseme-odb_nomain.o src/atccseme-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccseme-odb.o ${OBJECTDIR}/src/atccseme-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccseme_nomain.o: ${OBJECTDIR}/src/atccseme.o src/atccseme.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccseme.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccseme_nomain.o src/atccseme.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccseme.o ${OBJECTDIR}/src/atccseme_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/atccsfilterstatus-odb_nomain.o: ${OBJECTDIR}/src/atccsfilterstatus-odb.o src/atccsfilterstatus-odb.cxx 
@@ -844,6 +970,19 @@ ${OBJECTDIR}/src/atccsfocusstatus_nomain.o: ${OBJECTDIR}/src/atccsfocusstatus.o 
 	    ${CP} ${OBJECTDIR}/src/atccsfocusstatus.o ${OBJECTDIR}/src/atccsfocusstatus_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/atccsfullopeneddomestatus-odb_nomain.o: ${OBJECTDIR}/src/atccsfullopeneddomestatus-odb.o src/atccsfullopeneddomestatus-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsfullopeneddomestatus-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsfullopeneddomestatus-odb_nomain.o src/atccsfullopeneddomestatus-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsfullopeneddomestatus-odb.o ${OBJECTDIR}/src/atccsfullopeneddomestatus-odb_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/atccsfullopeneddomestatus_nomain.o: ${OBJECTDIR}/src/atccsfullopeneddomestatus.o src/atccsfullopeneddomestatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsfullopeneddomestatus.o`; \
@@ -881,6 +1020,32 @@ ${OBJECTDIR}/src/atccsgimbalstatus_nomain.o: ${OBJECTDIR}/src/atccsgimbalstatus.
 	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsgimbalstatus_nomain.o src/atccsgimbalstatus.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsgimbalstatus.o ${OBJECTDIR}/src/atccsgimbalstatus_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccsguidescopestatus-odb_nomain.o: ${OBJECTDIR}/src/atccsguidescopestatus-odb.o src/atccsguidescopestatus-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsguidescopestatus-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsguidescopestatus-odb_nomain.o src/atccsguidescopestatus-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsguidescopestatus-odb.o ${OBJECTDIR}/src/atccsguidescopestatus-odb_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/atccsguidescopestatus_nomain.o: ${OBJECTDIR}/src/atccsguidescopestatus.o src/atccsguidescopestatus.cpp 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsguidescopestatus.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsguidescopestatus_nomain.o src/atccsguidescopestatus.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsguidescopestatus.o ${OBJECTDIR}/src/atccsguidescopestatus_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/atccsinstruction-odb_nomain.o: ${OBJECTDIR}/src/atccsinstruction-odb.o src/atccsinstruction-odb.cxx 
@@ -1065,6 +1230,19 @@ ${OBJECTDIR}/src/atccsutilization_nomain.o: ${OBJECTDIR}/src/atccsutilization.o 
 	    ${CP} ${OBJECTDIR}/src/atccsutilization.o ${OBJECTDIR}/src/atccsutilization_nomain.o;\
 	fi
 
+${OBJECTDIR}/src/atccsutilizationlog-odb_nomain.o: ${OBJECTDIR}/src/atccsutilizationlog-odb.o src/atccsutilizationlog-odb.cxx 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsutilizationlog-odb.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsutilizationlog-odb_nomain.o src/atccsutilizationlog-odb.cxx;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/atccsutilizationlog-odb.o ${OBJECTDIR}/src/atccsutilizationlog-odb_nomain.o;\
+	fi
+
 ${OBJECTDIR}/src/atccsutilizationlog_nomain.o: ${OBJECTDIR}/src/atccsutilizationlog.o src/atccsutilizationlog.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/atccsutilizationlog.o`; \
@@ -1130,19 +1308,6 @@ ${OBJECTDIR}/src/dimmrealtimedata_nomain.o: ${OBJECTDIR}/src/dimmrealtimedata.o 
 	    ${CP} ${OBJECTDIR}/src/dimmrealtimedata.o ${OBJECTDIR}/src/dimmrealtimedata_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/dpmstatus_nomain.o: ${OBJECTDIR}/src/dpmstatus.o src/dpmstatus.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dpmstatus.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dpmstatus_nomain.o src/dpmstatus.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/dpmstatus.o ${OBJECTDIR}/src/dpmstatus_nomain.o;\
-	fi
-
 ${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/dustrealtimedata-odb.o src/dustrealtimedata-odb.cxx 
 	${MKDIR} -p ${OBJECTDIR}/src
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dustrealtimedata-odb.o`; \
@@ -1193,19 +1358,6 @@ ${OBJECTDIR}/src/emerealtimedata_nomain.o: ${OBJECTDIR}/src/emerealtimedata.o sr
 	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata_nomain.o src/emerealtimedata.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/emerealtimedata.o ${OBJECTDIR}/src/emerealtimedata_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/guidescopestatus_nomain.o: ${OBJECTDIR}/src/guidescopestatus.o src/guidescopestatus.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/guidescopestatus.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/guidescopestatus_nomain.o src/guidescopestatus.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/guidescopestatus.o ${OBJECTDIR}/src/guidescopestatus_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/sqmrealtimedata-odb.o src/sqmrealtimedata-odb.cxx 

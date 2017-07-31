@@ -14,6 +14,15 @@
 #ifndef DIMMREALTIMEDATA_H
 #define DIMMREALTIMEDATA_H
 #include "emerealtimedata.h"
+
+/**
+ * @brief dimmrealtimedata is a persistence class which encapsulates the 
+ * dimm real-time data.
+ * @modified 2017-07-26
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name dimmrealtimedata
+ * 
+ */
 #pragma db object
 class dimmrealtimedata : public emerealtimedata
 {

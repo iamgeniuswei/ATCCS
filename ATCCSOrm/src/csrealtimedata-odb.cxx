@@ -115,23 +115,23 @@ namespace odb
           i, t + 0UL))
       grew = true;
 
-    // _RelSkyT
+    // _relskytemperature
     //
     t[3UL] = 0;
 
-    // _AmbientT
+    // _ambienttemperature
     //
     t[4UL] = 0;
 
-    // _SensorT
+    // _sensortemperature
     //
     t[5UL] = 0;
 
-    // _RainF
+    // _rainfall
     //
     t[6UL] = 0;
 
-    // _RainThreshV
+    // _rainthresh
     //
     t[7UL] = 0;
 
@@ -139,19 +139,19 @@ namespace odb
     //
     t[8UL] = 0;
 
-    // _WindUnits
+    // _windunits
     //
     t[9UL] = 0;
 
-    // _HumidityPercent
+    // _humiditypercent
     //
     t[10UL] = 0;
 
-    // _DewPointT
+    // _dewpoint
     //
     t[11UL] = 0;
 
-    // _DayLightV
+    // _daylight
     //
     t[12UL] = 0;
 
@@ -174,39 +174,39 @@ namespace odb
     object_traits_impl< ::emerealtimedata, id_pgsql >::bind (b + n, i, sk);
     n += sk == statement_select ? 3UL : 2UL;
 
-    // _RelSkyT
+    // _relskytemperature
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._RelSkyT_value;
-    b[n].is_null = &i._RelSkyT_null;
+    b[n].buffer = &i._relskytemperature_value;
+    b[n].is_null = &i._relskytemperature_null;
     n++;
 
-    // _AmbientT
+    // _ambienttemperature
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._AmbientT_value;
-    b[n].is_null = &i._AmbientT_null;
+    b[n].buffer = &i._ambienttemperature_value;
+    b[n].is_null = &i._ambienttemperature_null;
     n++;
 
-    // _SensorT
+    // _sensortemperature
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._SensorT_value;
-    b[n].is_null = &i._SensorT_null;
+    b[n].buffer = &i._sensortemperature_value;
+    b[n].is_null = &i._sensortemperature_null;
     n++;
 
-    // _RainF
+    // _rainfall
     //
     b[n].type = pgsql::bind::smallint;
-    b[n].buffer = &i._RainF_value;
-    b[n].is_null = &i._RainF_null;
+    b[n].buffer = &i._rainfall_value;
+    b[n].is_null = &i._rainfall_null;
     n++;
 
-    // _RainThreshV
+    // _rainthresh
     //
     b[n].type = pgsql::bind::smallint;
-    b[n].buffer = &i._RainThreshV_value;
-    b[n].is_null = &i._RainThreshV_null;
+    b[n].buffer = &i._rainthresh_value;
+    b[n].is_null = &i._rainthresh_null;
     n++;
 
     // _wind
@@ -216,32 +216,32 @@ namespace odb
     b[n].is_null = &i._wind_null;
     n++;
 
-    // _WindUnits
+    // _windunits
     //
     b[n].type = pgsql::bind::smallint;
-    b[n].buffer = &i._WindUnits_value;
-    b[n].is_null = &i._WindUnits_null;
+    b[n].buffer = &i._windunits_value;
+    b[n].is_null = &i._windunits_null;
     n++;
 
-    // _HumidityPercent
+    // _humiditypercent
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._HumidityPercent_value;
-    b[n].is_null = &i._HumidityPercent_null;
+    b[n].buffer = &i._humiditypercent_value;
+    b[n].is_null = &i._humiditypercent_null;
     n++;
 
-    // _DewPointT
+    // _dewpoint
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._DewPointT_value;
-    b[n].is_null = &i._DewPointT_null;
+    b[n].buffer = &i._dewpoint_value;
+    b[n].is_null = &i._dewpoint_null;
     n++;
 
-    // _DayLightV
+    // _daylight
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._DayLightV_value;
-    b[n].is_null = &i._DayLightV_null;
+    b[n].buffer = &i._daylight_value;
+    b[n].is_null = &i._daylight_null;
     n++;
   }
 
@@ -263,74 +263,74 @@ namespace odb
     if (object_traits_impl< ::emerealtimedata, id_pgsql >::init (i, o, sk))
       grew = true;
 
-    // _RelSkyT
+    // _relskytemperature
     //
     {
       double const& v =
-        o._RelSkyT;
+        o._relskytemperature;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._RelSkyT_value, is_null, v);
-      i._RelSkyT_null = is_null;
+        i._relskytemperature_value, is_null, v);
+      i._relskytemperature_null = is_null;
     }
 
-    // _AmbientT
+    // _ambienttemperature
     //
     {
       double const& v =
-        o._AmbientT;
+        o._ambienttemperature;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._AmbientT_value, is_null, v);
-      i._AmbientT_null = is_null;
+        i._ambienttemperature_value, is_null, v);
+      i._ambienttemperature_null = is_null;
     }
 
-    // _SensorT
+    // _sensortemperature
     //
     {
       double const& v =
-        o._SensorT;
+        o._sensortemperature;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._SensorT_value, is_null, v);
-      i._SensorT_null = is_null;
+        i._sensortemperature_value, is_null, v);
+      i._sensortemperature_null = is_null;
     }
 
-    // _RainF
+    // _rainfall
     //
     {
       short unsigned int const& v =
-        o._RainF;
+        o._rainfall;
 
       bool is_null (false);
       pgsql::value_traits<
           short unsigned int,
           pgsql::id_smallint >::set_image (
-        i._RainF_value, is_null, v);
-      i._RainF_null = is_null;
+        i._rainfall_value, is_null, v);
+      i._rainfall_null = is_null;
     }
 
-    // _RainThreshV
+    // _rainthresh
     //
     {
       short unsigned int const& v =
-        o._RainThreshV;
+        o._rainthresh;
 
       bool is_null (false);
       pgsql::value_traits<
           short unsigned int,
           pgsql::id_smallint >::set_image (
-        i._RainThreshV_value, is_null, v);
-      i._RainThreshV_null = is_null;
+        i._rainthresh_value, is_null, v);
+      i._rainthresh_null = is_null;
     }
 
     // _wind
@@ -347,60 +347,60 @@ namespace odb
       i._wind_null = is_null;
     }
 
-    // _WindUnits
+    // _windunits
     //
     {
       short unsigned int const& v =
-        o._WindUnits;
+        o._windunits;
 
       bool is_null (false);
       pgsql::value_traits<
           short unsigned int,
           pgsql::id_smallint >::set_image (
-        i._WindUnits_value, is_null, v);
-      i._WindUnits_null = is_null;
+        i._windunits_value, is_null, v);
+      i._windunits_null = is_null;
     }
 
-    // _HumidityPercent
+    // _humiditypercent
     //
     {
       double const& v =
-        o._HumidityPercent;
+        o._humiditypercent;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._HumidityPercent_value, is_null, v);
-      i._HumidityPercent_null = is_null;
+        i._humiditypercent_value, is_null, v);
+      i._humiditypercent_null = is_null;
     }
 
-    // _DewPointT
+    // _dewpoint
     //
     {
       double const& v =
-        o._DewPointT;
+        o._dewpoint;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._DewPointT_value, is_null, v);
-      i._DewPointT_null = is_null;
+        i._dewpoint_value, is_null, v);
+      i._dewpoint_null = is_null;
     }
 
-    // _DayLightV
+    // _daylight
     //
     {
       double const& v =
-        o._DayLightV;
+        o._daylight;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._DayLightV_value, is_null, v);
-      i._DayLightV_null = is_null;
+        i._daylight_value, is_null, v);
+      i._daylight_null = is_null;
     }
 
     return grew;
@@ -419,74 +419,74 @@ namespace odb
     //
     object_traits_impl< ::emerealtimedata, id_pgsql >::init (o, i, db);
 
-    // _RelSkyT
+    // _relskytemperature
     //
     {
       double& v =
-        o._RelSkyT;
+        o._relskytemperature;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._RelSkyT_value,
-        i._RelSkyT_null);
+        i._relskytemperature_value,
+        i._relskytemperature_null);
     }
 
-    // _AmbientT
+    // _ambienttemperature
     //
     {
       double& v =
-        o._AmbientT;
+        o._ambienttemperature;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._AmbientT_value,
-        i._AmbientT_null);
+        i._ambienttemperature_value,
+        i._ambienttemperature_null);
     }
 
-    // _SensorT
+    // _sensortemperature
     //
     {
       double& v =
-        o._SensorT;
+        o._sensortemperature;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._SensorT_value,
-        i._SensorT_null);
+        i._sensortemperature_value,
+        i._sensortemperature_null);
     }
 
-    // _RainF
+    // _rainfall
     //
     {
       short unsigned int& v =
-        o._RainF;
+        o._rainfall;
 
       pgsql::value_traits<
           short unsigned int,
           pgsql::id_smallint >::set_value (
         v,
-        i._RainF_value,
-        i._RainF_null);
+        i._rainfall_value,
+        i._rainfall_null);
     }
 
-    // _RainThreshV
+    // _rainthresh
     //
     {
       short unsigned int& v =
-        o._RainThreshV;
+        o._rainthresh;
 
       pgsql::value_traits<
           short unsigned int,
           pgsql::id_smallint >::set_value (
         v,
-        i._RainThreshV_value,
-        i._RainThreshV_null);
+        i._rainthresh_value,
+        i._rainthresh_null);
     }
 
     // _wind
@@ -503,60 +503,60 @@ namespace odb
         i._wind_null);
     }
 
-    // _WindUnits
+    // _windunits
     //
     {
       short unsigned int& v =
-        o._WindUnits;
+        o._windunits;
 
       pgsql::value_traits<
           short unsigned int,
           pgsql::id_smallint >::set_value (
         v,
-        i._WindUnits_value,
-        i._WindUnits_null);
+        i._windunits_value,
+        i._windunits_null);
     }
 
-    // _HumidityPercent
+    // _humiditypercent
     //
     {
       double& v =
-        o._HumidityPercent;
+        o._humiditypercent;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._HumidityPercent_value,
-        i._HumidityPercent_null);
+        i._humiditypercent_value,
+        i._humiditypercent_null);
     }
 
-    // _DewPointT
+    // _dewpoint
     //
     {
       double& v =
-        o._DewPointT;
+        o._dewpoint;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._DewPointT_value,
-        i._DewPointT_null);
+        i._dewpoint_value,
+        i._dewpoint_null);
     }
 
-    // _DayLightV
+    // _daylight
     //
     {
       double& v =
-        o._DayLightV;
+        o._daylight;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._DayLightV_value,
-        i._DayLightV_null);
+        i._daylight_value,
+        i._daylight_null);
     }
   }
 
@@ -565,16 +565,16 @@ namespace odb
   "(\"id\", "
   "\"sec\", "
   "\"msec\", "
-  "\"RelSkyT\", "
-  "\"AmbientT\", "
-  "\"SensorT\", "
-  "\"RainF\", "
-  "\"RainThreshV\", "
+  "\"relskytemperature\", "
+  "\"ambienttemperature\", "
+  "\"sensortemperature\", "
+  "\"rainfall\", "
+  "\"rainthresh\", "
   "\"wind\", "
-  "\"WindUnits\", "
-  "\"HumidityPercent\", "
-  "\"DewPointT\", "
-  "\"DayLightV\") "
+  "\"windunits\", "
+  "\"humiditypercent\", "
+  "\"dewpoint\", "
+  "\"daylight\") "
   "VALUES "
   "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) "
   "RETURNING \"id\"";
@@ -584,16 +584,16 @@ namespace odb
   "\"csrealtimedata\".\"id\", "
   "\"csrealtimedata\".\"sec\", "
   "\"csrealtimedata\".\"msec\", "
-  "\"csrealtimedata\".\"RelSkyT\", "
-  "\"csrealtimedata\".\"AmbientT\", "
-  "\"csrealtimedata\".\"SensorT\", "
-  "\"csrealtimedata\".\"RainF\", "
-  "\"csrealtimedata\".\"RainThreshV\", "
+  "\"csrealtimedata\".\"relskytemperature\", "
+  "\"csrealtimedata\".\"ambienttemperature\", "
+  "\"csrealtimedata\".\"sensortemperature\", "
+  "\"csrealtimedata\".\"rainfall\", "
+  "\"csrealtimedata\".\"rainthresh\", "
   "\"csrealtimedata\".\"wind\", "
-  "\"csrealtimedata\".\"WindUnits\", "
-  "\"csrealtimedata\".\"HumidityPercent\", "
-  "\"csrealtimedata\".\"DewPointT\", "
-  "\"csrealtimedata\".\"DayLightV\" "
+  "\"csrealtimedata\".\"windunits\", "
+  "\"csrealtimedata\".\"humiditypercent\", "
+  "\"csrealtimedata\".\"dewpoint\", "
+  "\"csrealtimedata\".\"daylight\" "
   "FROM \"csrealtimedata\" "
   "WHERE \"csrealtimedata\".\"id\"=$1";
 
@@ -602,16 +602,16 @@ namespace odb
   "SET "
   "\"sec\"=$1, "
   "\"msec\"=$2, "
-  "\"RelSkyT\"=$3, "
-  "\"AmbientT\"=$4, "
-  "\"SensorT\"=$5, "
-  "\"RainF\"=$6, "
-  "\"RainThreshV\"=$7, "
+  "\"relskytemperature\"=$3, "
+  "\"ambienttemperature\"=$4, "
+  "\"sensortemperature\"=$5, "
+  "\"rainfall\"=$6, "
+  "\"rainthresh\"=$7, "
   "\"wind\"=$8, "
-  "\"WindUnits\"=$9, "
-  "\"HumidityPercent\"=$10, "
-  "\"DewPointT\"=$11, "
-  "\"DayLightV\"=$12 "
+  "\"windunits\"=$9, "
+  "\"humiditypercent\"=$10, "
+  "\"dewpoint\"=$11, "
+  "\"daylight\"=$12 "
   "WHERE \"id\"=$13";
 
   const char access::object_traits_impl< ::csrealtimedata, id_pgsql >::erase_statement[] =
@@ -623,16 +623,16 @@ namespace odb
   "\"csrealtimedata\".\"id\", "
   "\"csrealtimedata\".\"sec\", "
   "\"csrealtimedata\".\"msec\", "
-  "\"csrealtimedata\".\"RelSkyT\", "
-  "\"csrealtimedata\".\"AmbientT\", "
-  "\"csrealtimedata\".\"SensorT\", "
-  "\"csrealtimedata\".\"RainF\", "
-  "\"csrealtimedata\".\"RainThreshV\", "
+  "\"csrealtimedata\".\"relskytemperature\", "
+  "\"csrealtimedata\".\"ambienttemperature\", "
+  "\"csrealtimedata\".\"sensortemperature\", "
+  "\"csrealtimedata\".\"rainfall\", "
+  "\"csrealtimedata\".\"rainthresh\", "
   "\"csrealtimedata\".\"wind\", "
-  "\"csrealtimedata\".\"WindUnits\", "
-  "\"csrealtimedata\".\"HumidityPercent\", "
-  "\"csrealtimedata\".\"DewPointT\", "
-  "\"csrealtimedata\".\"DayLightV\" "
+  "\"csrealtimedata\".\"windunits\", "
+  "\"csrealtimedata\".\"humiditypercent\", "
+  "\"csrealtimedata\".\"dewpoint\", "
+  "\"csrealtimedata\".\"daylight\" "
   "FROM \"csrealtimedata\"";
 
   const char access::object_traits_impl< ::csrealtimedata, id_pgsql >::erase_query_statement[] =
@@ -1056,16 +1056,16 @@ namespace odb
                       "  \"id\" BIGSERIAL NOT NULL PRIMARY KEY,\n"
                       "  \"sec\" INTEGER NOT NULL,\n"
                       "  \"msec\" INTEGER NOT NULL,\n"
-                      "  \"RelSkyT\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"AmbientT\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"SensorT\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"RainF\" SMALLINT NOT NULL,\n"
-                      "  \"RainThreshV\" SMALLINT NOT NULL,\n"
+                      "  \"relskytemperature\" DOUBLE PRECISION NOT NULL,\n"
+                      "  \"ambienttemperature\" DOUBLE PRECISION NOT NULL,\n"
+                      "  \"sensortemperature\" DOUBLE PRECISION NOT NULL,\n"
+                      "  \"rainfall\" SMALLINT NOT NULL,\n"
+                      "  \"rainthresh\" SMALLINT NOT NULL,\n"
                       "  \"wind\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"WindUnits\" SMALLINT NOT NULL,\n"
-                      "  \"HumidityPercent\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"DewPointT\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"DayLightV\" DOUBLE PRECISION NOT NULL)");
+                      "  \"windunits\" SMALLINT NOT NULL,\n"
+                      "  \"humiditypercent\" DOUBLE PRECISION NOT NULL,\n"
+                      "  \"dewpoint\" DOUBLE PRECISION NOT NULL,\n"
+                      "  \"daylight\" DOUBLE PRECISION NOT NULL)");
           return false;
         }
       }
@@ -1077,7 +1077,7 @@ namespace odb
   static const schema_catalog_create_entry
   create_schema_entry_ (
     id_pgsql,
-    "",
+    "csrealtimedata",
     &create_schema);
 }
 

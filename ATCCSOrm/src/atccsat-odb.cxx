@@ -48,7 +48,6 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsat, id_pgsql >::
   persist_statement_types[] =
   {
-    pgsql::int4_oid,
     pgsql::text_oid,
     pgsql::text_oid
   };
@@ -80,6 +79,26 @@ namespace odb
     {
     }
   };
+
+  access::object_traits_impl< ::atccsat, id_pgsql >::id_type
+  access::object_traits_impl< ::atccsat, id_pgsql >::
+  id (const id_image_type& i)
+  {
+    pgsql::database* db (0);
+    ODB_POTENTIALLY_UNUSED (db);
+
+    id_type id;
+    {
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        id,
+        i.id_value,
+        i.id_null);
+    }
+
+    return id;
+  }
 
   access::object_traits_impl< ::atccsat, id_pgsql >::id_type
   access::object_traits_impl< ::atccsat, id_pgsql >::
@@ -146,7 +165,7 @@ namespace odb
 
     // _id
     //
-    if (sk != statement_update)
+    if (sk != statement_insert && sk != statement_update)
     {
       b[n].type = pgsql::bind::integer;
       b[n].buffer = &i._id_value;
@@ -194,21 +213,6 @@ namespace odb
     using namespace pgsql;
 
     bool grew (false);
-
-    // _id
-    //
-    if (sk == statement_insert)
-    {
-      unsigned int const& v =
-        o._id;
-
-      bool is_null (false);
-      pgsql::value_traits<
-          unsigned int,
-          pgsql::id_integer >::set_image (
-        i._id_value, is_null, v);
-      i._id_null = is_null;
-    }
 
     // _name
     //
@@ -328,7 +332,8 @@ namespace odb
   "\"name\", "
   "\"description\") "
   "VALUES "
-  "($1, $2, $3)";
+  "(DEFAULT, $1, $2) "
+  "RETURNING \"id\"";
 
   const char access::object_traits_impl< ::atccsat, id_pgsql >::find_statement[] =
   "SELECT "
@@ -363,7 +368,7 @@ namespace odb
   "\"atccsat\"";
 
   void access::object_traits_impl< ::atccsat, id_pgsql >::
-  persist (database& db, const object_type& obj)
+  persist (database& db, object_type& obj)
   {
     ODB_POTENTIALLY_UNUSED (db);
 
@@ -375,7 +380,7 @@ namespace odb
       conn.statement_cache ().find_object<object_type> ());
 
     callback (db,
-              obj,
+              static_cast<const object_type&> (obj),
               callback_event::pre_persist);
 
     image_type& im (sts.image ());
@@ -392,12 +397,25 @@ namespace odb
       imb.version++;
     }
 
+    {
+      id_image_type& i (sts.id_image ());
+      binding& b (sts.id_image_binding ());
+      if (i.version != sts.id_image_version () || b.version == 0)
+      {
+        bind (b.bind, i);
+        sts.id_image_version (i.version);
+        b.version++;
+      }
+    }
+
     insert_statement& st (sts.persist_statement ());
     if (!st.execute ())
       throw object_already_persistent ();
 
+    obj._id = id (sts.id_image ());
+
     callback (db,
-              obj,
+              static_cast<const object_type&> (obj),
               callback_event::post_persist);
   }
 
@@ -775,7 +793,7 @@ namespace odb
         case 1:
         {
           db.execute ("CREATE TABLE \"atccsat\" (\n"
-                      "  \"id\" INTEGER NOT NULL PRIMARY KEY,\n"
+                      "  \"id\" SERIAL NOT NULL PRIMARY KEY,\n"
                       "  \"name\" TEXT NOT NULL,\n"
                       "  \"description\" TEXT NOT NULL)");
           return false;
@@ -789,7 +807,7 @@ namespace odb
   static const schema_catalog_create_entry
   create_schema_entry_ (
     id_pgsql,
-    "",
+    "atccsat",
     &create_schema);
 }
 

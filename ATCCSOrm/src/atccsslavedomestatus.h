@@ -3,6 +3,9 @@
 #include <odb/core.hxx>
 #include "atccspublicstatus.h"
 
+/**
+ * @brief atccsslavedomestatus is the base class of slavedome's real-time status.
+ */
 #pragma db object
 class atccsslavedomestatus : public atccspublicstatus
 {

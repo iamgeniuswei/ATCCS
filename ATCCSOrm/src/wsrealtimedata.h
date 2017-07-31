@@ -15,6 +15,16 @@
 #define WSREALTIMEDATA_H
 #include "emerealtimedata.h"
 
+
+/**
+ * @brief wsrealtimedata is a persistence class which encapsulates the 
+ * weather station real-time data.
+ * @modified 2017-07-26
+ * @description 
+ * 1) two member-data's name is modified.
+ * 2) recompile the header file by odb complier with --schema-name wsrealtimedata
+ * 
+ */
 #pragma db object
 class wsrealtimedata : public emerealtimedata
 {
@@ -39,9 +49,9 @@ public:
     double _windspeed = 0;
     double _windspeed2 = 0;
     double _windspeed10 = 0;
-    unsigned int _windderection = 0;
+    unsigned int _winddirection = 0;
     double _rainfall = 0;
-    double _raidation = 0;
+    double _radiation = 0;
     double _illumination = 0;
 
 };

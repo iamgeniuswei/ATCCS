@@ -4,11 +4,15 @@
 #include "atccspublicstatus.h"
 #include <odb/core.hxx>
 
+/**
+ * @brief atccsfullopeneddomestatus is the base class of fullopeneddome's 
+ * real-time status.
+ */
 #pragma db object
-class ATCCSFullOpenedDomeStatus : public atccspublicstatus
+class atccsfullopeneddomestatus : public atccspublicstatus
 {
 public:
-    ATCCSFullOpenedDomeStatus();
+    atccsfullopeneddomestatus();
 private:
     friend class odb::access;
     double _domePosition = 0;

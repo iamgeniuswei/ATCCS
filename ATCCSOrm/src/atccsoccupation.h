@@ -5,6 +5,11 @@
 #include "atccs_global.h"
 #include <memory>
 class ATCCSData;
+
+/**
+ * @brief atccsoccupation is a persistence class which encapsulates the AT's 
+ * occupation.
+ */
 #pragma db object
 class atccsoccupation
 {
@@ -13,15 +18,10 @@ public:
     atccsoccupation();
     bool setValue(std::shared_ptr<ATCCSData> data = nullptr);
     unsigned int user() const;
-
     unsigned short at() const;
-
     unsigned short occupation() const;
-
     unsigned int start() const;
-
     unsigned int end() const;
-
     unsigned int priority() const;
     void setUser(unsigned int _user);
     void setAt(unsigned short _at);

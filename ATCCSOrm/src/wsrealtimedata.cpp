@@ -43,9 +43,9 @@ unsigned int wsrealtimedata::setRealtimeData(std::shared_ptr<ATCCSData> data)
         _windspeed = ws->windspeed;
         _windspeed2 = ws->windspeed2;
         _windspeed10 = ws->windspeed10;
-        _windderection = ws->windderection;
+        _winddirection = ws->windderection;
         _rainfall = ws->rainfall;
-        _raidation = ws->raidation;
+        _radiation = ws->raidation;
         _illumination = ws->illumination;
         
         return SUCCESS;

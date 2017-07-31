@@ -15,6 +15,11 @@
 #define ATCCSUSER_H
 #include <odb/core.hxx>
 #include <string>
+
+
+/**
+ * @brief atccsuser is a persistence class which encapsulates the user.
+ */
 #pragma db object
 class atccsuser {
 public:

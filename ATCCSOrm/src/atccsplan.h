@@ -6,6 +6,11 @@
 #include <odb/core.hxx>
 
 class ATCCSData;
+
+
+/**
+ * @brief atccsplan is the base class of AT's plan
+ */
 #pragma db object
 class atccsplan
 {

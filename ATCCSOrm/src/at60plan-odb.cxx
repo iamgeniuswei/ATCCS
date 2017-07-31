@@ -750,7 +750,7 @@ namespace odb
   static const schema_catalog_create_entry
   create_schema_entry_ (
     id_pgsql,
-    "",
+    "at60plan",
     &create_schema);
 }
 

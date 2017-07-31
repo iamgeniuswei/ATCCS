@@ -12,7 +12,7 @@ namespace odb
   access::object_traits< ::atccsutilization >::
   id (const object_type& o)
   {
-    return o._at;
+    return o._id;
   }
 
   inline

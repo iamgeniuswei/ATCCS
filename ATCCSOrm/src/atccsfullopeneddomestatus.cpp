@@ -1,13 +1,13 @@
 #include "atccsfullopeneddomestatus.h"
 #include "atccsdata.h"
 #include "atccs_dome_define.h"
-ATCCSFullOpenedDomeStatus::ATCCSFullOpenedDomeStatus()
+atccsfullopeneddomestatus::atccsfullopeneddomestatus()
 {
 
 }
 
 
-void ATCCSFullOpenedDomeStatus::setStatus(std::shared_ptr<ATCCSData> data)
+void atccsfullopeneddomestatus::setStatus(std::shared_ptr<ATCCSData> data)
 {
     atccspublicstatus::setStatus(data);
     if(data == nullptr || !(data->validate()))

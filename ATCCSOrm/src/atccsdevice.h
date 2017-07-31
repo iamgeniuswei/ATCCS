@@ -15,7 +15,12 @@
 #define ATCCSDEVICE_H
 #include <odb/core.hxx>
 #include <string>
-#pragma db objcet
+
+/**
+ * @brief atccsdevice is a persistence class and stored in a dictionary table,
+ * which enumerates the devices of an AT. 
+ */
+#pragma db object
 class atccsdevice {
 public:
     atccsdevice();
@@ -23,11 +28,11 @@ public:
     virtual ~atccsdevice();
 private:
     friend class odb::access;
+#pragma db id auto
     unsigned int _id;
     std::string _name;
     std::string _description;
 };
-#pragma db member(atccsdevice::_id) id
 
 #endif /* ATCCSDEVICE_H */
 

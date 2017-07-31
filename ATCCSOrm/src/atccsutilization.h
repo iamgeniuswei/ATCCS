@@ -16,22 +16,26 @@
 #include <odb/core.hxx>
 #include <string>
 #pragma db object
-class atccsutilization {
+
+class atccsutilization
+{
 public:
     explicit atccsutilization();
-    atccsutilization(unsigned int at =0);
+    atccsutilization(unsigned int at = 0);
     virtual ~atccsutilization();
     void updateUtilization();
 private:
     friend class odb::access;
+#pragma db id auto
+    unsigned int _id;
     unsigned int _at;
     unsigned int _start = 0;
     unsigned int _end = 0;
     unsigned int _user = 0;
     unsigned int _plan = 0;
+    unsigned int _occupation = 0;
     unsigned int _priority = 0;
     std::string _descirption;
 };
-#pragma db member(atccsutilization::_at) id
 #endif /* ATCCSUTILIZATION_H */
 

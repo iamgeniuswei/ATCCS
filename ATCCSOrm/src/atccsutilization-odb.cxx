@@ -54,6 +54,7 @@ namespace odb
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
+    pgsql::int4_oid,
     pgsql::text_oid
   };
 
@@ -66,6 +67,8 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsutilization, id_pgsql >::
   update_statement_types[] =
   {
+    pgsql::int4_oid,
+    pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
@@ -91,6 +94,26 @@ namespace odb
 
   access::object_traits_impl< ::atccsutilization, id_pgsql >::id_type
   access::object_traits_impl< ::atccsutilization, id_pgsql >::
+  id (const id_image_type& i)
+  {
+    pgsql::database* db (0);
+    ODB_POTENTIALLY_UNUSED (db);
+
+    id_type id;
+    {
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        id,
+        i.id_value,
+        i.id_null);
+    }
+
+    return id;
+  }
+
+  access::object_traits_impl< ::atccsutilization, id_pgsql >::id_type
+  access::object_traits_impl< ::atccsutilization, id_pgsql >::
   id (const image_type& i)
   {
     pgsql::database* db (0);
@@ -102,8 +125,8 @@ namespace odb
           unsigned int,
           pgsql::id_integer >::set_value (
         id,
-        i._at_value,
-        i._at_null);
+        i._id_value,
+        i._id_null);
     }
 
     return id;
@@ -118,33 +141,41 @@ namespace odb
 
     bool grew (false);
 
-    // _at
+    // _id
     //
     t[0UL] = 0;
 
-    // _start
+    // _at
     //
     t[1UL] = 0;
 
-    // _end
+    // _start
     //
     t[2UL] = 0;
 
-    // _user
+    // _end
     //
     t[3UL] = 0;
 
-    // _plan
+    // _user
     //
     t[4UL] = 0;
 
-    // _priority
+    // _plan
     //
     t[5UL] = 0;
 
+    // _occupation
+    //
+    t[6UL] = 0;
+
+    // _priority
+    //
+    t[7UL] = 0;
+
     // _descirption
     //
-    if (t[6UL])
+    if (t[8UL])
     {
       i._descirption_value.capacity (i._descirption_size);
       grew = true;
@@ -164,15 +195,22 @@ namespace odb
 
     std::size_t n (0);
 
-    // _at
+    // _id
     //
-    if (sk != statement_update)
+    if (sk != statement_insert && sk != statement_update)
     {
       b[n].type = pgsql::bind::integer;
-      b[n].buffer = &i._at_value;
-      b[n].is_null = &i._at_null;
+      b[n].buffer = &i._id_value;
+      b[n].is_null = &i._id_null;
       n++;
     }
+
+    // _at
+    //
+    b[n].type = pgsql::bind::integer;
+    b[n].buffer = &i._at_value;
+    b[n].is_null = &i._at_null;
+    n++;
 
     // _start
     //
@@ -200,6 +238,13 @@ namespace odb
     b[n].type = pgsql::bind::integer;
     b[n].buffer = &i._plan_value;
     b[n].is_null = &i._plan_null;
+    n++;
+
+    // _occupation
+    //
+    b[n].type = pgsql::bind::integer;
+    b[n].buffer = &i._occupation_value;
+    b[n].is_null = &i._occupation_null;
     n++;
 
     // _priority
@@ -243,7 +288,6 @@ namespace odb
 
     // _at
     //
-    if (sk == statement_insert)
     {
       unsigned int const& v =
         o._at;
@@ -312,6 +356,20 @@ namespace odb
       i._plan_null = is_null;
     }
 
+    // _occupation
+    //
+    {
+      unsigned int const& v =
+        o._occupation;
+
+      bool is_null (false);
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_image (
+        i._occupation_value, is_null, v);
+      i._occupation_null = is_null;
+    }
+
     // _priority
     //
     {
@@ -358,6 +416,20 @@ namespace odb
     ODB_POTENTIALLY_UNUSED (o);
     ODB_POTENTIALLY_UNUSED (i);
     ODB_POTENTIALLY_UNUSED (db);
+
+    // _id
+    //
+    {
+      unsigned int& v =
+        o._id;
+
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        v,
+        i._id_value,
+        i._id_null);
+    }
 
     // _at
     //
@@ -429,6 +501,20 @@ namespace odb
         i._plan_null);
     }
 
+    // _occupation
+    //
+    {
+      unsigned int& v =
+        o._occupation;
+
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        v,
+        i._occupation_value,
+        i._occupation_null);
+    }
+
     // _priority
     //
     {
@@ -474,50 +560,59 @@ namespace odb
 
   const char access::object_traits_impl< ::atccsutilization, id_pgsql >::persist_statement[] =
   "INSERT INTO \"atccsutilization\" "
-  "(\"at\", "
+  "(\"id\", "
+  "\"at\", "
   "\"start\", "
   "\"end\", "
   "\"user\", "
   "\"plan\", "
+  "\"occupation\", "
   "\"priority\", "
   "\"descirption\") "
   "VALUES "
-  "($1, $2, $3, $4, $5, $6, $7)";
+  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8) "
+  "RETURNING \"id\"";
 
   const char access::object_traits_impl< ::atccsutilization, id_pgsql >::find_statement[] =
   "SELECT "
+  "\"atccsutilization\".\"id\", "
   "\"atccsutilization\".\"at\", "
   "\"atccsutilization\".\"start\", "
   "\"atccsutilization\".\"end\", "
   "\"atccsutilization\".\"user\", "
   "\"atccsutilization\".\"plan\", "
+  "\"atccsutilization\".\"occupation\", "
   "\"atccsutilization\".\"priority\", "
   "\"atccsutilization\".\"descirption\" "
   "FROM \"atccsutilization\" "
-  "WHERE \"atccsutilization\".\"at\"=$1";
+  "WHERE \"atccsutilization\".\"id\"=$1";
 
   const char access::object_traits_impl< ::atccsutilization, id_pgsql >::update_statement[] =
   "UPDATE \"atccsutilization\" "
   "SET "
-  "\"start\"=$1, "
-  "\"end\"=$2, "
-  "\"user\"=$3, "
-  "\"plan\"=$4, "
-  "\"priority\"=$5, "
-  "\"descirption\"=$6 "
-  "WHERE \"at\"=$7";
+  "\"at\"=$1, "
+  "\"start\"=$2, "
+  "\"end\"=$3, "
+  "\"user\"=$4, "
+  "\"plan\"=$5, "
+  "\"occupation\"=$6, "
+  "\"priority\"=$7, "
+  "\"descirption\"=$8 "
+  "WHERE \"id\"=$9";
 
   const char access::object_traits_impl< ::atccsutilization, id_pgsql >::erase_statement[] =
   "DELETE FROM \"atccsutilization\" "
-  "WHERE \"at\"=$1";
+  "WHERE \"id\"=$1";
 
   const char access::object_traits_impl< ::atccsutilization, id_pgsql >::query_statement[] =
   "SELECT "
+  "\"atccsutilization\".\"id\", "
   "\"atccsutilization\".\"at\", "
   "\"atccsutilization\".\"start\", "
   "\"atccsutilization\".\"end\", "
   "\"atccsutilization\".\"user\", "
   "\"atccsutilization\".\"plan\", "
+  "\"atccsutilization\".\"occupation\", "
   "\"atccsutilization\".\"priority\", "
   "\"atccsutilization\".\"descirption\" "
   "FROM \"atccsutilization\"";
@@ -529,7 +624,7 @@ namespace odb
   "\"atccsutilization\"";
 
   void access::object_traits_impl< ::atccsutilization, id_pgsql >::
-  persist (database& db, const object_type& obj)
+  persist (database& db, object_type& obj)
   {
     ODB_POTENTIALLY_UNUSED (db);
 
@@ -541,7 +636,7 @@ namespace odb
       conn.statement_cache ().find_object<object_type> ());
 
     callback (db,
-              obj,
+              static_cast<const object_type&> (obj),
               callback_event::pre_persist);
 
     image_type& im (sts.image ());
@@ -558,12 +653,25 @@ namespace odb
       imb.version++;
     }
 
+    {
+      id_image_type& i (sts.id_image ());
+      binding& b (sts.id_image_binding ());
+      if (i.version != sts.id_image_version () || b.version == 0)
+      {
+        bind (b.bind, i);
+        sts.id_image_version (i.version);
+        b.version++;
+      }
+    }
+
     insert_statement& st (sts.persist_statement ());
     if (!st.execute ())
       throw object_already_persistent ();
 
+    obj._id = id (sts.id_image ());
+
     callback (db,
-              obj,
+              static_cast<const object_type&> (obj),
               callback_event::post_persist);
   }
 
@@ -583,7 +691,7 @@ namespace odb
       conn.statement_cache ().find_object<object_type> ());
 
     const id_type& id (
-      obj._at);
+      obj._id);
     id_image_type& idi (sts.id_image ());
     init (idi, id);
 
@@ -703,7 +811,7 @@ namespace odb
     statements_type::auto_lock l (sts);
 
     const id_type& id  (
-      obj._at);
+      obj._id);
 
     if (!find_ (sts, &id))
       return false;
@@ -885,11 +993,13 @@ namespace odb
         case 1:
         {
           db.execute ("CREATE TABLE \"atccsutilization\" (\n"
-                      "  \"at\" INTEGER NOT NULL PRIMARY KEY,\n"
+                      "  \"id\" SERIAL NOT NULL PRIMARY KEY,\n"
+                      "  \"at\" INTEGER NOT NULL,\n"
                       "  \"start\" INTEGER NOT NULL,\n"
                       "  \"end\" INTEGER NOT NULL,\n"
                       "  \"user\" INTEGER NOT NULL,\n"
                       "  \"plan\" INTEGER NOT NULL,\n"
+                      "  \"occupation\" INTEGER NOT NULL,\n"
                       "  \"priority\" INTEGER NOT NULL,\n"
                       "  \"descirption\" TEXT NOT NULL)");
           return false;
@@ -903,7 +1013,7 @@ namespace odb
   static const schema_catalog_create_entry
   create_schema_entry_ (
     id_pgsql,
-    "",
+    "atccsutilization",
     &create_schema);
 }
 

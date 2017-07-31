@@ -14,6 +14,13 @@
 #ifndef AT60FILTERSTATUS_H
 #define AT60FILTERSTATUS_H
 #include "atccsfilterstatus.h"
+
+/**
+ * @brief at60filterstatus is AT60 filter's real-time status.
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name at60filterstatus
+ */
 #pragma db object
 class at60filterstatus : public atccsfilterstatus
 {

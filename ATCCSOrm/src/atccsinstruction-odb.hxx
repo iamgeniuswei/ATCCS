@@ -163,6 +163,18 @@ namespace odb
 
     static const sequence_type_ sequence;
 
+    // timeout
+    //
+    typedef
+    pgsql::query_column<
+      pgsql::value_traits<
+        unsigned int,
+        pgsql::id_integer >::query_type,
+      pgsql::id_integer >
+    timeout_type_;
+
+    static const timeout_type_ timeout;
+
     // plan
     //
     typedef
@@ -248,6 +260,11 @@ namespace odb
   sequence (A::table_name, "\"sequence\"", 0);
 
   template <typename A>
+  const typename query_columns< ::atccsinstruction, id_pgsql, A >::timeout_type_
+  query_columns< ::atccsinstruction, id_pgsql, A >::
+  timeout (A::table_name, "\"timeout\"", 0);
+
+  template <typename A>
   const typename query_columns< ::atccsinstruction, id_pgsql, A >::plan_type_
   query_columns< ::atccsinstruction, id_pgsql, A >::
   plan (A::table_name, "\"plan\"", 0);
@@ -322,6 +339,11 @@ namespace odb
       //
       int _sequence_value;
       bool _sequence_null;
+
+      // _timeout
+      //
+      int _timeout_value;
+      bool _timeout_null;
 
       // _plan
       //

@@ -8,15 +8,16 @@
 #include <iostream>
 
 class ATCCSData;
+
+/**
+ * @brief atccspublicstatus is the base class of AT device's real-time status
+ */
 #pragma db object
 class atccspublicstatus
 {
 public:
     atccspublicstatus();
-    virtual ~atccspublicstatus()
-    {
-        std::cout << "~atccspublicstatus\n";
-    }
+    virtual ~atccspublicstatus(){}
     void set_errorString(std::string _errorString);
     std::string errorString() const;
     void set_error(unsigned long long _error);

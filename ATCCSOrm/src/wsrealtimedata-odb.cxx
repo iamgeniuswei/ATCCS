@@ -145,7 +145,7 @@ namespace odb
     //
     t[9UL] = 0;
 
-    // _windderection
+    // _winddirection
     //
     t[10UL] = 0;
 
@@ -153,7 +153,7 @@ namespace odb
     //
     t[11UL] = 0;
 
-    // _raidation
+    // _radiation
     //
     t[12UL] = 0;
 
@@ -229,11 +229,11 @@ namespace odb
     b[n].is_null = &i._windspeed10_null;
     n++;
 
-    // _windderection
+    // _winddirection
     //
     b[n].type = pgsql::bind::integer;
-    b[n].buffer = &i._windderection_value;
-    b[n].is_null = &i._windderection_null;
+    b[n].buffer = &i._winddirection_value;
+    b[n].is_null = &i._winddirection_null;
     n++;
 
     // _rainfall
@@ -243,11 +243,11 @@ namespace odb
     b[n].is_null = &i._rainfall_null;
     n++;
 
-    // _raidation
+    // _radiation
     //
     b[n].type = pgsql::bind::double_;
-    b[n].buffer = &i._raidation_value;
-    b[n].is_null = &i._raidation_null;
+    b[n].buffer = &i._radiation_value;
+    b[n].is_null = &i._radiation_null;
     n++;
 
     // _illumination
@@ -374,18 +374,18 @@ namespace odb
       i._windspeed10_null = is_null;
     }
 
-    // _windderection
+    // _winddirection
     //
     {
       unsigned int const& v =
-        o._windderection;
+        o._winddirection;
 
       bool is_null (false);
       pgsql::value_traits<
           unsigned int,
           pgsql::id_integer >::set_image (
-        i._windderection_value, is_null, v);
-      i._windderection_null = is_null;
+        i._winddirection_value, is_null, v);
+      i._winddirection_null = is_null;
     }
 
     // _rainfall
@@ -402,18 +402,18 @@ namespace odb
       i._rainfall_null = is_null;
     }
 
-    // _raidation
+    // _radiation
     //
     {
       double const& v =
-        o._raidation;
+        o._radiation;
 
       bool is_null (false);
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_image (
-        i._raidation_value, is_null, v);
-      i._raidation_null = is_null;
+        i._radiation_value, is_null, v);
+      i._radiation_null = is_null;
     }
 
     // _illumination
@@ -544,18 +544,18 @@ namespace odb
         i._windspeed10_null);
     }
 
-    // _windderection
+    // _winddirection
     //
     {
       unsigned int& v =
-        o._windderection;
+        o._winddirection;
 
       pgsql::value_traits<
           unsigned int,
           pgsql::id_integer >::set_value (
         v,
-        i._windderection_value,
-        i._windderection_null);
+        i._winddirection_value,
+        i._winddirection_null);
     }
 
     // _rainfall
@@ -572,18 +572,18 @@ namespace odb
         i._rainfall_null);
     }
 
-    // _raidation
+    // _radiation
     //
     {
       double& v =
-        o._raidation;
+        o._radiation;
 
       pgsql::value_traits<
           double,
           pgsql::id_double >::set_value (
         v,
-        i._raidation_value,
-        i._raidation_null);
+        i._radiation_value,
+        i._radiation_null);
     }
 
     // _illumination
@@ -613,9 +613,9 @@ namespace odb
   "\"windspeed\", "
   "\"windspeed2\", "
   "\"windspeed10\", "
-  "\"windderection\", "
+  "\"winddirection\", "
   "\"rainfall\", "
-  "\"raidation\", "
+  "\"radiation\", "
   "\"illumination\") "
   "VALUES "
   "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) "
@@ -633,9 +633,9 @@ namespace odb
   "\"wsrealtimedata\".\"windspeed\", "
   "\"wsrealtimedata\".\"windspeed2\", "
   "\"wsrealtimedata\".\"windspeed10\", "
-  "\"wsrealtimedata\".\"windderection\", "
+  "\"wsrealtimedata\".\"winddirection\", "
   "\"wsrealtimedata\".\"rainfall\", "
-  "\"wsrealtimedata\".\"raidation\", "
+  "\"wsrealtimedata\".\"radiation\", "
   "\"wsrealtimedata\".\"illumination\" "
   "FROM \"wsrealtimedata\" "
   "WHERE \"wsrealtimedata\".\"id\"=$1";
@@ -652,9 +652,9 @@ namespace odb
   "\"windspeed\"=$7, "
   "\"windspeed2\"=$8, "
   "\"windspeed10\"=$9, "
-  "\"windderection\"=$10, "
+  "\"winddirection\"=$10, "
   "\"rainfall\"=$11, "
-  "\"raidation\"=$12, "
+  "\"radiation\"=$12, "
   "\"illumination\"=$13 "
   "WHERE \"id\"=$14";
 
@@ -674,9 +674,9 @@ namespace odb
   "\"wsrealtimedata\".\"windspeed\", "
   "\"wsrealtimedata\".\"windspeed2\", "
   "\"wsrealtimedata\".\"windspeed10\", "
-  "\"wsrealtimedata\".\"windderection\", "
+  "\"wsrealtimedata\".\"winddirection\", "
   "\"wsrealtimedata\".\"rainfall\", "
-  "\"wsrealtimedata\".\"raidation\", "
+  "\"wsrealtimedata\".\"radiation\", "
   "\"wsrealtimedata\".\"illumination\" "
   "FROM \"wsrealtimedata\"";
 
@@ -1108,9 +1108,9 @@ namespace odb
                       "  \"windspeed\" DOUBLE PRECISION NOT NULL,\n"
                       "  \"windspeed2\" DOUBLE PRECISION NOT NULL,\n"
                       "  \"windspeed10\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"windderection\" INTEGER NOT NULL,\n"
+                      "  \"winddirection\" INTEGER NOT NULL,\n"
                       "  \"rainfall\" DOUBLE PRECISION NOT NULL,\n"
-                      "  \"raidation\" DOUBLE PRECISION NOT NULL,\n"
+                      "  \"radiation\" DOUBLE PRECISION NOT NULL,\n"
                       "  \"illumination\" DOUBLE PRECISION NOT NULL)");
           return false;
         }
@@ -1123,7 +1123,7 @@ namespace odb
   static const schema_catalog_create_entry
   create_schema_entry_ (
     id_pgsql,
-    "",
+    "wsrealtimedata",
     &create_schema);
 }
 

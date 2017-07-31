@@ -15,6 +15,14 @@
 #define ASCREALTIMEDATA_H
 #include "emerealtimedata.h"
 
+/**
+ * @brief ascrealtimedata is a persistence class which encapsulates the 
+ * ASC real-time data.
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name ascrealtimedata
+ * 
+ */
 #pragma db object
 class ascrealtimedata : public emerealtimedata
 {

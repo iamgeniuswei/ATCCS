@@ -5,6 +5,9 @@
 #include <odb/core.hxx>
 #include <iostream>
 
+/**
+ * @brief atccsfocusstatus is the base class of focus' real-time status.
+ */
 #pragma db object
 class atccsfocusstatus : public atccspublicstatus
 {

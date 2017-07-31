@@ -21,17 +21,27 @@
       <itemPath>src/at60plan.h</itemPath>
       <itemPath>src/at60slavedomestatus-odb.hxx</itemPath>
       <itemPath>src/at60slavedomestatus.h</itemPath>
+      <itemPath>src/atccsat-odb.hxx</itemPath>
       <itemPath>src/atccsat.h</itemPath>
       <itemPath>src/atccsccdstatus-odb.hxx</itemPath>
       <itemPath>src/atccsccdstatus.h</itemPath>
+      <itemPath>src/atccsdevice-odb.hxx</itemPath>
       <itemPath>src/atccsdevice.h</itemPath>
+      <itemPath>src/atccsdpmstatus-odb.hxx</itemPath>
+      <itemPath>src/atccsdpmstatus.h</itemPath>
+      <itemPath>src/atccseme-odb.hxx</itemPath>
+      <itemPath>src/atccseme.h</itemPath>
       <itemPath>src/atccsfilterstatus-odb.hxx</itemPath>
       <itemPath>src/atccsfilterstatus.h</itemPath>
       <itemPath>src/atccsfocusstatus-odb.hxx</itemPath>
       <itemPath>src/atccsfocusstatus.h</itemPath>
+      <itemPath>src/atccsfullopeneddomestatus-odb.hxx</itemPath>
       <itemPath>src/atccsfullopeneddomestatus.h</itemPath>
       <itemPath>src/atccsgimbalstatus-odb.hxx</itemPath>
       <itemPath>src/atccsgimbalstatus.h</itemPath>
+      <itemPath>src/atccsguidescopestatus-odb.hxx</itemPath>
+      <itemPath>src/atccsguidescopestatus.h</itemPath>
+      <itemPath>src/atccsinstruction-odb.hxx</itemPath>
       <itemPath>src/atccsinstruction.h</itemPath>
       <itemPath>src/atccsoccupation-odb.hxx</itemPath>
       <itemPath>src/atccsoccupation.h</itemPath>
@@ -45,17 +55,16 @@
       <itemPath>src/atccsuser.h</itemPath>
       <itemPath>src/atccsutilization-odb.hxx</itemPath>
       <itemPath>src/atccsutilization.h</itemPath>
+      <itemPath>src/atccsutilizationlog-odb.hxx</itemPath>
       <itemPath>src/atccsutilizationlog.h</itemPath>
       <itemPath>src/csrealtimedata-odb.hxx</itemPath>
       <itemPath>src/csrealtimedata.h</itemPath>
       <itemPath>src/dimmrealtimedata-odb.hxx</itemPath>
       <itemPath>src/dimmrealtimedata.h</itemPath>
-      <itemPath>src/dpmstatus.h</itemPath>
       <itemPath>src/dustrealtimedata-odb.hxx</itemPath>
       <itemPath>src/dustrealtimedata.h</itemPath>
       <itemPath>src/emerealtimedata-odb.hxx</itemPath>
       <itemPath>src/emerealtimedata.h</itemPath>
-      <itemPath>src/guidescopestatus.h</itemPath>
       <itemPath>src/sqmrealtimedata-odb.hxx</itemPath>
       <itemPath>src/sqmrealtimedata.h</itemPath>
       <itemPath>src/wsrealtimedata-odb.hxx</itemPath>
@@ -93,21 +102,30 @@
       <itemPath>src/at60slavedomestatus-odb.cxx</itemPath>
       <itemPath>src/at60slavedomestatus-odb.ixx</itemPath>
       <itemPath>src/at60slavedomestatus.cpp</itemPath>
+      <itemPath>src/atccsat-odb.cxx</itemPath>
       <itemPath>src/atccsat.cpp</itemPath>
       <itemPath>src/atccsccdstatus-odb.cxx</itemPath>
       <itemPath>src/atccsccdstatus-odb.ixx</itemPath>
       <itemPath>src/atccsccdstatus.cpp</itemPath>
+      <itemPath>src/atccsdevice-odb.cxx</itemPath>
       <itemPath>src/atccsdevice.cpp</itemPath>
+      <itemPath>src/atccsdpmstatus-odb.cxx</itemPath>
+      <itemPath>src/atccsdpmstatus.cpp</itemPath>
+      <itemPath>src/atccseme-odb.cxx</itemPath>
+      <itemPath>src/atccseme.cpp</itemPath>
       <itemPath>src/atccsfilterstatus-odb.cxx</itemPath>
       <itemPath>src/atccsfilterstatus-odb.ixx</itemPath>
       <itemPath>src/atccsfilterstatus.cpp</itemPath>
       <itemPath>src/atccsfocusstatus-odb.cxx</itemPath>
       <itemPath>src/atccsfocusstatus-odb.ixx</itemPath>
       <itemPath>src/atccsfocusstatus.cpp</itemPath>
+      <itemPath>src/atccsfullopeneddomestatus-odb.cxx</itemPath>
       <itemPath>src/atccsfullopeneddomestatus.cpp</itemPath>
       <itemPath>src/atccsgimbalstatus-odb.cxx</itemPath>
       <itemPath>src/atccsgimbalstatus-odb.ixx</itemPath>
       <itemPath>src/atccsgimbalstatus.cpp</itemPath>
+      <itemPath>src/atccsguidescopestatus-odb.cxx</itemPath>
+      <itemPath>src/atccsguidescopestatus.cpp</itemPath>
       <itemPath>src/atccsinstruction-odb.cxx</itemPath>
       <itemPath>src/atccsinstruction-odb.ixx</itemPath>
       <itemPath>src/atccsinstruction.cpp</itemPath>
@@ -129,6 +147,7 @@
       <itemPath>src/atccsutilization-odb.cxx</itemPath>
       <itemPath>src/atccsutilization-odb.ixx</itemPath>
       <itemPath>src/atccsutilization.cpp</itemPath>
+      <itemPath>src/atccsutilizationlog-odb.cxx</itemPath>
       <itemPath>src/atccsutilizationlog.cpp</itemPath>
       <itemPath>src/csrealtimedata-odb.cxx</itemPath>
       <itemPath>src/csrealtimedata-odb.ixx</itemPath>
@@ -136,14 +155,12 @@
       <itemPath>src/dimmrealtimedata-odb.cxx</itemPath>
       <itemPath>src/dimmrealtimedata-odb.ixx</itemPath>
       <itemPath>src/dimmrealtimedata.cpp</itemPath>
-      <itemPath>src/dpmstatus.cpp</itemPath>
       <itemPath>src/dustrealtimedata-odb.cxx</itemPath>
       <itemPath>src/dustrealtimedata-odb.ixx</itemPath>
       <itemPath>src/dustrealtimedata.cpp</itemPath>
       <itemPath>src/emerealtimedata-odb.cxx</itemPath>
       <itemPath>src/emerealtimedata-odb.ixx</itemPath>
       <itemPath>src/emerealtimedata.cpp</itemPath>
-      <itemPath>src/guidescopestatus.cpp</itemPath>
       <itemPath>src/sqmrealtimedata-odb.cxx</itemPath>
       <itemPath>src/sqmrealtimedata-odb.ixx</itemPath>
       <itemPath>src/sqmrealtimedata.cpp</itemPath>
@@ -200,6 +217,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>src/atccs_pre_compile.sh</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
@@ -450,6 +468,12 @@
       </item>
       <item path="src/at60slavedomestatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccs_pre_compile.sh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsat-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsat-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsat.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsat.h" ex="false" tool="3" flavor2="0">
@@ -464,9 +488,29 @@
       </item>
       <item path="src/atccsccdstatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsdevice-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdevice-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsdevice.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsdevice.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccseme-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccseme-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccseme.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccseme.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsfilterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -488,6 +532,16 @@
       </item>
       <item path="src/atccsfocusstatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsfullopeneddomestatus-odb.cxx"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/atccsfullopeneddomestatus-odb.hxx"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/atccsfullopeneddomestatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsfullopeneddomestatus.h" ex="false" tool="3" flavor2="0">
@@ -502,7 +556,17 @@
       </item>
       <item path="src/atccsgimbalstatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsguidescopestatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsguidescopestatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsguidescopestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsguidescopestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsinstruction-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction-odb.hxx" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsinstruction-odb.ixx" ex="false" tool="3" flavor2="0">
       </item>
@@ -570,6 +634,10 @@
       </item>
       <item path="src/atccsutilization.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsutilizationlog-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilizationlog-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsutilizationlog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
@@ -594,10 +662,6 @@
       </item>
       <item path="src/dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/dpmstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dpmstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/dustrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/dustrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
@@ -617,10 +681,6 @@
       <item path="src/emerealtimedata.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/emerealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/guidescopestatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/guidescopestatus.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/sqmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -881,6 +941,12 @@
       </item>
       <item path="src/at60slavedomestatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccs_pre_compile.sh" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsat-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsat-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsat.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsat.h" ex="false" tool="3" flavor2="0">
@@ -895,9 +961,29 @@
       </item>
       <item path="src/atccsccdstatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsdevice-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdevice-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsdevice.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsdevice.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsdpmstatus.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccseme-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccseme-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccseme.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccseme.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsfilterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
@@ -919,6 +1005,16 @@
       </item>
       <item path="src/atccsfocusstatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsfullopeneddomestatus-odb.cxx"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/atccsfullopeneddomestatus-odb.hxx"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
       <item path="src/atccsfullopeneddomestatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsfullopeneddomestatus.h" ex="false" tool="3" flavor2="0">
@@ -933,7 +1029,17 @@
       </item>
       <item path="src/atccsgimbalstatus.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsguidescopestatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsguidescopestatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsguidescopestatus.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsguidescopestatus.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsinstruction-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsinstruction-odb.hxx" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsinstruction-odb.ixx" ex="false" tool="3" flavor2="0">
       </item>
@@ -1001,6 +1107,10 @@
       </item>
       <item path="src/atccsutilization.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/atccsutilizationlog-odb.cxx" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsutilizationlog-odb.hxx" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsutilizationlog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
@@ -1025,10 +1135,6 @@
       </item>
       <item path="src/dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/dpmstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dpmstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/dustrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/dustrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
@@ -1048,10 +1154,6 @@
       <item path="src/emerealtimedata.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/emerealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/guidescopestatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/guidescopestatus.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/sqmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
       </item>

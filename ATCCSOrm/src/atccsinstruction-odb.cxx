@@ -103,17 +103,21 @@ namespace odb
     //
     t[6UL] = 0;
 
-    // _plan
+    // _timeout
     //
     t[7UL] = 0;
 
-    // _instruction
+    // _plan
     //
     t[8UL] = 0;
 
+    // _instruction
+    //
+    t[9UL] = 0;
+
     // _param
     //
-    if (t[9UL])
+    if (t[10UL])
     {
       i._param_value.capacity (i._param_size);
       grew = true;
@@ -121,7 +125,7 @@ namespace odb
 
     // _result
     //
-    t[10UL] = 0;
+    t[11UL] = 0;
 
     return grew;
   }
@@ -187,6 +191,13 @@ namespace odb
     b[n].type = pgsql::bind::integer;
     b[n].buffer = &i._sequence_value;
     b[n].is_null = &i._sequence_null;
+    n++;
+
+    // _timeout
+    //
+    b[n].type = pgsql::bind::integer;
+    b[n].buffer = &i._timeout_value;
+    b[n].is_null = &i._timeout_null;
     n++;
 
     // _plan
@@ -324,6 +335,20 @@ namespace odb
           pgsql::id_integer >::set_image (
         i._sequence_value, is_null, v);
       i._sequence_null = is_null;
+    }
+
+    // _timeout
+    //
+    {
+      unsigned int const& v =
+        o._timeout;
+
+      bool is_null (false);
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_image (
+        i._timeout_value, is_null, v);
+      i._timeout_null = is_null;
     }
 
     // _plan
@@ -497,6 +522,20 @@ namespace odb
         v,
         i._sequence_value,
         i._sequence_null);
+    }
+
+    // _timeout
+    //
+    {
+      unsigned int& v =
+        o._timeout;
+
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        v,
+        i._timeout_value,
+        i._timeout_null);
     }
 
     // _plan

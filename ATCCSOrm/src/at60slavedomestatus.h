@@ -15,7 +15,12 @@
 #define AT60SLAVEDOMESTATUS_H
 
 #include "atccsslavedomestatus.h"
-
+/**
+ * @brief at60slavedomestatus is AT60 slavedome's real-time status.
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name at60slavedomestatus
+ */
 #pragma db object
 class at60slavedomestatus : public atccsslavedomestatus
 {

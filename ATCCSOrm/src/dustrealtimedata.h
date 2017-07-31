@@ -16,6 +16,15 @@
 #include <odb/exceptions.hxx>
 
 #include "emerealtimedata.h"
+
+/**
+ * @brief ustdrealtimedata is a persistence class which encapsulates the 
+ * dust real-time data.
+ * @modified 2017-07-26
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name dustrealtimedata
+ * 
+ */
 #pragma db object
 class dustrealtimedata : public emerealtimedata
 {

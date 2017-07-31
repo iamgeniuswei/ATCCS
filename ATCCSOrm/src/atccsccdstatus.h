@@ -3,15 +3,16 @@
 #include <odb/core.hxx>
 #include "atccspublicstatus.h"
 #include <iostream>
+
+/**
+ * atccsccdstatus is the base class of ccd's real-time status.
+ */
 #pragma db object
 class atccsccdstatus : public atccspublicstatus
 {
 public:
     atccsccdstatus();
-    ~atccsccdstatus()
-    {
-        std::cout << "~atccsccdstatus" << std::endl;
-    }
+    ~atccsccdstatus(){}
     void setStatus(std::shared_ptr<ATCCSData> data = nullptr);
     unsigned short indexOfGain() const;
     unsigned short indexOfGainMode() const;

@@ -15,6 +15,12 @@
 #define AT60FOCUSSTATUS_H
 #include "atccsfocusstatus.h"
 
+/**
+ * @brief at60focusstatus is AT60 focus's real-time status.
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name at60focusstatus
+ */
 #pragma db object
 class at60focusstatus : public atccsfocusstatus
 {

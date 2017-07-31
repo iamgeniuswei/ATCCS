@@ -188,7 +188,7 @@ namespace odb
 
     static const windspeed10_type_ windspeed10;
 
-    // windderection
+    // winddirection
     //
     typedef
     pgsql::query_column<
@@ -196,9 +196,9 @@ namespace odb
         unsigned int,
         pgsql::id_integer >::query_type,
       pgsql::id_integer >
-    windderection_type_;
+    winddirection_type_;
 
-    static const windderection_type_ windderection;
+    static const winddirection_type_ winddirection;
 
     // rainfall
     //
@@ -212,7 +212,7 @@ namespace odb
 
     static const rainfall_type_ rainfall;
 
-    // raidation
+    // radiation
     //
     typedef
     pgsql::query_column<
@@ -220,9 +220,9 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    raidation_type_;
+    radiation_type_;
 
-    static const raidation_type_ raidation;
+    static const radiation_type_ radiation;
 
     // illumination
     //
@@ -273,9 +273,9 @@ namespace odb
   windspeed10 (A::table_name, "\"windspeed10\"", 0);
 
   template <typename A>
-  const typename query_columns< ::wsrealtimedata, id_pgsql, A >::windderection_type_
+  const typename query_columns< ::wsrealtimedata, id_pgsql, A >::winddirection_type_
   query_columns< ::wsrealtimedata, id_pgsql, A >::
-  windderection (A::table_name, "\"windderection\"", 0);
+  winddirection (A::table_name, "\"winddirection\"", 0);
 
   template <typename A>
   const typename query_columns< ::wsrealtimedata, id_pgsql, A >::rainfall_type_
@@ -283,9 +283,9 @@ namespace odb
   rainfall (A::table_name, "\"rainfall\"", 0);
 
   template <typename A>
-  const typename query_columns< ::wsrealtimedata, id_pgsql, A >::raidation_type_
+  const typename query_columns< ::wsrealtimedata, id_pgsql, A >::radiation_type_
   query_columns< ::wsrealtimedata, id_pgsql, A >::
-  raidation (A::table_name, "\"raidation\"", 0);
+  radiation (A::table_name, "\"radiation\"", 0);
 
   template <typename A>
   const typename query_columns< ::wsrealtimedata, id_pgsql, A >::illumination_type_
@@ -342,20 +342,20 @@ namespace odb
       double _windspeed10_value;
       bool _windspeed10_null;
 
-      // _windderection
+      // _winddirection
       //
-      int _windderection_value;
-      bool _windderection_null;
+      int _winddirection_value;
+      bool _winddirection_null;
 
       // _rainfall
       //
       double _rainfall_value;
       bool _rainfall_null;
 
-      // _raidation
+      // _radiation
       //
-      double _raidation_value;
-      bool _raidation_null;
+      double _radiation_value;
+      bool _radiation_null;
 
       // _illumination
       //

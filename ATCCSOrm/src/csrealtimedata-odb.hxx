@@ -104,7 +104,7 @@ namespace odb
     //
     typedef query_columns< ::emerealtimedata, id_pgsql, A > emerealtimedata;
 
-    // RelSkyT
+    // relskytemperature
     //
     typedef
     pgsql::query_column<
@@ -112,11 +112,11 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    RelSkyT_type_;
+    relskytemperature_type_;
 
-    static const RelSkyT_type_ RelSkyT;
+    static const relskytemperature_type_ relskytemperature;
 
-    // AmbientT
+    // ambienttemperature
     //
     typedef
     pgsql::query_column<
@@ -124,11 +124,11 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    AmbientT_type_;
+    ambienttemperature_type_;
 
-    static const AmbientT_type_ AmbientT;
+    static const ambienttemperature_type_ ambienttemperature;
 
-    // SensorT
+    // sensortemperature
     //
     typedef
     pgsql::query_column<
@@ -136,11 +136,11 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    SensorT_type_;
+    sensortemperature_type_;
 
-    static const SensorT_type_ SensorT;
+    static const sensortemperature_type_ sensortemperature;
 
-    // RainF
+    // rainfall
     //
     typedef
     pgsql::query_column<
@@ -148,11 +148,11 @@ namespace odb
         short unsigned int,
         pgsql::id_smallint >::query_type,
       pgsql::id_smallint >
-    RainF_type_;
+    rainfall_type_;
 
-    static const RainF_type_ RainF;
+    static const rainfall_type_ rainfall;
 
-    // RainThreshV
+    // rainthresh
     //
     typedef
     pgsql::query_column<
@@ -160,9 +160,9 @@ namespace odb
         short unsigned int,
         pgsql::id_smallint >::query_type,
       pgsql::id_smallint >
-    RainThreshV_type_;
+    rainthresh_type_;
 
-    static const RainThreshV_type_ RainThreshV;
+    static const rainthresh_type_ rainthresh;
 
     // wind
     //
@@ -176,7 +176,7 @@ namespace odb
 
     static const wind_type_ wind;
 
-    // WindUnits
+    // windunits
     //
     typedef
     pgsql::query_column<
@@ -184,11 +184,11 @@ namespace odb
         short unsigned int,
         pgsql::id_smallint >::query_type,
       pgsql::id_smallint >
-    WindUnits_type_;
+    windunits_type_;
 
-    static const WindUnits_type_ WindUnits;
+    static const windunits_type_ windunits;
 
-    // HumidityPercent
+    // humiditypercent
     //
     typedef
     pgsql::query_column<
@@ -196,11 +196,11 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    HumidityPercent_type_;
+    humiditypercent_type_;
 
-    static const HumidityPercent_type_ HumidityPercent;
+    static const humiditypercent_type_ humiditypercent;
 
-    // DewPointT
+    // dewpoint
     //
     typedef
     pgsql::query_column<
@@ -208,11 +208,11 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    DewPointT_type_;
+    dewpoint_type_;
 
-    static const DewPointT_type_ DewPointT;
+    static const dewpoint_type_ dewpoint;
 
-    // DayLightV
+    // daylight
     //
     typedef
     pgsql::query_column<
@@ -220,35 +220,35 @@ namespace odb
         double,
         pgsql::id_double >::query_type,
       pgsql::id_double >
-    DayLightV_type_;
+    daylight_type_;
 
-    static const DayLightV_type_ DayLightV;
+    static const daylight_type_ daylight;
   };
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::RelSkyT_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::relskytemperature_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  RelSkyT (A::table_name, "\"RelSkyT\"", 0);
+  relskytemperature (A::table_name, "\"relskytemperature\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::AmbientT_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::ambienttemperature_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  AmbientT (A::table_name, "\"AmbientT\"", 0);
+  ambienttemperature (A::table_name, "\"ambienttemperature\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::SensorT_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::sensortemperature_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  SensorT (A::table_name, "\"SensorT\"", 0);
+  sensortemperature (A::table_name, "\"sensortemperature\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::RainF_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::rainfall_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  RainF (A::table_name, "\"RainF\"", 0);
+  rainfall (A::table_name, "\"rainfall\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::RainThreshV_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::rainthresh_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  RainThreshV (A::table_name, "\"RainThreshV\"", 0);
+  rainthresh (A::table_name, "\"rainthresh\"", 0);
 
   template <typename A>
   const typename query_columns< ::csrealtimedata, id_pgsql, A >::wind_type_
@@ -256,24 +256,24 @@ namespace odb
   wind (A::table_name, "\"wind\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::WindUnits_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::windunits_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  WindUnits (A::table_name, "\"WindUnits\"", 0);
+  windunits (A::table_name, "\"windunits\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::HumidityPercent_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::humiditypercent_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  HumidityPercent (A::table_name, "\"HumidityPercent\"", 0);
+  humiditypercent (A::table_name, "\"humiditypercent\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::DewPointT_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::dewpoint_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  DewPointT (A::table_name, "\"DewPointT\"", 0);
+  dewpoint (A::table_name, "\"dewpoint\"", 0);
 
   template <typename A>
-  const typename query_columns< ::csrealtimedata, id_pgsql, A >::DayLightV_type_
+  const typename query_columns< ::csrealtimedata, id_pgsql, A >::daylight_type_
   query_columns< ::csrealtimedata, id_pgsql, A >::
-  DayLightV (A::table_name, "\"DayLightV\"", 0);
+  daylight (A::table_name, "\"daylight\"", 0);
 
   template <typename A>
   struct pointer_query_columns< ::csrealtimedata, id_pgsql, A >:
@@ -290,55 +290,55 @@ namespace odb
 
     struct image_type: object_traits_impl< ::emerealtimedata, id_pgsql >::image_type
     {
-      // _RelSkyT
+      // _relskytemperature
       //
-      double _RelSkyT_value;
-      bool _RelSkyT_null;
+      double _relskytemperature_value;
+      bool _relskytemperature_null;
 
-      // _AmbientT
+      // _ambienttemperature
       //
-      double _AmbientT_value;
-      bool _AmbientT_null;
+      double _ambienttemperature_value;
+      bool _ambienttemperature_null;
 
-      // _SensorT
+      // _sensortemperature
       //
-      double _SensorT_value;
-      bool _SensorT_null;
+      double _sensortemperature_value;
+      bool _sensortemperature_null;
 
-      // _RainF
+      // _rainfall
       //
-      short _RainF_value;
-      bool _RainF_null;
+      short _rainfall_value;
+      bool _rainfall_null;
 
-      // _RainThreshV
+      // _rainthresh
       //
-      short _RainThreshV_value;
-      bool _RainThreshV_null;
+      short _rainthresh_value;
+      bool _rainthresh_null;
 
       // _wind
       //
       double _wind_value;
       bool _wind_null;
 
-      // _WindUnits
+      // _windunits
       //
-      short _WindUnits_value;
-      bool _WindUnits_null;
+      short _windunits_value;
+      bool _windunits_null;
 
-      // _HumidityPercent
+      // _humiditypercent
       //
-      double _HumidityPercent_value;
-      bool _HumidityPercent_null;
+      double _humiditypercent_value;
+      bool _humiditypercent_null;
 
-      // _DewPointT
+      // _dewpoint
       //
-      double _DewPointT_value;
-      bool _DewPointT_null;
+      double _dewpoint_value;
+      bool _dewpoint_null;
 
-      // _DayLightV
+      // _daylight
       //
-      double _DayLightV_value;
-      bool _DayLightV_null;
+      double _daylight_value;
+      bool _daylight_null;
 
       std::size_t version;
     };

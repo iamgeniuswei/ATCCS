@@ -14,6 +14,13 @@
 #ifndef AT60CCDSTATUS_H
 #define AT60CCDSTATUS_H
 #include "atccsccdstatus.h"
+
+/**
+ * @brief at60ccdstatus is AT60 ccd's real-time status.
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name at60ccdstatus
+ */
 #pragma db object
 class at60ccdstatus : public atccsccdstatus
 {

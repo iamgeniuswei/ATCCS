@@ -5,10 +5,10 @@
 #include <odb/core.hxx>
 #include "atccspublicstatus.h"
 #pragma db object
-class GuideScopeStatus : public atccspublicstatus
+class atccsguidescopestatus : public atccspublicstatus
 {
 public:
-    GuideScopeStatus();
+    atccsguidescopestatus();
 
 private:
     friend class odb::access;

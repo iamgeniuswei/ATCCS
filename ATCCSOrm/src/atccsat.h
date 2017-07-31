@@ -15,18 +15,24 @@
 #define ATCCSAT_H
 #include <odb/core.hxx>
 #include <string>
+
+/**
+ * @brief atccsat is a persistence class and stored in a dictionary table, which
+ * enumerates the ATs in an observation station. 
+ */
 #pragma db object
-class atccsat {
+class atccsat 
+{
 public:
     atccsat();
     atccsat(const atccsat& orig);
     virtual ~atccsat();
 private:
     friend class odb::access;
+#pragma db id auto
     unsigned int _id;
     std::string _name;
     std::string _description;
 };
-#pragma db member(atccsat::_id) id
 #endif /* ATCCSAT_H */
 

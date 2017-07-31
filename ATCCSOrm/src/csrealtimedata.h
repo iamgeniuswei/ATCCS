@@ -15,6 +15,14 @@
 #define CSREALTIMEDATA_H
 #include "emerealtimedata.h"
 
+/**
+ * @brief csrealtimedata is a persistence class which encapsulates the 
+ * cloud sensor real-time data.
+ * @modified 2017-07-26
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name csrealtimedata
+ * 
+ */
 #pragma db object
 class csrealtimedata : public emerealtimedata
 {
@@ -34,16 +42,16 @@ protected:
 
 public:
     friend class odb::access;
-    double _RelSkyT = 0;
-    double _AmbientT = 0;
-    double _SensorT = 0;
-    unsigned short _RainF = 0;
-    unsigned short _RainThreshV = 0;
+    double _relskytemperature = 0;
+    double _ambienttemperature = 0;
+    double _sensortemperature = 0;
+    unsigned short _rainfall = 0;
+    unsigned short _rainthresh = 0;
     double _wind = 0;
-    unsigned short _WindUnits = 0;
-    double _HumidityPercent = 0;
-    double _DewPointT = 0;
-    double _DayLightV = 0;
+    unsigned short _windunits = 0;
+    double _humiditypercent = 0;
+    double _dewpoint = 0;
+    double _daylight = 0;
 };
 
 #endif /* CSREALTIMEDATA_H */

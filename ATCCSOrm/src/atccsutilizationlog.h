@@ -32,7 +32,6 @@ private:
     unsigned int _priority = 0;
     unsigned int _status = 0;
     std::string _descirption;
-
 };
 
 #endif /* ATCCSUTILIZATIONLOG_H */

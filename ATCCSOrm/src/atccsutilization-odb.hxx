@@ -55,7 +55,7 @@ namespace odb
 
     typedef unsigned int id_type;
 
-    static const bool auto_id = false;
+    static const bool auto_id = true;
 
     static const bool abstract = false;
 
@@ -97,6 +97,18 @@ namespace odb
   template <typename A>
   struct query_columns< ::atccsutilization, id_pgsql, A >
   {
+    // id
+    //
+    typedef
+    pgsql::query_column<
+      pgsql::value_traits<
+        unsigned int,
+        pgsql::id_integer >::query_type,
+      pgsql::id_integer >
+    id_type_;
+
+    static const id_type_ id;
+
     // at
     //
     typedef
@@ -157,6 +169,18 @@ namespace odb
 
     static const plan_type_ plan;
 
+    // occupation
+    //
+    typedef
+    pgsql::query_column<
+      pgsql::value_traits<
+        unsigned int,
+        pgsql::id_integer >::query_type,
+      pgsql::id_integer >
+    occupation_type_;
+
+    static const occupation_type_ occupation;
+
     // priority
     //
     typedef
@@ -183,6 +207,11 @@ namespace odb
   };
 
   template <typename A>
+  const typename query_columns< ::atccsutilization, id_pgsql, A >::id_type_
+  query_columns< ::atccsutilization, id_pgsql, A >::
+  id (A::table_name, "\"id\"", 0);
+
+  template <typename A>
   const typename query_columns< ::atccsutilization, id_pgsql, A >::at_type_
   query_columns< ::atccsutilization, id_pgsql, A >::
   at (A::table_name, "\"at\"", 0);
@@ -206,6 +235,11 @@ namespace odb
   const typename query_columns< ::atccsutilization, id_pgsql, A >::plan_type_
   query_columns< ::atccsutilization, id_pgsql, A >::
   plan (A::table_name, "\"plan\"", 0);
+
+  template <typename A>
+  const typename query_columns< ::atccsutilization, id_pgsql, A >::occupation_type_
+  query_columns< ::atccsutilization, id_pgsql, A >::
+  occupation (A::table_name, "\"occupation\"", 0);
 
   template <typename A>
   const typename query_columns< ::atccsutilization, id_pgsql, A >::priority_type_
@@ -238,6 +272,11 @@ namespace odb
 
     struct image_type
     {
+      // _id
+      //
+      int _id_value;
+      bool _id_null;
+
       // _at
       //
       int _at_value;
@@ -263,6 +302,11 @@ namespace odb
       int _plan_value;
       bool _plan_null;
 
+      // _occupation
+      //
+      int _occupation_value;
+      bool _occupation_null;
+
       // _priority
       //
       int _priority_value;
@@ -280,6 +324,9 @@ namespace odb
     struct extra_statement_cache_type;
 
     using object_traits<object_type>::id;
+
+    static id_type
+    id (const id_image_type&);
 
     static id_type
     id (const image_type&);
@@ -313,7 +360,7 @@ namespace odb
 
     typedef pgsql::query_base query_base_type;
 
-    static const std::size_t column_count = 7UL;
+    static const std::size_t column_count = 9UL;
     static const std::size_t id_column_count = 1UL;
     static const std::size_t inverse_column_count = 0UL;
     static const std::size_t readonly_column_count = 0UL;
@@ -334,7 +381,7 @@ namespace odb
     static const char table_name[];
 
     static void
-    persist (database&, const object_type&);
+    persist (database&, object_type&);
 
     static bool
     find (database&, const id_type&, object_type&);

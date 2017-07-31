@@ -42,16 +42,16 @@ unsigned int csrealtimedata::setRealtimeData(std::shared_ptr<ATCCSData> data)
             return RAWDATAERROR;
         _EME_CS_REALTIME_DATA *cs = (_EME_CS_REALTIME_DATA*)(data->data() + sizeof(_ATCCSPHeader));
         
-        _RelSkyT = cs->RelSkyT;
-        _AmbientT = cs->AmbientT;
-        _SensorT = cs->SensorT;
-        _RainF = cs->RainF;
-        _RainThreshV = cs->RainThreshV;
+        _relskytemperature = cs->RelSkyT;
+        _ambienttemperature = cs->AmbientT;
+        _sensortemperature = cs->SensorT;
+        _rainfall = cs->RainF;
+        _rainthresh = cs->RainThreshV;
         _wind = cs->wind;
-        _WindUnits = cs->WindUnits;
-        _HumidityPercent = cs->HumidityPercent;
-        _DewPointT = cs->DewPointT;
-        _DayLightV = cs->DayLightV;
+        _windunits = cs->WindUnits;
+        _humiditypercent = cs->HumidityPercent;
+        _dewpoint = cs->DewPointT;
+        _daylight = cs->DayLightV;
         
         return SUCCESS;
     }

@@ -14,6 +14,13 @@
 #ifndef AT60GIMBALSTATUS_H
 #define AT60GIMBALSTATUS_H
 #include "atccsgimbalstatus.h"
+
+/**
+ * @brief at60gimbalstatus is AT60 gimbal's real-time status.
+ * @modified 2017-07-27
+ * @description 
+ * 1) recompile the header file by odb complier with the --schema-name at60gimbalstatus
+ */
 #pragma db object
 class at60gimbalstatus : public atccsgimbalstatus
 {

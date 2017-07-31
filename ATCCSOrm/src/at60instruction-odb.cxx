@@ -56,6 +56,7 @@ namespace odb
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
+    pgsql::int4_oid,
     pgsql::text_oid,
     pgsql::int4_oid
   };
@@ -74,6 +75,7 @@ namespace odb
     pgsql::int4_oid,
     pgsql::int2_oid,
     pgsql::int2_oid,
+    pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
     pgsql::int4_oid,
@@ -128,7 +130,7 @@ namespace odb
     // atccsinstruction base
     //
     object_traits_impl< ::atccsinstruction, id_pgsql >::bind (b + n, i, sk);
-    n += sk == statement_select ? 11UL : 10UL;
+    n += sk == statement_select ? 12UL : 11UL;
   }
 
   bool access::object_traits_impl< ::at60instruction, id_pgsql >::
@@ -175,12 +177,13 @@ namespace odb
   "\"at\", "
   "\"device\", "
   "\"sequence\", "
+  "\"timeout\", "
   "\"plan\", "
   "\"instruction\", "
   "\"param\", "
   "\"result\") "
   "VALUES "
-  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) "
+  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) "
   "RETURNING \"id\"";
 
   const char access::object_traits_impl< ::at60instruction, id_pgsql >::find_statement[] =
@@ -192,6 +195,7 @@ namespace odb
   "\"at60instruction\".\"at\", "
   "\"at60instruction\".\"device\", "
   "\"at60instruction\".\"sequence\", "
+  "\"at60instruction\".\"timeout\", "
   "\"at60instruction\".\"plan\", "
   "\"at60instruction\".\"instruction\", "
   "\"at60instruction\".\"param\", "
@@ -208,11 +212,12 @@ namespace odb
   "\"at\"=$4, "
   "\"device\"=$5, "
   "\"sequence\"=$6, "
-  "\"plan\"=$7, "
-  "\"instruction\"=$8, "
-  "\"param\"=$9, "
-  "\"result\"=$10 "
-  "WHERE \"id\"=$11";
+  "\"timeout\"=$7, "
+  "\"plan\"=$8, "
+  "\"instruction\"=$9, "
+  "\"param\"=$10, "
+  "\"result\"=$11 "
+  "WHERE \"id\"=$12";
 
   const char access::object_traits_impl< ::at60instruction, id_pgsql >::erase_statement[] =
   "DELETE FROM \"at60instruction\" "
@@ -227,6 +232,7 @@ namespace odb
   "\"at60instruction\".\"at\", "
   "\"at60instruction\".\"device\", "
   "\"at60instruction\".\"sequence\", "
+  "\"at60instruction\".\"timeout\", "
   "\"at60instruction\".\"plan\", "
   "\"at60instruction\".\"instruction\", "
   "\"at60instruction\".\"param\", "
@@ -672,6 +678,7 @@ namespace odb
                       "  \"at\" SMALLINT NOT NULL,\n"
                       "  \"device\" SMALLINT NOT NULL,\n"
                       "  \"sequence\" INTEGER NOT NULL,\n"
+                      "  \"timeout\" INTEGER NOT NULL,\n"
                       "  \"plan\" INTEGER NOT NULL,\n"
                       "  \"instruction\" INTEGER NOT NULL,\n"
                       "  \"param\" TEXT NOT NULL,\n"
@@ -687,7 +694,7 @@ namespace odb
   static const schema_catalog_create_entry
   create_schema_entry_ (
     id_pgsql,
-    "",
+    "at60instruction",
     &create_schema);
 }
 
