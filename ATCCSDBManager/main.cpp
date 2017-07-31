@@ -32,7 +32,17 @@ using namespace odb::core;
 
 //TEST
 #include "at60plan.h"
+#include <string>
+#include "src/atccsdbinitializer.h"
 
+void printDBSettingInfo()
+{
+    std::cout << "Please enter an id to initialize database: \n";
+    std::cout << "Enter 1 to initialize ATCCS public tables;\n";
+    std::cout << "Enter 2 to initialize ATCCS EME tables;\n";
+    std::cout << "Enter 3 to initialize AT 60 tables;\n";
+    std::cout << "Enter q to quit.\n";
+}
 /*
  * 
  */
@@ -41,36 +51,18 @@ int main(int argc, char** argv)
     std::cout << "-----------------ATCCS Database Manager-------------------------\n";
     
     try
-    {        
-        ORMHelper::initDB("pgsql", "lenovo", "123456", "ATCCSDB", "192.168.0.200", 5432);
-        
+    {     
+        ORMHelper::initDB("pgsql", "lenovo", "1234567", "ATCCSDB", "192.168.0.200", 5432);
         std::shared_ptr<database> db = ORMHelper::db();
-        transaction t(db->begin());
-        t.tracer(stderr_tracer);
-        odb::schema_catalog::create_schema(*db);        
-        t.commit();
-        std::shared_ptr<atccsutilization> at216(new atccsutilization(AT216));
-        std::shared_ptr<atccsutilization> at126(new atccsutilization(AT126));
-        std::shared_ptr<atccsutilization> at100(new atccsutilization(AT100));
-        std::shared_ptr<atccsutilization> at85(new atccsutilization(AT85));
-        std::shared_ptr<atccsutilization> at80(new atccsutilization(AT80));
-        std::shared_ptr<atccsutilization> at60(new atccsutilization(AT60));
-        std::shared_ptr<atccsutilization> at50(new atccsutilization(AT50));
-        std::shared_ptr<atccsutilization> atAE(new atccsutilization(ATAE));
-        ORMHelper::persist<atccsutilization>(at216);
-        ORMHelper::persist<atccsutilization>(at126);
-        ORMHelper::persist<atccsutilization>(at100);
-        ORMHelper::persist<atccsutilization>(at85);
-        ORMHelper::persist<atccsutilization>(at80);
-        ORMHelper::persist<atccsutilization>(at60);
-        ORMHelper::persist<atccsutilization>(at50);
-        ORMHelper::persist<atccsutilization>(atAE); 
+        std::cout << db << std::endl;
+        std::cout << db->connection() << std::endl;
+        printDBSettingInfo();
+
     }
     catch(std::exception &e)
     {
         std::cout << e.what() << std::endl;
-    }
-    
+    }    
     return 0;
 }
 

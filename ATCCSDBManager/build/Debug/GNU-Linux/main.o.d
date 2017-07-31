@@ -4,7 +4,8 @@ build/Debug/GNU-Linux/main.o: main.cpp \
  ../ATCCSOrm/src/atccsutilization-odb.hxx \
  ../ATCCSOrm/src/atccsutilization.h \
  ../ATCCSOrm/src/atccsutilization-odb.ixx ../ATCCSOrm/src/ORMHelper.h \
- ../ATCCSOrm/src/at60plan.h ../ATCCSOrm/src/atccsplan.h
+ ../ATCCSOrm/src/at60plan.h ../ATCCSOrm/src/atccsplan.h \
+ src/atccsdbinitializer.h ../ATCCSProtocol/src/atccsmapmanager.h
 
 ../ATCCSProtocol/src/atccs_public_define.h:
 
@@ -23,3 +24,7 @@ build/Debug/GNU-Linux/main.o: main.cpp \
 ../ATCCSOrm/src/at60plan.h:
 
 ../ATCCSOrm/src/atccsplan.h:
+
+src/atccsdbinitializer.h:
+
+../ATCCSProtocol/src/atccsmapmanager.h:

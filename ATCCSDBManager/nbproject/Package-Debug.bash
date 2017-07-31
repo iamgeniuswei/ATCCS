@@ -87,6 +87,30 @@ cd "${TOP}"
 makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
 copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
 
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
+copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
+copyFileToTmpDir "${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/libATCCSOrm.so" 0755
+
+cd "${TOP}"
+makeDirectory "${NBTMPDIR}/atccsdbmanager/bin"
+copyFileToTmpDir "${OUTPUT_PATH}" "${NBTMPDIR}/${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}" 0755
+
 
 # Generate tar file
 cd "${TOP}"
