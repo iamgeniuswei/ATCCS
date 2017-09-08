@@ -18,6 +18,17 @@ void ATCCSAddress::setAddress(const std::string &ip, unsigned short port)
     _port = port;
 }
 
+void ATCCSAddress::setIP(const std::string& ip)
+{
+    _ip = ip;
+}
+
+void ATCCSAddress::setPort(unsigned short port)
+{
+    _port = port;
+}
+
+
 std::string ATCCSAddress::ip() const
 {
     return _ip;

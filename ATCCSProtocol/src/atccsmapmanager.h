@@ -4,6 +4,9 @@
 #include <map>
 #include <memory>
 #include <iostream>
+/**
+ * key-value数据管理器模板类
+ */
 template <typename T>
 class ATCCSMapManager
 {

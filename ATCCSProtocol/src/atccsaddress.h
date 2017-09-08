@@ -8,6 +8,8 @@ public:
     ATCCSAddress();
     ATCCSAddress(const std::string &ip, unsigned short port);
     void setAddress(const std::string &ip, unsigned short port);
+    void setIP(const std::string &ip);
+    void setPort(unsigned short port);
 
     std::string ip() const;
     unsigned short port() const;

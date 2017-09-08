@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/ATCCSExceptionPrinter.h</itemPath>
       <itemPath>src/atccs_ccd_define.h</itemPath>
       <itemPath>src/atccs_dome_define.h</itemPath>
       <itemPath>src/atccs_dpm_define.h</itemPath>
@@ -36,6 +37,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/ATCCSExceptionPrinter.cpp</itemPath>
       <itemPath>src/atccs_global.cpp</itemPath>
       <itemPath>src/atccsaddress.cpp</itemPath>
       <itemPath>src/atccscontroller.cpp</itemPath>
@@ -79,6 +81,10 @@
           <standard>8</standard>
         </ccTool>
       </compileType>
+      <item path="src/ATCCSExceptionPrinter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSExceptionPrinter.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccs_ccd_define.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccs_dome_define.h" ex="false" tool="3" flavor2="0">
@@ -177,6 +183,10 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="src/ATCCSExceptionPrinter.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSExceptionPrinter.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccs_ccd_define.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccs_dome_define.h" ex="false" tool="3" flavor2="0">

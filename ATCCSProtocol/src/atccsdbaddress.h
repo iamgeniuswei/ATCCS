@@ -20,11 +20,17 @@ class ATCCSDBAddress
 public:
     ATCCSDBAddress();
     ATCCSDBAddress(const std::string& type,
-                    const std::string &user, 
-                    const std::string& password, 
-                    const std::string& db, 
-                    const std::string& ip, 
-                    unsigned short port);
+                   const std::string &user,
+                   const std::string& password,
+                   const std::string& db,
+                   const std::string& ip,
+                   unsigned short port);
+    void setDBAddress(const std::string& type,
+                      const std::string &user,
+                      const std::string& password,
+                      const std::string& db,
+                      const std::string& ip,
+                      unsigned short port);
     std::string ip() const;
     std::string db() const;
     std::string password() const;

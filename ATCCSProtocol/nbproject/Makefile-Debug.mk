@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/ATCCSExceptionPrinter.o \
 	${OBJECTDIR}/src/atccs_global.o \
 	${OBJECTDIR}/src/atccsaddress.o \
 	${OBJECTDIR}/src/atccscontroller.o \
@@ -74,6 +75,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+
+${OBJECTDIR}/src/ATCCSExceptionPrinter.o: src/ATCCSExceptionPrinter.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ATCCSExceptionPrinter.o src/ATCCSExceptionPrinter.cpp
 
 ${OBJECTDIR}/src/atccs_global.o: src/atccs_global.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

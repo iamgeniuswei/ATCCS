@@ -25,6 +25,15 @@ ATCCSDBAddress::ATCCSDBAddress(const std::string& type, const std::string& user,
 
 }
 
+void ATCCSDBAddress::setDBAddress(const std::string& type, const std::string& user, const std::string& password, const std::string& db, const std::string& ip, unsigned short port)
+{
+    _type = type;
+    _user = user;
+    _password = password;
+    _db = db;
+    _ip = ip;
+    _port = port;
+}
 
 
 

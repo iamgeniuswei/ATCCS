@@ -22,6 +22,11 @@ ATCCSSetting::ATCCSSetting()
 {
 }
 
+/**
+ * 获取系统配置文件路径
+ * @return
+ * 系统配置文件路径 
+ */
 std::string ATCCSSetting::settingFilePath()
 {
     std::string xml;
@@ -34,6 +39,11 @@ std::string ATCCSSetting::settingFilePath()
         xml.assign(pwd);     
     }
 #endif
+    if (!xml.empty())
+    {
+        xml.append("/");
+        xml.append("config.xml");
+    }
     return xml;
 }
 

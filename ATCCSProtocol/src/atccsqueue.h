@@ -8,6 +8,10 @@
 #include <condition_variable>
 #endif
 #include <iostream>
+
+/**
+ * 线程安全队列(First in First Out, FIFO)模板类
+ */
 template <typename T>
 class ATCCSQueue
 {
@@ -42,7 +46,6 @@ public:
     {
 #ifdef C11
         std::unique_lock<std::mutex> lk(_queueLock);
-//        _dataCond.wait_for(lk, std::chrono::seconds(1), [this]{return !_dataQueue.empty();})
         _dataCond.wait(lk, [this]{return !_dataQueue.empty();});
 
         value = _dataQueue.front();
@@ -55,7 +58,6 @@ public:
 #ifdef C11
         std::unique_lock<std::mutex> lk(_queueLock);
         _dataCond.wait_for(lk, std::chrono::seconds(1), [this]{return !_dataQueue.empty();});
-//        _dataCond.wait(lk, [this]{return !_dataQueue.empty();});
         if(_dataQueue.empty())
             return nullptr;
         T value = _dataQueue.front();

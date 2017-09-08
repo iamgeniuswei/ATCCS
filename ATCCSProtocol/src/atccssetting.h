@@ -16,7 +16,9 @@
 
 #include <string>
 
-
+/**
+ * 系统配置基类
+ */
 class ATCCSSetting
 {
 public:
