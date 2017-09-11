@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RCC version="1.0">
+    <qresource prefix="/qss">
+        <file alias="default">qss/default.css</file>
+    </qresource>
+    <qresource prefix="/lang">
+        <file alias="zh_CN">lang/zh_CN.qm</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file alias="main_logo">img/telescope_logo.png</file>
+        <file alias="telescope_logo_combo">img/telescope_logo_combo.png</file>
+        <file alias="vertical_spilter">img/spilter.png</file>
+        <file alias="set_normal">img/set_normal.png</file>
+        <file alias="set_hover">img/set_hover.png</file>
+        <file alias="set_pressed">img/set_pressed.png</file>
+        <file alias="close_normal">img/close_normal.png</file>
+        <file alias="close_hover">img/close_hover.png</file>
+        <file alias="close_pressed">img/close_pressed.png</file>
+        <file alias="min_normal">img/min_normal.png</file>
+        <file alias="min_hover">img/min_hover.png</file>
+        <file alias="min_pressed">img/min_pressed.png</file>
+        <file alias="max_normal">img/max_normal.png</file>
+        <file alias="max_hover">img/max_hover.png</file>
+        <file alias="max_pressed">img/max_pressed.png</file>
+        <file alias="horizontal_line">img/horizontal_line.png</file>
+        <file alias="down_arrow">img/down_arrow.png</file>
+        <file alias="dot_normal">img/dot_normal.png</file>
+        <file alias="start_point">img/start_point.png</file>
+        <file alias="end_point">img/end_point.png</file>
+        <file alias="start_selected">img/start_selected.png</file>
+        <file alias="inter_selected">img/inter_selected.png</file>
+        <file alias="end_selected">img/end_selected.png</file>
+    </qresource>
+</RCC>

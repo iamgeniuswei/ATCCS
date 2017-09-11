@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EMDBAddressPanel</class>
+ <widget class="QWidget" name="EMDBAddressPanel">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>EMDBAddressPanel</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="_nameTag">
+       <property name="text">
+        <string>Database Setting</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="_dbTypeTag">
+       <property name="text">
+        <string>DB Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="_dbType"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="_dbNameTag">
+       <property name="text">
+        <string>DB Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="_dbName"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="_dbIPTag">
+       <property name="text">
+        <string>DB Addr:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="_dbIP"/>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="_dbPortTag">
+       <property name="text">
+        <string>DB Port:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="_dbPort"/>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="_dbUserTag">
+       <property name="text">
+        <string>DB User:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="_dbUser"/>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="_dbPasswordTag">
+       <property name="text">
+        <string>DB Pwd:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
+      <widget class="QLineEdit" name="_dbPassword"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

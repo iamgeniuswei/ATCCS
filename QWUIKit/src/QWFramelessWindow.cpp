@@ -17,10 +17,13 @@
 #include <QApplication>
 #include <iostream>
 #include <QPushButton>
+#include <QPainter>
+#include <qmath.h>
 QWFramelessWindow::QWFramelessWindow(QWidget *parent)
 :QWidget(parent)
 {
     setWindowFlags(Qt::FramelessWindowHint);
+    setAttribute(Qt::WA_TranslucentBackground);
     setMouseTracking(true);
 }
 
@@ -241,4 +244,25 @@ void QWFramelessWindow::centerToDesktop()
     QDesktopWidget *desktop = QApplication::desktop();
     if(desktop)
         move((desktop->width() - width())/2, (desktop->height() - height())/2);  
+}
+
+void QWFramelessWindow::paintEvent(QPaintEvent* event)
+{
+    QPainterPath path;
+    path.setFillRule(Qt::WindingFill);
+    path.addRect(10, 10, this->width()-20, this->height()-20);
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    painter.fillPath(path, QBrush(Qt::white));
+
+    QColor color(0, 0, 0, 50);
+    for(int i=0; i<10; i++)
+    {
+        QPainterPath path;
+        path.setFillRule(Qt::WindingFill);
+        path.addRect(10-i, 10-i, this->width()-(10-i)*2, this->height()-(10-i)*2);
+        color.setAlpha(150 - qSqrt(i)*50);
+        painter.setPen(color);
+        painter.drawPath(path);
+    }
 }

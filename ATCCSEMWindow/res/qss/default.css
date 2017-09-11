@@ -1,0 +1,125 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 1, 2017, 9:06:10 AM
+    Author     : lenovo
+*/
+
+/*QWidget
+{
+    background-color: rgb(231, 233, 240);
+}*/
+
+QWidget#default
+{
+    background-color:rgb(38,42,51);
+}
+
+QLabel
+{
+    color: rgb(86, 187, 117);;
+    font-family: "Ping Hei,Bold";
+}
+QWidget#setting_titlebar
+{
+    background-color:rgb(38,42,51);
+}
+QWidget#setting_window
+{
+    border: solid 2px;
+    border-color: gray;
+    background-color:rgb(38,42,51);
+}
+
+QScrollArea
+{
+    border: none;
+}
+
+
+
+
+QWidget#atccs_em_window
+{
+    background-color: rgb(38, 42, 51);
+}
+
+QWidget#atccs_em_titlebar
+{
+    background-color: rgb(38, 42, 51);
+}
+
+QWidget#atccs_em_displaypanel
+{
+    background-color: rgb(31, 33, 41);
+}
+
+QLabel#atccs_em_maintitle
+{
+    color: rgb(86, 187, 117);
+    font-size: 32px;
+}
+QLabel#atccs_em_subtitle
+{
+    color: rgb(86, 187, 117);
+}
+
+QLabel#atccs_em_name
+{
+    color: rgb(86, 187, 117);
+    font-size: 32px;
+}
+
+QLabel#atccs_em_tag
+{
+    color: rgb(86, 187, 117);
+    font-size: 16px;
+}
+QLabel#atccs_em_value
+{
+    color: rgb(213, 86, 64);
+    font-size: 24px;
+}
+
+
+QLabel#em_sp_name
+{
+    color: green;
+}
+QLabel#em_sp_value
+{
+    font-size: 32px;
+    color: red;
+}
+QLabel#em_sp_time
+{
+    color: green;
+}
+
+QToolButton#atccs_em_close
+{
+    border-image:url(:/img/close_normal);
+}
+QToolButton#atccs_em_close:hover
+{
+    border-image:url(:/img/close_hover);
+}
+QToolButton#atccs_em_close:pressed
+{
+    border-image:url(:/img/close_pressed);
+}
+QToolButton#atccs_em_setting
+{
+    border-image:url(:/img/setting_normal);
+}
+QToolButton#atccs_em_setting:hover
+{
+    border-image:url(:/img/setting_hover);
+}
+QToolButton#atccs_em_setting:pressed
+{
+    border-image:url(:/img/setting_pressed);
+}

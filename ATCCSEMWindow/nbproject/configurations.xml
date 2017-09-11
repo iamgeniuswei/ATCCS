@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>src/ATCCSEMDisplayArea.h</itemPath>
+      <itemPath>src/ATCCSEMSettingWindow.h</itemPath>
+      <itemPath>src/ATCCSEMTitleBar.h</itemPath>
+      <itemPath>src/ATCCSEMWindow.h</itemPath>
+      <itemPath>src/EMASCDataPanel.h</itemPath>
+      <itemPath>src/EMCSDataPanel.h</itemPath>
+      <itemPath>src/EMDBAddressPanel.h</itemPath>
+      <itemPath>src/EMDisplaySetPanel.h</itemPath>
+      <itemPath>src/EMLocalAddressPanel.h</itemPath>
+      <itemPath>src/EMSQMPanel.h</itemPath>
+      <itemPath>src/EMSettingTilteBar.h</itemPath>
+      <itemPath>src/EMSingleDataPanel.h</itemPath>
+      <itemPath>src/EMWSDataPanel.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <itemPath>src/ATCCSEMDisplayArea.ui</itemPath>
+      <itemPath>src/ATCCSEMSettingWindow.ui</itemPath>
+      <itemPath>src/ATCCSEMTitleBar.ui</itemPath>
+      <itemPath>res/ATCCSEMWindow.qrc</itemPath>
+      <itemPath>src/ATCCSEMWindow.ui</itemPath>
+      <itemPath>src/EMASCDataPanel.ui</itemPath>
+      <itemPath>src/EMCSDataPanel.ui</itemPath>
+      <itemPath>src/EMDBAddressPanel.ui</itemPath>
+      <itemPath>src/EMDisplaySetPanel.ui</itemPath>
+      <itemPath>src/EMLocalAddressPanel.ui</itemPath>
+      <itemPath>src/EMSQMPanel.ui</itemPath>
+      <itemPath>src/EMSettingTilteBar.ui</itemPath>
+      <itemPath>src/EMSingleDataPanel.ui</itemPath>
+      <itemPath>src/EMWSDataPanel.ui</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/ATCCSEMDisplayArea.cpp</itemPath>
+      <itemPath>src/ATCCSEMSettingWindow.cpp</itemPath>
+      <itemPath>src/ATCCSEMTitleBar.cpp</itemPath>
+      <itemPath>src/ATCCSEMWindow.cpp</itemPath>
+      <itemPath>src/EMASCDataPanel.cpp</itemPath>
+      <itemPath>src/EMCSDataPanel.cpp</itemPath>
+      <itemPath>src/EMDBAddressPanel.cpp</itemPath>
+      <itemPath>src/EMDisplaySetPanel.cpp</itemPath>
+      <itemPath>src/EMLocalAddressPanel.cpp</itemPath>
+      <itemPath>src/EMSQMPanel.cpp</itemPath>
+      <itemPath>src/EMSettingTilteBar.cpp</itemPath>
+      <itemPath>src/EMSingleDataPanel.cpp</itemPath>
+      <itemPath>src/EMWSDataPanel.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <itemPath>res/qss/default.css</itemPath>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="5">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <modules>core gui widgets</modules>
+        <mocDir>moc</mocDir>
+        <rccDir>rcc</rccDir>
+        <uiDir>ui</uiDir>
+      </qt>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>../QWUIKit/src</pElem>
+            <pElem>../QWUIKit/ui</pElem>
+            <pElem>../ATCCSEMCore/src</pElem>
+            <pElem>../ATCCSProtocol/src</pElem>
+            <pElem>../ATCCSUtility/src</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerDepDynSerchKind>2</linkerDepDynSerchKind>
+          <linkerCopySharedLibs>true</linkerCopySharedLibs>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../QWUIKit"
+                            CT="5"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../QWUIKit"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libQWUIKit.so.1.0.0">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSEMCore"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSEMCore"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSEMCore.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSProtocol"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSProtocol"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../ATCCSUtility"
+                            CT="2"
+                            CN="Release"
+                            AC="true"
+                            BL="true"
+                            WD="../ATCCSUtility"
+                            BC="${MAKE}  -f Makefile CONF=Release"
+                            CC="${MAKE}  -f Makefile CONF=Release clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="res/ATCCSEMWindow.qrc" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/qss/default.css" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMDisplayArea.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMDisplayArea.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMDisplayArea.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMSettingWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMSettingWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMSettingWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMTitleBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMTitleBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMTitleBar.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMASCDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMASCDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMASCDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMCSDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMCSDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMCSDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDBAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMDBAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDBAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDisplaySetPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMDisplaySetPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDisplaySetPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMLocalAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMLocalAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMLocalAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSQMPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMSQMPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSQMPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSettingTilteBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMSettingTilteBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSettingTilteBar.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSingleDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMSingleDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSingleDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMWSDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMWSDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMWSDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="5">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="res/ATCCSEMWindow.qrc" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/qss/default.css" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMDisplayArea.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMDisplayArea.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMDisplayArea.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMSettingWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMSettingWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMSettingWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMTitleBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMTitleBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMTitleBar.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCCSEMWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMASCDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMASCDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMASCDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMCSDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMCSDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMCSDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDBAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMDBAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDBAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDisplaySetPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMDisplaySetPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMDisplaySetPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMLocalAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMLocalAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMLocalAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSQMPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMSQMPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSQMPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSettingTilteBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMSettingTilteBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSettingTilteBar.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSingleDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMSingleDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMSingleDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMWSDataPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/EMWSDataPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/EMWSDataPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

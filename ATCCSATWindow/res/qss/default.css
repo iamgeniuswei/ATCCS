@@ -1,0 +1,209 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Aug 3, 2017, 11:55:52 AM
+    Author     : lenovo
+*/
+
+
+QWidget#selection_window
+{
+    background-color: white;
+}
+
+QWidget#titleBar
+{
+    background-color: rgb(38,42,51);
+}
+
+QWidget#device_panel
+{
+    background-color: rgb(231,233,240);
+    border: 2px solid rgb(230,230,230);
+}
+
+QLabel#atccs_timeline_start
+{
+    qproperty-pixmap:url(:/img/start_point);
+}
+QLabel#atccs_timeline_end
+{
+    qproperty-pixmap:url(:/img/end_point);
+}
+QLabel#atccs_timeline_intermediate
+{
+    qproperty-pixmap:url(:/img/dot_normal);
+}
+QLabel#atccs_timeline_start_selected
+{
+    qproperty-pixmap:url(:/img/start_selected);
+}
+QLabel#atccs_timeline_end_selected
+{
+    qproperty-pixmap:url(:/img/end_selected);
+}
+QLabel#atccs_timeline_inter_selected
+{
+    qproperty-pixmap:url(:/img/inter_selected);
+}
+QListWidget::item::selected
+{
+    background:#FFFFFF;
+}
+QListWidget
+{
+    border:none;
+}
+QWidget#setting_panel
+{
+    background-color: white;
+}
+QScrollArea
+{
+    border: none;
+    background-color: white;
+}
+
+QLabel#main_logo
+{
+     qproperty-pixmap:url(:/img/main_logo);
+}
+QLabel#main_title
+{
+     qproperty-text:"AT60 控制器";
+     font-family: ".PingFang SC";
+     color: white;
+     font-size: 24px;
+}
+QLabel
+{
+     font-family: ".PingFang SC";
+     color: black;
+     font-size: 18px;
+}
+
+
+QToolButton#setting
+{
+    border-image:url(:/img/set_normal);
+}
+QToolButton#setting:hover
+{
+    border-image:url(:/img/set_hover);
+}
+QToolButton#setting:pressed
+{
+    border-image:url(:/img/set_pressed);
+}
+
+QToolButton#close
+{
+    border-image:url(:/img/close_normal);
+}
+QToolButton#close:hover
+{
+    border-image:url(:/img/close_hover);
+}
+QToolButton#close:pressed
+{
+    border-image:url(:/img/close_pressed);
+}
+QToolButton#min
+{
+    border-image:url(:/img/min_normal);
+}
+QToolButton#min:hover
+{
+    border-image:url(:/img/min_hover);
+}
+QToolButton#min:pressed
+{
+    border-image:url(:/img/min_pressed);
+}
+QToolButton#max
+{
+    border-image:url(:/img/max_normal);
+}
+QToolButton#max:hover
+{
+    border-image:url(:/img/max_hover);
+}
+QToolButton#max:pressed
+{
+    border-image:url(:/img/max_pressed);
+}
+
+QPushButton
+{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(12, 115, 194);
+    min-width: 80px;
+    color:white;
+    font-family: ".PingFang SC";
+}
+QPushButton:hover
+{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(17, 103, 168);
+    min-width: 64px;
+    color:white;
+    font-family: ".PingFang SC";
+}
+QPushButton:pressed
+{
+    border: none;
+    border-radius: 3px;
+    background-color: rgb(6, 80, 136);
+    min-width: 64px;
+    color:white;
+    font-family: ".PingFang SC";
+}
+
+QLabel#horizontal_line
+{
+    qproperty-pixmap:url(:/img/horizontal_line);
+}
+
+QComboBox
+{
+    font-family: ".PingFang SC";
+    border: 1px solid gray;
+    border-radius: 3px;
+    /*padding: 1px 2px 1px 2px;*/
+    min-width: 9em;
+}
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 24px;
+ 
+    border-left-width: 1px;
+    border-left-color: darkgray;
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow
+{
+    image: url(:/img/down_arrow);
+    
+}
+
+QComboBox:!editable:on, QComboBox::drop-down:editable:on {
+      background: darkgray;
+  }
+
+
+  QComboBox:!editable, QComboBox::drop-down:editable {
+       background: lightgray;
+  }
+  
+  QComboBox QAbstractItemView::item {
+      border: none;
+      min-height: 64px;
+  }

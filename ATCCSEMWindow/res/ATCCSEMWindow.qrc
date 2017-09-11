@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RCC version="1.0">
+    <qresource prefix="/qss">
+        <file alias="default">qss/default.css</file>
+    </qresource>
+    <qresource prefix="/img">
+        <file alias="close_pressed">img/close_pressed.png</file>
+        <file alias="close_normal">img/close_normal.png</file>
+        <file alias="close_hover">img/close_hover.png</file>
+        <file alias="setting_pressed">img/setting_pressed.png</file>
+        <file alias="setting_normal">img/setting_normal.png</file>
+        <file alias="setting_hover">img/setting_hover.png</file>
+        <file alias="mw_logo">img/mw_logo.png</file>
+        <file alias="setting_logo">img/setting_logo.png</file>
+    </qresource>
+</RCC>

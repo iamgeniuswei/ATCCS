@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>src/ATCDevicePanel.h</itemPath>
+      <itemPath>src/ATCDisplayArea.h</itemPath>
+      <itemPath>src/ATCMainWindow.h</itemPath>
+      <itemPath>src/ATCSelectionPanel.h</itemPath>
+      <itemPath>src/ATCSelectionWindow.h</itemPath>
+      <itemPath>src/ATCSettingPanel.h</itemPath>
+      <itemPath>src/ATCSettingWindow.h</itemPath>
+      <itemPath>src/ATCTitleBar.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+      <itemPath>res/ATCCSATWindow.qrc</itemPath>
+      <itemPath>res/qss/ATCCSATWindow.ts</itemPath>
+      <itemPath>src/ATCDevicePanel.ui</itemPath>
+      <itemPath>src/ATCDisplayArea.ui</itemPath>
+      <itemPath>src/ATCMainWindow.ui</itemPath>
+      <itemPath>src/ATCSelectionPanel.ui</itemPath>
+      <itemPath>ATCSelectionWindow.ui</itemPath>
+      <itemPath>src/ATCSettingPanel.ui</itemPath>
+      <itemPath>src/ATCSettingWindow.ui</itemPath>
+      <itemPath>src/ATCTitleBar.ui</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>src/ATCDevicePanel.cpp</itemPath>
+      <itemPath>src/ATCDisplayArea.cpp</itemPath>
+      <itemPath>src/ATCMainWindow.cpp</itemPath>
+      <itemPath>src/ATCSelectionPanel.cpp</itemPath>
+      <itemPath>src/ATCSelectionWindow.cpp</itemPath>
+      <itemPath>src/ATCSettingPanel.cpp</itemPath>
+      <itemPath>src/ATCSettingWindow.cpp</itemPath>
+      <itemPath>src/ATCTitleBar.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+    <itemPath>res/qss/default.css</itemPath>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="5">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <modules>core gui widgets</modules>
+        <mocDir>moc</mocDir>
+        <rccDir>rcc</rccDir>
+        <uiDir>ui</uiDir>
+      </qt>
+      <compileType>
+        <ccTool>
+          <incDir>
+            <pElem>../QWUIKit/src</pElem>
+            <pElem>../QWUIKit/ui</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../QWUIKit"
+                            CT="5"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../QWUIKit"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libQWUIKit.so.1.0.0">
+              </makeArtifact>
+            </linkerLibProjectItem>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="ATCSelectionWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/ATCCSATWindow.qrc" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/qss/ATCCSATWindow.ts" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/qss/default.css" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDevicePanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCDevicePanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDevicePanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDisplayArea.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCDisplayArea.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDisplayArea.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCMainWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCMainWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCMainWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSettingPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSettingWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCTitleBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCTitleBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCTitleBar.ui" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="5">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <qt>
+        <buildMode>1</buildMode>
+        <modules>core gui widgets</modules>
+      </qt>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="ATCSelectionWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/ATCCSATWindow.qrc" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/qss/ATCCSATWindow.ts" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="res/qss/default.css" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDevicePanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCDevicePanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDevicePanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDisplayArea.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCDisplayArea.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCDisplayArea.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCMainWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCMainWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCMainWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSelectionWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSettingPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingWindow.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCSettingWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCSettingWindow.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCTitleBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCTitleBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ATCTitleBar.ui" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

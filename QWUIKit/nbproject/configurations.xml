@@ -4,20 +4,47 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/QWButtonPanel.h</itemPath>
+      <itemPath>src/QWComboItem.h</itemPath>
+      <itemPath>src/QWDBAddressPanel.h</itemPath>
       <itemPath>src/QWFramelessWindow.h</itemPath>
+      <itemPath>src/QWLocalAddressPanel.h</itemPath>
+      <itemPath>src/QWOutputDefaultItem.h</itemPath>
+      <itemPath>src/QWOutputPanel.h</itemPath>
+      <itemPath>src/QWPopupTitleBar.h</itemPath>
       <itemPath>src/QWPopupWindowTitleBar.h</itemPath>
       <itemPath>src/QWTitleBar.h</itemPath>
+      <itemPath>src/QWUIInitializer.h</itemPath>
+      <itemPath>src/qwtimeline.h</itemPath>
+      <itemPath>src/qwtimelinewidget.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
+      <itemPath>src/QWButtonPanel.ui</itemPath>
+      <itemPath>src/QWComboItem.ui</itemPath>
+      <itemPath>src/QWDBAddressPanel.ui</itemPath>
+      <itemPath>src/QWLocalAddressPanel.ui</itemPath>
+      <itemPath>src/QWOutputDefaultItem.ui</itemPath>
+      <itemPath>src/QWOutputPanel.ui</itemPath>
+      <itemPath>src/QWPopupTitleBar.ui</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/QWButtonPanel.cpp</itemPath>
+      <itemPath>src/QWComboItem.cpp</itemPath>
+      <itemPath>src/QWDBAddressPanel.cpp</itemPath>
       <itemPath>src/QWFramelessWindow.cpp</itemPath>
+      <itemPath>src/QWLocalAddressPanel.cpp</itemPath>
+      <itemPath>src/QWOutputDefaultItem.cpp</itemPath>
+      <itemPath>src/QWOutputPanel.cpp</itemPath>
+      <itemPath>src/QWPopupTitleBar.cpp</itemPath>
       <itemPath>src/QWPopupWindowTitleBar.cpp</itemPath>
       <itemPath>src/QWTitleBar.cpp</itemPath>
+      <itemPath>src/QWUIInitializer.cpp</itemPath>
+      <itemPath>src/qwtimeline.cpp</itemPath>
+      <itemPath>src/qwtimelinewidget.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -42,15 +69,60 @@
       </toolsSet>
       <qt>
         <modules>core gui widgets</modules>
+        <mocDir>moc</mocDir>
+        <rccDir>rcc</rccDir>
+        <uiDir>ui</uiDir>
       </qt>
       <compileType>
         <ccTool>
           <standard>8</standard>
         </ccTool>
       </compileType>
+      <item path="src/QWButtonPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWButtonPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWButtonPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWComboItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWComboItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWComboItem.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWDBAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWDBAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWDBAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/QWFramelessWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/QWFramelessWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWLocalAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWLocalAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWLocalAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputDefaultItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWOutputDefaultItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputDefaultItem.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWOutputPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWPopupTitleBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWPopupTitleBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWPopupTitleBar.ui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/QWPopupWindowTitleBar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -60,7 +132,19 @@
       </item>
       <item path="src/QWTitleBar.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/QWUIInitializer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWUIInitializer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/private/qwtitlebar_p.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/qwtimeline.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/qwtimeline.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/qwtimelinewidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/qwtimelinewidget.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="5">
@@ -87,9 +171,51 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="src/QWButtonPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWButtonPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWButtonPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWComboItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWComboItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWComboItem.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWDBAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWDBAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWDBAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/QWFramelessWindow.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/QWFramelessWindow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWLocalAddressPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWLocalAddressPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWLocalAddressPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputDefaultItem.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWOutputDefaultItem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputDefaultItem.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputPanel.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWOutputPanel.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWOutputPanel.ui" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWPopupTitleBar.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWPopupTitleBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/QWPopupTitleBar.ui" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/QWPopupWindowTitleBar.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -99,7 +225,19 @@
       </item>
       <item path="src/QWTitleBar.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/QWUIInitializer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/QWUIInitializer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/private/qwtitlebar_p.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/qwtimeline.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/qwtimeline.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/qwtimelinewidget.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/qwtimelinewidget.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

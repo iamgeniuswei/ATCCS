@@ -48,7 +48,6 @@ void DBMAT60TablePanel::selectAll()
         if(cb = qobject_cast<QCheckBox*>(item))
             cb->setChecked(true);            
     }
-
 }
 
 void DBMAT60TablePanel::selectNone()

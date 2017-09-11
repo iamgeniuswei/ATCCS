@@ -33,5 +33,4 @@ void AT60ExceptionDisplayer::run()
             continue;
         std::cout << temp->what() << std::endl;
     }
-
 }
