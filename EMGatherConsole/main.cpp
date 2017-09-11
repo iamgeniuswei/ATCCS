@@ -27,8 +27,7 @@ using namespace std;
 
 
 void quit()
-{
-    cout << gettext("Please enter \'q\' to quit!") << endl;
+{    
     std::string input;
     std::cin >> input;
     while(input != "q")
@@ -45,6 +44,7 @@ void quit()
 int main(int argc, char** argv)
 {
     cout << gettext("--------------------------------------EM Data Gather--------------------------------------") << endl;
+    cout << gettext("If want to quit, Please enter \'q\' to quit!") << endl;
     try
     {
 
@@ -99,10 +99,6 @@ int main(int argc, char** argv)
         }
         printer->setStop(true);
         printer->waitToQuit();
-//        for(int i=0; i < 8; i++)
-//        {
-//            _threadController[i]->join();
-//        }
     }
     catch(std::exception &e)
     {
