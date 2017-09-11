@@ -40,6 +40,19 @@ using namespace odb::core;
 #include "atccsdbaddress.h"
 #include "atccsaddress.h"
 #include "src/at60plancontroller.h"
+#include "ATCCSExceptionPrinter.h"
+
+
+void quit()
+{    
+    std::string input;
+    std::cin >> input;
+    while(input != "q")
+    {
+        std::cout << gettext("unknown command!") << std::endl;
+        std::cin >> input;  
+    }
+}
 
 /**
  * @brief main function, system entry.
@@ -56,20 +69,10 @@ int main(int argc, char** argv)
     bindtextdomain( "AT60Controller", "/usr/share/locale" );
     textdomain( "AT60Controller" );
     std::cout << "----------------------" <<gettext("AT60 Controller V3.00.00") << "----------------------" <<std::endl;
-    //declare the thread controllers.
-    std::shared_ptr<std::thread> exceptionThread = nullptr;
-    std::shared_ptr<std::thread> receiverThread = nullptr;
-    std::shared_ptr<std::thread> dispatcherThread = nullptr;
-    std::shared_ptr<std::thread> upgoingThread = nullptr;
-    std::shared_ptr<std::thread> at60PlanThread = nullptr;
-    std::shared_ptr<std::thread> at60GimbalThread = nullptr;
-    std::shared_ptr<std::thread> at60CCDThread = nullptr;
-    std::shared_ptr<std::thread> at60FilterThread = nullptr;
-    std::shared_ptr<std::thread> at60FocusThread = nullptr;
-    std::shared_ptr<std::thread> at60SlaveDomeThread = nullptr;
+    std::cout << gettext("If want to quit, Please enter \'q\' to quit!") << std::endl;
 
     //declare the thread class instances.
-    std::shared_ptr<AT60ExceptionDisplayer> exceptionDisplayer = nullptr;
+    std::shared_ptr<ATCCSExceptionPrinter> exceptionPrinter = nullptr;
     std::shared_ptr<ATCCSDataReceiver> dataReceiver = nullptr;
     std::shared_ptr<ATCCSDataDispatcher> dataDispatcher = nullptr;
     std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
@@ -82,17 +85,10 @@ int main(int argc, char** argv)
 
     try
     {
-        //initialize Exception Displayer Thread
-        exceptionDisplayer = std::make_shared<AT60ExceptionDisplayer>();
-        if (exceptionDisplayer)
-        {
-            exceptionThread = std::make_shared<std::thread>(&AT60ExceptionDisplayer::run, exceptionDisplayer);
-        }
-//        std::string msg;
-//        gett
-//        ATCCSExceptionHandler::setMsg(msg, "%s%d%d", gettext("AT: %d Device %d"), 12, 23);
-//        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,
-//                                            __FILE__, __func__, __LINE__, msg);
+        //initialize and start Exception Printer.
+        exceptionPrinter = std::make_shared<ATCCSExceptionPrinter>();
+        exceptionPrinter->start();
+
 
         AT60Setting *set = AT60Setting::instance();
         if (!(set->initSystemSetting()))
@@ -101,8 +97,8 @@ int main(int argc, char** argv)
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,
                                                 __FILE__, __func__, __LINE__, "");
 #endif
-            exceptionDisplayer->setStop(true);
-            exceptionThread->join();
+            exceptionPrinter->setStop(true);
+            exceptionPrinter->waitToQuit();
             return 0;
         }
         //initialize database
@@ -120,7 +116,7 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> recvAddress = set->hostAddress();
             dataReceiver->setRecvAddress(recvAddress);
-            receiverThread = std::make_shared<std::thread>(&ATCCSDataReceiver::run, dataReceiver);
+            dataReceiver->start();
         }
 
 
@@ -131,7 +127,7 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSDataProcessor> processor(new ATCCSDataDispatcherProcessor(dataDispatcher));
             dataDispatcher->setDataProcessor(processor);
-            dispatcherThread = std::make_shared<std::thread>(&ATCCSDataDispatcher::run, dataDispatcher);
+            dataDispatcher->start();
         }
 
 
@@ -147,14 +143,14 @@ int main(int argc, char** argv)
             dataDispatcher->registerDeviceController(ATINSTRUCTIONACK, upgoingController);
             dataDispatcher->registerDeviceController(ATHEARTBEAT, upgoingController);
             dataDispatcher->registerDeviceController(ATSTATUSREPORT, upgoingController);
-            upgoingThread = std::make_shared<std::thread>(&ATCCSUpgoingController::run, upgoingController);
-        }
+            upgoingController->start();
+       }
         
         at60PlanController = std::make_shared<AT60PlanController>();
         if(at60PlanController)
         {
             dataDispatcher->registerDeviceController(ATPLAN, at60PlanController);
-            at60PlanThread = std::make_shared<std::thread>(&ATCCSPlanController::run, at60PlanController);
+            at60PlanController->start();
         }
         
         //start a series of concrete variable device controller.
@@ -171,7 +167,7 @@ int main(int argc, char** argv)
             upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
             at60PlanController->registerDeviceController(GIMBAL, at60GimbalController);
             dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
-            at60GimbalThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60GimbalController);
+            at60GimbalController->start();
         }
 
         at60CCDController = std::make_shared<AT60CCDController>();
@@ -182,8 +178,8 @@ int main(int argc, char** argv)
             upgoingController->registerDeviceController(CCD, at60CCDController);
             at60PlanController->registerDeviceController(CCD, at60CCDController);
             dataDispatcher->registerDeviceController(CCD, at60CCDController);
-            at60CCDThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60CCDController);
-        }
+            at60CCDController->start();
+      }
 
         at60FocusController = std::make_shared<AT60FocusController>();
         if (at60FocusController)
@@ -193,8 +189,8 @@ int main(int argc, char** argv)
             upgoingController->registerDeviceController(FOCUS, at60FocusController);
             at60PlanController->registerDeviceController(FOCUS, at60FocusController);
             dataDispatcher->registerDeviceController(FOCUS, at60FocusController);
-            at60FocusThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60FocusController);
-        }
+            at60FocusController->start();
+       }
 
         at60FilterController = std::make_shared<AT60FilterController>();
         if (at60FilterController)
@@ -204,7 +200,7 @@ int main(int argc, char** argv)
             upgoingController->registerDeviceController(FILTER, at60FilterController);
             at60PlanController->registerDeviceController(FILTER, at60FilterController);
             dataDispatcher->registerDeviceController(FILTER, at60FilterController);
-            at60FilterThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60FilterController);
+            at60FilterController->start();
         }
 
         at60SlaveDomeController = std::make_shared<AT60SlaveDomeController>();
@@ -215,59 +211,59 @@ int main(int argc, char** argv)
             upgoingController->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
             at60PlanController->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
             dataDispatcher->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
-            at60SlaveDomeThread = std::make_shared<std::thread>(&ATCCSDeviceController::run, at60SlaveDomeController);
-        }
+            at60SlaveDomeController->start();
+       }
 
-        std::cin.get();
-        if (dataReceiver && receiverThread)
+        quit();
+        if (dataReceiver)
         {
             dataReceiver->setStop(true);
-            receiverThread->join();
+            dataReceiver->waitToQuit();
         }
-        if (dataDispatcher && dispatcherThread)
+        if (dataDispatcher)
         {
             dataDispatcher->setStop(true);
-            dispatcherThread->join();
+            dataDispatcher->waitToQuit();
         }
-        if (upgoingController && upgoingThread)
+        if (upgoingController)
         {
             upgoingController->setStop(true);
-            upgoingThread->join();
+            upgoingController->waitToQuit();
         }
-        if(at60PlanThread && at60PlanController)
+        if(at60PlanController)
         {
             at60PlanController->setStop(true);
-            at60PlanThread->join();
+            at60PlanController->waitToQuit();
         }
-        if (at60GimbalController && at60GimbalThread)
+        if (at60GimbalController)
         {
             at60GimbalController->setStop(true);
-            at60GimbalThread->join();
+            at60GimbalController->waitToQuit();
         }
-        if (at60CCDController && at60CCDThread)
+        if (at60CCDController)
         {
             at60CCDController->setStop(true);
-            at60CCDThread->join();
+            at60CCDController->waitToQuit();
         }
-        if (at60FocusController && at60FocusThread)
+        if (at60FocusController)
         {
             at60FocusController->setStop(true);
-            at60FocusThread->join();
+            at60FocusController->waitToQuit();
         }
-        if (at60FilterController && at60FilterThread)
+        if (at60FilterController)
         {
             at60FilterController->setStop(true);
-            at60FilterThread->join();
+            at60FilterController->waitToQuit();
         }
-        if (at60SlaveDomeController && at60SlaveDomeThread)
+        if (at60SlaveDomeController)
         {
             at60SlaveDomeController->setStop(true);
-            at60SlaveDomeThread->join();
+            at60SlaveDomeController->waitToQuit();
         }
-        if (exceptionDisplayer && exceptionThread)
+        if (exceptionPrinter)
         {
-            exceptionDisplayer->setStop(true);
-            exceptionThread->join();
+            exceptionPrinter->setStop(true);
+            exceptionPrinter->waitToQuit();
         }
 
     }
