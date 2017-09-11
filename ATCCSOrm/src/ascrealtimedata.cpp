@@ -48,8 +48,6 @@ unsigned int ascrealtimedata::setRealtimeData(std::shared_ptr<ATCCSData> data)
 
 unsigned long long ascrealtimedata::persistRealtimeData()
 {
-
     return ORMHelper::persist<ascrealtimedata*>(this);
-
 }
 
