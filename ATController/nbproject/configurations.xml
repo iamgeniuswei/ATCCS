@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/ATCCSPlanController.h</itemPath>
       <itemPath>src/atccsccdcontroller.h</itemPath>
       <itemPath>src/atccsdatadispatcherprocessor.h</itemPath>
       <itemPath>src/atccsdatapacker.h</itemPath>
@@ -15,7 +16,8 @@
       <itemPath>src/atccsheartbeatprocessor.h</itemPath>
       <itemPath>src/atccsinstructionresultprocessor.h</itemPath>
       <itemPath>src/atccsinstructionsender.h</itemPath>
-      <itemPath>src/atccsplancontroller.h</itemPath>
+      <itemPath>src/atccsplaninstruction.h</itemPath>
+      <itemPath>src/atccsplanperformer.h</itemPath>
       <itemPath>src/atccsplanprocessor.h</itemPath>
       <itemPath>src/atccssetting.h</itemPath>
       <itemPath>src/atccsslavedomecontroller.h</itemPath>
@@ -29,6 +31,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/ATCCSPlanController.cpp</itemPath>
       <itemPath>src/atccsccdcontroller.cpp</itemPath>
       <itemPath>src/atccsdatadispatcherprocessor.cpp</itemPath>
       <itemPath>src/atccsdatapacker.cpp</itemPath>
@@ -40,7 +43,8 @@
       <itemPath>src/atccsheartbeatprocessor.cpp</itemPath>
       <itemPath>src/atccsinstructionresultprocessor.cpp</itemPath>
       <itemPath>src/atccsinstructionsender.cpp</itemPath>
-      <itemPath>src/atccsplancontroller.cpp</itemPath>
+      <itemPath>src/atccsplaninstruction.cpp</itemPath>
+      <itemPath>src/atccsplanperformer.cpp</itemPath>
       <itemPath>src/atccsplanprocessor.cpp</itemPath>
       <itemPath>src/atccssetting.cpp</itemPath>
       <itemPath>src/atccsslavedomecontroller.cpp</itemPath>
@@ -109,6 +113,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="src/ATCCSPlanController.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSPlanController.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsccdcontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsccdcontroller.h" ex="false" tool="3" flavor2="0">
@@ -162,9 +170,13 @@
       </item>
       <item path="src/atccsinstructionsender.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/atccsplancontroller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/atccsplaninstruction.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/atccsplancontroller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/atccsplaninstruction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplanperformer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsplanperformer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsplanprocessor.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -254,6 +266,10 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="src/ATCCSPlanController.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ATCCSPlanController.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/atccsccdcontroller.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsccdcontroller.h" ex="false" tool="3" flavor2="0">
@@ -307,9 +323,13 @@
       </item>
       <item path="src/atccsinstructionsender.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/atccsplancontroller.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/atccsplaninstruction.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/atccsplancontroller.h" ex="false" tool="3" flavor2="0">
+      <item path="src/atccsplaninstruction.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/atccsplanperformer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/atccsplanperformer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccsplanprocessor.cpp" ex="false" tool="1" flavor2="0">
       </item>

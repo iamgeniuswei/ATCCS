@@ -1,7 +1,7 @@
 #include "atccsplanprocessor.h"
 #include "atccs_public_define.h"
 #include "atccsdata.h"
-ATCCSPlanProcessor::ATCCSPlanProcessor(ATCCSPlanController *controller)
+ATCCSPlanProcessor::ATCCSPlanProcessor(ATCCSPlanPerformer *controller)
     :_controller(controller)
 {
 

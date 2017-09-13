@@ -18,6 +18,7 @@
  */
 
 #include "atccs_global.h"
+#include "atccsaddress.h"
 #pragma once
 
 /*!
@@ -31,7 +32,9 @@
 *------------------------------------------------------------
 */
 #pragma pack(1)
-struct _AT_PLAN{
+struct _AT_PLAN
+{
+    unsigned int _tag;
     unsigned short at;
     char user[48];
     char project[48];
@@ -47,6 +50,35 @@ struct _AT_PLAN{
     unsigned short gain;
     unsigned short bin;
     unsigned short readout;
+};
+#pragma pack()
+
+/**
+ * 定义计划观测操作
+ */
+
+enum ENUM_AT_PLAN_STRATEGY
+{
+    SINGLE = 0x01,
+    SINGLELOOP,
+    SEQUENCE,
+    SEQUENCELOOP
+};
+
+enum ENUM_AT_PLAN_INSTRUCTION
+{
+    START = 0x01,
+    STOP,
+    NEXT
+};
+
+#pragma pack(1)
+struct _AT_PLAN_INSTRUCTION
+{
+    unsigned int instruction;
+    unsigned int strategy;
+    unsigned int start;
+    unsigned int end;
 };
 #pragma pack()
 

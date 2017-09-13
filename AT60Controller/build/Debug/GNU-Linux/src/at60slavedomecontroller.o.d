@@ -8,8 +8,8 @@ build/Debug/GNU-Linux/src/at60slavedomecontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_dome_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
- ../ATCCSOrm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
- ../ATCCSOrm/src/at60slavedomestatus.h \
+ ../AT60Orm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
+ ../AT60Orm/src/at60slavedomestatus.h \
  ../ATCCSOrm/src/atccsslavedomestatus.h \
  ../ATCCSOrm/src/atccspublicstatus.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
@@ -37,11 +37,11 @@ src/at60slavedomecontroller.h:
 
 ../ATCCSProtocol/src/atccs_public_define.h:
 
-../ATCCSOrm/src/at60instruction.h:
+../AT60Orm/src/at60instruction.h:
 
 ../ATCCSOrm/src/atccsinstruction.h:
 
-../ATCCSOrm/src/at60slavedomestatus.h:
+../AT60Orm/src/at60slavedomestatus.h:
 
 ../ATCCSOrm/src/atccsslavedomestatus.h:
 

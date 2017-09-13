@@ -15,10 +15,9 @@
 #include "atccsinstruction.h"
 #include "atccsdata.h"
 #include "atccs_ccd_define.h"
-#include "at60instruction.h"
 #include "atccspublicstatus.h"
-#include "at60ccdstatus.h"
 #include "atccsexceptionhandler.h"
+#include "atccsccdstatus.h"
 
 ATCCSCCDController::ATCCSCCDController(unsigned short at, unsigned short device)
 : ATCCSDeviceController(at, device)

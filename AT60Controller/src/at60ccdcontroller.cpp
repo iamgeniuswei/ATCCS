@@ -15,14 +15,15 @@
 #include "at60instruction.h"
 #include "at60ccdstatus.h"
 #include "atccsexceptionhandler.h"
-AT60CCDController::AT60CCDController() 
-    :ATCCSCCDController(AT60, CCD)
+
+AT60CCDController::AT60CCDController()
+: ATCCSCCDController(AT60, CCD)
 {
 
 }
 
-
-AT60CCDController::~AT60CCDController() {
+AT60CCDController::~AT60CCDController()
+{
 }
 
 /**
@@ -33,7 +34,7 @@ AT60CCDController::~AT60CCDController() {
  */
 std::shared_ptr<atccsinstruction> AT60CCDController::instructionInstance()
 {
-    if(_executoryInstruction == nullptr)
+    if (_executoryInstruction == nullptr)
     {
         try
         {
@@ -45,7 +46,7 @@ std::shared_ptr<atccsinstruction> AT60CCDController::instructionInstance()
             ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
                                                 __FILE__, __func__, __LINE__, e.what());
 #endif
-        }   
+        }
     }
     return _executoryInstruction;
 }
@@ -58,20 +59,7 @@ std::shared_ptr<atccsinstruction> AT60CCDController::instructionInstance()
  */
 std::shared_ptr<atccspublicstatus> AT60CCDController::statusInstance()
 {
-    if(_realtimeStatus == nullptr)
-    {
-        try
-        {
-            _realtimeStatus = std::make_shared<at60ccdstatus>();
-        }
-        catch (std::exception &e)
-        {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif
-        }   
-    }
+    _realtimeStatus = std::make_shared<at60ccdstatus>();
     return _realtimeStatus;
 }
 

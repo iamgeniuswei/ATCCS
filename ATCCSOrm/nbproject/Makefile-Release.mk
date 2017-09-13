@@ -36,22 +36,13 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/ORMHelper.o \
-	${OBJECTDIR}/src/ascrealtimedata-odb.o \
-	${OBJECTDIR}/src/ascrealtimedata.o \
-	${OBJECTDIR}/src/at60ccdstatus-odb.o \
-	${OBJECTDIR}/src/at60ccdstatus.o \
-	${OBJECTDIR}/src/at60filterstatus-odb.o \
-	${OBJECTDIR}/src/at60filterstatus.o \
-	${OBJECTDIR}/src/at60focusstatus-odb.o \
-	${OBJECTDIR}/src/at60focusstatus.o \
-	${OBJECTDIR}/src/at60gimbalstatus-odb.o \
-	${OBJECTDIR}/src/at60gimbalstatus.o \
-	${OBJECTDIR}/src/at60instruction-odb.o \
-	${OBJECTDIR}/src/at60instruction.o \
-	${OBJECTDIR}/src/at60plan-odb.o \
-	${OBJECTDIR}/src/at60plan.o \
-	${OBJECTDIR}/src/at60slavedomestatus-odb.o \
-	${OBJECTDIR}/src/at60slavedomestatus.o \
+	${OBJECTDIR}/src/at80ccdstatus.o \
+	${OBJECTDIR}/src/at80filterstatus.o \
+	${OBJECTDIR}/src/at80focusstatus.o \
+	${OBJECTDIR}/src/at80gimbalstatus.o \
+	${OBJECTDIR}/src/at80instruction.o \
+	${OBJECTDIR}/src/at80plan.o \
+	${OBJECTDIR}/src/at80slavedomestatus.o \
 	${OBJECTDIR}/src/atccsat-odb.o \
 	${OBJECTDIR}/src/atccsat.o \
 	${OBJECTDIR}/src/atccsccdstatus-odb.o \
@@ -87,19 +78,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccsutilization-odb.o \
 	${OBJECTDIR}/src/atccsutilization.o \
 	${OBJECTDIR}/src/atccsutilizationlog-odb.o \
-	${OBJECTDIR}/src/atccsutilizationlog.o \
-	${OBJECTDIR}/src/csrealtimedata-odb.o \
-	${OBJECTDIR}/src/csrealtimedata.o \
-	${OBJECTDIR}/src/dimmrealtimedata-odb.o \
-	${OBJECTDIR}/src/dimmrealtimedata.o \
-	${OBJECTDIR}/src/dustrealtimedata-odb.o \
-	${OBJECTDIR}/src/dustrealtimedata.o \
-	${OBJECTDIR}/src/emerealtimedata-odb.o \
-	${OBJECTDIR}/src/emerealtimedata.o \
-	${OBJECTDIR}/src/sqmrealtimedata-odb.o \
-	${OBJECTDIR}/src/sqmrealtimedata.o \
-	${OBJECTDIR}/src/wsrealtimedata-odb.o \
-	${OBJECTDIR}/src/wsrealtimedata.o
+	${OBJECTDIR}/src/atccsutilizationlog.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
@@ -156,85 +135,40 @@ ${OBJECTDIR}/src/ORMHelper.o: src/ORMHelper.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ORMHelper.o src/ORMHelper.cpp
 
-${OBJECTDIR}/src/ascrealtimedata-odb.o: src/ascrealtimedata-odb.cxx
+${OBJECTDIR}/src/at80ccdstatus.o: src/at80ccdstatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata-odb.o src/ascrealtimedata-odb.cxx
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80ccdstatus.o src/at80ccdstatus.cpp
 
-${OBJECTDIR}/src/ascrealtimedata.o: src/ascrealtimedata.cpp
+${OBJECTDIR}/src/at80filterstatus.o: src/at80filterstatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata.o src/ascrealtimedata.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80filterstatus.o src/at80filterstatus.cpp
 
-${OBJECTDIR}/src/at60ccdstatus-odb.o: src/at60ccdstatus-odb.cxx
+${OBJECTDIR}/src/at80focusstatus.o: src/at80focusstatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60ccdstatus-odb.o src/at60ccdstatus-odb.cxx
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80focusstatus.o src/at80focusstatus.cpp
 
-${OBJECTDIR}/src/at60ccdstatus.o: src/at60ccdstatus.cpp
+${OBJECTDIR}/src/at80gimbalstatus.o: src/at80gimbalstatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60ccdstatus.o src/at60ccdstatus.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80gimbalstatus.o src/at80gimbalstatus.cpp
 
-${OBJECTDIR}/src/at60filterstatus-odb.o: src/at60filterstatus-odb.cxx
+${OBJECTDIR}/src/at80instruction.o: src/at80instruction.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60filterstatus-odb.o src/at60filterstatus-odb.cxx
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80instruction.o src/at80instruction.cpp
 
-${OBJECTDIR}/src/at60filterstatus.o: src/at60filterstatus.cpp
+${OBJECTDIR}/src/at80plan.o: src/at80plan.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60filterstatus.o src/at60filterstatus.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80plan.o src/at80plan.cpp
 
-${OBJECTDIR}/src/at60focusstatus-odb.o: src/at60focusstatus-odb.cxx
+${OBJECTDIR}/src/at80slavedomestatus.o: src/at80slavedomestatus.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60focusstatus-odb.o src/at60focusstatus-odb.cxx
-
-${OBJECTDIR}/src/at60focusstatus.o: src/at60focusstatus.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60focusstatus.o src/at60focusstatus.cpp
-
-${OBJECTDIR}/src/at60gimbalstatus-odb.o: src/at60gimbalstatus-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalstatus-odb.o src/at60gimbalstatus-odb.cxx
-
-${OBJECTDIR}/src/at60gimbalstatus.o: src/at60gimbalstatus.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalstatus.o src/at60gimbalstatus.cpp
-
-${OBJECTDIR}/src/at60instruction-odb.o: src/at60instruction-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60instruction-odb.o src/at60instruction-odb.cxx
-
-${OBJECTDIR}/src/at60instruction.o: src/at60instruction.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60instruction.o src/at60instruction.cpp
-
-${OBJECTDIR}/src/at60plan-odb.o: src/at60plan-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plan-odb.o src/at60plan-odb.cxx
-
-${OBJECTDIR}/src/at60plan.o: src/at60plan.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plan.o src/at60plan.cpp
-
-${OBJECTDIR}/src/at60slavedomestatus-odb.o: src/at60slavedomestatus-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomestatus-odb.o src/at60slavedomestatus-odb.cxx
-
-${OBJECTDIR}/src/at60slavedomestatus.o: src/at60slavedomestatus.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomestatus.o src/at60slavedomestatus.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80slavedomestatus.o src/at80slavedomestatus.cpp
 
 ${OBJECTDIR}/src/atccsat-odb.o: src/atccsat-odb.cxx
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -416,66 +350,6 @@ ${OBJECTDIR}/src/atccsutilizationlog.o: src/atccsutilizationlog.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsutilizationlog.o src/atccsutilizationlog.cpp
 
-${OBJECTDIR}/src/csrealtimedata-odb.o: src/csrealtimedata-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata-odb.o src/csrealtimedata-odb.cxx
-
-${OBJECTDIR}/src/csrealtimedata.o: src/csrealtimedata.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata.o src/csrealtimedata.cpp
-
-${OBJECTDIR}/src/dimmrealtimedata-odb.o: src/dimmrealtimedata-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata-odb.o src/dimmrealtimedata-odb.cxx
-
-${OBJECTDIR}/src/dimmrealtimedata.o: src/dimmrealtimedata.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata.o src/dimmrealtimedata.cpp
-
-${OBJECTDIR}/src/dustrealtimedata-odb.o: src/dustrealtimedata-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata-odb.o src/dustrealtimedata-odb.cxx
-
-${OBJECTDIR}/src/dustrealtimedata.o: src/dustrealtimedata.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata.o src/dustrealtimedata.cpp
-
-${OBJECTDIR}/src/emerealtimedata-odb.o: src/emerealtimedata-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata-odb.o src/emerealtimedata-odb.cxx
-
-${OBJECTDIR}/src/emerealtimedata.o: src/emerealtimedata.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata.o src/emerealtimedata.cpp
-
-${OBJECTDIR}/src/sqmrealtimedata-odb.o: src/sqmrealtimedata-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata-odb.o src/sqmrealtimedata-odb.cxx
-
-${OBJECTDIR}/src/sqmrealtimedata.o: src/sqmrealtimedata.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata.o src/sqmrealtimedata.cpp
-
-${OBJECTDIR}/src/wsrealtimedata-odb.o: src/wsrealtimedata-odb.cxx
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata-odb.o src/wsrealtimedata-odb.cxx
-
-${OBJECTDIR}/src/wsrealtimedata.o: src/wsrealtimedata.cpp
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata.o src/wsrealtimedata.cpp
-
 # Subprojects
 .build-subprojects:
 	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Release
@@ -580,212 +454,95 @@ ${OBJECTDIR}/src/ORMHelper_nomain.o: ${OBJECTDIR}/src/ORMHelper.o src/ORMHelper.
 	    ${CP} ${OBJECTDIR}/src/ORMHelper.o ${OBJECTDIR}/src/ORMHelper_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/ascrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/ascrealtimedata-odb.o src/ascrealtimedata-odb.cxx 
+${OBJECTDIR}/src/at80ccdstatus_nomain.o: ${OBJECTDIR}/src/at80ccdstatus.o src/at80ccdstatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ascrealtimedata-odb.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80ccdstatus.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata-odb_nomain.o src/ascrealtimedata-odb.cxx;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80ccdstatus_nomain.o src/at80ccdstatus.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/ascrealtimedata-odb.o ${OBJECTDIR}/src/ascrealtimedata-odb_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80ccdstatus.o ${OBJECTDIR}/src/at80ccdstatus_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/ascrealtimedata_nomain.o: ${OBJECTDIR}/src/ascrealtimedata.o src/ascrealtimedata.cpp 
+${OBJECTDIR}/src/at80filterstatus_nomain.o: ${OBJECTDIR}/src/at80filterstatus.o src/at80filterstatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/ascrealtimedata.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80filterstatus.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ascrealtimedata_nomain.o src/ascrealtimedata.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80filterstatus_nomain.o src/at80filterstatus.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/ascrealtimedata.o ${OBJECTDIR}/src/ascrealtimedata_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80filterstatus.o ${OBJECTDIR}/src/at80filterstatus_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/at60ccdstatus-odb_nomain.o: ${OBJECTDIR}/src/at60ccdstatus-odb.o src/at60ccdstatus-odb.cxx 
+${OBJECTDIR}/src/at80focusstatus_nomain.o: ${OBJECTDIR}/src/at80focusstatus.o src/at80focusstatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60ccdstatus-odb.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80focusstatus.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60ccdstatus-odb_nomain.o src/at60ccdstatus-odb.cxx;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80focusstatus_nomain.o src/at80focusstatus.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/at60ccdstatus-odb.o ${OBJECTDIR}/src/at60ccdstatus-odb_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80focusstatus.o ${OBJECTDIR}/src/at80focusstatus_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/at60ccdstatus_nomain.o: ${OBJECTDIR}/src/at60ccdstatus.o src/at60ccdstatus.cpp 
+${OBJECTDIR}/src/at80gimbalstatus_nomain.o: ${OBJECTDIR}/src/at80gimbalstatus.o src/at80gimbalstatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60ccdstatus.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80gimbalstatus.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60ccdstatus_nomain.o src/at60ccdstatus.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80gimbalstatus_nomain.o src/at80gimbalstatus.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/at60ccdstatus.o ${OBJECTDIR}/src/at60ccdstatus_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80gimbalstatus.o ${OBJECTDIR}/src/at80gimbalstatus_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/at60filterstatus-odb_nomain.o: ${OBJECTDIR}/src/at60filterstatus-odb.o src/at60filterstatus-odb.cxx 
+${OBJECTDIR}/src/at80instruction_nomain.o: ${OBJECTDIR}/src/at80instruction.o src/at80instruction.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60filterstatus-odb.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80instruction.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60filterstatus-odb_nomain.o src/at60filterstatus-odb.cxx;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80instruction_nomain.o src/at80instruction.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/at60filterstatus-odb.o ${OBJECTDIR}/src/at60filterstatus-odb_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80instruction.o ${OBJECTDIR}/src/at80instruction_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/at60filterstatus_nomain.o: ${OBJECTDIR}/src/at60filterstatus.o src/at60filterstatus.cpp 
+${OBJECTDIR}/src/at80plan_nomain.o: ${OBJECTDIR}/src/at80plan.o src/at80plan.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60filterstatus.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80plan.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60filterstatus_nomain.o src/at60filterstatus.cpp;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80plan_nomain.o src/at80plan.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/at60filterstatus.o ${OBJECTDIR}/src/at60filterstatus_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80plan.o ${OBJECTDIR}/src/at80plan_nomain.o;\
 	fi
 
-${OBJECTDIR}/src/at60focusstatus-odb_nomain.o: ${OBJECTDIR}/src/at60focusstatus-odb.o src/at60focusstatus-odb.cxx 
+${OBJECTDIR}/src/at80slavedomestatus_nomain.o: ${OBJECTDIR}/src/at80slavedomestatus.o src/at80slavedomestatus.cpp 
 	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60focusstatus-odb.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at80slavedomestatus.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60focusstatus-odb_nomain.o src/at60focusstatus-odb.cxx;\
+	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at80slavedomestatus_nomain.o src/at80slavedomestatus.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/src/at60focusstatus-odb.o ${OBJECTDIR}/src/at60focusstatus-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60focusstatus_nomain.o: ${OBJECTDIR}/src/at60focusstatus.o src/at60focusstatus.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60focusstatus.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60focusstatus_nomain.o src/at60focusstatus.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60focusstatus.o ${OBJECTDIR}/src/at60focusstatus_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60gimbalstatus-odb_nomain.o: ${OBJECTDIR}/src/at60gimbalstatus-odb.o src/at60gimbalstatus-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60gimbalstatus-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalstatus-odb_nomain.o src/at60gimbalstatus-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60gimbalstatus-odb.o ${OBJECTDIR}/src/at60gimbalstatus-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60gimbalstatus_nomain.o: ${OBJECTDIR}/src/at60gimbalstatus.o src/at60gimbalstatus.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60gimbalstatus.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalstatus_nomain.o src/at60gimbalstatus.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60gimbalstatus.o ${OBJECTDIR}/src/at60gimbalstatus_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60instruction-odb_nomain.o: ${OBJECTDIR}/src/at60instruction-odb.o src/at60instruction-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60instruction-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60instruction-odb_nomain.o src/at60instruction-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60instruction-odb.o ${OBJECTDIR}/src/at60instruction-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60instruction_nomain.o: ${OBJECTDIR}/src/at60instruction.o src/at60instruction.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60instruction.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60instruction_nomain.o src/at60instruction.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60instruction.o ${OBJECTDIR}/src/at60instruction_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60plan-odb_nomain.o: ${OBJECTDIR}/src/at60plan-odb.o src/at60plan-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60plan-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plan-odb_nomain.o src/at60plan-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60plan-odb.o ${OBJECTDIR}/src/at60plan-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60plan_nomain.o: ${OBJECTDIR}/src/at60plan.o src/at60plan.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60plan.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plan_nomain.o src/at60plan.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60plan.o ${OBJECTDIR}/src/at60plan_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60slavedomestatus-odb_nomain.o: ${OBJECTDIR}/src/at60slavedomestatus-odb.o src/at60slavedomestatus-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60slavedomestatus-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomestatus-odb_nomain.o src/at60slavedomestatus-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60slavedomestatus-odb.o ${OBJECTDIR}/src/at60slavedomestatus-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/at60slavedomestatus_nomain.o: ${OBJECTDIR}/src/at60slavedomestatus.o src/at60slavedomestatus.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/at60slavedomestatus.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomestatus_nomain.o src/at60slavedomestatus.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/at60slavedomestatus.o ${OBJECTDIR}/src/at60slavedomestatus_nomain.o;\
+	    ${CP} ${OBJECTDIR}/src/at80slavedomestatus.o ${OBJECTDIR}/src/at80slavedomestatus_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/atccsat-odb_nomain.o: ${OBJECTDIR}/src/atccsat-odb.o src/atccsat-odb.cxx 
@@ -1254,162 +1011,6 @@ ${OBJECTDIR}/src/atccsutilizationlog_nomain.o: ${OBJECTDIR}/src/atccsutilization
 	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsutilizationlog_nomain.o src/atccsutilizationlog.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/atccsutilizationlog.o ${OBJECTDIR}/src/atccsutilizationlog_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/csrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/csrealtimedata-odb.o src/csrealtimedata-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/csrealtimedata-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata-odb_nomain.o src/csrealtimedata-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/csrealtimedata-odb.o ${OBJECTDIR}/src/csrealtimedata-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/csrealtimedata_nomain.o: ${OBJECTDIR}/src/csrealtimedata.o src/csrealtimedata.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/csrealtimedata.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/csrealtimedata_nomain.o src/csrealtimedata.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/csrealtimedata.o ${OBJECTDIR}/src/csrealtimedata_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/dimmrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/dimmrealtimedata-odb.o src/dimmrealtimedata-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dimmrealtimedata-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata-odb_nomain.o src/dimmrealtimedata-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/dimmrealtimedata-odb.o ${OBJECTDIR}/src/dimmrealtimedata-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/dimmrealtimedata_nomain.o: ${OBJECTDIR}/src/dimmrealtimedata.o src/dimmrealtimedata.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dimmrealtimedata.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dimmrealtimedata_nomain.o src/dimmrealtimedata.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/dimmrealtimedata.o ${OBJECTDIR}/src/dimmrealtimedata_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/dustrealtimedata-odb.o src/dustrealtimedata-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dustrealtimedata-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o src/dustrealtimedata-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/dustrealtimedata-odb.o ${OBJECTDIR}/src/dustrealtimedata-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/dustrealtimedata_nomain.o: ${OBJECTDIR}/src/dustrealtimedata.o src/dustrealtimedata.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/dustrealtimedata.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/dustrealtimedata_nomain.o src/dustrealtimedata.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/dustrealtimedata.o ${OBJECTDIR}/src/dustrealtimedata_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/emerealtimedata-odb_nomain.o: ${OBJECTDIR}/src/emerealtimedata-odb.o src/emerealtimedata-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/emerealtimedata-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata-odb_nomain.o src/emerealtimedata-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/emerealtimedata-odb.o ${OBJECTDIR}/src/emerealtimedata-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/emerealtimedata_nomain.o: ${OBJECTDIR}/src/emerealtimedata.o src/emerealtimedata.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/emerealtimedata.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/emerealtimedata_nomain.o src/emerealtimedata.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/emerealtimedata.o ${OBJECTDIR}/src/emerealtimedata_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/sqmrealtimedata-odb.o src/sqmrealtimedata-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/sqmrealtimedata-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o src/sqmrealtimedata-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/sqmrealtimedata-odb.o ${OBJECTDIR}/src/sqmrealtimedata-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/sqmrealtimedata_nomain.o: ${OBJECTDIR}/src/sqmrealtimedata.o src/sqmrealtimedata.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/sqmrealtimedata.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/sqmrealtimedata_nomain.o src/sqmrealtimedata.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/sqmrealtimedata.o ${OBJECTDIR}/src/sqmrealtimedata_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/wsrealtimedata-odb_nomain.o: ${OBJECTDIR}/src/wsrealtimedata-odb.o src/wsrealtimedata-odb.cxx 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/wsrealtimedata-odb.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata-odb_nomain.o src/wsrealtimedata-odb.cxx;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/wsrealtimedata-odb.o ${OBJECTDIR}/src/wsrealtimedata-odb_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/wsrealtimedata_nomain.o: ${OBJECTDIR}/src/wsrealtimedata.o src/wsrealtimedata.cpp 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/wsrealtimedata.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -O2 -I../ATCCSProtocol/src -std=c++11 -fPIC  -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/wsrealtimedata_nomain.o src/wsrealtimedata.cpp;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/wsrealtimedata.o ${OBJECTDIR}/src/wsrealtimedata_nomain.o;\
 	fi
 
 # Run Test Targets

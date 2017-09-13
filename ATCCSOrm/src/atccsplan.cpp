@@ -33,6 +33,7 @@ unsigned int atccsplan::setPlan(std::shared_ptr<ATCCSData> data)
     if(plan)
     {
         _at = plan->at;
+        _tag = plan->_tag;
         _user.assign(plan->user);
         _project = std::string(plan->project);
         _target = std::string(plan->target);
@@ -149,6 +150,11 @@ std::string atccsplan::user() const
 unsigned int atccsplan::id() const
 {
     return _id;
+}
+
+unsigned int atccsplan::tag() const
+{
+    return _tag;
 }
 
 

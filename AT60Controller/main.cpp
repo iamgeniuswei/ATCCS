@@ -41,6 +41,7 @@ using namespace odb::core;
 #include "atccsaddress.h"
 #include "src/at60plancontroller.h"
 #include "ATCCSExceptionPrinter.h"
+#include "ATCCSPlanController.h"
 
 
 void quit()
@@ -55,16 +56,17 @@ void quit()
 }
 
 /**
- * @brief main function, system entry.
+ * @brief 系统程序入口,.
  * @param argc
  * @param argv
  * @return 
  */
+#include "atccs_plan_define.h"
 #include <unistd.h>
 #include <locale>
 int main(int argc, char** argv)
 {
-    
+
     setlocale(LC_ALL, "zh_CN.UTF8");
     bindtextdomain( "AT60Controller", "/usr/share/locale" );
     textdomain( "AT60Controller" );
@@ -76,7 +78,7 @@ int main(int argc, char** argv)
     std::shared_ptr<ATCCSDataReceiver> dataReceiver = nullptr;
     std::shared_ptr<ATCCSDataDispatcher> dataDispatcher = nullptr;
     std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
-    std::shared_ptr<ATCCSPlanController> at60PlanController = nullptr;
+    std::shared_ptr<ATCCSPlanPerformer> at60PlanController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60GimbalController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60CCDController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60FilterController = nullptr;
@@ -146,12 +148,19 @@ int main(int argc, char** argv)
             upgoingController->start();
        }
         
+        
+        
         at60PlanController = std::make_shared<AT60PlanController>();
         if(at60PlanController)
         {
-            dataDispatcher->registerDeviceController(ATPLAN, at60PlanController);
+            dataDispatcher->registerDeviceController(ATPLANDATA, at60PlanController);
             at60PlanController->start();
         }
+        
+        std::shared_ptr<ATCCSPlanController> planController = std::make_shared<ATCCSPlanController>();
+        dataDispatcher->registerDeviceController(ATPLANINSTRCTION, planController);
+        planController->setPlanPerformer(at60PlanController);
+        planController->start();
         
         //start a series of concrete variable device controller.
         //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
@@ -229,6 +238,11 @@ int main(int argc, char** argv)
         {
             upgoingController->setStop(true);
             upgoingController->waitToQuit();
+        }
+        if(planController)
+        {
+            planController->setStop(true);
+            planController->waitToQuit();
         }
         if(at60PlanController)
         {

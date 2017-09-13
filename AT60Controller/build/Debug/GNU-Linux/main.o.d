@@ -23,9 +23,14 @@ build/Debug/GNU-Linux/main.o: main.cpp \
  src/at60setting.h ../ATCCSUtility/src/tinyxml2.h \
  ../ATCCSProtocol/src/atccsdbaddress.h \
  ../ATCCSProtocol/src/atccsaddress.h src/at60plancontroller.h \
- ../ATController/src/atccsplancontroller.h \
+ ../ATController/src/atccsplanperformer.h \
+ ../ATController/src/atccsplaninstruction.h \
  ../ATCCSProtocol/src/ATCCSExceptionPrinter.h \
- ../ATCCSProtocol/src/atccsthread.h
+ ../ATCCSProtocol/src/atccsthread.h \
+ ../ATController/src/ATCCSPlanController.h \
+ ../ATController/src/atccsplanperformer.h \
+ ../ATCCSProtocol/src/atccs_plan_define.h \
+ ../ATCCSProtocol/src/atccsaddress.h
 
 ../ATCCSProtocol/src/atccs_global.h:
 
@@ -95,8 +100,18 @@ src/at60setting.h:
 
 src/at60plancontroller.h:
 
-../ATController/src/atccsplancontroller.h:
+../ATController/src/atccsplanperformer.h:
+
+../ATController/src/atccsplaninstruction.h:
 
 ../ATCCSProtocol/src/ATCCSExceptionPrinter.h:
 
 ../ATCCSProtocol/src/atccsthread.h:
+
+../ATController/src/ATCCSPlanController.h:
+
+../ATController/src/atccsplanperformer.h:
+
+../ATCCSProtocol/src/atccs_plan_define.h:
+
+../ATCCSProtocol/src/atccsaddress.h:

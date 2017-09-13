@@ -49,3 +49,8 @@ std::shared_ptr<ATCCSData> ATCCSController::popControlData()
     std::shared_ptr<ATCCSData> temp = _fifoQueue.wait_and_pop();
     return temp;
 }
+
+size_t ATCCSController::queueSize()
+{
+    return _fifoQueue.size();
+}

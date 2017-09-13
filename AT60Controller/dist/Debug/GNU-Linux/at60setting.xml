@@ -13,7 +13,7 @@
 	</DATARECEIVER>
 	<DEVICECONTROLLER>
 		<device type="GIMBAL">
-			<ip>192.168.0.184</ip>
+			<ip>192.168.0.111</ip>
 			<port>6500</port>
 		</device>
 		<device type="CCD">
@@ -25,11 +25,11 @@
 			<port>4646</port>
 		</device>
 		<device type="FOCUS">
-			<ip>192.168.0.184</ip>
+			<ip>192.168.0.111</ip>
 			<port>6500</port>
 		</device>
 		<device type="SLAVEDOME">
-			<ip>192.168.0.184</ip>
+			<ip>192.168.0.111</ip>
 			<port>6500</port>
 		</device>
 	</DEVICECONTROLLER>

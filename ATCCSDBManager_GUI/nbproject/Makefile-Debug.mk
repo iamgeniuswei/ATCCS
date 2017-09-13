@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../QWUIKit/dist/Debug/GNU-Linux/libQWUIKit.so.1.0.0 -Wl,-rpath,'../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm -Wl,-rpath,'../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -lodb -lodb-pgsql
+LDLIBSOPTIONS=../QWUIKit/dist/Debug/GNU-Linux/libQWUIKit.so.1.0.0 -Wl,-rpath,'../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm -Wl,-rpath,'../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -lodb -lodb-pgsql -Wl,-rpath,'../AT60Orm/dist/Debug/GNU-Linux' -L../AT60Orm/dist/Debug/GNU-Linux -lAT60Orm
 
 nbproject/qt-${CND_CONF}.mk: nbproject/qt-${CND_CONF}.pro FORCE
 	${QMAKE} VPATH=. -o qttmp-${CND_CONF}.mk nbproject/qt-${CND_CONF}.pro

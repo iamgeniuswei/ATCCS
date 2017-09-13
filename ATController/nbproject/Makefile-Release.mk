@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/src/ATCCSPlanController.o \
 	${OBJECTDIR}/src/atccsccdcontroller.o \
 	${OBJECTDIR}/src/atccsdatadispatcherprocessor.o \
 	${OBJECTDIR}/src/atccsdatapacker.o \
@@ -46,7 +47,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/atccsheartbeatprocessor.o \
 	${OBJECTDIR}/src/atccsinstructionresultprocessor.o \
 	${OBJECTDIR}/src/atccsinstructionsender.o \
-	${OBJECTDIR}/src/atccsplancontroller.o \
+	${OBJECTDIR}/src/atccsplaninstruction.o \
+	${OBJECTDIR}/src/atccsplanperformer.o \
 	${OBJECTDIR}/src/atccsplanprocessor.o \
 	${OBJECTDIR}/src/atccssetting.o \
 	${OBJECTDIR}/src/atccsslavedomecontroller.o \
@@ -83,6 +85,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.${CND_DLIB_EXT}: ../A
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.${CND_DLIB_EXT}: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.${CND_DLIB_EXT} ${OBJECTFILES} ${LDLIBSOPTIONS} -shared -fPIC
+
+${OBJECTDIR}/src/ATCCSPlanController.o: src/ATCCSPlanController.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ATCCSPlanController.o src/ATCCSPlanController.cpp
 
 ${OBJECTDIR}/src/atccsccdcontroller.o: src/atccsccdcontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
@@ -139,10 +146,15 @@ ${OBJECTDIR}/src/atccsinstructionsender.o: src/atccsinstructionsender.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsinstructionsender.o src/atccsinstructionsender.cpp
 
-${OBJECTDIR}/src/atccsplancontroller.o: src/atccsplancontroller.cpp
+${OBJECTDIR}/src/atccsplaninstruction.o: src/atccsplaninstruction.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsplancontroller.o src/atccsplancontroller.cpp
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsplaninstruction.o src/atccsplaninstruction.cpp
+
+${OBJECTDIR}/src/atccsplanperformer.o: src/atccsplanperformer.cpp
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I../ATCCSProtocol/src -I../ATCCSOrm/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -std=c++11 -fPIC  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/atccsplanperformer.o src/atccsplanperformer.cpp
 
 ${OBJECTDIR}/src/atccsplanprocessor.o: src/atccsplanprocessor.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

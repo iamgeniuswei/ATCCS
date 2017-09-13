@@ -5,22 +5,13 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>src/ORMHelper.h</itemPath>
-      <itemPath>src/ascrealtimedata-odb.hxx</itemPath>
-      <itemPath>src/ascrealtimedata.h</itemPath>
-      <itemPath>src/at60ccdstatus-odb.hxx</itemPath>
-      <itemPath>src/at60ccdstatus.h</itemPath>
-      <itemPath>src/at60filterstatus-odb.hxx</itemPath>
-      <itemPath>src/at60filterstatus.h</itemPath>
-      <itemPath>src/at60focusstatus-odb.hxx</itemPath>
-      <itemPath>src/at60focusstatus.h</itemPath>
-      <itemPath>src/at60gimbalstatus-odb.hxx</itemPath>
-      <itemPath>src/at60gimbalstatus.h</itemPath>
-      <itemPath>src/at60instruction-odb.hxx</itemPath>
-      <itemPath>src/at60instruction.h</itemPath>
-      <itemPath>src/at60plan-odb.hxx</itemPath>
-      <itemPath>src/at60plan.h</itemPath>
-      <itemPath>src/at60slavedomestatus-odb.hxx</itemPath>
-      <itemPath>src/at60slavedomestatus.h</itemPath>
+      <itemPath>src/at80ccdstatus.h</itemPath>
+      <itemPath>src/at80filterstatus.h</itemPath>
+      <itemPath>src/at80focusstatus.h</itemPath>
+      <itemPath>src/at80gimbalstatus.h</itemPath>
+      <itemPath>src/at80instruction.h</itemPath>
+      <itemPath>src/at80plan.h</itemPath>
+      <itemPath>src/at80slavedomestatus.h</itemPath>
       <itemPath>src/atccsat-odb.hxx</itemPath>
       <itemPath>src/atccsat.h</itemPath>
       <itemPath>src/atccsccdstatus-odb.hxx</itemPath>
@@ -57,18 +48,6 @@
       <itemPath>src/atccsutilization.h</itemPath>
       <itemPath>src/atccsutilizationlog-odb.hxx</itemPath>
       <itemPath>src/atccsutilizationlog.h</itemPath>
-      <itemPath>src/csrealtimedata-odb.hxx</itemPath>
-      <itemPath>src/csrealtimedata.h</itemPath>
-      <itemPath>src/dimmrealtimedata-odb.hxx</itemPath>
-      <itemPath>src/dimmrealtimedata.h</itemPath>
-      <itemPath>src/dustrealtimedata-odb.hxx</itemPath>
-      <itemPath>src/dustrealtimedata.h</itemPath>
-      <itemPath>src/emerealtimedata-odb.hxx</itemPath>
-      <itemPath>src/emerealtimedata.h</itemPath>
-      <itemPath>src/sqmrealtimedata-odb.hxx</itemPath>
-      <itemPath>src/sqmrealtimedata.h</itemPath>
-      <itemPath>src/wsrealtimedata-odb.hxx</itemPath>
-      <itemPath>src/wsrealtimedata.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -78,30 +57,13 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>src/ORMHelper.cpp</itemPath>
-      <itemPath>src/ascrealtimedata-odb.cxx</itemPath>
-      <itemPath>src/ascrealtimedata-odb.ixx</itemPath>
-      <itemPath>src/ascrealtimedata.cpp</itemPath>
-      <itemPath>src/at60ccdstatus-odb.cxx</itemPath>
-      <itemPath>src/at60ccdstatus-odb.ixx</itemPath>
-      <itemPath>src/at60ccdstatus.cpp</itemPath>
-      <itemPath>src/at60filterstatus-odb.cxx</itemPath>
-      <itemPath>src/at60filterstatus-odb.ixx</itemPath>
-      <itemPath>src/at60filterstatus.cpp</itemPath>
-      <itemPath>src/at60focusstatus-odb.cxx</itemPath>
-      <itemPath>src/at60focusstatus-odb.ixx</itemPath>
-      <itemPath>src/at60focusstatus.cpp</itemPath>
-      <itemPath>src/at60gimbalstatus-odb.cxx</itemPath>
-      <itemPath>src/at60gimbalstatus-odb.ixx</itemPath>
-      <itemPath>src/at60gimbalstatus.cpp</itemPath>
-      <itemPath>src/at60instruction-odb.cxx</itemPath>
-      <itemPath>src/at60instruction-odb.ixx</itemPath>
-      <itemPath>src/at60instruction.cpp</itemPath>
-      <itemPath>src/at60plan-odb.cxx</itemPath>
-      <itemPath>src/at60plan-odb.ixx</itemPath>
-      <itemPath>src/at60plan.cpp</itemPath>
-      <itemPath>src/at60slavedomestatus-odb.cxx</itemPath>
-      <itemPath>src/at60slavedomestatus-odb.ixx</itemPath>
-      <itemPath>src/at60slavedomestatus.cpp</itemPath>
+      <itemPath>src/at80ccdstatus.cpp</itemPath>
+      <itemPath>src/at80filterstatus.cpp</itemPath>
+      <itemPath>src/at80focusstatus.cpp</itemPath>
+      <itemPath>src/at80gimbalstatus.cpp</itemPath>
+      <itemPath>src/at80instruction.cpp</itemPath>
+      <itemPath>src/at80plan.cpp</itemPath>
+      <itemPath>src/at80slavedomestatus.cpp</itemPath>
       <itemPath>src/atccsat-odb.cxx</itemPath>
       <itemPath>src/atccsat.cpp</itemPath>
       <itemPath>src/atccsccdstatus-odb.cxx</itemPath>
@@ -149,24 +111,6 @@
       <itemPath>src/atccsutilization.cpp</itemPath>
       <itemPath>src/atccsutilizationlog-odb.cxx</itemPath>
       <itemPath>src/atccsutilizationlog.cpp</itemPath>
-      <itemPath>src/csrealtimedata-odb.cxx</itemPath>
-      <itemPath>src/csrealtimedata-odb.ixx</itemPath>
-      <itemPath>src/csrealtimedata.cpp</itemPath>
-      <itemPath>src/dimmrealtimedata-odb.cxx</itemPath>
-      <itemPath>src/dimmrealtimedata-odb.ixx</itemPath>
-      <itemPath>src/dimmrealtimedata.cpp</itemPath>
-      <itemPath>src/dustrealtimedata-odb.cxx</itemPath>
-      <itemPath>src/dustrealtimedata-odb.ixx</itemPath>
-      <itemPath>src/dustrealtimedata.cpp</itemPath>
-      <itemPath>src/emerealtimedata-odb.cxx</itemPath>
-      <itemPath>src/emerealtimedata-odb.ixx</itemPath>
-      <itemPath>src/emerealtimedata.cpp</itemPath>
-      <itemPath>src/sqmrealtimedata-odb.cxx</itemPath>
-      <itemPath>src/sqmrealtimedata-odb.ixx</itemPath>
-      <itemPath>src/sqmrealtimedata.cpp</itemPath>
-      <itemPath>src/wsrealtimedata-odb.cxx</itemPath>
-      <itemPath>src/wsrealtimedata-odb.ixx</itemPath>
-      <itemPath>src/wsrealtimedata.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -388,85 +332,33 @@
       </item>
       <item path="src/ORMHelper.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      <item path="src/at80ccdstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80ccdstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80filterstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/at80filterstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata.h" ex="false" tool="3" flavor2="0">
+      <item path="src/at80focusstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      <item path="src/at80focusstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80gimbalstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80gimbalstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/at80instruction.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus.h" ex="false" tool="3" flavor2="0">
+      <item path="src/at80instruction.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60filterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      <item path="src/at80plan.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60filterstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80plan.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60filterstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80slavedomestatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60filterstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60filterstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60instruction-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60instruction-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60instruction-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60instruction.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60instruction.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60plan-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60plan-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60plan-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60plan.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60plan.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus.h" ex="false" tool="3" flavor2="0">
+      <item path="src/at80slavedomestatus.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccs_pre_compile.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -641,66 +533,6 @@
       <item path="src/atccsutilizationlog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Testclass_csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -861,85 +693,33 @@
       </item>
       <item path="src/ORMHelper.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
+      <item path="src/at80ccdstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80ccdstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80filterstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/at80filterstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/ascrealtimedata.h" ex="false" tool="3" flavor2="0">
+      <item path="src/at80focusstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      <item path="src/at80focusstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80gimbalstatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80gimbalstatus.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus.cpp" ex="false" tool="1" flavor2="0">
+      <item path="src/at80instruction.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60ccdstatus.h" ex="false" tool="3" flavor2="0">
+      <item path="src/at80instruction.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60filterstatus-odb.cxx" ex="false" tool="1" flavor2="0">
+      <item path="src/at80plan.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60filterstatus-odb.hxx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80plan.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/at60filterstatus-odb.ixx" ex="false" tool="3" flavor2="0">
+      <item path="src/at80slavedomestatus.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="src/at60filterstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60filterstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60focusstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60gimbalstatus.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60instruction-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60instruction-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60instruction-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60instruction.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60instruction.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60plan-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60plan-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60plan-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60plan.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60plan.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/at60slavedomestatus.h" ex="false" tool="3" flavor2="0">
+      <item path="src/at80slavedomestatus.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/atccs_pre_compile.sh" ex="false" tool="3" flavor2="0">
       </item>
@@ -1114,66 +894,6 @@
       <item path="src/atccsutilizationlog.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/atccsutilizationlog.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/csrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dimmrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/dustrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/emerealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/sqmrealtimedata.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata-odb.cxx" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata-odb.hxx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata-odb.ixx" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/wsrealtimedata.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/Testclass_csrealtimedata.cpp" ex="false" tool="1" flavor2="0">
       </item>

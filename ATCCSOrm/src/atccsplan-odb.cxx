@@ -47,6 +47,7 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsplan, id_pgsql >::
   persist_statement_types[] =
   {
+    pgsql::int4_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
@@ -77,6 +78,7 @@ namespace odb
   const unsigned int access::object_traits_impl< ::atccsplan, id_pgsql >::
   update_statement_types[] =
   {
+    pgsql::int4_oid,
     pgsql::text_oid,
     pgsql::text_oid,
     pgsql::text_oid,
@@ -166,9 +168,13 @@ namespace odb
     //
     t[0UL] = 0;
 
+    // _tag
+    //
+    t[1UL] = 0;
+
     // _user
     //
-    if (t[1UL])
+    if (t[2UL])
     {
       i._user_value.capacity (i._user_size);
       grew = true;
@@ -176,7 +182,7 @@ namespace odb
 
     // _project
     //
-    if (t[2UL])
+    if (t[3UL])
     {
       i._project_value.capacity (i._project_size);
       grew = true;
@@ -184,7 +190,7 @@ namespace odb
 
     // _target
     //
-    if (t[3UL])
+    if (t[4UL])
     {
       i._target_value.capacity (i._target_size);
       grew = true;
@@ -192,7 +198,7 @@ namespace odb
 
     // _filter
     //
-    if (t[4UL])
+    if (t[5UL])
     {
       i._filter_value.capacity (i._filter_size);
       grew = true;
@@ -200,63 +206,63 @@ namespace odb
 
     // _sec
     //
-    t[5UL] = 0;
+    t[6UL] = 0;
 
     // _msec
     //
-    t[6UL] = 0;
+    t[7UL] = 0;
 
     // _result
     //
-    t[7UL] = 0;
+    t[8UL] = 0;
 
     // _percent
     //
-    t[8UL] = 0;
+    t[9UL] = 0;
 
     // _at
     //
-    t[9UL] = 0;
+    t[10UL] = 0;
 
     // _type
     //
-    t[10UL] = 0;
+    t[11UL] = 0;
 
     // _epoch
     //
-    t[11UL] = 0;
+    t[12UL] = 0;
 
     // _exposureCount
     //
-    t[12UL] = 0;
+    t[13UL] = 0;
 
     // _gain
     //
-    t[13UL] = 0;
+    t[14UL] = 0;
 
     // _bin
     //
-    t[14UL] = 0;
+    t[15UL] = 0;
 
     // _readout
     //
-    t[15UL] = 0;
+    t[16UL] = 0;
 
     // _exposureTime
     //
-    t[16UL] = 0;
+    t[17UL] = 0;
 
     // _rightAscension
     //
-    t[17UL] = 0;
+    t[18UL] = 0;
 
     // _declination
     //
-    t[18UL] = 0;
+    t[19UL] = 0;
 
     // _delayTime
     //
-    t[19UL] = 0;
+    t[20UL] = 0;
 
     return grew;
   }
@@ -281,6 +287,13 @@ namespace odb
       b[n].is_null = &i._id_null;
       n++;
     }
+
+    // _tag
+    //
+    b[n].type = pgsql::bind::integer;
+    b[n].buffer = &i._tag_value;
+    b[n].is_null = &i._tag_null;
+    n++;
 
     // _user
     //
@@ -445,6 +458,20 @@ namespace odb
     using namespace pgsql;
 
     bool grew (false);
+
+    // _tag
+    //
+    {
+      unsigned int const& v =
+        o._tag;
+
+      bool is_null (false);
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_image (
+        i._tag_value, is_null, v);
+      i._tag_null = is_null;
+    }
 
     // _user
     //
@@ -766,6 +793,20 @@ namespace odb
         i._id_null);
     }
 
+    // _tag
+    //
+    {
+      unsigned int& v =
+        o._tag;
+
+      pgsql::value_traits<
+          unsigned int,
+          pgsql::id_integer >::set_value (
+        v,
+        i._tag_value,
+        i._tag_null);
+    }
+
     // _user
     //
     {
@@ -1053,6 +1094,7 @@ namespace odb
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::persist_statement[] =
   "INSERT INTO \"atccsplan\" "
   "(\"id\", "
+  "\"tag\", "
   "\"user\", "
   "\"project\", "
   "\"target\", "
@@ -1073,12 +1115,13 @@ namespace odb
   "\"declination\", "
   "\"delayTime\") "
   "VALUES "
-  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19) "
+  "(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20) "
   "RETURNING \"id\"";
 
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::find_statement[] =
   "SELECT "
   "\"atccsplan\".\"id\", "
+  "\"atccsplan\".\"tag\", "
   "\"atccsplan\".\"user\", "
   "\"atccsplan\".\"project\", "
   "\"atccsplan\".\"target\", "
@@ -1104,26 +1147,27 @@ namespace odb
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::update_statement[] =
   "UPDATE \"atccsplan\" "
   "SET "
-  "\"user\"=$1, "
-  "\"project\"=$2, "
-  "\"target\"=$3, "
-  "\"filter\"=$4, "
-  "\"sec\"=$5, "
-  "\"msec\"=$6, "
-  "\"result\"=$7, "
-  "\"percent\"=$8, "
-  "\"at\"=$9, "
-  "\"type\"=$10, "
-  "\"epoch\"=$11, "
-  "\"exposureCount\"=$12, "
-  "\"gain\"=$13, "
-  "\"bin\"=$14, "
-  "\"readout\"=$15, "
-  "\"exposureTime\"=$16, "
-  "\"rightAscension\"=$17, "
-  "\"declination\"=$18, "
-  "\"delayTime\"=$19 "
-  "WHERE \"id\"=$20";
+  "\"tag\"=$1, "
+  "\"user\"=$2, "
+  "\"project\"=$3, "
+  "\"target\"=$4, "
+  "\"filter\"=$5, "
+  "\"sec\"=$6, "
+  "\"msec\"=$7, "
+  "\"result\"=$8, "
+  "\"percent\"=$9, "
+  "\"at\"=$10, "
+  "\"type\"=$11, "
+  "\"epoch\"=$12, "
+  "\"exposureCount\"=$13, "
+  "\"gain\"=$14, "
+  "\"bin\"=$15, "
+  "\"readout\"=$16, "
+  "\"exposureTime\"=$17, "
+  "\"rightAscension\"=$18, "
+  "\"declination\"=$19, "
+  "\"delayTime\"=$20 "
+  "WHERE \"id\"=$21";
 
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::erase_statement[] =
   "DELETE FROM \"atccsplan\" "
@@ -1132,6 +1176,7 @@ namespace odb
   const char access::object_traits_impl< ::atccsplan, id_pgsql >::query_statement[] =
   "SELECT "
   "\"atccsplan\".\"id\", "
+  "\"atccsplan\".\"tag\", "
   "\"atccsplan\".\"user\", "
   "\"atccsplan\".\"project\", "
   "\"atccsplan\".\"target\", "

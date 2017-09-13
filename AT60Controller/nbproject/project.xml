@@ -15,6 +15,7 @@
                 <make-dep-project>../ATCCSUtility</make-dep-project>
                 <make-dep-project>../ATCCSProtocol</make-dep-project>
                 <make-dep-project>../ATCCSDataMediator</make-dep-project>
+                <make-dep-project>../AT60Orm</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>
             <confList>

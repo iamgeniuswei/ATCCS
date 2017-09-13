@@ -93,6 +93,7 @@ void EMEDataGather::run()
 
 unsigned long long EMEDataGather::resolveRealtimeData(std::shared_ptr<ATCCSData> data)
 {
+    std::cout << "recv data." << std::endl;
     unsigned long long id = 0;
     if(!_realtimeData)
     {

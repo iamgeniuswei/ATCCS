@@ -19,7 +19,7 @@ using namespace odb::core;
 #include "atccsexceptionhandler.h"
 
 
-unsigned int ATCCSDeviceController::INSTRUCTION_TIMEOUT = 5;
+unsigned int ATCCSDeviceController::INSTRUCTION_TIMEOUT = 30;
 unsigned int ATCCSDeviceController::INSTRUCTION_RETRANSMISSION = 3;
 
 ATCCSDeviceController::ATCCSDeviceController(unsigned short at, unsigned short device)
@@ -44,28 +44,39 @@ void ATCCSDeviceController::run()
             //the queue returns per 1 second, so sometimes there is no data.
             if (data == nullptr)
                 continue;
-            
-            executeInstruction(data);
-
+            if(_isPlanning)
+            {
+                std::cout << "Planning" << std::endl;
+                executeInstruction(data);
+            }
+            else
+            {
+                std::cout << "independent" << std::endl;
+                executeIndependentInstruction(data);
+            }
         }
         catch (std::exception &e)
         {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s",
-                                            gettext("Fails to fetch an ATCCSData from data queue. AT: "),
-                                            _at, " Device: ", _device, e.what());
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s",
+                                                gettext("ATCCSDeviceController fails to fetch an instruction. AT: "),
+                                                _at, " Device: ", _device, e.what());
 #endif
         }
     }
 }
 
+/**
+ * 执行一条指令
+ * @param data, 待解析的指令原始数据
+ */
 void ATCCSDeviceController::executeInstruction(std::shared_ptr<ATCCSData> data)
 {    
     _isExecutoryInstructionDone = false;
     //Only the instruction is all right, and the parameters are validated,
     //the instruction can be sent to according device.
     unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
-    ret = setExecutoryInstruction(data);
+    ret = updateExecutoryInstruction(data);
     if (ret == atccsinstruction::INSTRUCTION_PASS)
     {
         int size = sendInstruction(data);
@@ -73,7 +84,7 @@ void ATCCSDeviceController::executeInstruction(std::shared_ptr<ATCCSData> data)
         {
 #ifdef OUTDEBUGINFO
             ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s%d%s%d%s%d",
-                                                gettext("The instruction has been sent to device correctly. AT: "), _at,
+                                                gettext("ATCCSDeviceController has sent instruction to device correctly. AT: "), _at,
                                                 gettext(" Device: "), _device,
                                                 gettext(" Instruction: "), _executoryInstruction->instruction());
 #endif
@@ -92,13 +103,54 @@ void ATCCSDeviceController::executeInstruction(std::shared_ptr<ATCCSData> data)
     _isExecutoryInstructionDone = true;
 }
 
+
+
+
+/**
+ * 执行独立指令,区别于计划观测指令,独立指令无需等待上一条指令完成,即可向望远镜推送下一条指令
+ * @param data
+ */
+void ATCCSDeviceController::executeIndependentInstruction(std::shared_ptr<ATCCSData> data)
+{
+    _isExecutoryInstructionDone = false;
+    //Only the instruction is all right, and the parameters are validated,
+    //the instruction can be sent to according device.
+    unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
+    ret = updateExecutoryInstruction(data);
+    if (ret == atccsinstruction::INSTRUCTION_PASS)
+    {
+        int size = sendInstruction(data);
+        if (size == data->size())
+        {
+#ifdef OUTDEBUGINFO
+            ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s%d%s%d%s%d",
+                                                gettext("The instruction has been sent to device correctly. AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _executoryInstruction->instruction());
+#endif
+//            waitInstructionResult();
+        }
+        else
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d%s%s%s%s%s%s%d",
+                                                gettext("The instruction is fail to be sent and neglected. AT: "), _at,
+                                                gettext(" Device: "), _device,
+                                                gettext(" Instruction: "), _executoryInstruction->instruction());
+#endif
+        }
+    }
+    _isExecutoryInstructionDone = true;
+}
+
+
 /**
  * set the executory instruction according to raw instruction data
  * encapsulated in ATCCSData.
  * @param data, raw instruction data.
  * @return INSTRUCTION_PASS if successes, else fails.
  */
-unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCCSData> data)
+unsigned int ATCCSDeviceController::updateExecutoryInstruction(std::shared_ptr<ATCCSData> data)
 {
     unsigned int ret = atccsinstruction::INSTRUCTION_UNKOWNN;
     if (_executoryInstruction == nullptr)
@@ -132,9 +184,9 @@ unsigned int ATCCSDeviceController::setExecutoryInstruction(std::shared_ptr<ATCC
                 }                
 #endif
                 
-#ifdef OUTDEBUGINFO
-                _executoryInstruction->out();
-#endif                
+//#ifdef OUTDEBUGINFO
+//                _executoryInstruction->out();
+//#endif                
             }
             else if (ret == atccsinstruction::INSTRUCTION_PARAMOUTOFRANGE)
             {
@@ -322,6 +374,26 @@ void ATCCSDeviceController::waitInstructionResult()
 #endif
             }
         }
+        else if(_executoryInstruction->result() == atccsinstruction::RESULT_PARAMOUTOFRANGE || 
+                _executoryInstruction->result() == atccsinstruction::RESULT_CANNTEXECUTE)
+        {
+#ifdef DATAPERSISTENCE
+            try
+            {
+                _executoryInstruction->persistInstructionResult();
+            }
+            catch (std::exception &e)
+            {
+#ifdef OUTERRORINFO 
+                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s%d%s%d%s",
+                                                        gettext("Fails to persist instruction result. AT: "), _at,
+                                                        gettext(" Device: "), _device,
+                                                        gettext(" Instruction: "), _executoryInstruction->instruction(),
+                                                        e.what());
+#endif
+            }
+#endif            
+        }
         else
         {
 #ifdef DATAPERSISTENCE
@@ -435,18 +507,14 @@ std::shared_ptr<atccspublicstatus> ATCCSDeviceController::statusInstance()
 }
 
 /**
- * set the Device's real-time status according to raw status data 
- * encapsulated in ATCCSData.
- * @param data, raw status data.
+ * 更新望远镜设备实时状态.
+ * @param data, 原始实时状态数据.
  */
-void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
+void ATCCSDeviceController::updateRealtimeStatus(std::shared_ptr<ATCCSData> data)
 {
     if(_realtimeStatus == nullptr)
     {
-        //here, we can not define _realtimeStatus directly.
-        //atccspublicstatus will be persisted in database,
-        //so we have to create a concrete sub-class instance
-        //of atccspublicstaus.
+        //不能直接创建实时状态的实例,必须延迟到具体子类中创建,以实现数据的持久化
         try
         {
             _realtimeStatus = statusInstance();
@@ -455,7 +523,7 @@ void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
-                                            gettext("The status is fail to be created, fails to set real time status. AT: "), _at, 
+                                            gettext("ATCCSDeviceController fails to update real time status. AT: "), _at, 
                                             gettext(" Device: "), _device);
 #endif
             return;
@@ -474,7 +542,7 @@ void ATCCSDeviceController::setRealtimeStatus(std::shared_ptr<ATCCSData> data)
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s",
-                                            gettext("Fails to set real time status. AT: "), _at, 
+                                            gettext("ATCCSDeviceController fails to update real time status. AT: "), _at, 
                                             gettext(" Device: "), _device,
                                             e.what());
 #endif        
@@ -496,6 +564,7 @@ void ATCCSDeviceController::setExecutoryInstructionResult(std::shared_ptr<ATCCSD
         {
             std::lock_guard<std::mutex> lk(_instructionLock);
             unsigned int ret = _executoryInstruction->setInstructionResult(data);
+            std::cout << _executoryInstruction->device() << " " << _executoryInstruction->result() << std::endl;
             if (ret == atccsinstruction::RESULT_EXECUTING)
             {
 #ifdef DATAPERSISTENCE
@@ -536,9 +605,9 @@ void ATCCSDeviceController::setExecutoryInstructionResult(std::shared_ptr<ATCCSD
 }
 
 /**
- * set the device's address.
- * @param ip    std::string
- * @param port  unsigned short
+ * 设置目标设备IPv4地址和端口.
+ * @param ip    IPv4地址
+ * @param port  端口
  */
 void ATCCSDeviceController::setDeviceAddress(const std::string &ip, unsigned short port)
 {
@@ -552,20 +621,18 @@ void ATCCSDeviceController::setDeviceAddress(const std::string &ip, unsigned sho
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
-                                            gettext("The data sender is fail to be created, fails to set device address. AT: "), _at, 
+                                            gettext("ATCCSDeviceController fails to set device address. AT: "), _at, 
                                             gettext(" Device: "), _device);
 #endif  
             return;
         }
     }
-
     _instructionSender->setTargetAddress(ip, port);
-
 }
 
 /**
- * set the device's address
- * @param address   std::shared_ptr<ATCCSAddress>
+ * 设置目标设备IPv4地址和端口
+ * @param address   IPv4地址和端口封装类的智能指针
  */
 void ATCCSDeviceController::setDeviceAddress(std::shared_ptr<ATCCSAddress> address)
 {
@@ -577,7 +644,7 @@ void ATCCSDeviceController::setDeviceAddress(std::shared_ptr<ATCCSAddress> addre
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
-                                            gettext("The address is null, fails to set device address. AT: "), _at, 
+                                            gettext("ATCCSDeviceController fails to set device address. AT: "), _at, 
                                             gettext(" Device: "), _device);
 #endif        
     }
@@ -588,7 +655,7 @@ void ATCCSDeviceController::setDeviceAddress(std::shared_ptr<ATCCSAddress> addre
  * @param online bool
  * @param time  unsigned int
  */
-void ATCCSDeviceController::setRealtimeOnline(bool online, unsigned int time)
+void ATCCSDeviceController::updateRealtimeOnline(bool online, unsigned int time)
 {
     if(_realtimeOnline == nullptr)
     {

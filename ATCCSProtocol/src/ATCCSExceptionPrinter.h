@@ -24,8 +24,6 @@ public:
     ATCCSExceptionPrinter& operator=(const ATCCSExceptionPrinter&& orig) = delete;
     virtual ~ATCCSExceptionPrinter();
     void run() override;
-
-
 protected:
 
 private:

@@ -60,20 +60,7 @@ std::shared_ptr<atccsinstruction> AT60FilterController::instructionInstance()
  */
 std::shared_ptr<atccspublicstatus> AT60FilterController::statusInstance()
 {
-    if(_realtimeStatus == nullptr)
-    {
-        try
-        {
-            _realtimeStatus = std::make_shared<at60filterstatus>();
-        }
-        catch (std::exception &e)
-        {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif
-        }   
-    }
+    _realtimeStatus = std::make_shared<at60filterstatus>();
     return _realtimeStatus;
 }
 

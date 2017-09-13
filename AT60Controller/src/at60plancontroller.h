@@ -14,9 +14,9 @@
 #ifndef AT60PLANCONTROLLER_H
 #define AT60PLANCONTROLLER_H
 
-#include "atccsplancontroller.h"
+#include "atccsplanperformer.h"
 
-class AT60PlanController : public ATCCSPlanController
+class AT60PlanController : public ATCCSPlanPerformer
 {
 public:
     AT60PlanController();

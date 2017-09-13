@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm -Wl,-rpath,'$$ORIGIN/../../../../ATCCSNetwork/dist/Debug/GNU-Linux' -L../ATCCSNetwork/dist/Debug/GNU-Linux -lATCCSNetwork -Wl,-rpath,'$$ORIGIN/../../../../ATCCSUtility/dist/Release/GNU-Linux' -L../ATCCSUtility/dist/Release/GNU-Linux -lATCCSUtility -Wl,-rpath,'$$ORIGIN/../../../../ATCCSDataMediator/dist/Debug/GNU-Linux' -L../ATCCSDataMediator/dist/Debug/GNU-Linux -lATCCSDataMediator -Wl,-rpath,'$$ORIGIN/../../../../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -Wl,-rpath,'$$ORIGIN/../../../../ATCCSEMCore/dist/Debug/GNU-Linux' -L../ATCCSEMCore/dist/Debug/GNU-Linux -lATCCSEMCore
+LDLIBSOPTIONS=-Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm -Wl,-rpath,'$$ORIGIN/../../../../ATCCSNetwork/dist/Debug/GNU-Linux' -L../ATCCSNetwork/dist/Debug/GNU-Linux -lATCCSNetwork -Wl,-rpath,'$$ORIGIN/../../../../ATCCSUtility/dist/Release/GNU-Linux' -L../ATCCSUtility/dist/Release/GNU-Linux -lATCCSUtility -Wl,-rpath,'$$ORIGIN/../../../../ATCCSDataMediator/dist/Debug/GNU-Linux' -L../ATCCSDataMediator/dist/Debug/GNU-Linux -lATCCSDataMediator -Wl,-rpath,'$$ORIGIN/../../../../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -Wl,-rpath,'$$ORIGIN/../../../../ATCCSEMCore/dist/Debug/GNU-Linux' -L../ATCCSEMCore/dist/Debug/GNU-Linux -lATCCSEMCore -Wl,-rpath,'$$ORIGIN/../../../../EMOrm/dist/Debug/GNU-Linux' -L../EMOrm/dist/Debug/GNU-Linux -lEMOrm
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -63,6 +63,7 @@ LDLIBSOPTIONS=-Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L
 	${CP} ../ATCCSDataMediator/dist/Debug/GNU-Linux/libATCCSDataMediator.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${CP} ../ATCCSProtocol/dist/Debug/GNU-Linux/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${CP} ../ATCCSEMCore/dist/Debug/GNU-Linux/libATCCSEMCore.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${CP} ../EMOrm/dist/Debug/GNU-Linux/libEMOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole: ../ATCCSOrm/dist/Debug/GNU-Linux/libATCCSOrm.so
 
@@ -76,6 +77,8 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole: ../ATCCSProtocol/dis
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole: ../ATCCSEMCore/dist/Debug/GNU-Linux/libATCCSEMCore.so
 
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole: ../EMOrm/dist/Debug/GNU-Linux/libEMOrm.so
+
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole ${OBJECTFILES} ${LDLIBSOPTIONS} -lodb -lodb-pgsql
@@ -83,7 +86,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSOrm/src -I../ATCCSProtocol/src -I../ATCCSDataMediator/src -I../ATCCSUtility/src -I../ATCCSNetwork/src -I../ATCCSEMCore/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I../ATCCSOrm/src -I../ATCCSProtocol/src -I../ATCCSDataMediator/src -I../ATCCSUtility/src -I../ATCCSNetwork/src -I../ATCCSEMCore/src -I../EMOrm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
@@ -93,11 +96,12 @@ ${OBJECTDIR}/main.o: main.cpp
 	cd ../ATCCSDataMediator && ${MAKE}  -f Makefile CONF=Debug
 	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug
 	cd ../ATCCSEMCore && ${MAKE}  -f Makefile CONF=Debug
+	cd ../EMOrm && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSEMCore.so
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSEMCore.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libEMOrm.so
 	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/emgatherconsole
 
 # Subprojects
@@ -108,6 +112,7 @@ ${OBJECTDIR}/main.o: main.cpp
 	cd ../ATCCSDataMediator && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../ATCCSProtocol && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../ATCCSEMCore && ${MAKE}  -f Makefile CONF=Debug clean
+	cd ../EMOrm && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

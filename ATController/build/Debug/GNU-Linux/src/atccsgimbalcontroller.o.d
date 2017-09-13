@@ -12,15 +12,9 @@ build/Debug/GNU-Linux/src/atccsgimbalcontroller.o: \
  ../ATCCSOrm/src/atccsgimbalstatus-odb.hxx \
  ../ATCCSOrm/src/atccsgimbalstatus.h \
  ../ATCCSOrm/src/atccspublicstatus-odb.hxx \
- ../ATCCSOrm/src/atccsgimbalstatus-odb.ixx \
- ../ATCCSOrm/src/at60gimbalstatus.h \
- ../ATCCSOrm/src/at60gimbalstatus-odb.hxx \
- ../ATCCSOrm/src/at60gimbalstatus.h \
- ../ATCCSOrm/src/atccsgimbalstatus-odb.hxx \
- ../ATCCSOrm/src/at60gimbalstatus-odb.ixx src/atccssetting.h \
+ ../ATCCSOrm/src/atccsgimbalstatus-odb.ixx src/atccssetting.h \
  ../ATCCSProtocol/src/atccs_gimbal_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
- ../ATCCSOrm/src/atccsinstruction.h ../ATCCSOrm/src/at60instruction.h \
  ../ATCCSOrm/src/atccsinstruction.h ../ATCCSOrm/src/ORMHelper.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
  ../ATCCSProtocol/src/atccsexception.h
@@ -59,25 +53,11 @@ src/atccsdevicecontroller.h:
 
 ../ATCCSOrm/src/atccsgimbalstatus-odb.ixx:
 
-../ATCCSOrm/src/at60gimbalstatus.h:
-
-../ATCCSOrm/src/at60gimbalstatus-odb.hxx:
-
-../ATCCSOrm/src/at60gimbalstatus.h:
-
-../ATCCSOrm/src/atccsgimbalstatus-odb.hxx:
-
-../ATCCSOrm/src/at60gimbalstatus-odb.ixx:
-
 src/atccssetting.h:
 
 ../ATCCSProtocol/src/atccs_gimbal_define.h:
 
 ../ATCCSProtocol/src/atccs_public_define.h:
-
-../ATCCSOrm/src/atccsinstruction.h:
-
-../ATCCSOrm/src/at60instruction.h:
 
 ../ATCCSOrm/src/atccsinstruction.h:
 

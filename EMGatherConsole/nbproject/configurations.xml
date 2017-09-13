@@ -8,7 +8,7 @@
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
                    projectFiles="true">
-      <itemPath>emgather_setting.xml</itemPath>
+      <itemPath>dist/Debug/GNU-Linux/config.xml</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -45,6 +45,7 @@
             <pElem>../ATCCSUtility/src</pElem>
             <pElem>../ATCCSNetwork/src</pElem>
             <pElem>../ATCCSEMCore/src</pElem>
+            <pElem>../EMOrm/src</pElem>
           </incDir>
           <commandLine>-Wl,--no-as-needed -pthread</commandLine>
         </ccTool>
@@ -122,6 +123,18 @@
                             BC="${MAKE}  -f Makefile CONF=Debug"
                             CC="${MAKE}  -f Makefile CONF=Debug clean"
                             OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSEMCore.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../EMOrm"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../EMOrm"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libEMOrm.${CND_DLIB_EXT}">
               </makeArtifact>
             </linkerLibProjectItem>
           </linkerLibItems>
@@ -215,9 +228,57 @@
                             perm="755"
                             owner="root"
                             group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSNetwork.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSUtility.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSDataMediator.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSProtocol.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libATCCSEMCore.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSEMCore.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/libEMOrm.so"
+                            from="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libEMOrm.so"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
+          <packFileListElem type="File"
+                            to="${PACKAGE_TOP_DIR}bin/${OUTPUT_BASENAME}"
+                            from="${OUTPUT_PATH}"
+                            perm="755"
+                            owner="root"
+                            group="bin"/>
         </packFileList>
       </packaging>
-      <item path="emgather_setting.xml" ex="false" tool="3" flavor2="0">
+      <item path="dist/Debug/GNU-Linux/config.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -243,7 +304,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="emgather_setting.xml" ex="false" tool="3" flavor2="0">
+      <item path="dist/Debug/GNU-Linux/config.xml" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

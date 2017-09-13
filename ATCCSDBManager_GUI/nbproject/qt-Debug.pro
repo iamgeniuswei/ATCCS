@@ -20,8 +20,8 @@ UI_DIR =
 QMAKE_CC = gcc
 QMAKE_CXX = g++
 DEFINES += 
-INCLUDEPATH += ../QWUIKit/src ../ATCCSOrm/src ../ATCCSProtocol/src 
-LIBS += -Wl,-rpath,../QWUIKit/dist/Debug/GNU-Linux ../QWUIKit/dist/Debug/GNU-Linux/libQWUIKit.so.1.0.0 -Wl,-rpath,../ATCCSOrm/dist/Debug/GNU-Linux ../ATCCSOrm/dist/Debug/GNU-Linux/libATCCSOrm.so -Wl,-rpath,../ATCCSProtocol/dist/Debug/GNU-Linux ../ATCCSProtocol/dist/Debug/GNU-Linux/libATCCSProtocol.so -lodb -lodb-pgsql  
+INCLUDEPATH += ../QWUIKit/src ../ATCCSOrm/src ../ATCCSProtocol/src ../AT60Orm/src 
+LIBS += -Wl,-rpath,../QWUIKit/dist/Debug/GNU-Linux ../QWUIKit/dist/Debug/GNU-Linux/libQWUIKit.so.1.0.0 -Wl,-rpath,../ATCCSOrm/dist/Debug/GNU-Linux ../ATCCSOrm/dist/Debug/GNU-Linux/libATCCSOrm.so -Wl,-rpath,../ATCCSProtocol/dist/Debug/GNU-Linux ../ATCCSProtocol/dist/Debug/GNU-Linux/libATCCSProtocol.so -lodb -lodb-pgsql -Wl,-rpath,../AT60Orm/dist/Debug/GNU-Linux ../AT60Orm/dist/Debug/GNU-Linux/libAT60Orm.so  
 equals(QT_MAJOR_VERSION, 4) {
 QMAKE_CXXFLAGS += -std=c++11
 }

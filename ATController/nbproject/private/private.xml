@@ -11,6 +11,19 @@
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
             <file>file:/home/lenovo/NetBeansProjects/ATCCS/ATController/src/atccsfocuscontroller.h</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/ATCCSPlanController.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplaninstruction.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatapacker.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplanperformer.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/ATCCSPlanController.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplanprocessor.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplanperformer.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdevicecontroller.cpp</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsplaninstruction.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsinstructionsender.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATController/src/atccsdatapacker.cpp</file>
+        </group>
     </open-files>
 </project-private>

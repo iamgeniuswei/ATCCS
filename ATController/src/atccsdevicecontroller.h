@@ -4,12 +4,18 @@
 #include "atccsthread.h"
 #include <memory>
 #include <mutex>
+#include <stdbool.h>
 class ATCCSData;
 class atccsinstruction;
 class ATCCSDataSender;
 class atccspublicstatus;
 class ATCCSOnline;
 class ATCCSAddress;
+
+
+/**
+ * 望远镜设备控制基类,完成望远镜设备控制的核心功能.
+ */
 class ATCCSDeviceController : public ATCCSController, public ATCCSThread
 {
 public:
@@ -18,10 +24,19 @@ public:
     void run() override;
     void setDeviceAddress(const std::string &ip, unsigned short port);
     void setDeviceAddress(std::shared_ptr<ATCCSAddress> address = nullptr);
-    void setRealtimeStatus(std::shared_ptr<ATCCSData> data = nullptr);
-    void setRealtimeOnline(bool online, unsigned int time);
-    unsigned int setExecutoryInstruction(std::shared_ptr<ATCCSData> data = nullptr);
+    void updateRealtimeStatus(std::shared_ptr<ATCCSData> data = nullptr);
+    void updateRealtimeOnline(bool online, unsigned int time);
+    unsigned int updateExecutoryInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     void setExecutoryInstructionResult(std::shared_ptr<ATCCSData> data = nullptr);
+    
+    void setPlanning(bool planning)
+    {
+        _isPlanning = planning;
+    }
+    void unsetPlanning()
+    {
+        _isPlanning = false;
+    }
     
 
     
@@ -40,6 +55,7 @@ public:
     
 protected:
     void executeInstruction(std::shared_ptr<ATCCSData> data = nullptr);
+    void executeIndependentInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     virtual std::shared_ptr<atccsinstruction> instructionInstance();
     virtual std::shared_ptr<atccspublicstatus> statusInstance();
     int sendInstruction(std::shared_ptr<ATCCSData> data = nullptr);
@@ -54,9 +70,10 @@ protected:
 protected:
     unsigned int _device = 0;
     unsigned int _at = 0;
-    mutable bool _currentStatusOK;
+    mutable bool _currentStatusOK = false;
     mutable bool _isExecutoryInstructionSuccess = false;
     mutable bool _isExecutoryInstructionDone = false;
+    volatile bool _isPlanning = false;
     mutable std::mutex _statusLock;
     mutable std::mutex _instructionLock;
 

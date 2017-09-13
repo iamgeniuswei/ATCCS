@@ -12,6 +12,7 @@
                 <make-dep-project>../ATCCSNetwork</make-dep-project>
                 <make-dep-project>../ATCCSOrm</make-dep-project>
                 <make-dep-project>../ATCCSUtility</make-dep-project>
+                <make-dep-project>../EMOrm</make-dep-project>
                 <make-dep-project>../ATCCSProtocol</make-dep-project>
                 <make-dep-project>../ATCCSDataMediator</make-dep-project>
                 <make-dep-project>../ATCCSEMCore</make-dep-project>

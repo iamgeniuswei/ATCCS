@@ -16,8 +16,6 @@
 #include "atccspublicstatus-odb.hxx"
 #include "atccsgimbalstatus.h"
 #include "atccsgimbalstatus-odb.hxx"
-#include "at60gimbalstatus.h"
-#include "at60gimbalstatus-odb.hxx"
 #ifdef DATAPERSISTENCE
 #include <odb/core.hxx>
 #include <odb/database.hxx>
@@ -29,7 +27,6 @@ using namespace odb::core;
 #include "atccs_public_define.h"
 #include "atccs_gimbal_define.h"
 #include "atccsinstruction.h"
-#include "at60instruction.h"
 #include "ORMHelper.h"
 #include <memory>
 #include <stdbool.h>
@@ -346,7 +343,7 @@ bool ATCCSGimbalController::checkResult_TrackStar()
 {
     try
     {
-        std::shared_ptr<at60gimbalstatus> temp = std::dynamic_pointer_cast<at60gimbalstatus>(_realtimeStatus);
+        std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
@@ -409,7 +406,7 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
 {
     try
     {
-        std::shared_ptr<at60gimbalstatus> temp = std::dynamic_pointer_cast<at60gimbalstatus>(_realtimeStatus);
+        std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
@@ -507,7 +504,7 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
 {
     try
     {
-        std::shared_ptr<at60gimbalstatus> temp = std::dynamic_pointer_cast<at60gimbalstatus>(_realtimeStatus);
+        std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
@@ -566,7 +563,7 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
 {
     try
     {
-        std::shared_ptr<at60gimbalstatus> temp = std::dynamic_pointer_cast<at60gimbalstatus>(_realtimeStatus);
+        std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
@@ -806,7 +803,7 @@ bool ATCCSGimbalController::checkResult_CoverAction()
 {
     try
     {
-        std::shared_ptr<at60gimbalstatus> temp = std::dynamic_pointer_cast<at60gimbalstatus>(_realtimeStatus);
+        std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if(temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
@@ -865,7 +862,7 @@ bool ATCCSGimbalController::checkResult_FocusAction()
 {
     try
     {
-        std::shared_ptr<at60gimbalstatus> temp = std::dynamic_pointer_cast<at60gimbalstatus>(_realtimeStatus);
+        std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if(temp)
         {
             if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))

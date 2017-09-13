@@ -109,6 +109,18 @@ namespace odb
 
     static const id_type_ id;
 
+    // tag
+    //
+    typedef
+    pgsql::query_column<
+      pgsql::value_traits<
+        unsigned int,
+        pgsql::id_integer >::query_type,
+      pgsql::id_integer >
+    tag_type_;
+
+    static const tag_type_ tag;
+
     // user
     //
     typedef
@@ -344,6 +356,11 @@ namespace odb
   id (A::table_name, "\"id\"", 0);
 
   template <typename A>
+  const typename query_columns< ::atccsplan, id_pgsql, A >::tag_type_
+  query_columns< ::atccsplan, id_pgsql, A >::
+  tag (A::table_name, "\"tag\"", 0);
+
+  template <typename A>
   const typename query_columns< ::atccsplan, id_pgsql, A >::user_type_
   query_columns< ::atccsplan, id_pgsql, A >::
   user (A::table_name, "\"user\"", 0);
@@ -463,6 +480,11 @@ namespace odb
       //
       int _id_value;
       bool _id_null;
+
+      // _tag
+      //
+      int _tag_value;
+      bool _tag_null;
 
       // _user
       //
@@ -605,7 +627,7 @@ namespace odb
 
     typedef pgsql::query_base query_base_type;
 
-    static const std::size_t column_count = 20UL;
+    static const std::size_t column_count = 21UL;
     static const std::size_t id_column_count = 1UL;
     static const std::size_t inverse_column_count = 0UL;
     static const std::size_t readonly_column_count = 0UL;

@@ -92,6 +92,7 @@
             <pElem>../QWUIKit/src</pElem>
             <pElem>../ATCCSOrm/src</pElem>
             <pElem>../ATCCSProtocol/src</pElem>
+            <pElem>../AT60Orm/src</pElem>
           </incDir>
         </ccTool>
         <linkerTool>
@@ -134,6 +135,18 @@
               </makeArtifact>
             </linkerLibProjectItem>
             <linkerOptionItem>-lodb -lodb-pgsql</linkerOptionItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../AT60Orm"
+                            CT="2"
+                            CN="Debug"
+                            AC="true"
+                            BL="true"
+                            WD="../AT60Orm"
+                            BC="${MAKE}  -f Makefile CONF=Debug"
+                            CC="${MAKE}  -f Makefile CONF=Debug clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libAT60Orm.${CND_DLIB_EXT}">
+              </makeArtifact>
+            </linkerLibProjectItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

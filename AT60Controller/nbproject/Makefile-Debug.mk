@@ -60,7 +60,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/local/lib -Wl,-rpath,'/usr/local/lib' -Wl,-rpath,'$$ORIGIN/../../../../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -Wl,-rpath,'$$ORIGIN/../../../../ATCCSNetwork/dist/Debug/GNU-Linux' -L../ATCCSNetwork/dist/Debug/GNU-Linux -lATCCSNetwork -Wl,-rpath,'$$ORIGIN/../../../../ATCCSDataMediator/dist/Debug/GNU-Linux' -L../ATCCSDataMediator/dist/Debug/GNU-Linux -lATCCSDataMediator -Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm -lATCCSProtocol -lATCCSOrm -lATCCSNetwork -lATCCSDataMediator -Wl,-rpath,'$$ORIGIN/../../../../ATController/dist/Debug/GNU-Linux' -L../ATController/dist/Debug/GNU-Linux -lATController -Wl,-rpath,'$$ORIGIN/../../../../ATCCSUtility/dist/Release/GNU-Linux' -L../ATCCSUtility/dist/Release/GNU-Linux -lATCCSUtility
+LDLIBSOPTIONS=-L/usr/local/lib -Wl,-rpath,'/usr/local/lib' -Wl,-rpath,'$$ORIGIN/../../../../ATCCSProtocol/dist/Debug/GNU-Linux' -L../ATCCSProtocol/dist/Debug/GNU-Linux -lATCCSProtocol -Wl,-rpath,'$$ORIGIN/../../../../ATCCSNetwork/dist/Debug/GNU-Linux' -L../ATCCSNetwork/dist/Debug/GNU-Linux -lATCCSNetwork -Wl,-rpath,'$$ORIGIN/../../../../ATCCSDataMediator/dist/Debug/GNU-Linux' -L../ATCCSDataMediator/dist/Debug/GNU-Linux -lATCCSDataMediator -Wl,-rpath,'$$ORIGIN/../../../../ATCCSOrm/dist/Debug/GNU-Linux' -L../ATCCSOrm/dist/Debug/GNU-Linux -lATCCSOrm -lATCCSProtocol -lATCCSOrm -lATCCSNetwork -lATCCSDataMediator -Wl,-rpath,'$$ORIGIN/../../../../ATController/dist/Debug/GNU-Linux' -L../ATController/dist/Debug/GNU-Linux -lATController -Wl,-rpath,'$$ORIGIN/../../../../ATCCSUtility/dist/Release/GNU-Linux' -L../ATCCSUtility/dist/Release/GNU-Linux -lATCCSUtility -Wl,-rpath,'$$ORIGIN/../../../../AT60Orm/dist/Debug/GNU-Linux' -L../AT60Orm/dist/Debug/GNU-Linux -lAT60Orm
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -71,6 +71,7 @@ LDLIBSOPTIONS=-L/usr/local/lib -Wl,-rpath,'/usr/local/lib' -Wl,-rpath,'$$ORIGIN/
 	${CP} ../ATCCSOrm/dist/Debug/GNU-Linux/libATCCSOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${CP} ../ATController/dist/Debug/GNU-Linux/libATController.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${CP} ../ATCCSUtility/dist/Release/GNU-Linux/libATCCSUtility.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${CP} ../AT60Orm/dist/Debug/GNU-Linux/libAT60Orm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller: ../ATCCSProtocol/dist/Debug/GNU-Linux/libATCCSProtocol.so
 
@@ -84,6 +85,8 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller: ../ATController/dist/
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller: ../ATCCSUtility/dist/Release/GNU-Linux/libATCCSUtility.so
 
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller: ../AT60Orm/dist/Debug/GNU-Linux/libAT60Orm.so
+
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller ${OBJECTFILES} ${LDLIBSOPTIONS} -lodb -lodb-pgsql
@@ -91,47 +94,47 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller: ${OBJECTFILES}
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 ${OBJECTDIR}/src/at60ccdcontroller.o: src/at60ccdcontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60ccdcontroller.o src/at60ccdcontroller.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60ccdcontroller.o src/at60ccdcontroller.cpp
 
 ${OBJECTDIR}/src/at60exceptiondisplayer.o: src/at60exceptiondisplayer.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60exceptiondisplayer.o src/at60exceptiondisplayer.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60exceptiondisplayer.o src/at60exceptiondisplayer.cpp
 
 ${OBJECTDIR}/src/at60filtercontroller.o: src/at60filtercontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60filtercontroller.o src/at60filtercontroller.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60filtercontroller.o src/at60filtercontroller.cpp
 
 ${OBJECTDIR}/src/at60focuscontroller.o: src/at60focuscontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60focuscontroller.o src/at60focuscontroller.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60focuscontroller.o src/at60focuscontroller.cpp
 
 ${OBJECTDIR}/src/at60gimbalcontroller.o: src/at60gimbalcontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalcontroller.o src/at60gimbalcontroller.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60gimbalcontroller.o src/at60gimbalcontroller.cpp
 
 ${OBJECTDIR}/src/at60plancontroller.o: src/at60plancontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plancontroller.o src/at60plancontroller.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60plancontroller.o src/at60plancontroller.cpp
 
 ${OBJECTDIR}/src/at60setting.o: src/at60setting.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60setting.o src/at60setting.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60setting.o src/at60setting.cpp
 
 ${OBJECTDIR}/src/at60slavedomecontroller.o: src/at60slavedomecontroller.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomecontroller.o src/at60slavedomecontroller.cpp
+	$(COMPILE.cc) -g -I../ATCCSProtocol/src -I../ATCCSNetwork/src -I../ATCCSDataMediator/src -I../ATCCSOrm/src -I../ATController/src -I../ATCCSUtility/src -I../AT60Orm/src -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/at60slavedomecontroller.o src/at60slavedomecontroller.cpp
 
 # Subprojects
 .build-subprojects:
@@ -141,11 +144,12 @@ ${OBJECTDIR}/src/at60slavedomecontroller.o: src/at60slavedomecontroller.cpp
 	cd ../ATCCSOrm && ${MAKE}  -f Makefile CONF=Debug
 	cd ../ATController && ${MAKE}  -f Makefile CONF=Debug
 	cd ../ATCCSUtility && ${MAKE}  -f Makefile CONF=Release
+	cd ../AT60Orm && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so
+	${RM} -r ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSProtocol.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSNetwork.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSDataMediator.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSOrm.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATController.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libATCCSUtility.so ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libAT60Orm.so
 	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/at60controller
 
 # Subprojects
@@ -156,6 +160,7 @@ ${OBJECTDIR}/src/at60slavedomecontroller.o: src/at60slavedomecontroller.cpp
 	cd ../ATCCSOrm && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../ATController && ${MAKE}  -f Makefile CONF=Debug clean
 	cd ../ATCCSUtility && ${MAKE}  -f Makefile CONF=Release clean
+	cd ../AT60Orm && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

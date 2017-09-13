@@ -8,8 +8,8 @@ build/Debug/GNU-Linux/src/at60focuscontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_focus_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
- ../ATCCSOrm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
- ../ATCCSOrm/src/at60focusstatus.h ../ATCCSOrm/src/atccsfocusstatus.h \
+ ../AT60Orm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
+ ../AT60Orm/src/at60focusstatus.h ../ATCCSOrm/src/atccsfocusstatus.h \
  ../ATCCSOrm/src/atccspublicstatus.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
  ../ATCCSProtocol/src/atccsexception.h
@@ -36,11 +36,11 @@ src/at60focuscontroller.h:
 
 ../ATCCSProtocol/src/atccs_public_define.h:
 
-../ATCCSOrm/src/at60instruction.h:
+../AT60Orm/src/at60instruction.h:
 
 ../ATCCSOrm/src/atccsinstruction.h:
 
-../ATCCSOrm/src/at60focusstatus.h:
+../AT60Orm/src/at60focusstatus.h:
 
 ../ATCCSOrm/src/atccsfocusstatus.h:
 

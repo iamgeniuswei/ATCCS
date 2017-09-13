@@ -2,14 +2,14 @@
 #define ATCCSPLANPROCESSOR_H
 
 #include "atccsdataprocessor.h"
-class ATCCSPlanController;
+class ATCCSPlanPerformer;
 class ATCCSPlanProcessor : public ATCCSDataProcessor
 {
 public:
-    explicit ATCCSPlanProcessor(ATCCSPlanController *controller);
+    explicit ATCCSPlanProcessor(ATCCSPlanPerformer *controller);
     void processData(std::shared_ptr<ATCCSData> data);
 private:
-    ATCCSPlanController *_controller = nullptr;
+    ATCCSPlanPerformer *_controller = nullptr;
 };
 
 #endif // ATCCSPLANPROCESSOR_H

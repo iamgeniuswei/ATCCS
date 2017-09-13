@@ -61,20 +61,7 @@ std::shared_ptr<atccsinstruction> AT60FocusController::instructionInstance()
  */
 std::shared_ptr<atccspublicstatus> AT60FocusController::statusInstance()
 {
-    if(_realtimeStatus == nullptr)
-    {
-        try
-        {
-            _realtimeStatus = std::make_shared<at60focusstatus>();
-        }
-        catch (std::exception &e)
-        {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif
-        }   
-    }
+    _realtimeStatus = std::make_shared<at60focusstatus>();
     return _realtimeStatus;
 }
 

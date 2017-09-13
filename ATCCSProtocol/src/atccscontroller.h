@@ -36,6 +36,7 @@ public:
     virtual ~ATCCSController();
     void pushControlData(std::shared_ptr<ATCCSData> data = nullptr);
     void clearControlData();
+    size_t queueSize();
 protected:
     ATCCSQueue<std::shared_ptr<ATCCSData>> _fifoQueue;
     std::shared_ptr<ATCCSData> popControlData();

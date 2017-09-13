@@ -131,7 +131,7 @@ void ATCCSUpgoingController::setDeviceOnline(unsigned int id, bool online, unsig
             std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
             if (controller)
             {
-                controller->setRealtimeOnline(online, time);
+                controller->updateRealtimeOnline(online, time);
             }
             else
             {
@@ -213,7 +213,7 @@ void ATCCSUpgoingController::setDeviceStatus(unsigned int id, std::shared_ptr<AT
             std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
             if (controller)
             {
-                controller->setRealtimeStatus(data);
+                controller->updateRealtimeStatus(data);
             }
             else
             {

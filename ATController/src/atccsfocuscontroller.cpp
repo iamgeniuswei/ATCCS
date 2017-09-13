@@ -14,9 +14,10 @@
 #include "atccsfocuscontroller.h"
 #include "atccs_public_define.h"
 #include "atccs_focus_define.h"
-#include "at60instruction.h"
-#include "at60focusstatus.h"
 #include "atccsexceptionhandler.h"
+#include "atccspublicstatus.h"
+#include "atccsfocusstatus.h"
+#include "atccsinstruction.h"
 ATCCSFocusController::ATCCSFocusController(unsigned short at, unsigned short device) 
     :ATCCSDeviceController(at, device)
 {

@@ -6,11 +6,10 @@ build/Debug/GNU-Linux/src/atccsfocuscontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_focus_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
- ../ATCCSOrm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
- ../ATCCSOrm/src/at60focusstatus.h ../ATCCSOrm/src/atccsfocusstatus.h \
- ../ATCCSOrm/src/atccspublicstatus.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
- ../ATCCSProtocol/src/atccsexception.h
+ ../ATCCSProtocol/src/atccsexception.h \
+ ../ATCCSOrm/src/atccspublicstatus.h ../ATCCSOrm/src/atccsfocusstatus.h \
+ ../ATCCSOrm/src/atccspublicstatus.h ../ATCCSOrm/src/atccsinstruction.h
 
 src/atccsfocuscontroller.h:
 
@@ -32,16 +31,14 @@ src/atccsdevicecontroller.h:
 
 ../ATCCSProtocol/src/atccs_public_define.h:
 
-../ATCCSOrm/src/at60instruction.h:
+../ATCCSProtocol/src/atccsexceptionhandler.h:
 
-../ATCCSOrm/src/atccsinstruction.h:
+../ATCCSProtocol/src/atccsexception.h:
 
-../ATCCSOrm/src/at60focusstatus.h:
+../ATCCSOrm/src/atccspublicstatus.h:
 
 ../ATCCSOrm/src/atccsfocusstatus.h:
 
 ../ATCCSOrm/src/atccspublicstatus.h:
 
-../ATCCSProtocol/src/atccsexceptionhandler.h:
-
-../ATCCSProtocol/src/atccsexception.h:
+../ATCCSOrm/src/atccsinstruction.h:

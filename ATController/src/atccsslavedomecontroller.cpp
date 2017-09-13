@@ -14,8 +14,9 @@
 #include "atccsslavedomecontroller.h"
 #include "atccs_public_define.h"
 #include "atccs_dome_define.h"
-#include "at60instruction.h"
-#include "at60slavedomestatus.h"
+#include "atccspublicstatus.h"
+#include "atccsslavedomestatus.h"
+#include "atccsinstruction.h"
 #include "atccsexceptionhandler.h"
 ATCCSSlaveDomeController::ATCCSSlaveDomeController(unsigned short at, unsigned short device) 
     :ATCCSDeviceController(at, device)

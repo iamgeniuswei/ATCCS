@@ -6,10 +6,9 @@ build/Debug/GNU-Linux/src/atccsslavedomecontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_dome_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
- ../ATCCSOrm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
- ../ATCCSOrm/src/at60slavedomestatus.h \
- ../ATCCSOrm/src/atccsslavedomestatus.h \
  ../ATCCSOrm/src/atccspublicstatus.h \
+ ../ATCCSOrm/src/atccsslavedomestatus.h \
+ ../ATCCSOrm/src/atccspublicstatus.h ../ATCCSOrm/src/atccsinstruction.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
  ../ATCCSProtocol/src/atccsexception.h
 
@@ -33,15 +32,13 @@ src/atccsdevicecontroller.h:
 
 ../ATCCSProtocol/src/atccs_public_define.h:
 
-../ATCCSOrm/src/at60instruction.h:
-
-../ATCCSOrm/src/atccsinstruction.h:
-
-../ATCCSOrm/src/at60slavedomestatus.h:
+../ATCCSOrm/src/atccspublicstatus.h:
 
 ../ATCCSOrm/src/atccsslavedomestatus.h:
 
 ../ATCCSOrm/src/atccspublicstatus.h:
+
+../ATCCSOrm/src/atccsinstruction.h:
 
 ../ATCCSProtocol/src/atccsexceptionhandler.h:
 

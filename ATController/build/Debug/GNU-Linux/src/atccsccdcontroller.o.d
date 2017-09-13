@@ -7,11 +7,10 @@ build/Debug/GNU-Linux/src/atccsccdcontroller.o: \
  ../ATCCSProtocol/src/atccs_public_define.h \
  ../ATCCSProtocol/src/atccs_ccd_define.h \
  ../ATCCSProtocol/src/atccs_public_define.h \
- ../ATCCSOrm/src/at60instruction.h ../ATCCSOrm/src/atccsinstruction.h \
- ../ATCCSOrm/src/atccspublicstatus.h ../ATCCSOrm/src/at60ccdstatus.h \
- ../ATCCSOrm/src/atccsccdstatus.h ../ATCCSOrm/src/atccspublicstatus.h \
+ ../ATCCSOrm/src/atccspublicstatus.h \
  ../ATCCSProtocol/src/atccsexceptionhandler.h \
- ../ATCCSProtocol/src/atccsexception.h
+ ../ATCCSProtocol/src/atccsexception.h ../ATCCSOrm/src/atccsccdstatus.h \
+ ../ATCCSOrm/src/atccspublicstatus.h
 
 src/atccsccdcontroller.h:
 
@@ -35,18 +34,12 @@ src/atccsdevicecontroller.h:
 
 ../ATCCSProtocol/src/atccs_public_define.h:
 
-../ATCCSOrm/src/at60instruction.h:
-
-../ATCCSOrm/src/atccsinstruction.h:
-
-../ATCCSOrm/src/atccspublicstatus.h:
-
-../ATCCSOrm/src/at60ccdstatus.h:
-
-../ATCCSOrm/src/atccsccdstatus.h:
-
 ../ATCCSOrm/src/atccspublicstatus.h:
 
 ../ATCCSProtocol/src/atccsexceptionhandler.h:
 
 ../ATCCSProtocol/src/atccsexception.h:
+
+../ATCCSOrm/src/atccsccdstatus.h:
+
+../ATCCSOrm/src/atccspublicstatus.h:

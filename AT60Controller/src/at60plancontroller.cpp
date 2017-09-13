@@ -16,7 +16,7 @@
 #include "atccsexceptionhandler.h"
 #include "at60plan.h"
 AT60PlanController::AT60PlanController()
-    :ATCCSPlanController(AT60)
+    :ATCCSPlanPerformer(AT60)
 {
 }
 

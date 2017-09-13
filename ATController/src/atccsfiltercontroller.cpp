@@ -14,9 +14,10 @@
 #include "atccsfiltercontroller.h"
 #include "atccs_public_define.h"
 #include "atccs_filter_define.h"
-#include "at60instruction.h"
-#include "at60filterstatus.h"
 #include "atccsexceptionhandler.h"
+#include "atccspublicstatus.h"
+#include "atccsinstruction.h"
+#include "atccsfilterstatus.h"
 
 ATCCSFilterController::ATCCSFilterController(unsigned short at, unsigned short device)
 : ATCCSDeviceController(at, device)

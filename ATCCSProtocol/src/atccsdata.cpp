@@ -47,14 +47,13 @@ bool ATCCSData::validate() const
     {
         return false;
     }
-
     if(_size < sizeof(_ATCCSPHeader))
     {     
         return false;
     }
     _ATCCSPHeader *header = (_ATCCSPHeader*)(_data);
     if(header->length != _size)
-    {   
+    {
         return false;
     }
     

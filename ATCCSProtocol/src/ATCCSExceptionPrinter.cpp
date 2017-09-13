@@ -30,6 +30,7 @@ void ATCCSExceptionPrinter::run()
         if(temp == nullptr)
             continue;
         std::cout << temp->what() << std::endl;
+        std::cout.flush();
     }
 }
 

@@ -49,11 +49,13 @@ public:
     std::string project() const;
     std::string user() const;
     unsigned int id() const;
+    unsigned int tag() const;
 
 private:
     friend class odb::access;
 #pragma db id auto
     unsigned int _id = 0;
+    unsigned int _tag = 0;
     std::string _user;
     std::string _project;
     std::string _target;
