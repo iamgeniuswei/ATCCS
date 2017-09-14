@@ -46,13 +46,19 @@ void ATCCSDeviceController::run()
                 continue;
             if(_isPlanning)
             {
-                std::cout << "Planning" << std::endl;
+                ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------A Plan's instruction Start------------------------------"));
                 executeInstruction(data);
+                ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------The Plan's instruction End------------------------------"));
             }
             else
             {
-                std::cout << "independent" << std::endl;
+                ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------A Independent instruction Start------------------------------"));
                 executeIndependentInstruction(data);
+                ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------The Independent instruction End------------------------------"));
             }
         }
         catch (std::exception &e)

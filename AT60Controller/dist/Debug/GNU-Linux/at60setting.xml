@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <SETTING>
 	<DATABASE type="pgsql">
-		<ip>192.168.0.200</ip>
+		<ip>192.168.160.108</ip>
 		<port>5432</port>
 		<db>ATCCSDB</db>
 		<user>lenovo</user>
 		<password>123456</password>
 	</DATABASE>
 	<DATARECEIVER>
-		<ip>192.168.0.115</ip>
+		<ip>192.168.160.107</ip>
 		<port>4747</port>
 	</DATARECEIVER>
 	<DEVICECONTROLLER>
 		<device type="GIMBAL">
-			<ip>192.168.0.111</ip>
+			<ip>192.168.160.109</ip>
 			<port>6500</port>
 		</device>
 		<device type="CCD">
-			<ip>192.168.0.130</ip>
+			<ip>192.168.160.110</ip>
 			<port>4646</port>
 		</device>
 		<device type="FILTER">
-			<ip>192.168.0.130</ip>
+			<ip>192.168.160.110</ip>
 			<port>4646</port>
 		</device>
 		<device type="FOCUS">
-			<ip>192.168.0.111</ip>
+			<ip>192.168.160.109</ip>
 			<port>6500</port>
 		</device>
 		<device type="SLAVEDOME">
-			<ip>192.168.0.111</ip>
+			<ip>192.168.160.109</ip>
 			<port>6500</port>
 		</device>
 	</DEVICECONTROLLER>

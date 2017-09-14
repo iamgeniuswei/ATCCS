@@ -43,15 +43,14 @@ using namespace odb::core;
 #include "ATCCSExceptionPrinter.h"
 #include "ATCCSPlanController.h"
 
-
 void quit()
-{    
+{
     std::string input;
     std::cin >> input;
-    while(input != "q")
+    while (input != "q")
     {
         std::cout << gettext("unknown command!") << std::endl;
-        std::cin >> input;  
+        std::cin >> input;
     }
 }
 
@@ -64,21 +63,36 @@ void quit()
 #include "atccs_plan_define.h"
 #include <unistd.h>
 #include <locale>
+
 int main(int argc, char** argv)
 {
 
     setlocale(LC_ALL, "zh_CN.UTF8");
-    bindtextdomain( "AT60Controller", "/usr/share/locale" );
-    textdomain( "AT60Controller" );
-    std::cout << "----------------------" <<gettext("AT60 Controller V3.00.00") << "----------------------" <<std::endl;
+    bindtextdomain("AT60Controller", "/usr/share/locale");
+    textdomain("AT60Controller");
+    std::cout << "----------------------" << gettext("AT60 Controller V3.00.00") << "----------------------" << std::endl;
     std::cout << gettext("If want to quit, Please enter \'q\' to quit!") << std::endl;
 
-    //declare the thread class instances.
+    //声明控制线程实例.
+    //在系统设计中,为了最大程度的简化控制逻辑,将每种独立功能设计在一个独立线程中运行.
+    //在60cm望远镜控制软件中,存在以下11个线程
+    //1. 异常信息打印线程
+    //2. 数据接收线程
+    //3. 数据分派线程
+    //4. 上行数据处理线程(用于处理设备上报的各种数据)
+    //5. 观测计划指令处理线程
+    //6. 观测计划数据处理线程
+    //7. Gimbal控制线程
+    //8. CCD控制线程
+    //9. Filter控制线程
+    //10. Focus控制线程
+    //11. SlaveDome控制线程
     std::shared_ptr<ATCCSExceptionPrinter> exceptionPrinter = nullptr;
     std::shared_ptr<ATCCSDataReceiver> dataReceiver = nullptr;
     std::shared_ptr<ATCCSDataDispatcher> dataDispatcher = nullptr;
     std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
-    std::shared_ptr<ATCCSPlanPerformer> at60PlanController = nullptr;
+    std::shared_ptr<ATCCSPlanController> at60PlanController = nullptr;
+    std::shared_ptr<ATCCSPlanPerformer> at60PlanPerformer = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60GimbalController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60CCDController = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60FilterController = nullptr;
@@ -87,11 +101,12 @@ int main(int argc, char** argv)
 
     try
     {
-        //initialize and start Exception Printer.
+        //初始化并启动异常信息打印线程.
         exceptionPrinter = std::make_shared<ATCCSExceptionPrinter>();
         exceptionPrinter->start();
 
 
+        //加载配置文件
         AT60Setting *set = AT60Setting::instance();
         if (!(set->initSystemSetting()))
         {
@@ -103,7 +118,7 @@ int main(int argc, char** argv)
             exceptionPrinter->waitToQuit();
             return 0;
         }
-        //initialize database
+        //连接数据库
         std::shared_ptr<ATCCSDBAddress> dbAddress = set->dbAddress();
         if (dbAddress)
         {
@@ -111,8 +126,7 @@ int main(int argc, char** argv)
                               dbAddress->db(), dbAddress->ip(), dbAddress->port());
         }
 
-        //start a data receiver thread.
-        //generally speaking, the following 5 lines is enough.
+        //初始化并启动数据接收线程
         dataReceiver = std::make_shared<ATCCSDataReceiver>();
         if (dataReceiver)
         {
@@ -122,8 +136,7 @@ int main(int argc, char** argv)
         }
 
 
-        //start a data dispatcher thread.
-        //generally speaking, the following 5 lines is enough.
+        //初始化并启动数据分派线程
         dataDispatcher = std::make_shared<ATCCSDataDispatcher>();
         if (dataDispatcher)
         {
@@ -133,12 +146,10 @@ int main(int argc, char** argv)
         }
 
 
-        //then, you should create a series of subclasses of "ATCCSController"
-        //and register them to the instance of "ATCCSDataDispatcher".
+        //以下,启动一系列的数据处理线程,并将其注册到ATCCSDataDispatcher实例中
 
-        //start a upgoing processor thread.
-        //"ATCCSUpgoingController" is used to process upgoing-data from Device Controller;
-        //such as: ATHEARTBEAT, ATINSTRUCTIONACK, ATSTATUSREPORT
+        //初始化并启动上行数据处理线程
+        //将线程以 ATINSTRUCTIONACK | ATHEARTBEAT | ATSTATUSREPORT三种类型注册到数据分派器.
         upgoingController = std::make_shared<ATCCSUpgoingController>();
         if (upgoingController)
         {
@@ -146,84 +157,99 @@ int main(int argc, char** argv)
             dataDispatcher->registerDeviceController(ATHEARTBEAT, upgoingController);
             dataDispatcher->registerDeviceController(ATSTATUSREPORT, upgoingController);
             upgoingController->start();
-       }
-        
-        
-        
-        at60PlanController = std::make_shared<AT60PlanController>();
-        if(at60PlanController)
+        }
+
+
+        //初始化并启动观测计划数据处理线程
+        //将线程以 ATPLANDATA 类型注册到数据分派器 
+        at60PlanPerformer = std::make_shared<AT60PlanController>();
+        if (at60PlanPerformer)
         {
-            dataDispatcher->registerDeviceController(ATPLANDATA, at60PlanController);
+            dataDispatcher->registerDeviceController(ATPLANDATA, at60PlanPerformer);
+            at60PlanPerformer->start();
+        }
+
+        //初始化并启动观测计划指令处理线程
+        //将线程以 ATPLANINSTRUCTION 类型注册到数据分派器
+        //并将观测计划数据处理线程注册到本线程
+        at60PlanController = std::make_shared<ATCCSPlanController>();
+        if (at60PlanController)
+        {
+            dataDispatcher->registerDeviceController(ATPLANINSTRCTION, at60PlanController);
+            at60PlanController->setPlanPerformer(at60PlanPerformer);
             at60PlanController->start();
         }
-        
-        std::shared_ptr<ATCCSPlanController> planController = std::make_shared<ATCCSPlanController>();
-        dataDispatcher->registerDeviceController(ATPLANINSTRCTION, planController);
-        planController->setPlanPerformer(at60PlanController);
-        planController->start();
-        
+
         //start a series of concrete variable device controller.
         //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
         //"ATCCSDataDispatcher" dispatch control data to device controller.
         //"ATCCSUpgoingController" modify device controller's status according to upgoing-data.
 
-        //start a AT60 gimbal controller.
+        //启动一系列具体设备控制线程
+        //并将其以[设备类型]分别注册到数据分派器, 上行数据处理线程, 观测计划执行线程
+
+        //初始化并启动Gimbal控制线程
         at60GimbalController = std::make_shared<AT60GimbalController>();
         if (at60GimbalController)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(GIMBAL);
             at60GimbalController->setDeviceAddress(address);
             upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
-            at60PlanController->registerDeviceController(GIMBAL, at60GimbalController);
+            at60PlanPerformer->registerDeviceController(GIMBAL, at60GimbalController);
             dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
             at60GimbalController->start();
         }
 
+        //初始化并启动CCD控制线程
         at60CCDController = std::make_shared<AT60CCDController>();
         if (at60CCDController)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(CCD);
             at60CCDController->setDeviceAddress(address);
             upgoingController->registerDeviceController(CCD, at60CCDController);
-            at60PlanController->registerDeviceController(CCD, at60CCDController);
+            at60PlanPerformer->registerDeviceController(CCD, at60CCDController);
             dataDispatcher->registerDeviceController(CCD, at60CCDController);
             at60CCDController->start();
-      }
+        }
 
+        //初始化并启动Focus控制线程
         at60FocusController = std::make_shared<AT60FocusController>();
         if (at60FocusController)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FOCUS);
             at60FocusController->setDeviceAddress(address);
             upgoingController->registerDeviceController(FOCUS, at60FocusController);
-            at60PlanController->registerDeviceController(FOCUS, at60FocusController);
+            at60PlanPerformer->registerDeviceController(FOCUS, at60FocusController);
             dataDispatcher->registerDeviceController(FOCUS, at60FocusController);
             at60FocusController->start();
-       }
+        }
 
+        //初始化并启动Filter控制线程
         at60FilterController = std::make_shared<AT60FilterController>();
         if (at60FilterController)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FILTER);
             at60FilterController->setDeviceAddress(address);
             upgoingController->registerDeviceController(FILTER, at60FilterController);
-            at60PlanController->registerDeviceController(FILTER, at60FilterController);
+            at60PlanPerformer->registerDeviceController(FILTER, at60FilterController);
             dataDispatcher->registerDeviceController(FILTER, at60FilterController);
             at60FilterController->start();
         }
 
+        //初始化并启动SlaveDome控制线程
         at60SlaveDomeController = std::make_shared<AT60SlaveDomeController>();
         if (at60SlaveDomeController)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(SLAVEDOME);
             at60SlaveDomeController->setDeviceAddress(address);
             upgoingController->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
-            at60PlanController->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
+            at60PlanPerformer->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
             dataDispatcher->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
             at60SlaveDomeController->start();
-       }
+        }
 
         quit();
+        
         if (dataReceiver)
         {
             dataReceiver->setStop(true);
@@ -239,15 +265,15 @@ int main(int argc, char** argv)
             upgoingController->setStop(true);
             upgoingController->waitToQuit();
         }
-        if(planController)
-        {
-            planController->setStop(true);
-            planController->waitToQuit();
-        }
-        if(at60PlanController)
+        if (at60PlanController)
         {
             at60PlanController->setStop(true);
             at60PlanController->waitToQuit();
+        }
+        if (at60PlanPerformer)
+        {
+            at60PlanPerformer->setStop(true);
+            at60PlanPerformer->waitToQuit();
         }
         if (at60GimbalController)
         {

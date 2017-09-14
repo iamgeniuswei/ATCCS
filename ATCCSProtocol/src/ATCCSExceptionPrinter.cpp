@@ -29,7 +29,7 @@ void ATCCSExceptionPrinter::run()
         std::shared_ptr<ATCCSException> temp = ATCCSExceptionHandler::lastException();
         if(temp == nullptr)
             continue;
-        std::cout << temp->what() << std::endl;
+        std::cerr << temp->what() << std::endl;
         std::cout.flush();
     }
 }

@@ -68,28 +68,36 @@ void ATCCSPlanPerformer::run()
                     setDevicePlanning(true);
                     if (_instruction->strategy() == SINGLE)
                     {
-                        std::cout << "-----------------------Single Mode Plan Begin-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Single Mode Plans Start------------------------------"));
                         executeSinglePlan();
-                        std::cout << "-----------------------Single Mode Plan End-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Single Mode Plans End------------------------------"));
                     }
                     else if (_instruction->strategy() == SINGLELOOP)
                     {
-                        std::cout << "-----------------------Single Loop Mode Plan Begin-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Single Loop Mode Plans Start------------------------------"));
                         executeSingleLoopPlan();
-                        std::cout << "-----------------------Single Loop Mode Plan End-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Single Loop Mode Plans End------------------------------"));
                     }
                     else if (_instruction->strategy() == SEQUENCE)
                     {
-                        std::cout << "-----------------------Sequence Mode Plan Begin-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Sequence Mode Plans Start------------------------------"));
                         executeSequencePlan();
-                        std::cout << "-----------------------Sequence Mode Plan End-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Sequence Mode Plans End------------------------------"));
                         
                     }
                     else if (_instruction->strategy() == SEQUENCELOOP)
                     {
-                        std::cout << "-----------------------Sequence Loop Mode Plan Begin-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Sequence Loop Mode Plans Start------------------------------"));
                         executeSequenceLoopPlan();
-                        std::cout << "-----------------------Sequence Loop Mode Plan End-----------------------" << std::endl;
+                        ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------Sequence Loop Mode Plans End------------------------------"));
                     }
                     //重置指令
                     setDevicePlanning(false);
@@ -119,44 +127,24 @@ void ATCCSPlanPerformer::run()
         {
 
         }
-        //
-        //
-        //
-        //            std::shared_ptr<ATCCSData> data = popControlData();
-        //            if (data == nullptr)
-        //                continue;
-        //
-        //            while (!stop() && !canExecutePlan() && _instruction->instruction() != START)
-        //            {
-        //                std::chrono::milliseconds dura(2000);
-        //                std::this_thread::sleep_for(dura);
-        //            }
-        //            if (!stop() && canExecutePlan() && _instruction->instruction() != STOP)
-        //            {
-        //                executePlan(data);
-        //            }
-        //        }
-        //        catch (std::exception &e)
-        //        {
-        //#ifdef OUTERRORINFO
-        //            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
-        //                                                gettext("Fails to execute the plan. AT: "), _at,
-        //                                                e.what());
-        //#endif
-        //        }
     }
 }
 
 /**
- * judge whether can execute plan, the standard is 
- * all devices' status are normal.
- * @return true if can, false if can not.
+ * 判断是否可以执行计划,判断标准为所有设备状态正常,无错误.
+ * @return true,各设备状态正常; false,有设备不正常
  */
 bool ATCCSPlanPerformer::canExecutePlan() const
 {
     return true;
 }
 
+
+/**
+ * 更新待执行的计划参数
+ * @param data
+ * @return 
+ */
 bool ATCCSPlanPerformer::updatePlanData(std::shared_ptr<ATCCSData> data)
 {
     if (data)
@@ -165,29 +153,17 @@ bool ATCCSPlanPerformer::updatePlanData(std::shared_ptr<ATCCSData> data)
         {
             if (_executoryPlan->setPlan(data) == atccsplan::RESULT_EXECUTING)
             {
-                return true;
-                //                //persist the plan.
-                //#ifdef DATAPERSISTENCE
-                //                try
-                //                {
-                //                    _executoryPlan->persistPlan();
-                //                    return true;
-                //                }
-                //                catch (std::exception &e)
-                //                {
-                //#ifdef OUTERRORINFO
-                //                    ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d%s",
-                //                                                        gettext("Fails to persist the plan. AT: "), _at,
-                //                                                        e.what());
-                //#endif
-                //                }
-                //#endif                
+                return true;               
             }
         }
     }
     return false;
 }
 
+
+/**
+ * 执行Single模式观测计划
+ */
 void ATCCSPlanPerformer::executeSinglePlan()
 {
     try
@@ -208,9 +184,7 @@ void ATCCSPlanPerformer::executeSinglePlan()
         }
         if (_instruction->start() == _executoryPlan->tag())
         {
-            std::cout << "-------------A Plan start------------" << std::endl;
-            executeAPlan();
-            std::cout << "-------------A Plan end------------" << std::endl;
+            executeAPlanWithDebug();
         }
     }
     catch (std::exception &e)
@@ -219,6 +193,18 @@ void ATCCSPlanPerformer::executeSinglePlan()
     }
 }
 
+void ATCCSPlanPerformer::executeAPlanWithDebug()
+{
+    ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------A Plan Start------------------------------"));
+    executeAPlan();
+    ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
+                                                    gettext("------------------------------The Plan End------------------------------"));
+}
+
+/**
+ * 执行Single Loop模式观测计划
+ */
 void ATCCSPlanPerformer::executeSingleLoopPlan()
 {
     while (queueSize() > 0)
@@ -239,13 +225,14 @@ void ATCCSPlanPerformer::executeSingleLoopPlan()
     {
         while (!stop() && _instruction->instruction() != STOP)
         {
-            std::cout << "-------------A Plan start------------" << std::endl;
-            executeAPlan();
-            std::cout << "-------------A Plan end------------" << std::endl;
+            executeAPlanWithDebug();
         }
     }
 }
 
+/**
+ * 执行Sequence模式观测计划
+ */
 void ATCCSPlanPerformer::executeSequencePlan()
 {
     while (!stop() && _instruction->instruction() != STOP)
@@ -264,9 +251,8 @@ void ATCCSPlanPerformer::executeSequencePlan()
             break;
     }
 
-    std::cout << "-------------A Plan start------------" << std::endl;
-    executeAPlan();
-    std::cout << "-------------A Plan end------------" << std::endl;
+    executeAPlanWithDebug();
+
 
     while (queueSize() > 0 && _instruction->instruction() != STOP)
     {
@@ -275,9 +261,7 @@ void ATCCSPlanPerformer::executeSequencePlan()
             continue;
         if (!updatePlanData(data))
             continue;
-        std::cout << "-------------A Plan start------------" << std::endl;
-        executeAPlan();
-        std::cout << "-------------A Plan end------------" << std::endl;
+        executeAPlanWithDebug();
     }
 }
 
@@ -304,9 +288,10 @@ void ATCCSPlanPerformer::executeSequenceLoopPlan()
 
     while (!stop() && _instruction->instruction() != STOP)
     {
-        std::cout << "-------------A Plan start------------" << std::endl;
-        executeAPlan();
-        std::cout << "-------------A Plan end------------" << std::endl;
+        executeAPlanWithDebug();
+//        std::cout << "-------------A Plan start------------" << std::endl;
+//        executeAPlan();
+//        std::cout << "-------------A Plan end------------" << std::endl;
         std::shared_ptr<ATCCSData> data = popControlData();
         if (data == nullptr)
             continue;

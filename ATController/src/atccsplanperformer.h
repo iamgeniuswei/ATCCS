@@ -45,6 +45,7 @@ protected:
     void executeSequenceLoopPlan();
     bool updatePlanData(std::shared_ptr<ATCCSData> data = nullptr);
     void executeAPlan();
+    void executeAPlanWithDebug();
 private:
     void setDevicePlanning(bool planning);
     void resetDeviceInstruction(unsigned int device = 0);

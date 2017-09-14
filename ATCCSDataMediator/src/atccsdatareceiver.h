@@ -35,6 +35,7 @@ public:
 private:
     std::shared_ptr<QPUdpSocket> _recvSocket = nullptr;
     ATCCSDataQueue *_dataQueue = nullptr;
+    //设置该标记的目的是确保当网络地址绑定失败时,程序不会进入死循环,导致系统资源耗尽
     bool _isReadyToRecv = false;
     static const int BUFFER_SIZE = 4096;
 };

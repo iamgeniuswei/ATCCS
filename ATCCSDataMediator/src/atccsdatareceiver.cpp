@@ -41,7 +41,7 @@ void ATCCSDataReceiver::run()
     {
 #ifdef OUTERRORINFO
         ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR,"%s",
-                                            gettext("There is error in socket, fails to execute data receiver thread."));
+                                            gettext("Can not bind the IP and port, fails to execute data receiver thread."));
 #endif
         return;
     }
@@ -56,8 +56,7 @@ void ATCCSDataReceiver::run()
     char *data = nullptr;
     try
     {
-        data = new char[BUFFER_SIZE];
-        
+        data = new char[BUFFER_SIZE];        
     }
     catch(std::exception &e)
     {       

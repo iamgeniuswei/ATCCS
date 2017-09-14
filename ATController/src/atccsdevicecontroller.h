@@ -33,12 +33,6 @@ public:
     {
         _isPlanning = planning;
     }
-    void unsetPlanning()
-    {
-        _isPlanning = false;
-    }
-    
-
     
     virtual bool isOnline() const;
     virtual bool isStatusOK() const;

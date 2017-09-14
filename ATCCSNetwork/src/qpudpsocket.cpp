@@ -74,10 +74,6 @@ int QPUdpSocket::setHostAddress(const string &ip, unsigned short port)
     if(recv_socket_descriptor != -1)
     {
         ret = bind(recv_socket_descriptor, (sockaddr*)&_hostAddr, sizeof(sockaddr));
-        if(ret == FAIL)
-        {
-            cerr << "ERROR: fails to bind IP and PORT, can not receive any data!" << endl;
-        }
     }
     return ret;
 }
