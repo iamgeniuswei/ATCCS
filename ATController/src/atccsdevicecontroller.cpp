@@ -78,6 +78,7 @@ void ATCCSDeviceController::run()
  */
 void ATCCSDeviceController::executeInstruction(std::shared_ptr<ATCCSData> data)
 {    
+    _isPlanningStop = false;
     _isExecutoryInstructionDone = false;
     //Only the instruction is all right, and the parameters are validated,
     //the instruction can be sent to according device.
@@ -294,14 +295,14 @@ int ATCCSDeviceController::sendInstruction(std::shared_ptr<ATCCSData> data)
 void ATCCSDeviceController::waitInstructionResult()
 {
     //There are 2 phases in the process of waiting instruction result.    
-    if (_executoryInstruction)
+    if (_executoryInstruction && !_isPlanningStop)
     {
         //phase 1: wait the feedback of the instruction from the device.
         //  1) RESULT_EXECUTING,         // =1
         //  2) RESULT_PARAMOUTOFRANGE, // =2
         //  3) RESULT_CANNTEXECUTE,    // =3
         auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-        while (_executoryInstruction->result() == atccsinstruction::RESULT_WAITINGTOEXECUTE)
+        while (_executoryInstruction->result() == atccsinstruction::RESULT_WAITINGTOEXECUTE && !_isPlanningStop)
         {
             auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
             if ((now - base) > INSTRUCTION_TIMEOUT)
@@ -311,14 +312,15 @@ void ATCCSDeviceController::waitInstructionResult()
         }
 
         //phase 2: if the feedback is RESULT_EXECUTING, wait the device's status.
-        if (_executoryInstruction->result() == atccsinstruction::RESULT_EXECUTING)
+        if ((_executoryInstruction->result() == atccsinstruction::RESULT_EXECUTING) && !_isPlanningStop)
         {
             _timeout = _executoryInstruction->timeout();
+            std::cout << "Timeout is : " << _timeout << std::endl;
             base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 
             //The device's feedback contains the instruction's timeout
             //here, the waiting time changes from INSTRUCTION_TIMEOUT to timeout.
-            while (!isExecutoryInstructionOK())
+            while (!isExecutoryInstructionOK() && !_isPlanningStop)
             {
                 auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
                 if ((now - base) > _executoryInstruction->timeout())
@@ -443,7 +445,7 @@ unsigned int ATCCSDeviceController::timeout()
     return _timeout;
 }
 
-bool ATCCSDeviceController::isExecutoryInstructionSuccess(unsigned int instruction) const
+bool ATCCSDeviceController::isExecutoryInstructionSuccess(unsigned int instruction)
 {
     if (_executoryInstruction)
     {
@@ -732,7 +734,7 @@ unsigned int ATCCSDeviceController::device() const
     return _device;
 }
 
-bool ATCCSDeviceController::isExecutoryInstructionFinished(unsigned int instruction) const
+bool ATCCSDeviceController::isExecutoryInstructionFinished(unsigned int instruction)
 {
     if(_executoryInstruction)
     {

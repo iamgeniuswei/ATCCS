@@ -46,6 +46,8 @@ protected:
     bool updatePlanData(std::shared_ptr<ATCCSData> data = nullptr);
     void executeAPlan();
     void executeAPlanWithDebug();
+    void executePlanParell();
+    
 private:
     void setDevicePlanning(bool planning);
     void resetDeviceInstruction(unsigned int device = 0);
@@ -53,7 +55,9 @@ private:
     bool setDeviceInstruction(unsigned int device = 0, unsigned int instruction = 0);
     bool setGimbalInstruction(unsigned int instruction = 0);
     bool setCCDInstruction(unsigned int instruction = 0);
+    bool setFilterInstruction(unsigned int instruction = 0);
     bool waitInstructionFinish(unsigned int device, unsigned int instruction = 0);
+    bool waitInstructionFinishNew(unsigned int device, unsigned int instruction = 0);
 
     
 

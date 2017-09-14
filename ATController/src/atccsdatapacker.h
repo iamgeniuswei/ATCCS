@@ -36,8 +36,13 @@ public:
     static std::shared_ptr<ATCCSData> packCCDInstruction_SetExposureTactic(std::shared_ptr<atccsplan> plan = nullptr);
     static std::shared_ptr<ATCCSData> packCCDInstruction_StartExposure(std::shared_ptr<atccsplan> plan = nullptr);
     static std::shared_ptr<ATCCSData> packCCDInstruction_Stop(unsigned int at);
+    static std::shared_ptr<ATCCSData> packFilterInstruction_SetPosition(std::shared_ptr<atccsplan> plan = nullptr);
+    
     static void packATCCSHeader(_ATCCSPHeader& header, unsigned int size, unsigned short at, unsigned short device);
     static void packInstructionHeader(_AT_INSTRUCTION_HEADER &in, unsigned short at, unsigned short device, unsigned int plan, unsigned int instruction);
+    
+private:
+    static unsigned short filter(std::string str, unsigned short at = 0);
 
 };
 

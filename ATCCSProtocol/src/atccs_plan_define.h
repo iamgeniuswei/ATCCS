@@ -31,6 +31,23 @@
 * @size 160 Bytes
 *------------------------------------------------------------
 */
+
+enum ENUM_OBJECT_TYPE
+{
+    STELLAR = 0,
+    SUN,
+    MOON,
+    COMET,
+    PLANET,
+    SATELITE,
+    FIXED,
+    BIAS,
+    DARK,
+    FLAT    
+};
+
+
+
 #pragma pack(1)
 struct _AT_PLAN
 {

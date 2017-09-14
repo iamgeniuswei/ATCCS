@@ -185,7 +185,7 @@ bool ATCCSFilterController::checkResult_SetFilterPosition()
 #endif 
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
+            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_SETPOSITION)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -198,8 +198,8 @@ bool ATCCSFilterController::checkResult_SetFilterPosition()
             _AT_FILTER_PARAM_SETPOSITION *param = (_AT_FILTER_PARAM_SETPOSITION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << temp->curstatus() << "--" << _FILTER_STATUS_SLEWED << std::endl;
-            std::cout << temp->filterPosition() << "--" << param->position << std::endl;
+            std::cerr << temp->curstatus() << "--" << _FILTER_STATUS_SLEWED << std::endl;
+            std::cerr << temp->filterPosition() << "--" << param->position << std::endl;
             return (temp->curstatus() == _FILTER_STATUS_SLEWED)
                     &&(temp->filterPosition() == param->position);
 

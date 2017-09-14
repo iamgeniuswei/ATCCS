@@ -33,6 +33,10 @@ public:
     {
         _isPlanning = planning;
     }
+    void setPlanningStop(bool stop)
+    {
+        _isPlanningStop = stop;
+    }
     
     virtual bool isOnline() const;
     virtual bool isStatusOK() const;
@@ -43,16 +47,16 @@ public:
     unsigned int at() const;
     unsigned int device() const;
     unsigned int timeout();
-    bool isExecutoryInstructionSuccess(unsigned int instruction) const;
-    bool isExecutoryInstructionFinished(unsigned int instructon) const;
-    
+    bool isExecutoryInstructionSuccess(unsigned int instruction);
+    bool isExecutoryInstructionFinished(unsigned int instructon);
+    int sendInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     
 protected:
     void executeInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     void executeIndependentInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     virtual std::shared_ptr<atccsinstruction> instructionInstance();
     virtual std::shared_ptr<atccspublicstatus> statusInstance();
-    int sendInstruction(std::shared_ptr<ATCCSData> data = nullptr);
+    
     void waitInstructionResult();
     inline bool cmpDouble(double a, double b, double precision)
     {
@@ -65,9 +69,10 @@ protected:
     unsigned int _device = 0;
     unsigned int _at = 0;
     mutable bool _currentStatusOK = false;
-    mutable bool _isExecutoryInstructionSuccess = false;
-    mutable bool _isExecutoryInstructionDone = false;
+    volatile bool _isExecutoryInstructionSuccess = false;
+    volatile bool _isExecutoryInstructionDone = false;
     volatile bool _isPlanning = false;
+    volatile bool _isPlanningStop = false;
     mutable std::mutex _statusLock;
     mutable std::mutex _instructionLock;
 

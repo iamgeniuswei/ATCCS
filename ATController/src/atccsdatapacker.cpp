@@ -16,6 +16,7 @@
 #include "atccs_public_define.h"
 #include "atccs_gimbal_define.h"
 #include "atccs_ccd_define.h"
+#include "atccs_filter_define.h"
 #include <chrono>
 #include <string.h>
 #include "atccsplan.h"
@@ -234,6 +235,31 @@ std::shared_ptr<ATCCSData> ATCCSDataPacker::packGimbalInstruction_Stop(unsigned 
     return pendingData;
 }
 
+std::shared_ptr<ATCCSData> ATCCSDataPacker::packFilterInstruction_SetPosition(std::shared_ptr<atccsplan> plan /* = nullptr */)
+{
+    if (plan == nullptr)
+        return nullptr;
+    unsigned int size = sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_SETPOSITION);
+    std::shared_ptr<ATCCSData> pendingData(new (std::nothrow) ATCCSData(size));
+    if (pendingData)
+    {
+        _ATCCSPHeader header;
+        packATCCSHeader(header, size, plan->at(), FILTER);
+        _AT_INSTRUCTION_HEADER in;
+        packInstructionHeader(in, plan->at(), FILTER, plan->id(), _FILTER_INSTRUCTION_SETPOSITION);
+        _AT_FILTER_PARAM_SETPOSITION param;
+        param.position = filter(plan->filter(), plan->at());
+
+        memcpy(pendingData->data(), &header, sizeof (_ATCCSPHeader));
+        memcpy(pendingData->data() + sizeof (_ATCCSPHeader), &in, sizeof (_AT_INSTRUCTION_HEADER));
+        memcpy(pendingData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER), &param, sizeof (_AT_FILTER_PARAM_SETPOSITION));
+    }
+    return pendingData;    
+}
+
+
+
+
 
 void ATCCSDataPacker::packATCCSHeader(_ATCCSPHeader& header, unsigned int size, unsigned short at, unsigned short device)
 {
@@ -259,5 +285,25 @@ void ATCCSDataPacker::packInstructionHeader(_AT_INSTRUCTION_HEADER& in, unsigned
     in.instruction = instruction;
 }
 
-
-
+unsigned short ATCCSDataPacker::filter(std::string str, unsigned short at /* = 0 */)
+{
+    unsigned short filter = 0;
+    switch(at)
+    {
+        case AT60:
+        {
+            if(str == "U")
+                filter = 0;
+            else if(str == "B")
+                filter = 1;
+            else if(str == "V")
+                filter = 2;
+            else if(str == "R")
+                filter = 3;
+            else if(str == "I")
+                filter = 4;
+            break;
+        }
+    }
+    return filter;
+}

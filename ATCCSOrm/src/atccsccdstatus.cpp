@@ -20,6 +20,7 @@ void atccsccdstatus::setStatus(std::shared_ptr<ATCCSData> data)
         _lastTargetName.assign(status->lastTargetName);
         _J2000RightAscension = status->J2000RightAscension;
         _J2000Declination = status->J2000Declination;
+        _observeType = status->observeType;
         _epoch = status->epoch;
         _binX = status->binX;
         _binY = status->binY;

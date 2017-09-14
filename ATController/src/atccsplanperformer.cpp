@@ -36,9 +36,12 @@ void ATCCSPlanPerformer::updateInstruction(std::shared_ptr<ATCCSData> data)
             clearControlData();
             resetDeviceInstruction(GIMBAL);
             resetDeviceInstruction(CCD);
+            resetDeviceInstruction(FILTER);
             //直接向设备发送带外停止指令
             sendStopInstruction(GIMBAL);
+            std::cerr << "Gimbal's Emergency stop has sent." << std::endl;
             sendStopInstruction(CCD);
+            std::cerr << "CCD's Emergency stop has sent." << std::endl;
         }
     }
     catch (std::exception &e)
@@ -69,35 +72,35 @@ void ATCCSPlanPerformer::run()
                     if (_instruction->strategy() == SINGLE)
                     {
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Single Mode Plans Start------------------------------"));
+                                                            gettext("------------------------------Single Mode Plans Start------------------------------"));
                         executeSinglePlan();
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Single Mode Plans End------------------------------"));
+                                                            gettext("------------------------------Single Mode Plans End------------------------------"));
                     }
                     else if (_instruction->strategy() == SINGLELOOP)
                     {
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Single Loop Mode Plans Start------------------------------"));
+                                                            gettext("------------------------------Single Loop Mode Plans Start------------------------------"));
                         executeSingleLoopPlan();
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Single Loop Mode Plans End------------------------------"));
+                                                            gettext("------------------------------Single Loop Mode Plans End------------------------------"));
                     }
                     else if (_instruction->strategy() == SEQUENCE)
                     {
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Sequence Mode Plans Start------------------------------"));
+                                                            gettext("------------------------------Sequence Mode Plans Start------------------------------"));
                         executeSequencePlan();
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Sequence Mode Plans End------------------------------"));
-                        
+                                                            gettext("------------------------------Sequence Mode Plans End------------------------------"));
+
                     }
                     else if (_instruction->strategy() == SEQUENCELOOP)
                     {
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Sequence Loop Mode Plans Start------------------------------"));
+                                                            gettext("------------------------------Sequence Loop Mode Plans Start------------------------------"));
                         executeSequenceLoopPlan();
                         ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------Sequence Loop Mode Plans End------------------------------"));
+                                                            gettext("------------------------------Sequence Loop Mode Plans End------------------------------"));
                     }
                     //重置指令
                     setDevicePlanning(false);
@@ -136,9 +139,21 @@ void ATCCSPlanPerformer::run()
  */
 bool ATCCSPlanPerformer::canExecutePlan() const
 {
+    if (_controllers)
+    {
+        try
+        {
+            std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(SLAVEDOME);
+            if (temp)
+                return temp->canExecutePlan();
+        }
+        catch (std::exception &e)
+        {
+
+        }
+    }
     return true;
 }
-
 
 /**
  * 更新待执行的计划参数
@@ -153,13 +168,13 @@ bool ATCCSPlanPerformer::updatePlanData(std::shared_ptr<ATCCSData> data)
         {
             if (_executoryPlan->setPlan(data) == atccsplan::RESULT_EXECUTING)
             {
-                return true;               
+                std::cerr << "type is : " << _executoryPlan->type() << std::endl;
+                return true;
             }
         }
     }
     return false;
 }
-
 
 /**
  * 执行Single模式观测计划
@@ -196,10 +211,10 @@ void ATCCSPlanPerformer::executeSinglePlan()
 void ATCCSPlanPerformer::executeAPlanWithDebug()
 {
     ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------A Plan Start------------------------------"));
+                                        gettext("------------------------------A Plan Start------------------------------"));
     executeAPlan();
     ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s",
-                                                    gettext("------------------------------The Plan End------------------------------"));
+                                        gettext("------------------------------The Plan End------------------------------"));
 }
 
 /**
@@ -244,6 +259,7 @@ void ATCCSPlanPerformer::executeSequencePlan()
             continue;
         if (_instruction->start() != _executoryPlan->tag())
         {
+
             pushControlData(data);
             continue;
         }
@@ -269,7 +285,10 @@ void ATCCSPlanPerformer::executeSequenceLoopPlan()
 {
     while (!stop() && _instruction->instruction() != STOP)
     {
+        //        std::cout << "queue size: " << queueSize() << std::endl;
         std::shared_ptr<ATCCSData> data = popControlData();
+        //        std::cout << "start is : " << _instruction-> start() << std::endl;
+        //        std::cout << "queue size: " << queueSize() << std::endl;
         if (data == nullptr)
             continue;
         if (!updatePlanData(data))
@@ -286,23 +305,26 @@ void ATCCSPlanPerformer::executeSequenceLoopPlan()
         }
     }
 
+    executeAPlanWithDebug();
+
     while (!stop() && _instruction->instruction() != STOP)
     {
-        executeAPlanWithDebug();
-//        std::cout << "-------------A Plan start------------" << std::endl;
-//        executeAPlan();
-//        std::cout << "-------------A Plan end------------" << std::endl;
         std::shared_ptr<ATCCSData> data = popControlData();
         if (data == nullptr)
             continue;
         if (!updatePlanData(data))
             continue;
+        executeAPlanWithDebug();
+        //        std::cout << "-------------A Plan start------------" << std::endl;
+        //        executeAPlan();
+        //        std::cout << "-------------A Plan end------------" << std::endl;
+        pushControlData(data);
     }
 }
 
 void ATCCSPlanPerformer::executeAPlan()
 {
-
+    std::cout << "Current Plan" << _executoryPlan->tag() << std::endl;
     if (_instruction->instruction() == STOP)
         return;
     //持久化计划数据
@@ -321,69 +343,77 @@ void ATCCSPlanPerformer::executeAPlan()
     }
 #endif    
 
-    //清空转台指令队列.
-    resetDeviceInstruction(GIMBAL);
-
     if (_instruction->instruction() == STOP)
         return;
+
+    //清空Filter指令队列
+    resetDeviceInstruction(FILTER);
+    //清空转台指令队列.
+    resetDeviceInstruction(GIMBAL);
     //清空CCD指令队列
     resetDeviceInstruction(CCD);
 
-    if (!isRelatedDevicesReady())
-        return;
-    if (_instruction->instruction() == STOP)
-        return;
-    if (!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
+    if (_executoryPlan->type() != BIAS && _executoryPlan->type() != DARK)
     {
+        if (!isRelatedDevicesReady())
+            return;
+        if (_instruction->instruction() == STOP)
+            return;
+        if (!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
+        {
 #ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
-                                            gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
-                                            gettext(" Device: "), GIMBAL,
-                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                gettext(" Device: "), GIMBAL,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
 #endif
-        return;
+            return;
+        }
+
+        if (_instruction->instruction() == STOP)
+            return;
+        if (!waitInstructionFinish(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                gettext(" Device: "), GIMBAL,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
+#endif
+            return;
+        }
+
+        //Send GImbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
+        if (!isRelatedDevicesReady())
+            return;
+        if (_instruction->instruction() == STOP)
+            return;
+        if (!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                                gettext(" Device: "), GIMBAL,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
+#endif
+            return;
+        }
+        if (_instruction->instruction() == STOP)
+            return;
+        if (!waitInstructionFinish(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                                gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                                gettext(" Device: "), GIMBAL,
+                                                gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
+#endif
+            return;
+        }
     }
 
-    if (_instruction->instruction() == STOP)
-        return;
-    if (!waitInstructionFinish(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
-                                            gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
-                                            gettext(" Device: "), GIMBAL,
-                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_SETOBJECTNAME);
-#endif
-        return;
-    }
 
-    //Send GImbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
-    if (!isRelatedDevicesReady())
-        return;
-    if (_instruction->instruction() == STOP)
-        return;
-    if (!setDeviceInstruction(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
-                                            gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
-                                            gettext(" Device: "), GIMBAL,
-                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
-#endif
-        return;
-    }
-    if (_instruction->instruction() == STOP)
-        return;
-    if (!waitInstructionFinish(GIMBAL, _GIMBAL_INSTRUCTION_TRACKSTAR))
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
-                                            gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
-                                            gettext(" Device: "), GIMBAL,
-                                            gettext(" Instruction: "), _GIMBAL_INSTRUCTION_TRACKSTAR);
-#endif
-        return;
-    }
+
     //Send CCD's instruction: _CCD_INSTRUCTION_SETGAIN
     if (!isRelatedDevicesReady())
         return;
@@ -468,6 +498,37 @@ void ATCCSPlanPerformer::executeAPlan()
         return;
     }
 
+
+    if (!isRelatedDevicesReady())
+        return;
+    if (_instruction->instruction() == STOP)
+        return;
+    if (!setDeviceInstruction(FILTER, _FILTER_INSTRUCTION_SETPOSITION))
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                            gettext("Fails to set the instruction and the plan is neglected. AT: "), _at,
+                                            gettext(" Device: "), FILTER,
+                                            gettext(" Instruction: "), _FILTER_INSTRUCTION_SETPOSITION);
+#endif
+        return;
+    }
+
+    if (_instruction->instruction() == STOP)
+        return;
+    if (!waitInstructionFinish(FILTER, _FILTER_INSTRUCTION_SETPOSITION))
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
+                                            gettext("Fails to execute the instruction and the plan is neglected. AT: "), _at,
+                                            gettext(" Device: "), FILTER,
+                                            gettext(" Instruction: "), _FILTER_INSTRUCTION_SETPOSITION);
+#endif
+        return;
+    }
+
+
+
     if (_instruction->instruction() == STOP)
         return;
     for (int i = 0; i < _executoryPlan->exposureCount(); i++)
@@ -477,6 +538,20 @@ void ATCCSPlanPerformer::executeAPlan()
             break;
         if (_instruction->instruction() == STOP)
             break;
+        bool statusOk = false;
+        auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+        while (!canExecutePlan())
+        {
+            auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            if(now-base > 30)
+                break;
+            std::chrono::milliseconds dura(2000);
+            std::this_thread::sleep_for(dura);
+
+        }
+        if(!canExecutePlan())
+            break;
+
         if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
         {
 #ifdef OUTERRORINFO
@@ -831,6 +906,11 @@ void ATCCSPlanPerformer::setDevicePlanning(bool planning)
             {
                 temp->setPlanning(planning);
             }
+            temp = _controllers->controller(FILTER);
+            if (temp)
+            {
+                temp->setPlanning(planning);
+            }
         }
         catch (std::exception &e)
         {
@@ -849,6 +929,7 @@ void ATCCSPlanPerformer::resetDeviceInstruction(unsigned int device)
             if (temp)
             {
                 temp->clearControlData();
+                temp->setPlanningStop(true);
             }
             else
             {
@@ -1002,11 +1083,112 @@ bool ATCCSPlanPerformer::setCCDInstruction(unsigned int instruction)
     return false;
 }
 
+bool ATCCSPlanPerformer::setFilterInstruction(unsigned int instruction)
+{
+    if (_controllers)
+    {
+        try
+        {
+            std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(FILTER);
+            if (temp)
+            {
+                std::shared_ptr<ATCCSData> pendingData = nullptr;
+                if (instruction == _FILTER_INSTRUCTION_SETPOSITION)
+                {
+                    pendingData = ATCCSDataPacker::packFilterInstruction_SetPosition(_executoryPlan);
+                }
+                temp->pushControlData(pendingData);
+                return true;
+            }
+            else
+            {
+#ifdef OUTERRORINFO
+                ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                    gettext(" Fails to find AT Controller and  set AT Controller's instruction. AT: "), _at,
+                                                    gettext(" Device: "), FILTER,
+                                                    gettext(" Instruction: "), instruction);
+#endif            
+            }
+        }
+        catch (std::exception &e)
+        {
+#ifdef OUTERRORINFO
+            ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                                gettext("Fails to set AT Controller's instruction. AT: "), _at,
+                                                gettext(" Device: "), FILTER,
+                                                gettext(" Instruction: "), instruction);
+#endif           
+        }
+    }
+    else
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d%s%d",
+                                            gettext("The AT Controllers' manager is fail to be created, fails to set AT Controller's instruction. AT: "), _at,
+                                            gettext(" Device: "), GIMBAL,
+                                            gettext(" Instruction: "), instruction);
+#endif
+    }
+    return false;
+}
+
 bool ATCCSPlanPerformer::sendStopInstruction(unsigned int device)
 {
     if (_controllers)
     {
-
+        std::shared_ptr<ATCCSDeviceController> temp = _controllers->controller(device);
+        if (temp)
+        {
+            switch (device)
+            {
+                case GIMBAL:
+                {
+                    std::shared_ptr<ATCCSData> stopInstruction = ATCCSDataPacker::packGimbalInstruction_Stop(_at);
+                    if (stopInstruction)
+                    {
+                        int size = temp->sendInstruction(stopInstruction);
+                        if (size != stopInstruction->size())
+                        {
+#ifdef OUTERRORINFO
+                            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d",
+                                                                gettext("ATCCSPlanPerformer fails to send GIMBAL's stop instruction. AT: "), _at);
+#endif                    
+                        }
+                    }
+                    else
+                    {
+#ifdef OUTERRORINFO
+                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d",
+                                                            gettext("ATCCSPlanPerformer fails to construct GIMBAL's stop instruction. AT: "), _at);
+#endif                
+                    }
+                    break;
+                }
+                case CCD:
+                {
+                    std::shared_ptr<ATCCSData> stopInstruction = ATCCSDataPacker::packCCDInstruction_Stop(_at);
+                    if (stopInstruction)
+                    {
+                        int size = temp->sendInstruction(stopInstruction);
+                        if (size != stopInstruction->size())
+                        {
+#ifdef OUTERRORINFO
+                            ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d",
+                                                                gettext("ATCCSPlanPerformer fails to send CCD's abort instruction. AT: "), _at);
+#endif                    
+                        }
+                    }
+                    else
+                    {
+#ifdef OUTERRORINFO
+                        ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d",
+                                                            gettext("ATCCSPlanPerformer fails to construct CCD's abort instruction. AT: "), _at);
+#endif                
+                    }
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -1019,6 +1201,9 @@ bool ATCCSPlanPerformer::setDeviceInstruction(unsigned int device, unsigned int 
             break;
         case CCD:
             return setCCDInstruction(instruction);
+            break;
+        case FILTER:
+            return setFilterInstruction(instruction);
             break;
         default:
             return false;
@@ -1088,4 +1273,44 @@ bool ATCCSPlanPerformer::isRelatedDevicesReady()
 std::shared_ptr<atccsplan> ATCCSPlanPerformer::executoryPlanInstance()
 {
     return nullptr;
+}
+
+void ATCCSPlanPerformer::executePlanParell()
+{
+    bool Filter1Send, Gimbal1Send, Gimbal2Send, CCD1Send, CCD2Send, CCD3Send = false;
+    bool Filter1OK, Gimbal1OK, Gimbal2OK, CCD1OK, CCD2OK, CCD3OK = false;
+    while (!(Filter1Send && Gimbal1Send && Gimbal2Send && CCD1Send && CCD2Send && CCD3Send))
+    {
+        if (!Filter1Send)
+        {
+            if (!setFilterInstruction(_FILTER_INSTRUCTION_SETPOSITION))
+                break;
+            Filter1Send = true;
+        }
+        if (!Gimbal1Send)
+        {
+            if (!setGimbalInstruction(_GIMBAL_INSTRUCTION_SETOBJECTNAME))
+                break;
+            Gimbal1Send = true;
+        }
+        if (!Gimbal1Send && !Gimbal2Send && waitInstructionFinishNew(GIMBAL, _GIMBAL_INSTRUCTION_SETOBJECTNAME))
+        {
+            if (!setGimbalInstruction(_GIMBAL_INSTRUCTION_TRACKSTAR))
+                break;
+            Gimbal2Send = true;
+        }
+        if (!CCD1Send)
+        {
+            if (!setCCDInstruction(_CCD_INSTRUCTION_SETGAIN))
+                break;
+            CCD1Send = true;
+        }
+
+    }
+
+}
+
+bool ATCCSPlanPerformer::waitInstructionFinishNew(unsigned int device, unsigned int instruction)
+{
+    return true;
 }
