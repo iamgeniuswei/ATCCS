@@ -34,21 +34,21 @@ AT60GimbalController::~AT60GimbalController()
  */
 std::shared_ptr<atccsinstruction> AT60GimbalController::instructionInstance()
 {
-    if(_executoryInstruction == nullptr)
+    std::shared_ptr<atccsinstruction> instruction = nullptr;
+
+    try
     {
-        try
-        {
-            _executoryInstruction = std::make_shared<at60instruction>();
-        }
-        catch (std::exception &e)
-        {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
-                                                __FILE__, __func__, __LINE__, e.what());
-#endif
-        }   
+        instruction = std::make_shared<at60instruction>();
     }
-    return _executoryInstruction;
+    catch (std::exception &e)
+    {
+#ifdef OUTERRORINFO
+        ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION,
+                                            __FILE__, __func__, __LINE__, e.what());
+#endif
+    }
+
+    return instruction;
 }
 
 /**

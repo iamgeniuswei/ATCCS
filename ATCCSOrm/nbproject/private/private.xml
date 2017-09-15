@@ -8,11 +8,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ATCCS"/>
         <group>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSOrm/src/atccs_pre_compile.sh</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSOrm/src/ORMHelper.h</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSOrm/src/atccsinstruction.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSOrm/src/atccsplan-odb.hxx</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSOrm/src/atccsinstruction.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSOrm/src/atccsplan.h</file>
         </group>
     </open-files>
 </project-private>

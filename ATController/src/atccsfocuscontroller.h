@@ -22,17 +22,25 @@ public:
     virtual ~ATCCSFocusController();
 
     bool isStatusOK() const override;
-    bool isExecutoryInstructionOK() override;
     bool canExecutePlan() override;
+    bool isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) override;
+
 
 protected:
-    virtual bool checkResult_Connect();
-    virtual bool checkResult_EnableTCompensate();
-    virtual bool checkResult_FindHome();
-    virtual bool checkResult_SetFixedSpeed();
-    virtual bool checkResult_SetPostion();
-    virtual bool checkResult_SetTCompensateCoefficiency();
-    virtual bool checkResult_Stop();
+    virtual bool checkResult_Connect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_EnableTCompensate(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_FindHome(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetFixedSpeed(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetPostion(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetTCompensateCoefficiency(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_Stop(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
 
 };
 

@@ -67,101 +67,96 @@ bool ATCCSCCDController::isStatusOK() const
     return false;
 }
 
-/**
- * query the AT's CCD's executory instruction's result,
- * and judge the progress it has executed.
- * @return true if has done, false if in progress.
- */
-bool ATCCSCCDController::isExecutoryInstructionOK()
+bool ATCCSCCDController::isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     bool ret = false;
-    if (_executoryInstruction)
+    if (_planInstruction)
     {
-        switch (_executoryInstruction->instruction())
+        switch (_planInstruction->instruction())
         {
             case _CCD_INSTRUCTION_CONNECT:
             {
-                ret = checkResult_Connect();
+                ret = checkResult_Connect(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETCOOLERT:
             {
-                ret = checkResult_SetCoolerT();
+                ret = checkResult_SetCoolerT(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETEXPOSURETACTIC:
             {
-                ret = checkResult_SetExposureTactics();
+                ret = checkResult_SetExposureTactics(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_STARTEXPOSURE:
             {
-                ret = checkResult_StartExposure();
+                ret = checkResult_StartExposure(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_STOPEXPOSURE:
             {
-                ret = checkResult_StopExposure();
+                ret = checkResult_StopExposure(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_ABORTEXPOSURE:
             {
-                ret = checkResult_AbortExposure();
+                ret = checkResult_AbortExposure(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETGAIN:
             {
-                ret = checkResult_SetGain();
+                ret = checkResult_SetGain(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETBIN:
             {
-                ret = checkResult_SetBIN();
+                ret = checkResult_SetBIN(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETRSMODE:
             {
-                ret = checkResult_SetReadSpeedMode();
+                ret = checkResult_SetReadSpeedMode(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETTSMODE:
             {
-                ret = checkResult_SetTransferSpeed();
+                ret = checkResult_SetTransferSpeed(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETROI:
             {
-                ret = checkResult_SetROI();
+                ret = checkResult_SetROI(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETSHUTTER:
             {
-                ret = checkResult_SetShutter();
+                ret = checkResult_SetShutter(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETFULLFRAME:
             {
-                ret = checkResult_SetFullFrame();
+                ret = checkResult_SetFullFrame(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETEM:
             {
-                ret = checkResult_SetEM();
+                ret = checkResult_SetEM(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETNOISEFILTER:
             {
-                ret = checkResult_SetCMOSNF();
+                ret = checkResult_SetCMOSNF(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETBASELINE:
             {
-                ret = checkResult_SetBaseline();
+                ret = checkResult_SetBaseline(instruction, rawData);
                 break;
             }
             case _CCD_INSTRUCTION_SETOVERSCAN:
             {
-                ret = checkResult_SetOverScan();
+                ret = checkResult_SetOverScan(instruction, rawData);
                 break;
             }
             default:
@@ -178,6 +173,119 @@ bool ATCCSCCDController::isExecutoryInstructionOK()
     }
     return ret;
 }
+
+
+/**
+ * query the AT's CCD's executory instruction's result,
+ * and judge the progress it has executed.
+ * @return true if has done, false if in progress.
+ */
+//bool ATCCSCCDController::isExecutoryInstructionOK()
+//{
+//    bool ret = false;
+//    if (_executoryInstruction)
+//    {
+//        switch (_executoryInstruction->instruction())
+//        {
+//            case _CCD_INSTRUCTION_CONNECT:
+//            {
+//                ret = checkResult_Connect();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETCOOLERT:
+//            {
+//                ret = checkResult_SetCoolerT();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETEXPOSURETACTIC:
+//            {
+//                ret = checkResult_SetExposureTactics();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_STARTEXPOSURE:
+//            {
+//                ret = checkResult_StartExposure();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_STOPEXPOSURE:
+//            {
+//                ret = checkResult_StopExposure();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_ABORTEXPOSURE:
+//            {
+//                ret = checkResult_AbortExposure();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETGAIN:
+//            {
+//                ret = checkResult_SetGain();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETBIN:
+//            {
+//                ret = checkResult_SetBIN();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETRSMODE:
+//            {
+//                ret = checkResult_SetReadSpeedMode();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETTSMODE:
+//            {
+//                ret = checkResult_SetTransferSpeed();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETROI:
+//            {
+//                ret = checkResult_SetROI();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETSHUTTER:
+//            {
+//                ret = checkResult_SetShutter();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETFULLFRAME:
+//            {
+//                ret = checkResult_SetFullFrame();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETEM:
+//            {
+//                ret = checkResult_SetEM();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETNOISEFILTER:
+//            {
+//                ret = checkResult_SetCMOSNF();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETBASELINE:
+//            {
+//                ret = checkResult_SetBaseline();
+//                break;
+//            }
+//            case _CCD_INSTRUCTION_SETOVERSCAN:
+//            {
+//                ret = checkResult_SetOverScan();
+//                break;
+//            }
+//            default:
+//                break;
+//        }
+//    }
+//    else
+//    {
+//#ifdef OUTERRORINFO
+//        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d%s%d",
+//                                            gettext("The instruction is fail to be created, fails to check instruction's result: AT: "), _at,
+//                                            gettext(" Device: "), _device);
+//#endif        
+//    }
+//    return ret;
+//}
 
 bool ATCCSCCDController::canExecutePlan()
 {
@@ -209,11 +317,14 @@ bool ATCCSCCDController::canExecutePlan()
  * check the result of Gimbal's instruction: _CCD_INSTRUCTION_CONNECT
  * @return true if success, false if fails. 
  */
-bool ATCCSCCDController::checkResult_Connect()
+bool ATCCSCCDController::checkResult_Connect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
+    if(instruction == nullptr || rawData == nullptr)
+        return false;
+    
     if (_realtimeStatus)
     {
-        if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+        if (!(rawData->validate()))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -223,7 +334,7 @@ bool ATCCSCCDController::checkResult_Connect()
 #endif            
             return false;
         }
-        if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_CONNECT)))
+        if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_CONNECT)))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -233,7 +344,7 @@ bool ATCCSCCDController::checkResult_Connect()
 #endif            
             return false;
         }
-        _AT_CCD_PARAM_CONNECT *param = (_AT_CCD_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+        _AT_CCD_PARAM_CONNECT *param = (_AT_CCD_PARAM_CONNECT*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -273,14 +384,16 @@ bool ATCCSCCDController::checkResult_Connect()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetCoolerT()
+bool ATCCSCCDController::checkResult_SetCoolerT(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
+    if(instruction == nullptr || rawData == nullptr)
+        return false;
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (!(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -290,7 +403,7 @@ bool ATCCSCCDController::checkResult_SetCoolerT()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETCOOLERT)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETCOOLERT)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -300,10 +413,9 @@ bool ATCCSCCDController::checkResult_SetCoolerT()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETCOOLERT *param = (_AT_CCD_PARAM_SETCOOLERT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETCOOLERT *param = (_AT_CCD_PARAM_SETCOOLERT*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << param->temperature << "--" << temp->coolerT() << std::endl;
             return ((temp->warning() == _CCD_WARN_NORMAL) && (cmpDouble(temp->coolerT(), param->temperature, 5)));
         }
         else
@@ -329,14 +441,16 @@ bool ATCCSCCDController::checkResult_SetCoolerT()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetExposureTactics()
+bool ATCCSCCDController::checkResult_SetExposureTactics(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
+    if(instruction == nullptr || rawData == nullptr)
+        return false;
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -346,7 +460,7 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEXPOSURETACTIC)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEXPOSURETACTIC)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -356,18 +470,18 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
 #endif                 
                 return false;
             }
-            _AT_CCD_PARAM_SETEXPOSURETACTIC *param = (_AT_CCD_PARAM_SETEXPOSURETACTIC*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETEXPOSURETACTIC *param = (_AT_CCD_PARAM_SETEXPOSURETACTIC*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             std::string name = std::string(param->objectName);
             std::string band = std::string(param->objectBand);
-            std::cout << temp->curstatus() << "-" << _CCD_STATUS_WAITINGEXPOSURE << std::endl;
-            std::cout << temp->epoch() << "-" << param->objectEpoch << std::endl;
-            std::cout << temp->observeType() << "-" << param->objectType << std::endl;
-            std::cout << temp->observeName() << "-" << name << std::endl;
-            std::cout << temp->band() << "-" << band << std::endl;
-            std::cout << temp->J2000RightAscension() << "-" << param->objectRightAscension << std::endl;
-            std::cout << temp->J2000Declination() << "-" << param->objectDeclination << std::endl;
+//            std::cout << temp->curstatus() << "-" << _CCD_STATUS_WAITINGEXPOSURE << std::endl;
+//            std::cout << temp->epoch() << "-" << param->objectEpoch << std::endl;
+//            std::cout << temp->observeType() << "-" << param->objectType << std::endl;
+//            std::cout << temp->observeName() << "-" << name << std::endl;
+//            std::cout << temp->band() << "-" << band << std::endl;
+//            std::cout << temp->J2000RightAscension() << "-" << param->objectRightAscension << std::endl;
+//            std::cout << temp->J2000Declination() << "-" << param->objectDeclination << std::endl;
 
             return (temp->curstatus() == _CCD_STATUS_WAITINGEXPOSURE)&&
                     (temp->epoch() == param->objectEpoch) &&
@@ -400,14 +514,15 @@ bool ATCCSCCDController::checkResult_SetExposureTactics()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_StartExposure()
+bool ATCCSCCDController::checkResult_StartExposure(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
+    
     if (_realtimeStatus)
     {
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << _realtimeStatus ->laststatus() << "--" << _realtimeStatus->curstatus() << std::endl;
+//            std::cout << _realtimeStatus ->laststatus() << "--" << _realtimeStatus->curstatus() << std::endl;
             return (_realtimeStatus->laststatus() == _CCD_STATUS_SAVING)&&
                     (_realtimeStatus->curstatus() == _CCD_STATUS_IDLE);
         }
@@ -434,7 +549,7 @@ bool ATCCSCCDController::checkResult_StartExposure()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_StopExposure()
+bool ATCCSCCDController::checkResult_StopExposure(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -467,7 +582,7 @@ bool ATCCSCCDController::checkResult_StopExposure()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_AbortExposure()
+bool ATCCSCCDController::checkResult_AbortExposure(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -499,14 +614,15 @@ bool ATCCSCCDController::checkResult_AbortExposure()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetGain()
+bool ATCCSCCDController::checkResult_SetGain(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
+    
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -516,7 +632,7 @@ bool ATCCSCCDController::checkResult_SetGain()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETGAIN)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETGAIN)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -526,11 +642,11 @@ bool ATCCSCCDController::checkResult_SetGain()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETGAIN *param = (_AT_CCD_PARAM_SETGAIN*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETGAIN *param = (_AT_CCD_PARAM_SETGAIN*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << temp->indexOfGain() << "--" << param->gear << std::endl;
-            std::cout << temp->indexOfGainMode() << "--" << param->mode << std::endl;
+//            std::cout << temp->indexOfGain() << "--" << param->gear << std::endl;
+//            std::cout << temp->indexOfGainMode() << "--" << param->mode << std::endl;
             return (temp->indexOfGain() == param->gear && temp->indexOfGainMode() == param->mode);
         }
         else
@@ -556,14 +672,14 @@ bool ATCCSCCDController::checkResult_SetGain()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetReadSpeedMode()
+bool ATCCSCCDController::checkResult_SetReadSpeedMode(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -573,7 +689,7 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETRSMODE)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETRSMODE)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -583,10 +699,10 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETRSMODE *param = (_AT_CCD_PARAM_SETRSMODE*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETRSMODE *param = (_AT_CCD_PARAM_SETRSMODE*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << temp->indexOfRSMode() << "--" << param->mode << std::endl;
+//            std::cout << temp->indexOfRSMode() << "--" << param->mode << std::endl;
             return temp->indexOfRSMode() == param->mode;
         }
         else
@@ -612,14 +728,14 @@ bool ATCCSCCDController::checkResult_SetReadSpeedMode()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetBIN()
+bool ATCCSCCDController::checkResult_SetBIN(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -629,7 +745,7 @@ bool ATCCSCCDController::checkResult_SetBIN()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETBIN)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETBIN)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -639,11 +755,11 @@ bool ATCCSCCDController::checkResult_SetBIN()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETBIN *param = (_AT_CCD_PARAM_SETBIN*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETBIN *param = (_AT_CCD_PARAM_SETBIN*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << temp->binX() << "--" << param->binX << std::endl;
-            std::cout << temp->binY() << "--" << param->binY << std::endl;
+//            std::cout << temp->binX() << "--" << param->binX << std::endl;
+//            std::cout << temp->binY() << "--" << param->binY << std::endl;
             return (temp->binX() == param->binX) && (temp->binY() == param->binY);
         }
         else
@@ -669,14 +785,14 @@ bool ATCCSCCDController::checkResult_SetBIN()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetBaseline()
+bool ATCCSCCDController::checkResult_SetBaseline(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -686,7 +802,7 @@ bool ATCCSCCDController::checkResult_SetBaseline()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETBASELINE)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETBASELINE)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -696,7 +812,7 @@ bool ATCCSCCDController::checkResult_SetBaseline()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETBASELINE *param = (_AT_CCD_PARAM_SETBASELINE*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETBASELINE *param = (_AT_CCD_PARAM_SETBASELINE*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return (temp->isBaseline() == param->isBaseline) && (temp->baseline() == param->baseline);
@@ -724,14 +840,14 @@ bool ATCCSCCDController::checkResult_SetBaseline()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetCMOSNF()
+bool ATCCSCCDController::checkResult_SetCMOSNF(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -741,7 +857,7 @@ bool ATCCSCCDController::checkResult_SetCMOSNF()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETNOISEFILTER)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETNOISEFILTER)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -751,7 +867,7 @@ bool ATCCSCCDController::checkResult_SetCMOSNF()
 #endif                 
                 return false;
             }
-            _AT_CCD_PARAM_SETNOISEFILTER *param = (_AT_CCD_PARAM_SETNOISEFILTER*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETNOISEFILTER *param = (_AT_CCD_PARAM_SETNOISEFILTER*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->isNoiseFilter() == param->isNoiseFilter;
@@ -779,14 +895,14 @@ bool ATCCSCCDController::checkResult_SetCMOSNF()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetEM()
+bool ATCCSCCDController::checkResult_SetEM(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -796,7 +912,7 @@ bool ATCCSCCDController::checkResult_SetEM()
 #endif                 
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEM)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETEM)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -806,7 +922,7 @@ bool ATCCSCCDController::checkResult_SetEM()
 #endif
                 return false;
             }
-            _AT_CCD_PARAM_SETEM *param = (_AT_CCD_PARAM_SETEM*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETEM *param = (_AT_CCD_PARAM_SETEM*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return (temp->isEM() == param->isEM) && (temp->EM() == param->EM);
@@ -834,14 +950,14 @@ bool ATCCSCCDController::checkResult_SetEM()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetFullFrame()
+bool ATCCSCCDController::checkResult_SetFullFrame(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -851,7 +967,7 @@ bool ATCCSCCDController::checkResult_SetFullFrame()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETFULLFRAME)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETFULLFRAME)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -861,7 +977,7 @@ bool ATCCSCCDController::checkResult_SetFullFrame()
 #endif 
                 return false;
             }
-            _AT_CCD_PARAM_SETFULLFRAME *param = (_AT_CCD_PARAM_SETFULLFRAME*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETFULLFRAME *param = (_AT_CCD_PARAM_SETFULLFRAME*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->isFullFrame() == param->fullFrame;
@@ -889,19 +1005,19 @@ bool ATCCSCCDController::checkResult_SetFullFrame()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetOverScan()
+bool ATCCSCCDController::checkResult_SetOverScan(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     return true;
 }
 
-bool ATCCSCCDController::checkResult_SetROI()
+bool ATCCSCCDController::checkResult_SetROI(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -911,7 +1027,7 @@ bool ATCCSCCDController::checkResult_SetROI()
 #endif                 
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETROI)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETROI)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -921,7 +1037,7 @@ bool ATCCSCCDController::checkResult_SetROI()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETROI *param = (_AT_CCD_PARAM_SETROI*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETROI *param = (_AT_CCD_PARAM_SETROI*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return (temp->startX() == param->startX) &&
@@ -952,14 +1068,14 @@ bool ATCCSCCDController::checkResult_SetROI()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetShutter()
+bool ATCCSCCDController::checkResult_SetShutter(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -969,7 +1085,7 @@ bool ATCCSCCDController::checkResult_SetShutter()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETSHUTTER)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETSHUTTER)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -979,7 +1095,7 @@ bool ATCCSCCDController::checkResult_SetShutter()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETSHUTTER *param = (_AT_CCD_PARAM_SETSHUTTER*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETSHUTTER *param = (_AT_CCD_PARAM_SETSHUTTER*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->shutterMode() == param->shutter;
@@ -1007,14 +1123,14 @@ bool ATCCSCCDController::checkResult_SetShutter()
     return false;
 }
 
-bool ATCCSCCDController::checkResult_SetTransferSpeed()
+bool ATCCSCCDController::checkResult_SetTransferSpeed(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsccdstatus> temp = std::dynamic_pointer_cast<atccsccdstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -1024,7 +1140,7 @@ bool ATCCSCCDController::checkResult_SetTransferSpeed()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETTSMODE)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_CCD_PARAM_SETTSMODE)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -1034,7 +1150,7 @@ bool ATCCSCCDController::checkResult_SetTransferSpeed()
 #endif                
                 return false;
             }
-            _AT_CCD_PARAM_SETTSMODE *param = (_AT_CCD_PARAM_SETTSMODE*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_CCD_PARAM_SETTSMODE *param = (_AT_CCD_PARAM_SETTSMODE*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->indexOfTSMode() == param->mode;

@@ -22,17 +22,25 @@ public:
     virtual ~ATCCSSlaveDomeController();
     
     bool isStatusOK() const override;
-    bool isExecutoryInstructionOK() override;
+    bool isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) override;
+
     bool canExecutePlan() override;
 
 protected:
-    virtual bool checkResult_Connect();
-    virtual bool checkResult_ScuttleAction();
-    virtual bool checkResult_SetDomePosition();
-    virtual bool checkResult_SetRotatePosition();
-    virtual bool checkResult_SetShadePosition();
-    virtual bool checkResult_ShadeAction();
-    virtual bool checkResult_Stop();
+    virtual bool checkResult_Connect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_ScuttleAction(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetDomePosition(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetRotatePosition(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetShadePosition(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_ShadeAction(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_Stop(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
 };
 
 #endif /* ATCCSSLAVEDOMECONTROLLER_H */

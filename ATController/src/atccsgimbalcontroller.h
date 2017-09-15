@@ -21,30 +21,47 @@ class ATCCSGimbalController : public ATCCSDeviceController
 public:
     ATCCSGimbalController(unsigned short at = 0, unsigned short device = 0);
     virtual ~ATCCSGimbalController();    
-    bool isExecutoryInstructionOK() override;
-    bool isExecutoryInstructionOK(unsigned int instruction) override;
 
     bool isStatusOK() const override;
     bool canExecutePlan() override;
+    bool isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) override;
+
 
 protected:
-    virtual bool checkResult_Connect();
-    virtual bool checkResult_FindHome();
-    virtual bool checkResult_TrackStar();
-    virtual bool checkResult_SetObjectName();
-    virtual bool checkResult_SlewAzEl();
-    virtual bool checkResult_SlewDerotator();
-    virtual bool checkResult_ConfigDerotator();
-    virtual bool checkResult_Stop();
-    virtual bool checkResult_SpeedCorrect();
-    virtual bool checkResult_Park();
-    virtual bool checkResult_FixedMove();
-    virtual bool checkResult_PositionCorrect();
-    virtual bool checkResult_CoverAction();
-    virtual bool checkResult_FocusAction();
-    virtual bool checkResult_Emergence();
-    virtual bool checkResult_ConfigProperty();
-    virtual bool checkResult_SaveSyncData();
+    virtual bool checkResult_Connect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_FindHome(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_TrackStar(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetObjectName(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SlewAzEl(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SlewDerotator(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_ConfigDerotator(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_Stop(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SpeedCorrect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_Park(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_FixedMove(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_PositionCorrect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_CoverAction(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_FocusAction(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_Emergence(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_ConfigProperty(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SaveSyncData(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
 };
 
 #endif /* AT60GIMBALCONTROLLER_H */

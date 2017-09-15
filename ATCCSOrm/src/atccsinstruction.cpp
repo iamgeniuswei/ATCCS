@@ -615,22 +615,22 @@ unsigned int atccsinstruction::validateFullOpenedDomeParam(unsigned int instruct
     return ret;
 }
 
-unsigned int atccsinstruction::setInstructionValue(std::shared_ptr<ATCCSData> data)
+unsigned int atccsinstruction::updateInstruction(std::shared_ptr<ATCCSData> data)
 {
     //Level 1 validation.
     if(data == nullptr)
-        return INSTRUCTION_NULL;
+        return RESULT_DATAERROR;
     if(!data->validate())
-        return INSTRUCTION_SIZEERROR;
+        return RESULT_DATAERROR;
     if(data->size() < (sizeof(_ATCCSPHeader) + sizeof(_AT_INSTRUCTION_HEADER)))
-        return INSTRUCTION_SIZEERROR;
+        return RESULT_DATAERROR;
     
     //Level 2 validation.
     _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
     _AT_INSTRUCTION_HEADER *instruction = (_AT_INSTRUCTION_HEADER*)(data->data()+sizeof(_ATCCSPHeader));
     unsigned int ret = validateParam(instruction->device, instruction->instruction, data);
     if(ret != INSTRUCTION_PASS && ret != INSTRUCTION_PARAMOUTOFRANGE)
-        return ret;
+        return RESULT_DATAERROR;
     
     //resolve ATCCSData to set atccsinstruction.
     if(header)
@@ -649,14 +649,19 @@ unsigned int atccsinstruction::setInstructionValue(std::shared_ptr<ATCCSData> da
         _timeout = 30;
         _instruction = instruction->instruction;
         if(ret == INSTRUCTION_PASS)
+        {
             _result = RESULT_WAITINGTOEXECUTE;
+            return RESULT_WAITINGTOEXECUTE;
+        }
         else
-            _result = RESULT_PARAMOUTOFRANGE;                
+        {
+            _result = RESULT_PARAMOUTOFRANGE;    
+            return RESULT_PARAMOUTOFRANGE;
+        }            
     }
-    return ret;
 }
 
-unsigned int atccsinstruction::setInstructionResult(std::shared_ptr<ATCCSData> data)
+unsigned int atccsinstruction::updateInstructionResult(std::shared_ptr<ATCCSData> data)
 {
     if(data == nullptr)
         return RESULT_SIZEERROR;

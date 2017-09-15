@@ -88,86 +88,86 @@ bool ATCCSGimbalController::isStatusOK() const
  * and judge the progress it has executed.
  * @return true if has done, false if in progress.
  */
-bool ATCCSGimbalController::isExecutoryInstructionOK()
+bool ATCCSGimbalController::isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     bool ret = false;
-    if (_executoryInstruction)
+    if (instruction)
     {
-        switch (_executoryInstruction->instruction())
+        switch (instruction->instruction())
         {
             case _GIMBAL_INSTRUCTION_CONNECT:
             {
-                ret = checkResult_Connect();
+                ret = checkResult_Connect(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_FINDHOME:
             {
-                ret = checkResult_FindHome();
+                ret = checkResult_FindHome(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_TRACKSTAR:
             {
-                ret = checkResult_TrackStar();
+                ret = checkResult_TrackStar(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_SETOBJECTNAME:
             {
-                ret = checkResult_SetObjectName();
+                ret = checkResult_SetObjectName(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_SLEWAZEL:
             {
-                ret = checkResult_SlewAzEl();
+                ret = checkResult_SlewAzEl(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_SLEWDEROTATOR:
             {
-                ret = checkResult_SlewDerotator();
+                ret = checkResult_SlewDerotator(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_CONFIGDEROTATOR:
             {
-                ret = checkResult_ConfigDerotator();
+                ret = checkResult_ConfigDerotator(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_STOP:
             {
-                ret = checkResult_Stop();
+                ret = checkResult_Stop(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_SPEEDCORRECT:
             {
-                ret = checkResult_SpeedCorrect();
+                ret = checkResult_SpeedCorrect(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_PARK:
             {
-                ret = checkResult_Park();
+                ret = checkResult_Park(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_FIXEDMOVE:
             {
-                ret = checkResult_FixedMove();
+                ret = checkResult_FixedMove(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_POSITIONCORRECT:
             {
-                ret = checkResult_PositionCorrect();
+                ret = checkResult_PositionCorrect(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_COVERACTION:
             {
-                ret = checkResult_CoverAction();
+                ret = checkResult_CoverAction(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_FOCUSACTION:
             {
-                ret = checkResult_FocusAction();
+                ret = checkResult_FocusAction(instruction, rawData);
                 break;
             }
             case _GIMBAL_INSTRUCTION_EMERGENCYSTOP:
             {
-                ret = checkResult_Emergence();
+                ret = checkResult_Emergence(instruction, rawData);
                 break;
             }
             default:
@@ -185,19 +185,19 @@ bool ATCCSGimbalController::isExecutoryInstructionOK()
     return ret;
 }
 
-bool ATCCSGimbalController::isExecutoryInstructionOK(unsigned int instruction)
-{
-    if(_executoryInstruction)
-    {
-        if(_executoryInstruction->instruction() == instruction)
-            return isExecutoryInstructionOK();
-        return false;
-    }
-    else
-    {
-        return false;
-    }
-}
+//bool ATCCSGimbalController::isExecutoryInstructionOK(unsigned int instruction)
+//{
+//    if(instruction)
+//    {
+//        if(instruction->instruction() == instruction)
+//            return isExecutoryInstructionOK();
+//        return false;
+//    }
+//    else
+//    {
+//        return false;
+//    }
+//}
 
 
 bool ATCCSGimbalController::canExecutePlan()
@@ -235,11 +235,11 @@ bool ATCCSGimbalController::canExecutePlan()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_CONNECT
  * @return true if success, false if fails. 
  */
-bool ATCCSGimbalController::checkResult_Connect()
+bool ATCCSGimbalController::checkResult_Connect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
-        if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+        if (rawData == nullptr || !(rawData->validate()))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -249,7 +249,7 @@ bool ATCCSGimbalController::checkResult_Connect()
 #endif            
             return false;
         }
-        if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_CONNECT)))
+        if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_CONNECT)))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -259,7 +259,7 @@ bool ATCCSGimbalController::checkResult_Connect()
 #endif            
             return false;
         }
-        _AT_GIMBAL_PARAM_CONNECT *param = (_AT_GIMBAL_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+        _AT_GIMBAL_PARAM_CONNECT *param = (_AT_GIMBAL_PARAM_CONNECT*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -303,7 +303,7 @@ bool ATCCSGimbalController::checkResult_Connect()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_FINDHOME
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_FindHome()
+bool ATCCSGimbalController::checkResult_FindHome(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -339,14 +339,14 @@ bool ATCCSGimbalController::checkResult_FindHome()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_TRACKSTAR
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_TrackStar()
+bool ATCCSGimbalController::checkResult_TrackStar(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -356,7 +356,7 @@ bool ATCCSGimbalController::checkResult_TrackStar()
 #endif                 
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_TRACKSTAR)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_TRACKSTAR)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -366,7 +366,7 @@ bool ATCCSGimbalController::checkResult_TrackStar()
 #endif                
                 return false;
             }
-            _AT_GIMBAL_PARAM_TRACKSTAR *param = (_AT_GIMBAL_PARAM_TRACKSTAR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_GIMBAL_PARAM_TRACKSTAR *param = (_AT_GIMBAL_PARAM_TRACKSTAR*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
             std::cout << param->rightAscension <<"---" << temp->targetJ2000RightAscension() << std::endl;
@@ -402,14 +402,14 @@ bool ATCCSGimbalController::checkResult_TrackStar()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_SETOBJECTNAME
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_SetObjectName()
+bool ATCCSGimbalController::checkResult_SetObjectName(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -419,7 +419,7 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_SETOBJECTNAME)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_SETOBJECTNAME)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -429,7 +429,7 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
 #endif                
                 return false;
             }
-            _AT_GIMBAL_PARAM_SETOBJECTNAME *param = (_AT_GIMBAL_PARAM_SETOBJECTNAME*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_GIMBAL_PARAM_SETOBJECTNAME *param = (_AT_GIMBAL_PARAM_SETOBJECTNAME*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
             std::string tempObjectName(param->objectName);
@@ -464,7 +464,7 @@ bool ATCCSGimbalController::checkResult_SetObjectName()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_SLEWAZEL
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_SlewAzEl()
+bool ATCCSGimbalController::checkResult_SlewAzEl(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -500,14 +500,14 @@ bool ATCCSGimbalController::checkResult_SlewAzEl()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_SLEWDEORTATOR
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_SlewDerotator()
+bool ATCCSGimbalController::checkResult_SlewDerotator(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -517,7 +517,7 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_SLEWDEROTATOR)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_SLEWDEROTATOR)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -527,7 +527,7 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
 #endif                
                 return false;
             }
-            _AT_GIMBAL_PARAM_SLEWDEROTATOR *param = (_AT_GIMBAL_PARAM_SLEWDEROTATOR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_GIMBAL_PARAM_SLEWDEROTATOR *param = (_AT_GIMBAL_PARAM_SLEWDEROTATOR*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
             return cmpDouble(param->position, temp->axis3Encoder(), 1 / 360);
@@ -559,14 +559,14 @@ bool ATCCSGimbalController::checkResult_SlewDerotator()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_CONFIGDEORTATOR
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_ConfigDerotator()
+bool ATCCSGimbalController::checkResult_ConfigDerotator(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -576,7 +576,7 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_CONFIGDEROTATOR)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_CONFIGDEROTATOR)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -586,7 +586,7 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
 #endif                
                 return false;
             }
-            _AT_GIMBAL_PARAM_CONFIGDEROTATOR *param = (_AT_GIMBAL_PARAM_CONFIGDEROTATOR*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_GIMBAL_PARAM_CONFIGDEROTATOR *param = (_AT_GIMBAL_PARAM_CONFIGDEROTATOR*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
            
             std::lock_guard<std::mutex> lk(_statusLock);
             return param->mode == temp->axis3Mode();
@@ -618,7 +618,7 @@ bool ATCCSGimbalController::checkResult_ConfigDerotator()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_STOP
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_Stop()
+bool ATCCSGimbalController::checkResult_Stop(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -654,7 +654,7 @@ bool ATCCSGimbalController::checkResult_Stop()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_SPEEDCORRECT
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_SpeedCorrect()
+bool ATCCSGimbalController::checkResult_SpeedCorrect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -690,7 +690,7 @@ bool ATCCSGimbalController::checkResult_SpeedCorrect()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_PARK
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_Park()
+bool ATCCSGimbalController::checkResult_Park(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -726,7 +726,7 @@ bool ATCCSGimbalController::checkResult_Park()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_FIXEDMOVE
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_FixedMove()
+bool ATCCSGimbalController::checkResult_FixedMove(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -762,7 +762,7 @@ bool ATCCSGimbalController::checkResult_FixedMove()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_POSITIONCORRECT
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_PositionCorrect()
+bool ATCCSGimbalController::checkResult_PositionCorrect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
@@ -799,14 +799,14 @@ bool ATCCSGimbalController::checkResult_PositionCorrect()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_COVERACTION
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_CoverAction()
+bool ATCCSGimbalController::checkResult_CoverAction(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if(temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -816,7 +816,7 @@ bool ATCCSGimbalController::checkResult_CoverAction()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_COVERACTION)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_COVERACTION)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -826,7 +826,7 @@ bool ATCCSGimbalController::checkResult_CoverAction()
 #endif                
                 return false;
             }
-            _AT_GIMBAL_PARAM_COVERACTION *param = (_AT_GIMBAL_PARAM_COVERACTION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_GIMBAL_PARAM_COVERACTION *param = (_AT_GIMBAL_PARAM_COVERACTION*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->coverIndex() == param->action;
@@ -858,14 +858,14 @@ bool ATCCSGimbalController::checkResult_CoverAction()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_FOCUSACTION
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_FocusAction()
+bool ATCCSGimbalController::checkResult_FocusAction(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsgimbalstatus> temp = std::dynamic_pointer_cast<atccsgimbalstatus>(_realtimeStatus);
         if(temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -875,7 +875,7 @@ bool ATCCSGimbalController::checkResult_FocusAction()
 #endif                
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_FOCUSACTION)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_GIMBAL_PARAM_FOCUSACTION)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -885,7 +885,7 @@ bool ATCCSGimbalController::checkResult_FocusAction()
 #endif                
                 return false;
             }
-            _AT_GIMBAL_PARAM_FOCUSACTION *param = (_AT_GIMBAL_PARAM_FOCUSACTION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_GIMBAL_PARAM_FOCUSACTION *param = (_AT_GIMBAL_PARAM_FOCUSACTION*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
             return temp->focusTypeIndex() == param->action;
@@ -916,7 +916,7 @@ bool ATCCSGimbalController::checkResult_FocusAction()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_EMERGENCE
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_Emergence()
+bool ATCCSGimbalController::checkResult_Emergence(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if(_realtimeStatus)
     {
@@ -952,7 +952,7 @@ bool ATCCSGimbalController::checkResult_Emergence()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_CONFIGPROPERTY
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_ConfigProperty()
+bool ATCCSGimbalController::checkResult_ConfigProperty(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     return true;
 }
@@ -961,7 +961,7 @@ bool ATCCSGimbalController::checkResult_ConfigProperty()
  * check the result of Gimbal's instruction: _GIMBAL_INSTRUCTION_SAVESYNCDATA
  * @return true if success, false if fails
  */
-bool ATCCSGimbalController::checkResult_SaveSyncData()
+bool ATCCSGimbalController::checkResult_SaveSyncData(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     return true;
 

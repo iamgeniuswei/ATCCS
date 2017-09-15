@@ -28,6 +28,7 @@ class ATCCSPlanPerformer : public ATCCSController, public ATCCSThread
         STOP,
         NEXT
     };
+    
 public:
     ATCCSPlanPerformer(unsigned short at = 0);
     ~ATCCSPlanPerformer();
@@ -38,26 +39,22 @@ public:
     
 protected:
     bool canExecutePlan() const;
-    void executePlan(std::shared_ptr<ATCCSData> data = nullptr);
     void executeSinglePlan();
     void executeSingleLoopPlan();
     void executeSequencePlan();
     void executeSequenceLoopPlan();
     bool updatePlanData(std::shared_ptr<ATCCSData> data = nullptr);
-    void executeAPlan();
+    void executePlanInSequence();
     void executeAPlanWithDebug();
-    void executePlanParell();
+    void executePlanInParallel();
     
 private:
-    void setDevicePlanning(bool planning);
-    void resetDeviceInstruction(unsigned int device = 0);
-    bool sendStopInstruction(unsigned int device = 0);
+    void persistPlan();    
     bool setDeviceInstruction(unsigned int device = 0, unsigned int instruction = 0);
     bool setGimbalInstruction(unsigned int instruction = 0);
     bool setCCDInstruction(unsigned int instruction = 0);
     bool setFilterInstruction(unsigned int instruction = 0);
     bool waitInstructionFinish(unsigned int device, unsigned int instruction = 0);
-    bool waitInstructionFinishNew(unsigned int device, unsigned int instruction = 0);
 
     
 
@@ -70,8 +67,7 @@ protected:
     std::shared_ptr<atccsplan> _executoryPlan = nullptr;    
     std::shared_ptr<atccsplan> _lastPlan = nullptr;
     std::shared_ptr<ATCCSMapManager<ATCCSDeviceController>> _controllers;
-    std::shared_ptr<atccsplaninstruction> _instruction = nullptr;
-    mutable volatile bool _nextPlanOK;
+    std::shared_ptr<atccsplaninstruction> _instruction = nullptr;    
     unsigned short _at = 0;
 };
 

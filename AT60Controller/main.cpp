@@ -90,7 +90,7 @@ int main(int argc, char** argv)
     std::shared_ptr<ATCCSExceptionPrinter> exceptionPrinter = nullptr;
     std::shared_ptr<ATCCSDataReceiver> dataReceiver = nullptr;
     std::shared_ptr<ATCCSDataDispatcher> dataDispatcher = nullptr;
-    std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
+//    std::shared_ptr<ATCCSUpgoingController> upgoingController = nullptr;
     std::shared_ptr<ATCCSPlanController> at60PlanController = nullptr;
     std::shared_ptr<ATCCSPlanPerformer> at60PlanPerformer = nullptr;
     std::shared_ptr<ATCCSDeviceController> at60GimbalController = nullptr;
@@ -125,67 +125,8 @@ int main(int argc, char** argv)
             ORMHelper::initDB(dbAddress->type(), dbAddress->user(), dbAddress->password(),
                               dbAddress->db(), dbAddress->ip(), dbAddress->port());
         }
-
-        //初始化并启动数据接收线程
-        dataReceiver = std::make_shared<ATCCSDataReceiver>();
-        if (dataReceiver)
-        {
-            std::shared_ptr<ATCCSAddress> recvAddress = set->hostAddress();
-            dataReceiver->setRecvAddress(recvAddress);
-            dataReceiver->start();
-        }
-
-
-        //初始化并启动数据分派线程
-        dataDispatcher = std::make_shared<ATCCSDataDispatcher>();
-        if (dataDispatcher)
-        {
-            std::shared_ptr<ATCCSDataProcessor> processor(new ATCCSDataDispatcherProcessor(dataDispatcher));
-            dataDispatcher->setDataProcessor(processor);
-            dataDispatcher->start();
-        }
-
-
-        //以下,启动一系列的数据处理线程,并将其注册到ATCCSDataDispatcher实例中
-
-        //初始化并启动上行数据处理线程
-        //将线程以 ATINSTRUCTIONACK | ATHEARTBEAT | ATSTATUSREPORT三种类型注册到数据分派器.
-        upgoingController = std::make_shared<ATCCSUpgoingController>();
-        if (upgoingController)
-        {
-            dataDispatcher->registerDeviceController(ATINSTRUCTIONACK, upgoingController);
-            dataDispatcher->registerDeviceController(ATHEARTBEAT, upgoingController);
-            dataDispatcher->registerDeviceController(ATSTATUSREPORT, upgoingController);
-            upgoingController->start();
-        }
-
-
-        //初始化并启动观测计划数据处理线程
-        //将线程以 ATPLANDATA 类型注册到数据分派器 
-        at60PlanPerformer = std::make_shared<AT60PlanController>();
-        if (at60PlanPerformer)
-        {
-            dataDispatcher->registerDeviceController(ATPLANDATA, at60PlanPerformer);
-            at60PlanPerformer->start();
-        }
-
-        //初始化并启动观测计划指令处理线程
-        //将线程以 ATPLANINSTRUCTION 类型注册到数据分派器
-        //并将观测计划数据处理线程注册到本线程
-        at60PlanController = std::make_shared<ATCCSPlanController>();
-        if (at60PlanController)
-        {
-            dataDispatcher->registerDeviceController(ATPLANINSTRCTION, at60PlanController);
-            at60PlanController->setPlanPerformer(at60PlanPerformer);
-            at60PlanController->start();
-        }
-
-        //start a series of concrete variable device controller.
-        //and register them to the instance of "ATCCSDataDispatcher" and "ATCCSUpgoingController"
-        //"ATCCSDataDispatcher" dispatch control data to device controller.
-        //"ATCCSUpgoingController" modify device controller's status according to upgoing-data.
-
-        //启动一系列具体设备控制线程
+        
+                //启动一系列具体设备控制线程
         //并将其以[设备类型]分别注册到数据分派器, 上行数据处理线程, 观测计划执行线程
 
         //初始化并启动Gimbal控制线程
@@ -193,10 +134,9 @@ int main(int argc, char** argv)
         if (at60GimbalController)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(GIMBAL);
-            at60GimbalController->setDeviceAddress(address);
-            upgoingController->registerDeviceController(GIMBAL, at60GimbalController);
-            at60PlanPerformer->registerDeviceController(GIMBAL, at60GimbalController);
-            dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
+            at60GimbalController->setDeviceAddress(address);            
+//            at60PlanPerformer->registerDeviceController(GIMBAL, at60GimbalController);
+//            dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
             at60GimbalController->start();
         }
 
@@ -206,9 +146,9 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(CCD);
             at60CCDController->setDeviceAddress(address);
-            upgoingController->registerDeviceController(CCD, at60CCDController);
-            at60PlanPerformer->registerDeviceController(CCD, at60CCDController);
-            dataDispatcher->registerDeviceController(CCD, at60CCDController);
+            
+//            at60PlanPerformer->registerDeviceController(CCD, at60CCDController);
+//            dataDispatcher->registerDeviceController(CCD, at60CCDController);
             at60CCDController->start();
         }
 
@@ -218,9 +158,9 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FOCUS);
             at60FocusController->setDeviceAddress(address);
-            upgoingController->registerDeviceController(FOCUS, at60FocusController);
-            at60PlanPerformer->registerDeviceController(FOCUS, at60FocusController);
-            dataDispatcher->registerDeviceController(FOCUS, at60FocusController);
+//            upgoingController->registerDeviceController(FOCUS, at60FocusController);
+//            at60PlanPerformer->registerDeviceController(FOCUS, at60FocusController);
+//            dataDispatcher->registerDeviceController(FOCUS, at60FocusController);
             at60FocusController->start();
         }
 
@@ -230,9 +170,9 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(FILTER);
             at60FilterController->setDeviceAddress(address);
-            upgoingController->registerDeviceController(FILTER, at60FilterController);
-            at60PlanPerformer->registerDeviceController(FILTER, at60FilterController);
-            dataDispatcher->registerDeviceController(FILTER, at60FilterController);
+//            upgoingController->registerDeviceController(FILTER, at60FilterController);
+//            at60PlanPerformer->registerDeviceController(FILTER, at60FilterController);
+//            dataDispatcher->registerDeviceController(FILTER, at60FilterController);
             at60FilterController->start();
         }
 
@@ -242,10 +182,58 @@ int main(int argc, char** argv)
         {
             std::shared_ptr<ATCCSAddress> address = set->deviceAddress(SLAVEDOME);
             at60SlaveDomeController->setDeviceAddress(address);
-            upgoingController->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
-            at60PlanPerformer->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
-            dataDispatcher->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
+//            upgoingController->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
+//            at60PlanPerformer->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
+//            dataDispatcher->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
             at60SlaveDomeController->start();
+        }
+        
+        //初始化并启动观测计划数据处理线程
+        //将线程以 ATPLANDATA 类型注册到数据分派器 
+        at60PlanPerformer = std::make_shared<AT60PlanController>();
+        if (at60PlanPerformer)
+        {
+            at60PlanPerformer->registerDeviceController(GIMBAL, at60GimbalController);
+            at60PlanPerformer->registerDeviceController(CCD, at60CCDController);
+            at60PlanPerformer->registerDeviceController(FILTER, at60FilterController);
+            at60PlanPerformer->registerDeviceController(FOCUS, at60FocusController);
+            at60PlanPerformer->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
+            at60PlanPerformer->start();
+        }
+
+        //初始化并启动观测计划指令处理线程
+        //将线程以 ATPLANINSTRUCTION 类型注册到数据分派器
+        //并将观测计划数据处理线程注册到本线程
+        at60PlanController = std::make_shared<ATCCSPlanController>();
+        if (at60PlanController)
+        {            
+            at60PlanController->setPlanPerformer(at60PlanPerformer);
+            at60PlanController->start();
+        }
+
+        //初始化并启动数据分派线程
+        dataDispatcher = std::make_shared<ATCCSDataDispatcher>();
+        if (dataDispatcher)
+        {
+            std::shared_ptr<ATCCSDataProcessor> processor(new ATCCSDataDispatcherProcessor(dataDispatcher));
+            dataDispatcher->setDataProcessor(processor);
+            dataDispatcher->registerDeviceController(GIMBAL, at60GimbalController);
+            dataDispatcher->registerDeviceController(CCD, at60CCDController);
+            dataDispatcher->registerDeviceController(FOCUS, at60GimbalController);
+            dataDispatcher->registerDeviceController(FILTER, at60FilterController);
+            dataDispatcher->registerDeviceController(SLAVEDOME, at60SlaveDomeController);
+            dataDispatcher->registerDeviceController(ATPLANDATA, at60PlanPerformer);
+            dataDispatcher->registerDeviceController(ATPLANINSTRCTION, at60PlanController);            
+            dataDispatcher->start();
+        }
+
+        //初始化并启动数据接收线程
+        dataReceiver = std::make_shared<ATCCSDataReceiver>();
+        if (dataReceiver)
+        {
+            std::shared_ptr<ATCCSAddress> recvAddress = set->hostAddress();
+            dataReceiver->setRecvAddress(recvAddress);
+            dataReceiver->start();
         }
 
         quit();
@@ -259,11 +247,6 @@ int main(int argc, char** argv)
         {
             dataDispatcher->setStop(true);
             dataDispatcher->waitToQuit();
-        }
-        if (upgoingController)
-        {
-            upgoingController->setStop(true);
-            upgoingController->waitToQuit();
         }
         if (at60PlanController)
         {

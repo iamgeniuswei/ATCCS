@@ -25,8 +25,9 @@ public:
         RESULT_SENDERROR,       // =4    
         RESULT_SIZEERROR,       // =5
         RESULT_SUCCESS,         // =6
-        RESULT_TIMEOUT,          // =7,
-        RESULT_NOFEEDBACK
+        RESULT_TIMEOUT,         // =7
+        RESULT_NOFEEDBACK,      // =8
+        RESULT_DATAERROR        // =9
     };
     enum ENUM_AT_INSTRUCTION_VALIDATION
     {
@@ -38,18 +39,11 @@ public:
     };
     explicit atccsinstruction();
     virtual ~atccsinstruction();
-    unsigned int setInstructionValue(std::shared_ptr<ATCCSData> data = nullptr);
-    unsigned int setInstructionResult(std::shared_ptr<ATCCSData> data = nullptr);
+    unsigned int updateInstruction(std::shared_ptr<ATCCSData> data = nullptr);
+    unsigned int updateInstructionResult(std::shared_ptr<ATCCSData> data = nullptr);
     virtual unsigned long long persistInstruction() = 0;
     virtual void persistInstructionResult() = 0;
     void reset();
-    void out()
-    {
-        std::cout <<"id:"<< _id << "- sec:" << _sec << "- msec:" << _msec << "- user:" << _user << "- at:" << _at << "- device:"
-                << _device << "- sequence:" << _sequence << "- plan:" << _plan << "- instruction:" << _instruction
-                << "- param:" << _param << "- result: "<<_result << std::endl;
-    }
-
 
     unsigned int sec() const;
     void setSec(const unsigned int sec);

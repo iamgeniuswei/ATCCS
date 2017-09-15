@@ -63,26 +63,26 @@ bool ATCCSFilterController::canExecutePlan()
     return false;
 }
 
-bool ATCCSFilterController::isExecutoryInstructionOK()
+bool ATCCSFilterController::isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     bool ret = false;
-    if (_executoryInstruction)
+    if (instruction)
     {
-        switch (_executoryInstruction->instruction())
+        switch (instruction->instruction())
         {
             case _FILTER_INSTRUCTION_CONNECT:
             {
-                ret = checkResult_Connect();
+                ret = checkResult_Connect(instruction, rawData);
                 break;
             }
             case _FILTER_INSTRUCTION_FINDHOME:
             {
-                ret = checkResult_FindHome();
+                ret = checkResult_FindHome(instruction, rawData);
                 break;
             }
             case _FILTER_INSTRUCTION_SETPOSITION:
             {
-                ret = checkResult_SetFilterPosition();
+                ret = checkResult_SetFilterPosition(instruction, rawData);
                 break;
             }
             default:
@@ -100,11 +100,11 @@ bool ATCCSFilterController::isExecutoryInstructionOK()
     return ret;
 }
 
-bool ATCCSFilterController::checkResult_Connect()
+bool ATCCSFilterController::checkResult_Connect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     if (_realtimeStatus)
     {
-        if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+        if (rawData == nullptr || !(rawData->validate()))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -114,7 +114,7 @@ bool ATCCSFilterController::checkResult_Connect()
 #endif             
             return false;
         }
-        if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
+        if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_CONNECT)))
         {
 #ifdef OUTERRORINFO
             ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -124,7 +124,7 @@ bool ATCCSFilterController::checkResult_Connect()
 #endif            
             return false;
         }
-        _AT_FILTER_PARAM_CONNECT *param = (_AT_FILTER_PARAM_CONNECT*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+        _AT_FILTER_PARAM_CONNECT *param = (_AT_FILTER_PARAM_CONNECT*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
         try
         {
             std::lock_guard<std::mutex> lk(_statusLock);
@@ -163,19 +163,19 @@ bool ATCCSFilterController::checkResult_Connect()
     return false;
 }
 
-bool ATCCSFilterController::checkResult_FindHome()
+bool ATCCSFilterController::checkResult_FindHome(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     return true;
 }
 
-bool ATCCSFilterController::checkResult_SetFilterPosition()
+bool ATCCSFilterController::checkResult_SetFilterPosition(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     try
     {
         std::shared_ptr<atccsfilterstatus> temp = std::dynamic_pointer_cast<atccsfilterstatus>(_realtimeStatus);
         if (temp)
         {
-            if (_executoryInstructionRawData == nullptr || !(_executoryInstructionRawData->validate()))
+            if (rawData == nullptr || !(rawData->validate()))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -185,7 +185,7 @@ bool ATCCSFilterController::checkResult_SetFilterPosition()
 #endif 
                 return false;
             }
-            if (_executoryInstructionRawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_SETPOSITION)))
+            if (rawData->size() != (sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER) + sizeof (_AT_FILTER_PARAM_SETPOSITION)))
             {
 #ifdef OUTERRORINFO
                 ATCCSExceptionHandler::addException(ATCCSException::CUSTOMERROR, "%s%d%s%d%s%d",
@@ -195,7 +195,7 @@ bool ATCCSFilterController::checkResult_SetFilterPosition()
 #endif                
                 return false;
             }
-            _AT_FILTER_PARAM_SETPOSITION *param = (_AT_FILTER_PARAM_SETPOSITION*) (_executoryInstructionRawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
+            _AT_FILTER_PARAM_SETPOSITION *param = (_AT_FILTER_PARAM_SETPOSITION*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
 
             std::lock_guard<std::mutex> lk(_statusLock);
             std::cerr << temp->curstatus() << "--" << _FILTER_STATUS_SLEWED << std::endl;

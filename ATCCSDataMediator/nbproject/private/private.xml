@@ -9,7 +9,6 @@
         <group name="ATCCS"/>
         <group>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSDataMediator/src/atccsdatadispatcher.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSDataMediator/src/atccsdatareceiver.h</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSDataMediator/src/atccsdatareceiver.cpp</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSDataMediator/src/atccsdatadispatcher.cpp</file>
         </group>

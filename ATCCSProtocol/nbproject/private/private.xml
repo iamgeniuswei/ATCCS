@@ -8,14 +8,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group name="ATCCS"/>
         <group>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccs_ccd_define.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccscontroller.cpp</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccs_public_define.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/ATCCSExceptionPrinter.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccsdata.h</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccsdata.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccsexceptionhandler.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccsqueue.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/ATCCSExceptionPrinter.h</file>
             <file>file:/home/lenovo/Project/ATCCS/ATCCSProtocol/src/atccsexceptionhandler.cpp</file>
         </group>
     </open-files>

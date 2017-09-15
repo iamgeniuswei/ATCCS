@@ -32,10 +32,10 @@ void ATCCSDataDispatcherProcessor::processData(std::shared_ptr<ATCCSData> data)
     _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
     if(header)
     {
-        if(header->msg == ATINSTRUCTION)
+        if(header->msg == ATINSTRUCTION || header->msg == ATINSTRUCTIONACK || header->msg == ATSTATUSREPORT)
         {
             _dispatcher->dispatchControlData(header->AT.device, data);
-        }
+        }        
         else
         {
             _dispatcher->dispatchControlData(header->msg, data);

@@ -23,27 +23,45 @@ public:
     virtual ~ATCCSCCDController();
     
     bool isStatusOK() const override;
-    bool isExecutoryInstructionOK() override;
+    bool isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction = nullptr, std::shared_ptr<ATCCSData> rawData = nullptr) override;
+
     bool canExecutePlan() override;
 
 protected:
-    virtual bool checkResult_Connect();
-    virtual bool checkResult_SetCoolerT();
-    virtual bool checkResult_SetExposureTactics();
-    virtual bool checkResult_StartExposure();
-    virtual bool checkResult_StopExposure();
-    virtual bool checkResult_AbortExposure();
-    virtual bool checkResult_SetGain();
-    virtual bool checkResult_SetReadSpeedMode();
-    virtual bool checkResult_SetTransferSpeed();
-    virtual bool checkResult_SetBIN();
-    virtual bool checkResult_SetROI();
-    virtual bool checkResult_SetShutter();
-    virtual bool checkResult_SetFullFrame();
-    virtual bool checkResult_SetEM();
-    virtual bool checkResult_SetCMOSNF();
-    virtual bool checkResult_SetBaseline();
-    virtual bool checkResult_SetOverScan();
+    virtual bool checkResult_Connect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetCoolerT(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetExposureTactics(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_StartExposure(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_StopExposure(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_AbortExposure(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetGain(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetReadSpeedMode(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetTransferSpeed(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetBIN(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetROI(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetShutter(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetFullFrame(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetEM(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetCMOSNF(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetBaseline(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetOverScan(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
 private:
 
 };

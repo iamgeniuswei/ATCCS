@@ -19,17 +19,20 @@ class ATCCSFilterController : public ATCCSDeviceController
 {
 public:
     ATCCSFilterController(unsigned short at = 0, unsigned short device = 0);
-    virtual ~ATCCSFilterController();
-    
+    virtual ~ATCCSFilterController();    
     bool isStatusOK() const override;
-    bool isExecutoryInstructionOK() override;
     bool canExecutePlan() override;
+    bool isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) override;
+
 
 
 protected:
-    virtual bool checkResult_Connect();
-    virtual bool checkResult_FindHome();
-    virtual bool checkResult_SetFilterPosition();
+    virtual bool checkResult_Connect(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_FindHome(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
+    virtual bool checkResult_SetFilterPosition(std::shared_ptr<atccsinstruction> instruction = nullptr,
+                                     std::shared_ptr<ATCCSData> rawData = nullptr);
 };
 
 #endif /* ATCCSFILTERCONTROLLER_H */

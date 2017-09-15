@@ -35,46 +35,46 @@ bool ATCCSSlaveDomeController::isStatusOK() const
 }
 
 
-bool ATCCSSlaveDomeController::isExecutoryInstructionOK() 
+bool ATCCSSlaveDomeController::isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     bool ret = false;
-    if(_executoryInstruction)
+    if(instruction)
     {
-        switch(_executoryInstruction->instruction())
+        switch(instruction->instruction())
         {
             case _SLAVEDOME_INSTRUCTION_CONNECT:
             {
-                ret = checkResult_Connect();
+                ret = checkResult_Connect(instruction, rawData);
                 break;
             }
             case _SLAVEDOME_INSTRUCTION_SETDOMEPOSITION:
             {
-                ret = checkResult_SetDomePosition();
+                ret = checkResult_SetDomePosition(instruction, rawData);
                 break;
             }
             case _SLAVEDOME_INSTRUCTION_SETSHADEPOSITION:
             {
-                ret = checkResult_SetShadePosition();
+                ret = checkResult_SetShadePosition(instruction, rawData);
                 break;
             }
             case _SLAVEDOME_INSTRUCTION_SETROTATESPEED:
             {
-                ret = checkResult_SetRotatePosition();
+                ret = checkResult_SetRotatePosition(instruction, rawData);
                 break;
             }
             case _SLAVEDOME_INSTRUCTION_STOP:
             {
-                ret = checkResult_Stop();
+                ret = checkResult_Stop(instruction, rawData);
                 break;
             }
             case _SLAVEDOME_INSTRUCTION_SCUTTLEACTION:
             {
-                ret = checkResult_ScuttleAction();
+                ret = checkResult_ScuttleAction(instruction, rawData);
                 break;
             }
             case _SLAVEDOME_INSTRUCTION_SHADEACTION:
             {
-                ret = checkResult_ShadeAction();
+                ret = checkResult_ShadeAction(instruction, rawData);
                 break;
             }
             default:
@@ -116,31 +116,31 @@ bool ATCCSSlaveDomeController::canExecutePlan()
 
 
 
-bool ATCCSSlaveDomeController::checkResult_Connect() {
+bool ATCCSSlaveDomeController::checkResult_Connect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSSlaveDomeController::checkResult_ScuttleAction() {
+bool ATCCSSlaveDomeController::checkResult_ScuttleAction(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSSlaveDomeController::checkResult_SetDomePosition() {
+bool ATCCSSlaveDomeController::checkResult_SetDomePosition(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSSlaveDomeController::checkResult_SetRotatePosition() {
+bool ATCCSSlaveDomeController::checkResult_SetRotatePosition(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSSlaveDomeController::checkResult_SetShadePosition() {
+bool ATCCSSlaveDomeController::checkResult_SetShadePosition(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSSlaveDomeController::checkResult_ShadeAction() {
+bool ATCCSSlaveDomeController::checkResult_ShadeAction(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSSlaveDomeController::checkResult_Stop() {
+bool ATCCSSlaveDomeController::checkResult_Stop(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 

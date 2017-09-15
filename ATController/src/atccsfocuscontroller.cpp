@@ -35,46 +35,46 @@ bool ATCCSFocusController::isStatusOK() const
 }
 
 
-bool ATCCSFocusController::isExecutoryInstructionOK() 
+bool ATCCSFocusController::isInstructionSuccess(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData)
 {
     bool ret = false;
-    if(_executoryInstruction)
+    if(instruction)
     {
-        switch(_executoryInstruction->instruction())
+        switch(instruction->instruction())
         {
             case _FOCUS_INSTRUCTION_CONNECT:
             {
-                ret = checkResult_Connect();
+                ret = checkResult_Connect(instruction, rawData);
                 break;
             }
             case _FOCUS_INSTRUCTION_FINDHOME:
             {
-                ret = checkResult_FindHome();
+                ret = checkResult_FindHome(instruction, rawData);
                 break;
             }
             case _FOCUS_INSTRUCTION_SETPOSITION:
             {
-                ret = checkResult_SetPostion();
+                ret = checkResult_SetPostion(instruction, rawData);
                 break;
             }
             case _FOCUS_INSTRUCTION_SETFIXEDSPEED:
             {
-                ret = checkResult_SetFixedSpeed();
+                ret = checkResult_SetFixedSpeed(instruction, rawData);
                 break;
             }
             case _FOCUS_INSTRUCTION_STOP:
             {
-                ret = checkResult_Stop();
+                ret = checkResult_Stop(instruction, rawData);
                 break;
             }
             case _FOCUS_INSTRUCTION_ENABLETCOMPENSATE:
             {
-                ret = checkResult_EnableTCompensate();
+                ret = checkResult_EnableTCompensate(instruction, rawData);
                 break;
             }
             case _FOCUS_INSTRUCTION_SETTCOMPENSATE:
             {
-                ret = checkResult_SetTCompensateCoefficiency();
+                ret = checkResult_SetTCompensateCoefficiency(instruction, rawData);
                 break;
             }            
             default:
@@ -115,31 +115,31 @@ bool ATCCSFocusController::canExecutePlan()
 }
 
 
-bool ATCCSFocusController::checkResult_Connect() {
+bool ATCCSFocusController::checkResult_Connect(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSFocusController::checkResult_EnableTCompensate() {
+bool ATCCSFocusController::checkResult_EnableTCompensate(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSFocusController::checkResult_FindHome() {
+bool ATCCSFocusController::checkResult_FindHome(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSFocusController::checkResult_SetFixedSpeed() {
+bool ATCCSFocusController::checkResult_SetFixedSpeed(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSFocusController::checkResult_SetPostion() {
+bool ATCCSFocusController::checkResult_SetPostion(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSFocusController::checkResult_SetTCompensateCoefficiency() {
+bool ATCCSFocusController::checkResult_SetTCompensateCoefficiency(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 
-bool ATCCSFocusController::checkResult_Stop() {
+bool ATCCSFocusController::checkResult_Stop(std::shared_ptr<atccsinstruction> instruction, std::shared_ptr<ATCCSData> rawData) {
     return true;
 }
 

@@ -165,38 +165,38 @@ void ATCCSUpgoingController::setDeviceOnline(unsigned int id, bool online, unsig
  */
 void ATCCSUpgoingController::setInstructionResult(unsigned int id, std::shared_ptr<ATCCSData> data)
 {
-    if (_controllerManager)
-    {
-        try
-        {
-            std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
-            if (controller)
-            {
-                controller->setExecutoryInstructionResult(data);
-            }
-            else
-            {
-#ifdef OUTERRORINFO
-                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
-                                                    gettext("Fails to find AT Controller and set device's instruction result. Device: "), id);
-#endif
-            }
-        }
-        catch(std::exception &e)
-        {
-#ifdef OUTERRORINFO
-            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
-                                                    gettext("Fails to set device's instruction result. Device: "), id);
-#endif            
-        }
-    }
-    else
-    {
-#ifdef OUTERRORINFO
-        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d",
-                                           gettext("The AT Controllers' manager is fail to be created, fails to set device's instruction result. Device: "), id);
-#endif
-    }
+//    if (_controllerManager)
+//    {
+//        try
+//        {
+//            std::shared_ptr<ATCCSDeviceController> controller = _controllerManager->controller(id);
+//            if (controller)
+//            {
+//                controller->setExecutoryInstructionResult(data);
+//            }
+//            else
+//            {
+//#ifdef OUTERRORINFO
+//                ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+//                                                    gettext("Fails to find AT Controller and set device's instruction result. Device: "), id);
+//#endif
+//            }
+//        }
+//        catch(std::exception &e)
+//        {
+//#ifdef OUTERRORINFO
+//            ATCCSExceptionHandler::addException(ATCCSException::STDEXCEPTION, "%s%d",
+//                                                    gettext("Fails to set device's instruction result. Device: "), id);
+//#endif            
+//        }
+//    }
+//    else
+//    {
+//#ifdef OUTERRORINFO
+//        ATCCSExceptionHandler::addException(ATCCSException::POINTERISNULL, "%s%d",
+//                                           gettext("The AT Controllers' manager is fail to be created, fails to set device's instruction result. Device: "), id);
+//#endif
+//    }
 }
 
 /**
