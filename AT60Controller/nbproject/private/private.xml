@@ -7,17 +7,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60ccdcontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60exceptiondisplayer.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60slavedomecontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60exceptiondisplayer.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60gimbalcontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60filtercontroller.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60ccdcontroller.h</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60focuscontroller.cpp</file>
             <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60gimbalcontroller.cpp</file>
             <file>file:/home/lenovo/Project/ATCCS/AT60Controller/main.cpp</file>
-            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/src/at60filtercontroller.h</file>
+            <file>file:/home/lenovo/Project/ATCCS/AT60Controller/dist/Debug/GNU-Linux/at60setting.xml</file>
         </group>
     </open-files>
 </project-private>

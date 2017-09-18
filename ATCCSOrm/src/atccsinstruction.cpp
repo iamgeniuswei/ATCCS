@@ -679,7 +679,7 @@ unsigned int atccsinstruction::updateInstructionResult(std::shared_ptr<ATCCSData
     {
         _timeout = result->timeout;
         _result = result->result;
-        return RESULT_EXECUTING;
+        return _result;
     }
     else
     {

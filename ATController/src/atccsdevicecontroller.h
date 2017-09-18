@@ -25,7 +25,7 @@ public:
     void setDeviceAddress(const std::string &ip, unsigned short port);
     void setDeviceAddress(std::shared_ptr<ATCCSAddress> address = nullptr);
     void updateRealtimeStatus(std::shared_ptr<ATCCSData> data = nullptr);
-    void updateRealtimeOnline(bool online, unsigned int time);    
+    void updateRealtimeOnline(std::shared_ptr<ATCCSData> data = nullptr);    
     
     virtual bool isOnline() const;
     virtual bool isStatusOK() const;
@@ -38,7 +38,7 @@ public:
     unsigned int timeout();
     int sendInstruction(std::shared_ptr<ATCCSData> data = nullptr);
     bool handlePlanInstruction(std::shared_ptr<ATCCSData> data = nullptr);
-    bool queryPlanInstructionResult();
+    bool queryPlanInstructionResult(int &result);
     void persistPlanInstructionResult(bool success = true);
 protected:
     void resolveData(std::shared_ptr<ATCCSData> data = nullptr);

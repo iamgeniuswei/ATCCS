@@ -76,6 +76,7 @@ void ATCCSDataReceiver::run()
                 ssize_t size = _recvSocket->recvData(data, BUFFER_SIZE);
                 if (size > 0) 
                 {
+//                    std::cout << "recv data\n";
                     std::shared_ptr<ATCCSData> newdata(new ATCCSData(size));
                     if (newdata != nullptr && newdata->data() != nullptr) 
                     {

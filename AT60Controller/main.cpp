@@ -299,6 +299,7 @@ int main(int argc, char** argv)
                 << " @" << __LINE__ << std::endl;
 #endif   
     }
+    std::cerr << "AT60 Controller exit." << std::endl;
     return 0;
 }
 

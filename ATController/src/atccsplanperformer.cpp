@@ -307,6 +307,10 @@ void ATCCSPlanPerformer::executeSequenceLoopPlan()
 
 void ATCCSPlanPerformer::executePlanInSequence()
 {
+    ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s%s%d%s",
+                                        gettext("----------------------------"),
+                                        gettext("The Plan tag: "), _executoryPlan->tag(),
+                                        gettext("----------------------------"));
     persistPlan();
     if (_instruction->instruction() == STOP)
         return;    
@@ -496,19 +500,22 @@ void ATCCSPlanPerformer::executePlanInSequence()
             break;
         if (_instruction->instruction() == STOP)
             break;
-        bool statusOk = false;
-        auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-        while (!canExecutePlan())
+        if (_executoryPlan->type() != BIAS && _executoryPlan->type() != DARK)
         {
-            auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-            if (now - base > 30)
-                break;
-            std::chrono::milliseconds dura(2000);
-            std::this_thread::sleep_for(dura);
+            bool statusOk = false;
+            auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+            while (!canExecutePlan())
+            {
+                auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+                if (now - base > 1800)
+                    break;
+                std::chrono::milliseconds dura(2000);
+                std::this_thread::sleep_for(dura);
 
+            }
+            if (!canExecutePlan())
+                break;
         }
-        if (!canExecutePlan())
-            break;
 
         if (!setDeviceInstruction(CCD, _CCD_INSTRUCTION_SETEXPOSURETACTIC))
         {
@@ -1123,15 +1130,17 @@ bool ATCCSPlanPerformer::waitInstructionFinish(unsigned int device, unsigned int
             if (temp)
             {
                 auto base = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-                while (!temp->queryPlanInstructionResult() && !_instruction->instruction() == STOP)
+                int result = 0;
+                while (!temp->queryPlanInstructionResult(result) && !(_instruction->instruction() == STOP))
                 {
+                    std::cout << "timeout is: " << temp->timeout() << std::endl;
                     auto now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
                     if ((now - base) > temp->timeout())
                         break;
                     std::chrono::milliseconds dura(1000);
                     std::this_thread::sleep_for(dura);
                 }
-                if (temp->queryPlanInstructionResult())
+                if (temp->queryPlanInstructionResult(result) && result != 2)
                     return true;
                 else
                     return false;

@@ -84,6 +84,10 @@ void ATCCSDeviceController::resolveData(std::shared_ptr<ATCCSData> data)
                 handleInstructionResult(data);
                 break;
             }
+            case ATHEARTBEAT:
+            {
+                updateRealtimeOnline(data);
+            }
         }
     }
 }
@@ -368,15 +372,27 @@ bool ATCCSDeviceController::handlePlanInstruction(std::shared_ptr<ATCCSData> dat
     _planInstructionRawData = data;
     if (sendInstruction(data) != data->size())
         return false;
+#ifdef OUTDEBUGINFO
+    ATCCSExceptionHandler::addException(ATCCSException::DEBUGINFO, "%s%d%s%d%s%d",
+                                        gettext("The instruction has been sent to device correctly. AT: "), _at,
+                                        gettext(" Device: "), _device,
+                                        gettext(" Instruction: "), _planInstruction->instruction());
+#endif
     return true;
 }
 
-bool ATCCSDeviceController::queryPlanInstructionResult()
+bool ATCCSDeviceController::queryPlanInstructionResult(int &result)
 {
+    result = atccsinstruction::RESULT_WAITINGTOEXECUTE;
     if (_planInstruction == nullptr)
         return false;
     if (_planInstruction->result() == atccsinstruction::RESULT_WAITINGTOEXECUTE)
         return false;
+    if(_planInstruction->result() == atccsinstruction::RESULT_PARAMOUTOFRANGE)
+    {
+        result = atccsinstruction::RESULT_PARAMOUTOFRANGE;
+        return true;
+    }
     if (_planInstruction->result() == atccsinstruction::RESULT_EXECUTING)
     {
         return isInstructionSuccess(_planInstruction, _planInstructionRawData);
@@ -536,8 +552,10 @@ void ATCCSDeviceController::setDeviceAddress(std::shared_ptr<ATCCSAddress> addre
  * @param online bool
  * @param time  unsigned int
  */
-void ATCCSDeviceController::updateRealtimeOnline(bool online, unsigned int time)
+void ATCCSDeviceController::updateRealtimeOnline(std::shared_ptr<ATCCSData> data)
 {
+    if(data == nullptr)
+        return;
     if (_realtimeOnline == nullptr)
     {
         try
@@ -554,8 +572,8 @@ void ATCCSDeviceController::updateRealtimeOnline(bool online, unsigned int time)
             return;
         }
     }
-
-    _realtimeOnline->setOnline(online, time);
+    _ATCCSPHeader *header = (_ATCCSPHeader*)(data->data());
+    _realtimeOnline->setOnline(true, header->tv_sec);
 
 }
 

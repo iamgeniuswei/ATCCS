@@ -30,7 +30,7 @@ using namespace odb::core;
 #include "ORMHelper.h"
 #include <memory>
 #include <stdbool.h>
-
+#include <iomanip>
 #include "atccsexceptionhandler.h"
 
 ATCCSGimbalController::ATCCSGimbalController(unsigned short at, unsigned short device)
@@ -369,8 +369,8 @@ bool ATCCSGimbalController::checkResult_TrackStar(std::shared_ptr<atccsinstructi
             _AT_GIMBAL_PARAM_TRACKSTAR *param = (_AT_GIMBAL_PARAM_TRACKSTAR*) (rawData->data() + sizeof (_ATCCSPHeader) + sizeof (_AT_INSTRUCTION_HEADER));
             
             std::lock_guard<std::mutex> lk(_statusLock);
-            std::cout << param->rightAscension <<"---" << temp->targetJ2000RightAscension() << std::endl;
-            std::cout << param->declination << "---" << temp->targetJ2000Declination() << std::endl;
+            std::cout << std::fixed << std::setprecision(8) << param->rightAscension <<"---" << temp->targetJ2000RightAscension() << std::endl;
+            std::cout << std::fixed << std::setprecision(8) << param->declination << "---" << temp->targetJ2000Declination() << std::endl;
             return (temp->curstatus() == _GIMBAL_STATUS_TRACKING)&&
                     (cmpDouble(param->rightAscension, temp->targetJ2000RightAscension(), 0.0001))&&
                     (cmpDouble(param->declination, temp->targetJ2000Declination(), 0.0001));
